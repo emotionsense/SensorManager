@@ -1,5 +1,7 @@
 .project
 .classpath
 *.class
+*/.DS_Store
 bin/*
 gen/*
+.DS_Store
