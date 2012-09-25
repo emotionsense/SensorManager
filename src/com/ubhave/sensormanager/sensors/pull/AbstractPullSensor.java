@@ -1,5 +1,7 @@
 package com.ubhave.sensormanager.sensors.pull;
 
+import android.content.Context;
+
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
@@ -11,6 +13,11 @@ public abstract class AbstractPullSensor extends AbstractSensor implements PullS
 	protected long pullSenseStartTimestamp;
 	
 	protected SensorData prevSensorData;
+	
+	public AbstractPullSensor(Context context)
+	{
+		super(context);
+	}
 
 	protected abstract SensorData getMostRecentRawData();
 

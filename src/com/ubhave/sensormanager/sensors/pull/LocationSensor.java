@@ -7,12 +7,12 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Looper;
 
-import com.ubhave.sensormanager.SurveyApplication;
 import com.ubhave.sensormanager.config.Constants;
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.data.pullsensor.LocationData;
 import com.ubhave.sensormanager.logs.ESLogger;
+import com.ubhave.sensormanager.sensors.AbstractSensor;
 
 public class LocationSensor extends AbstractPullSensor
 {
@@ -26,7 +26,7 @@ public class LocationSensor extends AbstractPullSensor
 	private static LocationSensor locationSensor;
 	private static Object lock = new Object();
 
-	public static LocationSensor getLocationSensor()
+	public static LocationSensor getLocationSensor(Context context)
 	{
 
 		if (locationSensor == null)
@@ -35,16 +35,26 @@ public class LocationSensor extends AbstractPullSensor
 			{
 				if (locationSensor == null)
 				{
-					locationSensor = new LocationSensor();
+					if (AbstractSensor.permissionGranted(context, "android.permission.ACCESS_COARSE_LOCATION")
+							|| AbstractSensor.permissionGranted(context, "android.permission.ACCESS_FINE_LOCATION"))
+					{
+						locationSensor = new LocationSensor(context);
+					}
+					else
+					{
+						ESLogger.log(TAG, "Location Sensor: Permission Not Granted!");
+					}
+					
 				}
 			}
 		}
 		return locationSensor;
 	}
 
-	private LocationSensor()
+	private LocationSensor(Context context)
 	{
-		locationManager = (LocationManager) SurveyApplication.getContext().getSystemService(Context.LOCATION_SERVICE);
+		super(context);
+		locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 		locListener = new LocationListener()
 		{
 

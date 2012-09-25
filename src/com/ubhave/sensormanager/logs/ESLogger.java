@@ -18,7 +18,8 @@ public class ESLogger
 	public static void error(String TAG, String message)
 	{
 		Log.e(TAG, message);		
-		DataLogger.getDataLogger().logData(ERROR_TAG, TAG + " " + message);
+		// TODO
+//		DataLogger.getDataLogger().logData(ERROR_TAG, TAG + " " + message);
 	}
 
 	public static void error(String TAG, Exception exp)

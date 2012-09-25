@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 
 import com.ubhave.sensormanager.ESException;
-import com.ubhave.sensormanager.SurveyApplication;
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.logs.ESLogger;
@@ -23,8 +22,9 @@ public abstract class AbstractPushSensor extends AbstractSensor implements PushS
 
 	protected abstract IntentFilter[] getIntentFilters();
 
-	public AbstractPushSensor()
+	public AbstractPushSensor(Context context)
 	{
+		super(context);
 		broadcastReceiver = new BroadcastReceiver()
 		{
 			public void onReceive(Context context, Intent intent)
@@ -53,13 +53,12 @@ public abstract class AbstractPushSensor extends AbstractSensor implements PushS
 		this.sensorDataListener = listener;
 		startSensing(sensorConfig);
 		// register broadcast receiver
-		Context context = SurveyApplication.getContext();
 		IntentFilter[] filters = getIntentFilters();
 		if ((filters != null) && (filters.length > 0))
 		{
 			for (IntentFilter aFilter : filters)
 			{
-				context.registerReceiver(broadcastReceiver, aFilter);
+				applicationContext.registerReceiver(broadcastReceiver, aFilter);
 			}
 		}
 
@@ -80,7 +79,7 @@ public abstract class AbstractPushSensor extends AbstractSensor implements PushS
 		IntentFilter[] filters = getIntentFilters();
 		if ((filters != null) && (filters.length > 0))
 		{
-			SurveyApplication.getContext().unregisterReceiver(broadcastReceiver);
+			applicationContext.unregisterReceiver(broadcastReceiver);
 		}
 
 		ESLogger.log(getLogTag(), "Sensing stopped.");

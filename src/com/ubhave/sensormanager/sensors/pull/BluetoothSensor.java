@@ -13,13 +13,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 
-import com.ubhave.sensormanager.SurveyApplication;
 import com.ubhave.sensormanager.config.Constants;
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.config.Utilities;
 import com.ubhave.sensormanager.data.pullsensor.BluetoothData;
 import com.ubhave.sensormanager.data.pullsensor.ESBluetoothDevice;
 import com.ubhave.sensormanager.logs.ESLogger;
+import com.ubhave.sensormanager.sensors.AbstractSensor;
 
 public class BluetoothSensor extends AbstractPullSensor
 {
@@ -33,7 +33,7 @@ public class BluetoothSensor extends AbstractPullSensor
 	private static BluetoothSensor bluetoothSensor;
 	private static Object lock = new Object();
 
-	public static BluetoothSensor getBluetoothSensor()
+	public static BluetoothSensor getBluetoothSensor(Context context)
 	{
 		if (bluetoothSensor == null)
 		{
@@ -41,15 +41,24 @@ public class BluetoothSensor extends AbstractPullSensor
 			{
 				if (bluetoothSensor == null)
 				{
-					bluetoothSensor = new BluetoothSensor();
+					if (AbstractSensor.permissionGranted(context, "android.permission.BLUETOOTH")
+							&& AbstractSensor.permissionGranted(context, "android.permission.BLUETOOTH_ADMIN"))
+					{
+						bluetoothSensor = new BluetoothSensor(context);
+					}
+					else
+					{
+						ESLogger.log(TAG, "Bluetooth Sensor : Permission not Granted");
+					}
 				}
 			}
 		}
 		return bluetoothSensor;
 	}
 
-	private BluetoothSensor()
+	private BluetoothSensor(Context context)
 	{
+		super(context);
 		btDevices = new ArrayList<ESBluetoothDevice>();
 		bluetooth = BluetoothAdapter.getDefaultAdapter();
 		if (bluetooth == null)
@@ -101,9 +110,8 @@ public class BluetoothSensor extends AbstractPullSensor
 		// or anything
 		IntentFilter found = new IntentFilter(BluetoothDevice.ACTION_FOUND);
 		IntentFilter finished = new IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
-		Context context = SurveyApplication.getContext();
-		context.registerReceiver(receiver, found);
-		context.registerReceiver(receiver, finished);
+		applicationContext.registerReceiver(receiver, found);
+		applicationContext.registerReceiver(receiver, finished);
 	}
 
 	protected String getLogTag()

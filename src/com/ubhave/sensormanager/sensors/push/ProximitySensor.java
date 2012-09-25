@@ -12,7 +12,6 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
-import com.ubhave.sensormanager.SurveyApplication;
 import com.ubhave.sensormanager.config.Constants;
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.pushsensor.ProximityData;
@@ -26,7 +25,7 @@ public class ProximitySensor extends AbstractPushSensor
 
 	private SensorEventListener sensorEventListener;
 
-	public static ProximitySensor getProximitySensor()
+	public static ProximitySensor getProximitySensor(Context context)
 	{
 		if (ProximitySensor == null)
 		{
@@ -34,15 +33,16 @@ public class ProximitySensor extends AbstractPushSensor
 			{
 				if (ProximitySensor == null)
 				{
-					ProximitySensor = new ProximitySensor();
+					ProximitySensor = new ProximitySensor(context);
 				}
 			}
 		}
 		return ProximitySensor;
 	}
 
-	private ProximitySensor()
+	private ProximitySensor(Context context)
 	{
+		super(context);
 		sensorEventListener = new SensorEventListener()
 		{
 			public void onSensorChanged(SensorEvent event)
@@ -83,14 +83,14 @@ public class ProximitySensor extends AbstractPushSensor
 
 	protected boolean startSensing(SensorConfig sensorConfig)
 	{
-		SensorManager sensorManager = (SensorManager) SurveyApplication.getContext().getSystemService(Context.SENSOR_SERVICE);
+		SensorManager sensorManager = (SensorManager) applicationContext.getSystemService(Context.SENSOR_SERVICE);
 		boolean registered = sensorManager.registerListener(sensorEventListener, sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY), SensorManager.SENSOR_DELAY_NORMAL);
 		return registered;
 	}
 
 	protected void stopSensing()
 	{
-		SensorManager sensorManager = (SensorManager) SurveyApplication.getContext().getSystemService(Context.SENSOR_SERVICE);
+		SensorManager sensorManager = (SensorManager) applicationContext.getSystemService(Context.SENSOR_SERVICE);
 		sensorManager.unregisterListener(sensorEventListener);
 	}
 

@@ -8,7 +8,6 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
-import com.ubhave.sensormanager.SurveyApplication;
 import com.ubhave.sensormanager.config.Constants;
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.pullsensor.AccelerometerData;
@@ -30,7 +29,7 @@ public class AccelerometerSensor extends AbstractPullSensor
 	private static AccelerometerSensor accelerometerSensor;
 	private static Object lock = new Object();
 
-	public static AccelerometerSensor getAccelerometerSensor()
+	public static AccelerometerSensor getAccelerometerSensor(Context context)
 	{
 		if (accelerometerSensor == null)
 		{
@@ -38,16 +37,17 @@ public class AccelerometerSensor extends AbstractPullSensor
 			{
 				if (accelerometerSensor == null)
 				{
-					accelerometerSensor = new AccelerometerSensor();
+					accelerometerSensor = new AccelerometerSensor(context);
 				}
 			}
 		}
 		return accelerometerSensor;
 	}
 
-	private AccelerometerSensor()
+	private AccelerometerSensor(Context context)
 	{
-		sensorManager = (SensorManager) SurveyApplication.getContext().getSystemService(Context.SENSOR_SERVICE);
+		super(context);
+		sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
 		listener = new SensorEventListener()
 		{
 

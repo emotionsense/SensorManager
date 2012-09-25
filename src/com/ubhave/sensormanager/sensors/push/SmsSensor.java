@@ -15,12 +15,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.telephony.SmsMessage;
 
-import com.ubhave.sensormanager.SurveyApplication;
 import com.ubhave.sensormanager.config.Constants;
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.config.Utilities;
 import com.ubhave.sensormanager.data.pushsensor.SmsData;
 import com.ubhave.sensormanager.logs.ESLogger;
+import com.ubhave.sensormanager.sensors.AbstractSensor;
 
 public class SmsSensor extends AbstractPushSensor
 {
@@ -33,7 +33,7 @@ public class SmsSensor extends AbstractPushSensor
 	private static SmsSensor smsSensor;
 	private static Object lock = new Object();
 
-	public static SmsSensor getSmsSensor()
+	public static SmsSensor getSmsSensor(Context context)
 	{
 		if (smsSensor == null)
 		{
@@ -41,15 +41,21 @@ public class SmsSensor extends AbstractPushSensor
 			{
 				if (smsSensor == null)
 				{
-					smsSensor = new SmsSensor();
+					if (AbstractSensor.permissionGranted(context, "android.permission.RECEIVE_SMS")
+							&& AbstractSensor.permissionGranted(context, "android.permission.READ_SMS"))
+					{
+						smsSensor = new SmsSensor(context);
+					}
+					else ESLogger.log(TAG, "SMS Sensor : Permission not Granted");
 				}
 			}
 		}
 		return smsSensor;
 	}
 
-	private SmsSensor()
+	private SmsSensor(Context context)
 	{
+		super(context);
 		// Create a content observer for sms
 		observer = new ContentObserver(new Handler())
 		{
@@ -60,7 +66,7 @@ public class SmsSensor extends AbstractPushSensor
 				{
 					// check last sent message
 					Uri smsUri = Uri.parse("content://sms");
-					Cursor cursor = SurveyApplication.getContext().getContentResolver().query(smsUri, null, null, null, null);
+					Cursor cursor = applicationContext.getContentResolver().query(smsUri, null, null, null, null);
 					// last sms sent is the fist in the list
 					cursor.moveToNext();
 					String content = cursor.getString(cursor.getColumnIndex("body"));
@@ -156,14 +162,14 @@ public class SmsSensor extends AbstractPushSensor
 		prevMessageId = "";
 
 		// register content observer
-		ContentResolver contentResolver = SurveyApplication.getContext().getContentResolver();
+		ContentResolver contentResolver = applicationContext.getContentResolver();
 		contentResolver.registerContentObserver(Uri.parse("content://sms"), true, observer);
 		return true;
 	}
 
 	protected void stopSensing()
 	{
-		SurveyApplication.getContext().getContentResolver().unregisterContentObserver(observer);
+		applicationContext.getContentResolver().unregisterContentObserver(observer);
 	}
 
 }

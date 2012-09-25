@@ -1,5 +1,8 @@
 package com.ubhave.sensormanager.sensors;
 
+import android.content.Context;
+import android.content.pm.PackageManager;
+
 import com.ubhave.sensormanager.config.Constants;
 import com.ubhave.sensormanager.config.SensorConfig;
 
@@ -7,7 +10,19 @@ public abstract class AbstractSensor implements SensorInterface
 {
 
 	protected boolean isSensing;
-	protected Object senseCompleteNotify = new Object();
+	protected final Context applicationContext;
+	protected final Object senseCompleteNotify;
+	
+	public AbstractSensor(Context context)
+	{
+		applicationContext = context;
+		senseCompleteNotify = new Object();
+	}
+	
+	public static boolean permissionGranted(Context context, String permission)
+	{
+		return context.checkCallingOrSelfPermission(permission) == PackageManager.PERMISSION_GRANTED;
+	}
 
 	protected abstract boolean startSensing(SensorConfig sensorConfig);
 

@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
+import android.content.Context;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
@@ -17,6 +18,7 @@ import com.ubhave.sensormanager.config.Utilities;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.data.pullsensor.MicrophoneData;
 import com.ubhave.sensormanager.logs.ESLogger;
+import com.ubhave.sensormanager.sensors.AbstractSensor;
 
 public class MicrophoneSensor extends AbstractPullSensor
 {
@@ -39,7 +41,7 @@ public class MicrophoneSensor extends AbstractPullSensor
 	private static MicrophoneSensor microphoneSensor;
 	private static Object lock = new Object();
 
-	public static MicrophoneSensor getMicrophoneSensor()
+	public static MicrophoneSensor getMicrophoneSensor(Context context)
 	{
 		if (microphoneSensor == null)
 		{
@@ -47,16 +49,23 @@ public class MicrophoneSensor extends AbstractPullSensor
 			{
 				if (microphoneSensor == null)
 				{
-					microphoneSensor = new MicrophoneSensor();
+					if (AbstractSensor.permissionGranted(context, "android.permission.RECORD_AUDIO"))
+					{
+						microphoneSensor = new MicrophoneSensor(context);
+					}
+					else
+					{
+						ESLogger.log(LOG_TAG, "Microphone : Permission not Granted");
+					}
 				}
 			}
 		}
 		return microphoneSensor;
 	}
 
-	private MicrophoneSensor()
+	private MicrophoneSensor(Context context)
 	{
-		// to get amplitude
+		super(context);
 		recorder = new MediaRecorder();
 		recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
 		recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
@@ -242,7 +251,7 @@ public class MicrophoneSensor extends AbstractPullSensor
 
 	private String generateAudioFileName()
 	{
-		String audioFileName = Utilities.getImei() + "_" + System.currentTimeMillis() + ".pcm";
+		String audioFileName = Utilities.getImei(applicationContext) + "_" + System.currentTimeMillis() + ".pcm";
 		String audioFileFullPath = Constants.SOUNDS_DIR + "/" + audioFileName;
 		return audioFileFullPath;
 	}

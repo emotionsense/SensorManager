@@ -14,10 +14,11 @@ import android.content.IntentFilter;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 
-import com.ubhave.sensormanager.SurveyApplication;
 import com.ubhave.sensormanager.config.Constants;
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.pullsensor.WifiData;
+import com.ubhave.sensormanager.logs.ESLogger;
+import com.ubhave.sensormanager.sensors.AbstractSensor;
 
 public class WifiSensor extends AbstractPullSensor
 {
@@ -32,7 +33,7 @@ public class WifiSensor extends AbstractPullSensor
 	private static WifiSensor wifiSensor;
 	private static Object lock = new Object();
 
-	public static WifiSensor getWifiSensor()
+	public static WifiSensor getWifiSensor(Context context)
 	{
 		if (wifiSensor == null)
 		{
@@ -40,16 +41,23 @@ public class WifiSensor extends AbstractPullSensor
 			{
 				if (wifiSensor == null)
 				{
-					wifiSensor = new WifiSensor();
+					if (AbstractSensor.permissionGranted(context, "android.permission.ACCESS_WIFI_STATE")
+							&& AbstractSensor.permissionGranted(context, "android.permission.ACCESS_NETWORK_STATE")
+							&& AbstractSensor.permissionGranted(context, "android.permission.CHANGE_WIFI_STATE"))
+					{
+						wifiSensor = new WifiSensor(context);
+					}
+					else ESLogger.log(TAG, "Wifi Sensor : Permission not Granted");
 				}
 			}
 		}
 		return wifiSensor;
 	}
 
-	private WifiSensor()
+	private WifiSensor(Context context)
 	{
-		wifiManager = (WifiManager) SurveyApplication.getContext().getSystemService(Context.WIFI_SERVICE);
+		super(context);
+		wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
 		wifiReceiver = new BroadcastReceiver()
 		{
 			public void onReceive(Context context, Intent intent)
@@ -94,7 +102,7 @@ public class WifiSensor extends AbstractPullSensor
 		{
 			wifiScanResults = new ArrayList<ScanResult>();
 			cyclesRemaining = (Integer) sensorConfig.get(SensorConfig.NUMBER_OF_SAMPLING_CYCLES);
-			SurveyApplication.getContext().registerReceiver(wifiReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
+			applicationContext.registerReceiver(wifiReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
 			wifiManager.startScan();
 			return true;
 		}
@@ -104,7 +112,7 @@ public class WifiSensor extends AbstractPullSensor
 	// Called when a scan is finished
 	protected void stopSensing()
 	{
-		SurveyApplication.getContext().unregisterReceiver(wifiReceiver);
+		applicationContext.unregisterReceiver(wifiReceiver);
 	}
 
 }

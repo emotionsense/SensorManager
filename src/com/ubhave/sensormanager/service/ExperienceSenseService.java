@@ -14,10 +14,10 @@ import android.os.IBinder;
 import android.os.PowerManager;
 
 import com.ubhave.sensormanager.ESException;
+import com.ubhave.sensormanager.ESSensorManager;
 import com.ubhave.sensormanager.R;
 import com.ubhave.sensormanager.config.Constants;
 import com.ubhave.sensormanager.logs.ESLogger;
-import com.ubhave.sensormanager.sensors.ESSensorManager;
 
 
 
@@ -73,7 +73,14 @@ public class ExperienceSenseService extends Service
 
 	private void startServices()
 	{
-		ESSensorManager.startSensorManager();
+		try {
+			ESSensorManager.getSensorManager(this).startAllSensors();
+		}
+		catch(ESException e)
+		{
+			// Handle error
+		}
+		
 
 		// test cases
 		// ESTests esTests = new ESTests();

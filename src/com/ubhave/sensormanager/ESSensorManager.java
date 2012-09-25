@@ -1,10 +1,10 @@
-package com.ubhave.sensormanager.sensors;
+package com.ubhave.sensormanager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.ubhave.sensormanager.ESException;
-import com.ubhave.sensormanager.SurveyApplication;
+import android.content.Context;
+
 import com.ubhave.sensormanager.config.Constants;
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.config.Utilities;
@@ -12,6 +12,9 @@ import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.data.pushsensor.BatteryData;
 import com.ubhave.sensormanager.logs.DataLogger;
 import com.ubhave.sensormanager.logs.ESLogger;
+import com.ubhave.sensormanager.sensors.AbstractSensor;
+import com.ubhave.sensormanager.sensors.SensorDataListener;
+import com.ubhave.sensormanager.sensors.SensorInterface;
 import com.ubhave.sensormanager.sensors.pull.AccelerometerSensor;
 import com.ubhave.sensormanager.sensors.pull.BluetoothSensor;
 import com.ubhave.sensormanager.sensors.pull.LocationSensor;
@@ -28,29 +31,18 @@ import com.ubhave.sensormanager.service.ExperienceSenseService;
 import com.ubhave.sensormanager.service.ServiceAlarmReceiver;
 
 // this class manages all the sensors
-public class ESSensorManager
+public class ESSensorManager implements ESSensorManagerInterface
 {
 	private static final String TAG = "ESSensorManager";
 
 	private static ESSensorManager sensorManager;
 	private static Object lock = new Object();
-	private HashMap<Integer, SensorTask> sensorTaskMap;
+	
+	
+	private final Context applicationContext;
+	private final HashMap<Integer, SensorTask> sensorTaskMap;
 
-	private SensorInterface[] PULL_SENSORS = new SensorInterface[] { AccelerometerSensor.getAccelerometerSensor(), BluetoothSensor.getBluetoothSensor(), LocationSensor.getLocationSensor(), MicrophoneSensor.getMicrophoneSensor(),
-			WifiSensor.getWifiSensor() };
-
-	private SensorInterface[] PUSH_SENSORS = new SensorInterface[] { BatterySensor.getBatterySensor(), PhoneStateSensor.getPhoneStateSensor(), ProximitySensor.getProximitySensor(), ScreenSensor.getScreenSensor(), SmsSensor.getSmsSensor() };
-
-	public static ESSensorManager getSensorManager() throws ESException
-	{
-		if (sensorManager == null)
-		{
-			throw new ESException(ESException.SENSOR_MANAGER_NOT_STARTED, "ESSensorManager not started.");
-		}
-		return sensorManager;
-	}
-
-	public static void startSensorManager()
+	public static ESSensorManager getSensorManager(Context appContext) throws ESException
 	{
 		if (sensorManager == null)
 		{
@@ -58,11 +50,16 @@ public class ESSensorManager
 			{
 				if (sensorManager == null)
 				{
-					sensorManager = new ESSensorManager();
-					ESLogger.log(TAG, "started.");
+					if (AbstractSensor.permissionGranted(appContext, "android.permission.WAKE_LOCK"))
+					{
+						sensorManager = new ESSensorManager(appContext);
+						ESLogger.log(TAG, "started.");
+					}
+					else throw new ESException(ESException.PERMISSION_DENIED, "Sensor Manager requires android.permission.WAKE_LOCK");
 				}
 			}
 		}
+		return sensorManager;
 	}
 
 	// there are two types of sensors
@@ -75,24 +72,51 @@ public class ESSensorManager
 	// bluetooth, wifi sensors where the duration of sampling windows depends on
 	// number of devices in the environment, therefore, for these, the sampling
 	// window is defined in terms of no. of sampling cycles.
-	private ESSensorManager()
+	private ESSensorManager(Context appContext)
 	{
+		applicationContext = appContext;
 		sensorTaskMap = new HashMap<Integer, SensorTask>();
-
+		
 		// PULL SENSORS
+		SensorInterface[] PULL_SENSORS = new SensorInterface[]
+		{
+				AccelerometerSensor.getAccelerometerSensor(applicationContext),
+				BluetoothSensor.getBluetoothSensor(applicationContext),
+				LocationSensor.getLocationSensor(applicationContext),
+				MicrophoneSensor.getMicrophoneSensor(applicationContext),
+				WifiSensor.getWifiSensor(applicationContext)
+		};
+		
+		
 		for (SensorInterface aSensor : PULL_SENSORS)
 		{
-			PullSensorTask pullSensorTask = new PullSensorTask(aSensor);
-			sensorTaskMap.put(aSensor.getSensorType(), pullSensorTask);
+			if (aSensor != null)
+			{
+				PullSensorTask pullSensorTask = new PullSensorTask(aSensor);
+				sensorTaskMap.put(aSensor.getSensorType(), pullSensorTask);
+			}
 		}
 
 		// PUSH SENSORS
+		SensorInterface[] PUSH_SENSORS = new SensorInterface[] {
+				BatterySensor.getBatterySensor(applicationContext),
+				PhoneStateSensor.getPhoneStateSensor(applicationContext),
+				ProximitySensor.getProximitySensor(applicationContext),
+				ScreenSensor.getScreenSensor(applicationContext),
+				SmsSensor.getSmsSensor(applicationContext)
+		};
 		for (SensorInterface aSensor : PUSH_SENSORS)
 		{
-			PushSensorTask pushSensorTask = new PushSensorTask(aSensor);
-			sensorTaskMap.put(aSensor.getSensorType(), pushSensorTask);
+			if (aSensor != null)
+			{
+				PushSensorTask pushSensorTask = new PushSensorTask(aSensor);
+				sensorTaskMap.put(aSensor.getSensorType(), pushSensorTask);
+			}
 		}
-
+	}
+	
+	public void startAllSensors()
+	{
 		// start sensor threads
 		for (SensorTask task : sensorTaskMap.values())
 		{
@@ -150,12 +174,12 @@ public class ESSensorManager
 
 	private void startServiceAlarm()
 	{
-		ServiceAlarmReceiver.startAlarm(SurveyApplication.getContext());
+		ServiceAlarmReceiver.startAlarm(applicationContext);
 	}
 
 	private void stopServiceAlarm()
 	{
-		ServiceAlarmReceiver.cancelAlarm(SurveyApplication.getContext());
+		ServiceAlarmReceiver.cancelAlarm(applicationContext);
 	}
 
 	public synchronized void stopAllSensors()
@@ -400,7 +424,7 @@ public class ESSensorManager
 			{
 				String sensorName = AbstractSensor.getSensorName(sensor.getSensorType());
 				ESLogger.log("SensorManager", "Data from: " + sensorName);
-				DataLogger.getDataLogger().logData(sensorName, sensorData.toString());
+				DataLogger.getDataLogger(applicationContext).logData(sensorName, sensorData.toString());
 
 				// update listeners
 				for (SensorDataListener listener : listenerList)

@@ -19,7 +19,7 @@ public class ScreenSensor extends AbstractPushSensor
 	private static ScreenSensor ScreenSensor;
 	private static Object lock = new Object();
 
-	public static ScreenSensor getScreenSensor()
+	public static ScreenSensor getScreenSensor(Context context)
 	{
 		if (ScreenSensor == null)
 		{
@@ -27,15 +27,16 @@ public class ScreenSensor extends AbstractPushSensor
 			{
 				if (ScreenSensor == null)
 				{
-					ScreenSensor = new ScreenSensor();
+					ScreenSensor = new ScreenSensor(context);
 				}
 			}
 		}
 		return ScreenSensor;
 	}
 
-	private ScreenSensor()
+	private ScreenSensor(Context context)
 	{
+		super(context);
 	}
 
 	public String getLogTag()

@@ -5,6 +5,7 @@ public class ESException extends Exception
 	private static final long serialVersionUID = -6952859423645368705L;
 	
 	// error codes
+	public static final int PERMISSION_DENIED = 8000;
 	public static final int UNKNOWN_SENSOR_TYPE = 8001;
 	public static final int UNKNOWN_SENSOR_NAME = 8002;
 	public static final int SENSOR_ALREADY_SENSING = 8003;

@@ -31,7 +31,6 @@ import android.os.BatteryManager;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
-import com.ubhave.sensormanager.SurveyApplication;
 import com.ubhave.sensormanager.logs.ESLogger;
 
 public class Utilities
@@ -144,13 +143,8 @@ public class Utilities
 		out.close();
 	}
 
-	public static String getImei()
+	public static String getImei(Context context)
 	{
-		Context context = SurveyApplication.getContext();
-		if (context == null)
-		{
-			Log.d(LOG_TAG, "Context is null");
-		}
 		TelephonyManager manager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
 		if (manager == null)
 		{
@@ -238,13 +232,13 @@ public class Utilities
 		return files;
 	}
 
-	public static String zipFiles(String directory, String fileExtension, File[] files)
+	public static String zipFiles(Context context, String directory, String fileExtension, File[] files)
 	{
 		String fileType = fileExtension.substring(fileExtension.lastIndexOf(".") + 1, fileExtension.length());
 		fileType = fileType.toUpperCase();
 
 		// Create the ZIP file
-		String outFilename = directory + "/" + getImei() + "_" + fileType + "_" + System.currentTimeMillis() + ".zip";
+		String outFilename = directory + "/" + getImei(context) + "_" + fileType + "_" + System.currentTimeMillis() + ".zip";
 		try
 		{
 			ZipOutputStream out = new ZipOutputStream(new FileOutputStream(outFilename));
@@ -281,9 +275,8 @@ public class Utilities
 		return outFilename;
 	}
 
-	public static boolean isNetworkConnected()
+	public static boolean isNetworkConnected(Context context)
 	{
-		Context context = SurveyApplication.getContext();
 		ConnectivityManager connManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 		// wifi
 		NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
@@ -301,9 +294,8 @@ public class Utilities
 		return false;
 	}
 
-	public static boolean isWiFiConnected()
+	public static boolean isWiFiConnected(Context context)
 	{
-		Context context = SurveyApplication.getContext();
 		ConnectivityManager connManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 		if (mWifi.isConnected())
@@ -316,9 +308,9 @@ public class Utilities
 		}
 	}
 
-	public static boolean isWiFiEnabled()
+	public static boolean isWiFiEnabled(Context context)
 	{
-		WifiManager wifiManager = (WifiManager) SurveyApplication.getContext().getSystemService(Context.WIFI_SERVICE);
+		WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
 		if (wifiManager.isWifiEnabled())
 		{
 			return true;
@@ -365,10 +357,10 @@ public class Utilities
 		return hash;
 	}
 
-	public static boolean isPhoneCharging()
+	public static boolean isPhoneCharging(Context context)
 	{
 		IntentFilter intentFilter = new IntentFilter(Intent.ACTION_BATTERY_CHANGED);
-		Intent batteryStatus = SurveyApplication.getContext().registerReceiver(null, intentFilter);
+		Intent batteryStatus = context.registerReceiver(null, intentFilter);
 
 		// charging or charged
 		int chargeStatus = batteryStatus.getIntExtra(BatteryManager.EXTRA_STATUS, -1);

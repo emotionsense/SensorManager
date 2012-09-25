@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import android.content.Context;
+
 import com.ubhave.sensormanager.config.Constants;
 import com.ubhave.sensormanager.config.Utilities;
 
@@ -18,9 +20,10 @@ public class DataLogger
 	private static DataLogger dataLogger;
 	private static Object lock = new Object();
 
-	private Timer timer;
-	private LogDataToFileTask logDataToFileTask;
-	private HashMap<String, DataHolder> dataMap;
+	private final Timer timer;
+	private final LogDataToFileTask logDataToFileTask;
+	private final HashMap<String, DataHolder> dataMap;
+	private final Context applicationContext;
 
 	class DataHolder
 	{
@@ -28,7 +31,7 @@ public class DataLogger
 		FileOutputStream fos;
 	}
 
-	public static DataLogger getDataLogger()
+	public static DataLogger getDataLogger(Context context)
 	{
 		if (dataLogger == null)
 		{
@@ -36,15 +39,16 @@ public class DataLogger
 			{
 				if (dataLogger == null)
 				{
-					dataLogger = new DataLogger();
+					dataLogger = new DataLogger(context);
 				}
 			}
 		}
 		return dataLogger;
 	}
 
-	private DataLogger()
+	private DataLogger(Context context)
 	{
+		applicationContext = context;
 		dataMap = new HashMap<String, DataHolder>();
 		logDataToFileTask = new LogDataToFileTask();
 		timer = new Timer();
@@ -124,7 +128,7 @@ public class DataLogger
 					{
 						if (dh.fos == null)
 						{
-							String fileName = Constants.DATA_LOGS_DIR + "/" + Utilities.getImei() + "_" + key + "_" + System.currentTimeMillis() + ".log";
+							String fileName = Constants.DATA_LOGS_DIR + "/" + Utilities.getImei(applicationContext) + "_" + key + "_" + System.currentTimeMillis() + ".log";
 							ESLogger.log(TAG, "Creating new log file: " + fileName);
 							dh.fos = new FileOutputStream(fileName);
 						}

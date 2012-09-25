@@ -12,6 +12,8 @@ import android.os.BatteryManager;
 import com.ubhave.sensormanager.config.Constants;
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.pushsensor.BatteryData;
+import com.ubhave.sensormanager.logs.ESLogger;
+import com.ubhave.sensormanager.sensors.AbstractSensor;
 
 public class BatterySensor extends AbstractPushSensor
 {
@@ -20,7 +22,7 @@ public class BatterySensor extends AbstractPushSensor
 	private static BatterySensor batterySensor;
 	private static Object lock = new Object();
 
-	public static BatterySensor getBatterySensor()
+	public static BatterySensor getBatterySensor(Context context)
 	{
 		if (batterySensor == null)
 		{
@@ -28,15 +30,23 @@ public class BatterySensor extends AbstractPushSensor
 			{
 				if (batterySensor == null)
 				{
-					batterySensor = new BatterySensor();
+					if (AbstractSensor.permissionGranted(context, "android.permission.BATTERY_STATS"))
+					{
+						batterySensor = new BatterySensor(context);
+					}
+					else 
+					{
+						ESLogger.log(TAG, "Battery : Permission not Granted");
+					}
 				}
 			}
 		}
 		return batterySensor;
 	}
 
-	private BatterySensor()
+	private BatterySensor(Context context)
 	{
+		super(context);
 	}
 
 	public String getLogTag()
