@@ -11,6 +11,7 @@ import android.content.Context;
 
 import com.ubhave.sensormanager.config.Constants;
 import com.ubhave.sensormanager.config.Utilities;
+import com.ubhave.sensormanager.service.ExperienceSenseService;
 
 public class DataLogger
 {
@@ -31,7 +32,7 @@ public class DataLogger
 		FileOutputStream fos;
 	}
 
-	public static DataLogger getDataLogger(Context context)
+	public static DataLogger getDataLogger()
 	{
 		if (dataLogger == null)
 		{
@@ -39,7 +40,7 @@ public class DataLogger
 			{
 				if (dataLogger == null)
 				{
-					dataLogger = new DataLogger(context);
+					dataLogger = new DataLogger(ExperienceSenseService.getContext());
 				}
 			}
 		}

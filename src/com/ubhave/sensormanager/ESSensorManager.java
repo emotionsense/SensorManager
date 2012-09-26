@@ -42,7 +42,7 @@ public class ESSensorManager implements ESSensorManagerInterface
 	private final Context applicationContext;
 	private final HashMap<Integer, SensorTask> sensorTaskMap;
 
-	public static ESSensorManager getSensorManager(Context appContext) throws ESException
+	public static ESSensorManager getSensorManager() throws ESException
 	{
 		if (sensorManager == null)
 		{
@@ -50,9 +50,10 @@ public class ESSensorManager implements ESSensorManagerInterface
 			{
 				if (sensorManager == null)
 				{
-					if (AbstractSensor.permissionGranted(appContext, "android.permission.WAKE_LOCK"))
+					Context context = ExperienceSenseService.getContext();
+					if (AbstractSensor.permissionGranted(context, "android.permission.WAKE_LOCK"))
 					{
-						sensorManager = new ESSensorManager(appContext);
+						sensorManager = new ESSensorManager(context);
 						ESLogger.log(TAG, "started.");
 					}
 					else throw new ESException(ESException.PERMISSION_DENIED, "Sensor Manager requires android.permission.WAKE_LOCK");
@@ -424,7 +425,7 @@ public class ESSensorManager implements ESSensorManagerInterface
 			{
 				String sensorName = AbstractSensor.getSensorName(sensor.getSensorType());
 				ESLogger.log("SensorManager", "Data from: " + sensorName);
-				DataLogger.getDataLogger(applicationContext).logData(sensorName, sensorData.toString());
+				DataLogger.getDataLogger().logData(sensorName, sensorData.toString());
 
 				// update listeners
 				for (SensorDataListener listener : listenerList)

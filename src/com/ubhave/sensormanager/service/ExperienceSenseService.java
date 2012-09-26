@@ -14,12 +14,9 @@ import android.os.IBinder;
 import android.os.PowerManager;
 
 import com.ubhave.sensormanager.ESException;
-import com.ubhave.sensormanager.ESSensorManager;
 import com.ubhave.sensormanager.R;
 import com.ubhave.sensormanager.config.Constants;
 import com.ubhave.sensormanager.logs.ESLogger;
-
-
 
 public class ExperienceSenseService extends Service
 {
@@ -48,7 +45,6 @@ public class ExperienceSenseService extends Service
 					super.onCreate();
 					acquireWakeLocks();
 					createDirs();
-					startServices();
 					esService = this;
 					ESLogger.log(TAG, "Service start complete");
 				}
@@ -71,21 +67,18 @@ public class ExperienceSenseService extends Service
 		wifiLock.release();
 	}
 
-	private void startServices()
+	public static Context getContext()
 	{
-		try {
-			ESSensorManager.getSensorManager(this).startAllSensors();
-		}
-		catch(ESException e)
+		if (esService != null)
 		{
-			// Handle error
+			return esService.getApplicationContext();
 		}
-		
-
-		// test cases
-		// ESTests esTests = new ESTests();
-		// esTests.start();
+		else
+		{
+			return null;
+		}
 	}
+
 
 	private void acquireWakeLocks()
 	{
