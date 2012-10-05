@@ -42,7 +42,7 @@ public class ESSensorManager implements ESSensorManagerInterface
 	private final Context applicationContext;
 	private final HashMap<Integer, SensorTask> sensorTaskMap;
 
-	public static ESSensorManager getSensorManager() throws ESException
+	public static ESSensorManager getSensorManager(Context context) throws ESException
 	{
 		if (sensorManager == null)
 		{
@@ -50,7 +50,6 @@ public class ESSensorManager implements ESSensorManagerInterface
 			{
 				if (sensorManager == null)
 				{
-					Context context = ExperienceSenseService.getContext();
 					if (AbstractSensor.permissionGranted(context, "android.permission.WAKE_LOCK"))
 					{
 						sensorManager = new ESSensorManager(context);
