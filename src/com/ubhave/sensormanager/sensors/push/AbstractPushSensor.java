@@ -6,11 +6,11 @@ import android.content.Intent;
 import android.content.IntentFilter;
 
 import com.ubhave.sensormanager.ESException;
+import com.ubhave.sensormanager.SensorDataListener;
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.logs.ESLogger;
 import com.ubhave.sensormanager.sensors.AbstractSensor;
-import com.ubhave.sensormanager.sensors.SensorDataListener;
 
 public abstract class AbstractPushSensor extends AbstractSensor implements PushSensor
 {

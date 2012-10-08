@@ -15,12 +15,12 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.telephony.SmsMessage;
 
+import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.config.Constants;
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.config.Utilities;
 import com.ubhave.sensormanager.data.pushsensor.SmsData;
 import com.ubhave.sensormanager.logs.ESLogger;
-import com.ubhave.sensormanager.sensors.AbstractSensor;
 
 public class SmsSensor extends AbstractPushSensor
 {
@@ -33,7 +33,7 @@ public class SmsSensor extends AbstractPushSensor
 	private static SmsSensor smsSensor;
 	private static Object lock = new Object();
 
-	public static SmsSensor getSmsSensor(Context context)
+	public static SmsSensor getSmsSensor(Context context) throws ESException
 	{
 		if (smsSensor == null)
 		{
@@ -41,12 +41,12 @@ public class SmsSensor extends AbstractPushSensor
 			{
 				if (smsSensor == null)
 				{
-					if (AbstractSensor.permissionGranted(context, "android.permission.RECEIVE_SMS")
-							&& AbstractSensor.permissionGranted(context, "android.permission.READ_SMS"))
+					if (permissionGranted(context, "android.permission.RECEIVE_SMS")
+							&& permissionGranted(context, "android.permission.READ_SMS"))
 					{
 						smsSensor = new SmsSensor(context);
 					}
-					else ESLogger.log(TAG, "SMS Sensor : Permission not Granted");
+					else throw new ESException(ESException. PERMISSION_DENIED, "SMS Sensor : Permission not Granted");
 				}
 			}
 		}

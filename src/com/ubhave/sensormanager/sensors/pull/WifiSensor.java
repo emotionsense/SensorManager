@@ -14,26 +14,25 @@ import android.content.IntentFilter;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 
+import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.config.Constants;
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.pullsensor.WifiData;
-import com.ubhave.sensormanager.logs.ESLogger;
-import com.ubhave.sensormanager.sensors.AbstractSensor;
 
 public class WifiSensor extends AbstractPullSensor
 {
 
 	private static final String TAG = "WifiSensor";
 
-	WifiManager wifiManager;
-	BroadcastReceiver wifiReceiver;
-	ArrayList<ScanResult> wifiScanResults;
+	private WifiManager wifiManager;
+	private BroadcastReceiver wifiReceiver;
+	private ArrayList<ScanResult> wifiScanResults;
 
 	private int cyclesRemaining;
 	private static WifiSensor wifiSensor;
 	private static Object lock = new Object();
 
-	public static WifiSensor getWifiSensor(Context context)
+	public static WifiSensor getWifiSensor(Context context) throws ESException
 	{
 		if (wifiSensor == null)
 		{
@@ -41,13 +40,13 @@ public class WifiSensor extends AbstractPullSensor
 			{
 				if (wifiSensor == null)
 				{
-					if (AbstractSensor.permissionGranted(context, "android.permission.ACCESS_WIFI_STATE")
-							&& AbstractSensor.permissionGranted(context, "android.permission.ACCESS_NETWORK_STATE")
-							&& AbstractSensor.permissionGranted(context, "android.permission.CHANGE_WIFI_STATE"))
+					if (permissionGranted(context, "android.permission.ACCESS_WIFI_STATE")
+							&& permissionGranted(context, "android.permission.ACCESS_NETWORK_STATE")
+							&& permissionGranted(context, "android.permission.CHANGE_WIFI_STATE"))
 					{
 						wifiSensor = new WifiSensor(context);
 					}
-					else ESLogger.log(TAG, "Wifi Sensor : Permission not Granted");
+					else throw new ESException(ESException. PERMISSION_DENIED, "Wifi Sensor : Permission not Granted");
 				}
 			}
 		}

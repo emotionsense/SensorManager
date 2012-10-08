@@ -7,12 +7,12 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Looper;
 
+import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.config.Constants;
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.data.pullsensor.LocationData;
 import com.ubhave.sensormanager.logs.ESLogger;
-import com.ubhave.sensormanager.sensors.AbstractSensor;
 
 public class LocationSensor extends AbstractPullSensor
 {
@@ -26,25 +26,20 @@ public class LocationSensor extends AbstractPullSensor
 	private static LocationSensor locationSensor;
 	private static Object lock = new Object();
 
-	public static LocationSensor getLocationSensor(Context context)
+	public static LocationSensor getLocationSensor(Context context) throws ESException
 	{
-
 		if (locationSensor == null)
 		{
 			synchronized (lock)
 			{
 				if (locationSensor == null)
 				{
-					if (AbstractSensor.permissionGranted(context, "android.permission.ACCESS_COARSE_LOCATION")
-							|| AbstractSensor.permissionGranted(context, "android.permission.ACCESS_FINE_LOCATION"))
+					if (permissionGranted(context, "android.permission.ACCESS_COARSE_LOCATION")
+							|| permissionGranted(context, "android.permission.ACCESS_FINE_LOCATION"))
 					{
 						locationSensor = new LocationSensor(context);
 					}
-					else
-					{
-						ESLogger.log(TAG, "Location Sensor: Permission Not Granted!");
-					}
-					
+					else throw new ESException(ESException. PERMISSION_DENIED, "Location Sensor: Permission Not Granted!");
 				}
 			}
 		}

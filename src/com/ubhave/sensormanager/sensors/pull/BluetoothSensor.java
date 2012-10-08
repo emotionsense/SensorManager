@@ -13,13 +13,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 
+import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.config.Constants;
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.config.Utilities;
 import com.ubhave.sensormanager.data.pullsensor.BluetoothData;
 import com.ubhave.sensormanager.data.pullsensor.ESBluetoothDevice;
 import com.ubhave.sensormanager.logs.ESLogger;
-import com.ubhave.sensormanager.sensors.AbstractSensor;
 
 public class BluetoothSensor extends AbstractPullSensor
 {
@@ -33,7 +33,7 @@ public class BluetoothSensor extends AbstractPullSensor
 	private static BluetoothSensor bluetoothSensor;
 	private static Object lock = new Object();
 
-	public static BluetoothSensor getBluetoothSensor(Context context)
+	public static BluetoothSensor getBluetoothSensor(Context context) throws ESException
 	{
 		if (bluetoothSensor == null)
 		{
@@ -41,15 +41,12 @@ public class BluetoothSensor extends AbstractPullSensor
 			{
 				if (bluetoothSensor == null)
 				{
-					if (AbstractSensor.permissionGranted(context, "android.permission.BLUETOOTH")
-							&& AbstractSensor.permissionGranted(context, "android.permission.BLUETOOTH_ADMIN"))
+					if (permissionGranted(context, "android.permission.BLUETOOTH")
+							&& permissionGranted(context, "android.permission.BLUETOOTH_ADMIN"))
 					{
 						bluetoothSensor = new BluetoothSensor(context);
 					}
-					else
-					{
-						ESLogger.log(TAG, "Bluetooth Sensor : Permission not Granted");
-					}
+					else throw new ESException(ESException. PERMISSION_DENIED, "Bluetooth Sensor : Permission not Granted");
 				}
 			}
 		}

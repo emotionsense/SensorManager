@@ -19,7 +19,7 @@ public abstract class AbstractSensor implements SensorInterface
 		senseCompleteNotify = new Object();
 	}
 	
-	public static boolean permissionGranted(Context context, String permission)
+	protected static boolean permissionGranted(Context context, String permission)
 	{
 		return context.checkCallingOrSelfPermission(permission) == PackageManager.PERMISSION_GRANTED;
 	}

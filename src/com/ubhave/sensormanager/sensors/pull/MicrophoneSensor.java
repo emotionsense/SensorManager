@@ -12,13 +12,13 @@ import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder;
 
+import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.config.Constants;
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.config.Utilities;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.data.pullsensor.MicrophoneData;
 import com.ubhave.sensormanager.logs.ESLogger;
-import com.ubhave.sensormanager.sensors.AbstractSensor;
 
 public class MicrophoneSensor extends AbstractPullSensor
 {
@@ -41,7 +41,7 @@ public class MicrophoneSensor extends AbstractPullSensor
 	private static MicrophoneSensor microphoneSensor;
 	private static Object lock = new Object();
 
-	public static MicrophoneSensor getMicrophoneSensor(Context context)
+	public static MicrophoneSensor getMicrophoneSensor(Context context) throws ESException
 	{
 		if (microphoneSensor == null)
 		{
@@ -49,14 +49,11 @@ public class MicrophoneSensor extends AbstractPullSensor
 			{
 				if (microphoneSensor == null)
 				{
-					if (AbstractSensor.permissionGranted(context, "android.permission.RECORD_AUDIO"))
+					if (permissionGranted(context, "android.permission.RECORD_AUDIO"))
 					{
 						microphoneSensor = new MicrophoneSensor(context);
 					}
-					else
-					{
-						ESLogger.log(LOG_TAG, "Microphone : Permission not Granted");
-					}
+					else throw new ESException(ESException. PERMISSION_DENIED, "Microphone : Permission not Granted");
 				}
 			}
 		}

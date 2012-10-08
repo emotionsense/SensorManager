@@ -1,14 +1,13 @@
 package com.ubhave.sensormanager;
 
 import com.ubhave.sensormanager.data.SensorData;
-import com.ubhave.sensormanager.sensors.SensorDataListener;
 
 public interface ESSensorManagerInterface
 {
 	// To be removed
-	public void startAllSensors();
-	public void stopAllSensors();
-	public void pauseAllSensors(long pauseLength) throws ESException;
+//	public void startAllSensors();
+//	public void stopAllSensors();
+//	public void pauseAllSensors(long pauseLength) throws ESException;
 	
 	// To be implemented
 	public int subscribeToSensorData(int sensorId, SensorDataListener listener);
