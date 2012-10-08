@@ -12,9 +12,9 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
-import com.ubhave.sensormanager.config.Constants;
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.pushsensor.ProximityData;
+import com.ubhave.sensormanager.sensors.SensorList;
 
 public class ProximitySensor extends AbstractPushSensor
 {
@@ -67,7 +67,7 @@ public class ProximitySensor extends AbstractPushSensor
 
 	public int getSensorType()
 	{
-		return Constants.SENSOR_TYPE_PROXIMITY;
+		return SensorList.SENSOR_TYPE_PROXIMITY;
 	}
 
 	protected void onBroadcastReceived(Context context, Intent intent)

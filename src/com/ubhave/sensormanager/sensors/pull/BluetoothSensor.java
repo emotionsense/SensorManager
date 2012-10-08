@@ -14,12 +14,12 @@ import android.content.Intent;
 import android.content.IntentFilter;
 
 import com.ubhave.sensormanager.ESException;
-import com.ubhave.sensormanager.config.Constants;
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.config.Utilities;
 import com.ubhave.sensormanager.data.pullsensor.BluetoothData;
 import com.ubhave.sensormanager.data.pullsensor.ESBluetoothDevice;
 import com.ubhave.sensormanager.logs.ESLogger;
+import com.ubhave.sensormanager.sensors.SensorList;
 
 public class BluetoothSensor extends AbstractPullSensor
 {
@@ -118,7 +118,7 @@ public class BluetoothSensor extends AbstractPullSensor
 
 	public int getSensorType()
 	{
-		return Constants.SENSOR_TYPE_BLUETOOTH;
+		return SensorList.SENSOR_TYPE_BLUETOOTH;
 	}
 
 	protected BluetoothData getMostRecentRawData()

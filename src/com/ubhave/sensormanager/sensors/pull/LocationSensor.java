@@ -8,11 +8,11 @@ import android.os.Bundle;
 import android.os.Looper;
 
 import com.ubhave.sensormanager.ESException;
-import com.ubhave.sensormanager.config.Constants;
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.data.pullsensor.LocationData;
 import com.ubhave.sensormanager.logs.ESLogger;
+import com.ubhave.sensormanager.sensors.SensorList;
 
 public class LocationSensor extends AbstractPullSensor
 {
@@ -87,7 +87,7 @@ public class LocationSensor extends AbstractPullSensor
 
 	public int getSensorType()
 	{
-		return Constants.SENSOR_TYPE_LOCATION;
+		return SensorList.SENSOR_TYPE_LOCATION;
 	}
 
 	protected boolean startSensing(SensorConfig sensorConfig)

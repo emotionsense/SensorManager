@@ -2,8 +2,6 @@ package com.ubhave.sensormanager.config;
 
 import java.util.HashMap;
 
-import com.ubhave.sensormanager.ESException;
-
 public class SensorConfig
 {
 
@@ -69,55 +67,6 @@ public class SensorConfig
 			}
 		}
 		return false;
-	}
-
-	public static int getSensorType(String sensorName) throws ESException
-	{
-		if (sensorName.equals(Constants.SENSOR_NAME_ACCELEROMETER))
-		{
-			return Constants.SENSOR_TYPE_ACCELEROMETER;
-		}
-		else if (sensorName.equals(Constants.SENSOR_NAME_BATTERY))
-		{
-			return Constants.SENSOR_TYPE_BATTERY;
-		}
-		else if (sensorName.equals(Constants.SENSOR_NAME_BLUETOOTH))
-		{
-			return Constants.SENSOR_TYPE_BLUETOOTH;
-		}
-		else if (sensorName.equals(Constants.SENSOR_NAME_LOCATION))
-		{
-			return Constants.SENSOR_TYPE_LOCATION;
-		}
-		else if (sensorName.equals(Constants.SENSOR_NAME_MICROPHONE))
-		{
-			return Constants.SENSOR_TYPE_MICROPHONE;
-		}
-		else if (sensorName.equals(Constants.SENSOR_NAME_PHONE_STATE))
-		{
-			return Constants.SENSOR_TYPE_PHONE_STATE;
-		}
-		else if (sensorName.equals(Constants.SENSOR_NAME_PROXIMITY))
-		{
-			return Constants.SENSOR_TYPE_PROXIMITY;
-		}
-		else if (sensorName.equals(Constants.SENSOR_NAME_SCREEN))
-		{
-			return Constants.SENSOR_TYPE_SCREEN;
-		}
-		else if (sensorName.equals(Constants.SENSOR_NAME_SMS))
-		{
-			return Constants.SENSOR_TYPE_SMS;
-		}
-		else if (sensorName.equals(Constants.SENSOR_NAME_WIFI))
-		{
-			return Constants.SENSOR_TYPE_WIFI;
-		}
-		else
-		{
-			throw new ESException(ESException.UNKNOWN_SENSOR_NAME, "unknown sensor name " + sensorName);
-		}
-
 	}
 
 }

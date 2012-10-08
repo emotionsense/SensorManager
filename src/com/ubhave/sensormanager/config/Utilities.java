@@ -336,7 +336,7 @@ public class Utilities
 		MessageDigest mDigest = null;
 		try
 		{
-			mDigest = MessageDigest.getInstance(Constants.HASH_ALGORITHM);
+			mDigest = MessageDigest.getInstance("SHA-256");
 		}
 		catch (NoSuchAlgorithmException e)
 		{

@@ -16,11 +16,11 @@ import android.os.Handler;
 import android.telephony.SmsMessage;
 
 import com.ubhave.sensormanager.ESException;
-import com.ubhave.sensormanager.config.Constants;
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.config.Utilities;
 import com.ubhave.sensormanager.data.pushsensor.SmsData;
 import com.ubhave.sensormanager.logs.ESLogger;
+import com.ubhave.sensormanager.sensors.SensorList;
 
 public class SmsSensor extends AbstractPushSensor
 {
@@ -109,7 +109,7 @@ public class SmsSensor extends AbstractPushSensor
 
 	public int getSensorType()
 	{
-		return Constants.SENSOR_TYPE_SMS;
+		return SensorList.SENSOR_TYPE_SMS;
 	}
 
 	protected void onBroadcastReceived(Context context, Intent intent)

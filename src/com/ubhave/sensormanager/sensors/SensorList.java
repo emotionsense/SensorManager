@@ -17,22 +17,33 @@ import com.ubhave.sensormanager.sensors.push.SmsSensor;
 
 public class SensorList
 {
-	private final static int SENSOR_TYPE_ACCELEROMETER = 5001;
-	private final static int SENSOR_TYPE_BATTERY = 5002;
-	private final static int SENSOR_TYPE_BLUETOOTH = 5003;
-	private final static int SENSOR_TYPE_LOCATION = 5004;
-	private final static int SENSOR_TYPE_MICROPHONE = 5005;
-	private final static int SENSOR_TYPE_PHONE_STATE = 5006;
-	private final static int SENSOR_TYPE_PROXIMITY = 5007;
-	private final static int SENSOR_TYPE_SCREEN = 5008;
-	private final static int SENSOR_TYPE_SMS = 5009;
-	private final static int SENSOR_TYPE_WIFI = 5010;
+	public final static int SENSOR_TYPE_ACCELEROMETER = 5001;
+	public final static int SENSOR_TYPE_BATTERY = 5002;
+	public final static int SENSOR_TYPE_BLUETOOTH = 5003;
+	public final static int SENSOR_TYPE_LOCATION = 5004;
+//	public final static int SENSOR_TYPE_MICROPHONE = 5005;
+	public final static int SENSOR_TYPE_PHONE_STATE = 5006;
+	public final static int SENSOR_TYPE_PROXIMITY = 5007;
+	public final static int SENSOR_TYPE_SCREEN = 5008;
+	public final static int SENSOR_TYPE_SMS = 5009;
+	public final static int SENSOR_TYPE_WIFI = 5010;
+	
+	public final static String SENSOR_NAME_ACCELEROMETER = "accelerometer";
+	public final static String SENSOR_NAME_BATTERY = "battery";
+	public final static String SENSOR_NAME_BLUETOOTH = "bluetooth";
+	public final static String SENSOR_NAME_LOCATION = "location";
+//	public final static String SENSOR_NAME_MICROPHONE = "microphone";
+	public final static String SENSOR_NAME_PHONE_STATE = "phonestate";
+	public final static String SENSOR_NAME_PROXIMITY = "proximity";
+	public final static String SENSOR_NAME_SCREEN = "screen";
+	public final static String SENSOR_NAME_SMS = "sms";
+	public final static String SENSOR_NAME_WIFI = "wifi";
 	
 	private final static int[] ALL_SENSORS = new int[]{
 		SENSOR_TYPE_ACCELEROMETER,
 		SENSOR_TYPE_BLUETOOTH,
 		SENSOR_TYPE_LOCATION,
-		SENSOR_TYPE_MICROPHONE,
+//		SENSOR_TYPE_MICROPHONE,
 		SENSOR_TYPE_WIFI,
 		SENSOR_TYPE_BATTERY,
 		SENSOR_TYPE_PHONE_STATE,
@@ -106,6 +117,83 @@ public class SensorList
 		case SENSOR_TYPE_SMS: return SmsSensor.getSmsSensor(context);
 		default: throw new ESException(ESException.UNKNOWN_SENSOR_TYPE, "Unknown sensor id");
 		}	
+	}
+	
+	public static int getSensorType(String sensorName) throws ESException
+	{
+		if (sensorName.equals(SENSOR_NAME_ACCELEROMETER))
+		{
+			return SENSOR_TYPE_ACCELEROMETER;
+		}
+		else if (sensorName.equals(SENSOR_NAME_BATTERY))
+		{
+			return SENSOR_TYPE_BATTERY;
+		}
+		else if (sensorName.equals(SENSOR_NAME_BLUETOOTH))
+		{
+			return SENSOR_TYPE_BLUETOOTH;
+		}
+		else if (sensorName.equals(SENSOR_NAME_LOCATION))
+		{
+			return SENSOR_TYPE_LOCATION;
+		}
+//		else if (sensorName.equals(SENSOR_NAME_MICROPHONE))
+//		{
+//			return SENSOR_TYPE_MICROPHONE;
+//		}
+		else if (sensorName.equals(SENSOR_NAME_PHONE_STATE))
+		{
+			return SENSOR_TYPE_PHONE_STATE;
+		}
+		else if (sensorName.equals(SENSOR_NAME_PROXIMITY))
+		{
+			return SENSOR_TYPE_PROXIMITY;
+		}
+		else if (sensorName.equals(SENSOR_NAME_SCREEN))
+		{
+			return SENSOR_TYPE_SCREEN;
+		}
+		else if (sensorName.equals(SENSOR_NAME_SMS))
+		{
+			return SENSOR_TYPE_SMS;
+		}
+		else if (sensorName.equals(SENSOR_NAME_WIFI))
+		{
+			return SENSOR_TYPE_WIFI;
+		}
+		else
+		{
+			throw new ESException(ESException.UNKNOWN_SENSOR_NAME, "unknown sensor name " + sensorName);
+		}
+	}
+	
+	public static String getSensorName(int sensorType) throws ESException
+	{
+		switch (sensorType)
+		{
+		case SensorList.SENSOR_TYPE_ACCELEROMETER:
+			return SENSOR_NAME_ACCELEROMETER;
+		case SensorList.SENSOR_TYPE_BATTERY:
+			return SENSOR_NAME_BATTERY;
+		case SensorList.SENSOR_TYPE_BLUETOOTH:
+			return SENSOR_NAME_BLUETOOTH;
+		case SensorList.SENSOR_TYPE_LOCATION:
+			return SENSOR_NAME_LOCATION;
+//		case SensorList.SENSOR_TYPE_MICROPHONE:
+//			return SENSOR_NAME_MICROPHONE;
+		case SensorList.SENSOR_TYPE_PHONE_STATE:
+			return SENSOR_NAME_PHONE_STATE;
+		case SensorList.SENSOR_TYPE_PROXIMITY:
+			return SENSOR_NAME_PROXIMITY;
+		case SensorList.SENSOR_TYPE_SCREEN:
+			return SENSOR_NAME_SCREEN;
+		case SensorList.SENSOR_TYPE_SMS:
+			return SENSOR_NAME_SMS;
+		case SensorList.SENSOR_TYPE_WIFI:
+			return SENSOR_NAME_WIFI;
+		default:
+			throw new ESException(ESException.UNKNOWN_SENSOR_NAME, "unknown sensor type " + sensorType);
+		}
 	}
 	
 }

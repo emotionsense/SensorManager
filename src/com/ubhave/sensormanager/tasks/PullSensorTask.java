@@ -5,8 +5,8 @@ import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.config.Utilities;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.logs.ESLogger;
-import com.ubhave.sensormanager.sensors.AbstractSensor;
 import com.ubhave.sensormanager.sensors.SensorInterface;
+import com.ubhave.sensormanager.sensors.SensorList;
 import com.ubhave.sensormanager.sensors.pull.PullSensor;
 
 public class PullSensorTask extends AbstractSensorTask
@@ -56,7 +56,7 @@ public class PullSensorTask extends AbstractSensorTask
 						// sense, this is a blocking call and returns when
 						// the sensing is complete, the sensorConfig object
 						// will have the sampling window, cycle information
-						ESLogger.log("SensorManager", "Pulling from: " + AbstractSensor.getSensorName(sensor.getSensorType()));
+						ESLogger.log("SensorManager", "Pulling from: " + SensorList.getSensorName(sensor.getSensorType()));
 						SensorData sensorData = ((PullSensor) sensor).sense(sensorConfig);
 						// log sensed data
 //						logData(sensorData);

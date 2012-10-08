@@ -8,10 +8,10 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
-import com.ubhave.sensormanager.config.Constants;
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.pullsensor.AccelerometerData;
 import com.ubhave.sensormanager.logs.ESLogger;
+import com.ubhave.sensormanager.sensors.SensorList;
 
 /**
  * Accelerometer sensor monitor.
@@ -101,7 +101,7 @@ public class AccelerometerSensor extends AbstractPullSensor
 
 	public int getSensorType()
 	{
-		return Constants.SENSOR_TYPE_ACCELEROMETER;
+		return SensorList.SENSOR_TYPE_ACCELEROMETER;
 	}
 
 	protected AccelerometerData getMostRecentRawData()

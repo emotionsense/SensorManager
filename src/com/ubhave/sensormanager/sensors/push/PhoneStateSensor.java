@@ -13,11 +13,11 @@ import android.telephony.ServiceState;
 import android.telephony.TelephonyManager;
 
 import com.ubhave.sensormanager.ESException;
-import com.ubhave.sensormanager.config.Constants;
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.config.Utilities;
 import com.ubhave.sensormanager.data.pushsensor.PhoneStateData;
 import com.ubhave.sensormanager.logs.ESLogger;
+import com.ubhave.sensormanager.sensors.SensorList;
 
 public class PhoneStateSensor extends AbstractPushSensor
 {
@@ -200,7 +200,7 @@ public class PhoneStateSensor extends AbstractPushSensor
 
 	public int getSensorType()
 	{
-		return Constants.SENSOR_TYPE_PHONE_STATE;
+		return SensorList.SENSOR_TYPE_PHONE_STATE;
 	}
 
 	protected boolean startSensing(SensorConfig sensorConfig)
