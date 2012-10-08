@@ -16,7 +16,7 @@ public abstract class AbstractSensorTask extends Thread
 	protected int state;
 	
 	protected ArrayList<SensorDataListener> listenerList;
-	protected ArrayList<SensorConfig> listenerConfigList;
+//	protected ArrayList<SensorConfig> listenerConfigList;
 
 	public static final int RUNNING = 6123;
 	public static final int PAUSED = 6124;
@@ -26,7 +26,7 @@ public abstract class AbstractSensorTask extends Thread
 	{
 		this.sensor = sensor;
 		listenerList = new ArrayList<SensorDataListener>();
-		listenerConfigList = new ArrayList<SensorConfig>();
+//		listenerConfigList = new ArrayList<SensorConfig>();
 	}
 
 	public abstract void run();
@@ -58,13 +58,19 @@ public abstract class AbstractSensorTask extends Thread
 //		return false;
 //	}
 
-	public int registerSensorDataListener(SensorDataListener listener)
+	public boolean registerSensorDataListener(SensorDataListener listener)
 	{
 		synchronized (listenerList)
 		{
+			for (int i=0; i<listenerList.size(); i++)
+			{
+				if (listenerList.get(i) == listener)
+				{
+					return false;
+				}
+			}
 			listenerList.add(listener);
-//			listenerConfigList.add(sensorConfig);
-			return 0;
+			return true;
 		}
 	}
 
@@ -72,9 +78,9 @@ public abstract class AbstractSensorTask extends Thread
 	{
 		synchronized (listenerList)
 		{
-			int index = listenerList.indexOf(listener);
+//			int index = listenerList.indexOf(listener);
 			listenerList.remove(listener);
-			listenerConfigList.remove(index);
+//			listenerConfigList.remove(index);
 		}
 	}
 
@@ -86,15 +92,16 @@ public abstract class AbstractSensorTask extends Thread
 
 	protected SensorConfig getSensorConfig()
 	{
-		SensorConfig sensorConfig;
-		if (listenerConfigList.size() > 0)
-		{
-			sensorConfig = listenerConfigList.get(0);
-		}
-		else
-		{
-			sensorConfig = AbstractSensor.getDefaultSensorConfig(sensor.getSensorType());
-		}
+		// TODO
+//		SensorConfig sensorConfig;
+//		if (listenerConfigList.size() > 0)
+//		{
+//			sensorConfig = listenerConfigList.get(0);
+//		}
+//		else
+//		{
+		SensorConfig sensorConfig = AbstractSensor.getDefaultSensorConfig(sensor.getSensorType());
+//		}
 		return sensorConfig;
 	}
 

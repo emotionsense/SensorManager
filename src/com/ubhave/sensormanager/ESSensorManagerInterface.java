@@ -11,7 +11,7 @@ public interface ESSensorManagerInterface
 	
 	// To be implemented
 	public int subscribeToSensorData(int sensorId, SensorDataListener listener) throws ESException;
-	public boolean unsubscribeFromSensorData(int subscriptionId) throws ESException;
+	public void unsubscribeFromSensorData(int subscriptionId) throws ESException;
 	
 	public SensorData getDataFromSensor(int sensorId);
 }
