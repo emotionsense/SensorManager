@@ -49,6 +49,7 @@ public abstract class AbstractPushSensor extends AbstractSensor implements PushS
 			ESLogger.log(getLogTag(), "sensing already sensing");
 			throw new ESException(ESException.SENSOR_ALREADY_SENSING, "sensor already sensing");
 		}
+		
 		isSensing = true;
 		this.sensorDataListener = listener;
 		startSensing(sensorConfig);

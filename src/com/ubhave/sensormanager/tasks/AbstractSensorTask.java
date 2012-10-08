@@ -2,9 +2,9 @@ package com.ubhave.sensormanager.tasks;
 
 import java.util.ArrayList;
 
-import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.SensorDataListener;
 import com.ubhave.sensormanager.config.SensorConfig;
+import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.sensors.AbstractSensor;
 import com.ubhave.sensormanager.sensors.SensorInterface;
 
@@ -14,6 +14,7 @@ public abstract class AbstractSensorTask extends Thread
 	protected Object syncObject = new Object();
 	
 	protected int state;
+	protected long pauseTime;
 	
 	protected ArrayList<SensorDataListener> listenerList;
 //	protected ArrayList<SensorConfig> listenerConfigList;
@@ -31,13 +32,104 @@ public abstract class AbstractSensorTask extends Thread
 
 	public abstract void run();
 
+	@Override
+	public void start()
+	{
+		state = STOPPED;
+		super.start();
+	}
+
+	public boolean registerSensorDataListener(SensorDataListener listener)
+	{
+		synchronized (listenerList)
+		{
+			for (int i=0; i<listenerList.size(); i++)
+			{
+				if (listenerList.get(i) == listener)
+				{
+					return false;
+				}
+			}
+			listenerList.add(listener);
+			startTask();
+			return true;
+		}
+	}
+	
+	protected void publishData(SensorData sensorData)
+	{
+		synchronized (listenerList)
+		{
+			for (SensorDataListener listener : listenerList)
+			{
+				listener.onDataSensed(sensorData);
+			}
+		}
+	}
+
+	public void unregisterSensorDataListener(SensorDataListener listener)
+	{
+		synchronized (listenerList)
+		{
+//			int index = listenerList.indexOf(listener);
+			listenerList.remove(listener);
+			if (listenerList.isEmpty())
+			{
+				stopTask();
+			}
+//			listenerConfigList.remove(index);
+		}
+	}
+
+	protected SensorConfig getSensorConfig()
+	{
+		// TODO
+//		SensorConfig sensorConfig;
+//		if (listenerConfigList.size() > 0)
+//		{
+//			sensorConfig = listenerConfigList.get(0);
+//		}
+//		else
+//		{
+		SensorConfig sensorConfig = AbstractSensor.getDefaultSensorConfig(sensor.getSensorType());
+//		}
+		return sensorConfig;
+	}
+
+	public void startTask()
+	{
+		if (state == STOPPED)
+		{
+			synchronized (syncObject)
+			{
+				syncObject.notify();
+			}
+		}
+		else
+		{
+			// ignore
+		}
+	}
+	
+	protected void stopTask()
+	{
+		if (state == STOPPED)
+		{
+			// ignore
+		}
+		else
+		{
+			synchronized (syncObject)
+			{
+				state = STOPPED;
+				this.interrupt();
+			}
+		}
+	}
+
 //	public boolean isRunning()
 //	{
-//		if (state == RUNNING)
-//		{
-//			return true;
-//		}
-//		return false;
+//		return (state == RUNNING);
 //	}
 
 //	public boolean isPaused()
@@ -57,69 +149,7 @@ public abstract class AbstractSensorTask extends Thread
 //		}
 //		return false;
 //	}
-
-	public boolean registerSensorDataListener(SensorDataListener listener)
-	{
-		synchronized (listenerList)
-		{
-			for (int i=0; i<listenerList.size(); i++)
-			{
-				if (listenerList.get(i) == listener)
-				{
-					return false;
-				}
-			}
-			listenerList.add(listener);
-			return true;
-		}
-	}
-
-	public void unregisterSensorDataListener(SensorDataListener listener)
-	{
-		synchronized (listenerList)
-		{
-//			int index = listenerList.indexOf(listener);
-			listenerList.remove(listener);
-//			listenerConfigList.remove(index);
-		}
-	}
-
-	public void start()
-	{
-		state = STOPPED;
-		super.start();
-	}
-
-	protected SensorConfig getSensorConfig()
-	{
-		// TODO
-//		SensorConfig sensorConfig;
-//		if (listenerConfigList.size() > 0)
-//		{
-//			sensorConfig = listenerConfigList.get(0);
-//		}
-//		else
-//		{
-		SensorConfig sensorConfig = AbstractSensor.getDefaultSensorConfig(sensor.getSensorType());
-//		}
-		return sensorConfig;
-	}
-
-	public void startTask() throws ESException
-	{
-		if (state == STOPPED)
-		{
-			synchronized (syncObject)
-			{
-				syncObject.notify();
-			}
-		}
-		else
-		{
-			throw new ESException(ESException.INVALID_STATE, "cannot start() the sensor task in the pause or running state");
-		}
-	}
-
+	
 //	protected void pauseTask(long delay) throws ESException
 //	{
 //		if (state == STOPPED)
@@ -137,22 +167,6 @@ public abstract class AbstractSensorTask extends Thread
 //
 //		}
 //	}
-
-	protected void stopTask()
-	{
-		if (state == STOPPED)
-		{
-			// ignore
-		}
-		else
-		{
-			synchronized (syncObject)
-			{
-				state = STOPPED;
-				this.interrupt();
-			}
-		}
-	}
 
 //	protected void logData(SensorData sensorData)
 //	{

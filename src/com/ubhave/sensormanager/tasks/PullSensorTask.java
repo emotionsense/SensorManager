@@ -12,7 +12,6 @@ import com.ubhave.sensormanager.sensors.pull.PullSensor;
 public class PullSensorTask extends AbstractSensorTask
 {
 	private final static String TAG = "PullSensorTask";
-	protected long pauseTime;
 	
 	public PullSensorTask(SensorInterface sensor)
 	{
@@ -61,6 +60,7 @@ public class PullSensorTask extends AbstractSensorTask
 						SensorData sensorData = ((PullSensor) sensor).sense(sensorConfig);
 						// log sensed data
 //						logData(sensorData);
+						publishData(sensorData);
 					}
 					catch (InterruptedException exp)
 					{

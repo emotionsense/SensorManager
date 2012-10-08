@@ -4,7 +4,7 @@ package com.ubhave.sensormanager.config;
 
 public class SensorConfigUpdater
 {
-	private static final String TAG = "SensorConfigUpdater";
+//	private static final String TAG = "SensorConfigUpdater";
 	
 	// this method is called when the sensor needs updating (essentially
 	// enabling/disabling) when the sensorConfig.json changes

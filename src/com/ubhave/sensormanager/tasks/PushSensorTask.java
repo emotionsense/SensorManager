@@ -1,13 +1,14 @@
 package com.ubhave.sensormanager.tasks;
 
 import com.ubhave.sensormanager.ESException;
+import com.ubhave.sensormanager.SensorDataListener;
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.logs.ESLogger;
 import com.ubhave.sensormanager.sensors.SensorInterface;
 import com.ubhave.sensormanager.sensors.push.PushSensor;
 
-public class PushSensorTask extends AbstractSensorTask
+public class PushSensorTask extends AbstractSensorTask implements SensorDataListener
 {
 	private final static String TAG = "PushSensorTask";
 	
@@ -82,10 +83,9 @@ public class PushSensorTask extends AbstractSensorTask
 	}
 
 	@Override
-	public void onDataSensed(SensorData sensorData)
+	public void onDataSensed(SensorData data)
 	{
-		// log sensed data
-//		logData(sensorData);
+		super.publishData(data);
 	}
 
 }
