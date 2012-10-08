@@ -2,12 +2,11 @@ package com.ubhave.sensormanager.classifier;
 
 import java.util.ArrayList;
 
-import com.ubhave.sensormanager.config.Utilities;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.data.pullsensor.BluetoothData;
 import com.ubhave.sensormanager.data.pullsensor.ESBluetoothDevice;
 
-public class BluetoothDataClassifier implements SensorDataClassifier
+public class BluetoothDataClassifier extends SocialClassifier implements SensorDataClassifier
 {
 
 	public boolean isInteresting(SensorData sensorData)
@@ -18,7 +17,7 @@ public class BluetoothDataClassifier implements SensorDataClassifier
 		String[] currDevices = getDeviceMacs(data);
 		String[] prevDevices = getDeviceMacs(prevData);
 
-		if (Utilities.areSameDeviceAddrSets(prevDevices, currDevices))
+		if (areSameDeviceAddrSets(prevDevices, currDevices))
 		{
 			return false;
 		}

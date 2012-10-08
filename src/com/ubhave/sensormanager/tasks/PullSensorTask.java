@@ -2,7 +2,6 @@ package com.ubhave.sensormanager.tasks;
 
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.config.SensorConfig;
-import com.ubhave.sensormanager.config.Utilities;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.logs.ESLogger;
 import com.ubhave.sensormanager.sensors.SensorInterface;
@@ -70,7 +69,14 @@ public class PullSensorTask extends AbstractSensorTask
 				catch (ESException e)
 				{
 					ESLogger.error(TAG, e);
-					Utilities.sleep(30000);
+					try
+					{
+						Thread.sleep(30000);
+					}
+					catch (Exception exp)
+					{
+						exp.printStackTrace();
+					}
 				}
 			}
 		}

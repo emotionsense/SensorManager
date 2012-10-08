@@ -2,7 +2,7 @@ package com.ubhave.sensormanager.classifier;
 
 import android.location.Location;
 
-import com.ubhave.sensormanager.config.Utilities;
+import com.ubhave.sensormanager.config.Constants;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.data.pullsensor.LocationData;
 
@@ -27,7 +27,7 @@ public class LocationDataClassifier implements SensorDataClassifier
 			prevLoc = prevData.getLocation();
 		}
 
-		if (Utilities.areSameLocations(currLoc, prevLoc))
+		if (areSameLocations(currLoc, prevLoc))
 		{
 			return false;
 		}
@@ -36,5 +36,22 @@ public class LocationDataClassifier implements SensorDataClassifier
 			return true;
 		}
 	}
+	
+    private boolean areSameLocations(Location loc1, Location loc2)
+    {
+        if ((loc1 != null) && (loc2 != null))
+        {
+            if (loc1.distanceTo(loc2) < Constants.LOCATION_CHANGE_DISTANCE_THRESHOLD)
+            {
+                return true;
+            }
+        }
+        if ((loc1 == null) && (loc2 == null))
+        {
+            return true;
+        }
+        return false;
+    }
+
 
 }

@@ -4,11 +4,10 @@ import java.util.ArrayList;
 
 import android.net.wifi.ScanResult;
 
-import com.ubhave.sensormanager.config.Utilities;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.data.pullsensor.WifiData;
 
-public class WifiDataClassifier implements SensorDataClassifier
+public class WifiDataClassifier extends SocialClassifier implements SensorDataClassifier
 {
 
 	public boolean isInteresting(SensorData sensorData)
@@ -19,7 +18,7 @@ public class WifiDataClassifier implements SensorDataClassifier
 		String[] currDevices = getDeviceMacs(data);
 		String[] prevDevices = getDeviceMacs(prevData);
 		
-		if (Utilities.areSameDeviceAddrSets(prevDevices, currDevices))
+		if (areSameDeviceAddrSets(prevDevices, currDevices))
 		{
 			return false;
 		}

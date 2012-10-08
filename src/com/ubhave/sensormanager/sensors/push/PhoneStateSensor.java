@@ -14,12 +14,11 @@ import android.telephony.TelephonyManager;
 
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.config.SensorConfig;
-import com.ubhave.sensormanager.config.Utilities;
 import com.ubhave.sensormanager.data.pushsensor.PhoneStateData;
 import com.ubhave.sensormanager.logs.ESLogger;
 import com.ubhave.sensormanager.sensors.SensorList;
 
-public class PhoneStateSensor extends AbstractPushSensor
+public class PhoneStateSensor extends AbstractCommunicationSensor
 {
 
 	private static final String TAG = "PhoneStateSensor";
@@ -74,7 +73,7 @@ public class PhoneStateSensor extends AbstractPushSensor
 					break;
 				case TelephonyManager.CALL_STATE_RINGING:
 					stateType = PhoneStateData.CALL_STATE_RINGING;
-					stateString = "CALL_STATE_RINGING" + " IncomingNumber " + Utilities.hashPhoneNumber(incomingNumber);
+					stateString = "CALL_STATE_RINGING" + " IncomingNumber " + hashPhoneNumber(incomingNumber);
 					break;
 				}
 
@@ -129,7 +128,7 @@ public class PhoneStateSensor extends AbstractPushSensor
 	protected void onBroadcastReceived(Context context, Intent intent)
 	{
 		String outgoingNumber = intent.getStringExtra(Intent.EXTRA_PHONE_NUMBER);
-		logOnDataSensed(PhoneStateData.CALL_STATE_OUTGOING, "OutgoingNumber " + Utilities.hashPhoneNumber(outgoingNumber));
+		logOnDataSensed(PhoneStateData.CALL_STATE_OUTGOING, "OutgoingNumber " + hashPhoneNumber(outgoingNumber));
 	}
 
 	protected IntentFilter[] getIntentFilters()

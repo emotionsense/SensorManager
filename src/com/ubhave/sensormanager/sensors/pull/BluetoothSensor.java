@@ -15,7 +15,6 @@ import android.content.IntentFilter;
 
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.config.SensorConfig;
-import com.ubhave.sensormanager.config.Utilities;
 import com.ubhave.sensormanager.data.pullsensor.BluetoothData;
 import com.ubhave.sensormanager.data.pullsensor.ESBluetoothDevice;
 import com.ubhave.sensormanager.logs.ESLogger;
@@ -136,7 +135,14 @@ public class BluetoothSensor extends AbstractPullSensor
 			bluetooth.enable();
 			while (!bluetooth.isEnabled())
 			{
-				Utilities.sleep(100);
+				try
+				{
+					Thread.sleep(100);
+				}
+				catch (Exception exp)
+				{
+					exp.printStackTrace();
+				}
 			}
 		}
 		cyclesRemaining = (Integer) sensorConfig.get(SensorConfig.NUMBER_OF_SAMPLING_CYCLES);

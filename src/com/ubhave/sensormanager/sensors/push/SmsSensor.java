@@ -17,12 +17,11 @@ import android.telephony.SmsMessage;
 
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.config.SensorConfig;
-import com.ubhave.sensormanager.config.Utilities;
 import com.ubhave.sensormanager.data.pushsensor.SmsData;
 import com.ubhave.sensormanager.logs.ESLogger;
 import com.ubhave.sensormanager.sensors.SensorList;
 
-public class SmsSensor extends AbstractPushSensor
+public class SmsSensor extends AbstractCommunicationSensor
 {
 	private static final String TAG = "SmsSensor";
 
@@ -75,7 +74,7 @@ public class SmsSensor extends AbstractPushSensor
 					String messageId = cursor.getString(cursor.getColumnIndex("_id"));
 
 					// hash phone number
-					sentTo = Utilities.hashPhoneNumber(sentTo);
+					sentTo = hashPhoneNumber(sentTo);
 
 					if ((prevMessageId != null) && (prevMessageId.length() > 0) && (prevMessageId.equals(messageId)))
 					{
@@ -134,7 +133,7 @@ public class SmsSensor extends AbstractPushSensor
 						int noOfWords = content.split(" ").length;
 
 						// hash phone number
-						address = Utilities.hashPhoneNumber(address);
+						address = hashPhoneNumber(address);
 
 						// add sender and body length to smsActivity
 						String logString = System.currentTimeMillis() + " "+SmsData.SMS_RECEIVED+" " + contentLength + " words " + noOfWords + " address " + address + " timestamp " + smsMessagesArray[i].getTimestampMillis();
