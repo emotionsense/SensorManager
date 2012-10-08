@@ -5,7 +5,7 @@ public class Constants
 {
 
 	public static final boolean TEST_MODE = true;
-	public static final String SENSOR_CONFIG_JSON_FILE = "sensorConfig.json";
+//	public static final String SENSOR_CONFIG_JSON_FILE = "sensorConfig.json";
 	
 	public static final int STOP_SENSING_BATTERY_LEVEL = 20;
 
@@ -21,11 +21,7 @@ public class Constants
 	public static final long MICROPHONE_SLEEP_INTERVAL = 2 * 60 * 1000;
 	public static final long WIFI_SLEEP_INTERVAL = 15 * 60 * 1000;
 
-	public final static String PHYSICAL_ACTIVITY_MOVING = "Moving";
-	public final static String PHYSICAL_ACTIVITY_STATIONARY = "Stationary";
-	public final static String PHYSICAL_ACTIVITY_UNKNOWN = "Unknown";
-
-	public final static String AUDIO_MODEL_UNKNOWN = "Unknown";
+//	public final static String AUDIO_MODEL_UNKNOWN = "Unknown";
 	
 	
 	// classifier thresholds
