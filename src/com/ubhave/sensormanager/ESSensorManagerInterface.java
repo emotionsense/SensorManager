@@ -10,8 +10,8 @@ public interface ESSensorManagerInterface
 //	public void pauseAllSensors(long pauseLength) throws ESException;
 	
 	// To be implemented
-	public int subscribeToSensorData(int sensorId, SensorDataListener listener);
-	public boolean unsubscribeFromSensorData(int subscriptionId);
+	public int subscribeToSensorData(int sensorId, SensorDataListener listener) throws ESException;
+	public boolean unsubscribeFromSensorData(int subscriptionId) throws ESException;
 	
 	public SensorData getDataFromSensor(int sensorId);
 }
