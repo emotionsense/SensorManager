@@ -1,43 +1,24 @@
 package com.ubhave.sensormanager.data.pullsensor;
 
-import java.io.File;
-
 import com.ubhave.sensormanager.data.SensorData;
 
 public class MicrophoneData extends SensorData
 {
-	private final double maxAmplitude;
-	private final String recordedAudioFileFullPath;
-	private final boolean isSilent;
-	private final double avgAmplitude;
+	private final String amplitudeString;
 
-	public MicrophoneData(long senseStartTimestamp, double maxAmplitude, String audioFileFullPath, boolean isSilent, double avgAmplitude)
+	public MicrophoneData(long senseStartTimestamp, String amplitudeString)
 	{
 		super(senseStartTimestamp);
-		this.maxAmplitude = maxAmplitude;
-		this.isSilent = isSilent;
-		recordedAudioFileFullPath = audioFileFullPath;
-		this.avgAmplitude =avgAmplitude; 
-	}
-	
-	public boolean isSilent()
-	{
-		return isSilent;
+		this.amplitudeString = amplitudeString;
 	}
 
-	public double getMaxAmplitude()
+	public String getAmplitudeString()
 	{
-		return maxAmplitude;
-	}
-
-	public String getRecordedAudioFileFullPath()
-	{
-		return recordedAudioFileFullPath;
+		return amplitudeString;
 	}
 	
 	public String getDataString() 
 	{
-		File file = new File(this.recordedAudioFileFullPath);
-		return file.getName() + " " + this.isSilent + " " + avgAmplitude;
+		return amplitudeString;
 	}
 }

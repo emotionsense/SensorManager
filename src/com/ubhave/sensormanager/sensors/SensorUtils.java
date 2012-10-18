@@ -9,6 +9,7 @@ import com.ubhave.sensormanager.logs.ESLogger;
 import com.ubhave.sensormanager.sensors.pull.AccelerometerSensor;
 import com.ubhave.sensormanager.sensors.pull.BluetoothSensor;
 import com.ubhave.sensormanager.sensors.pull.LocationSensor;
+import com.ubhave.sensormanager.sensors.pull.MicrophoneSensor;
 import com.ubhave.sensormanager.sensors.pull.WifiSensor;
 import com.ubhave.sensormanager.sensors.push.BatterySensor;
 import com.ubhave.sensormanager.sensors.push.PhoneStateSensor;
@@ -16,9 +17,9 @@ import com.ubhave.sensormanager.sensors.push.ProximitySensor;
 import com.ubhave.sensormanager.sensors.push.ScreenSensor;
 import com.ubhave.sensormanager.sensors.push.SmsSensor;
 
-public class SensorList
+public class SensorUtils
 {
-	private static String TAG = "SensorList";
+	private static String TAG = "SensorUtils";
 	
 	public final static int SENSOR_TYPE_ACCELEROMETER = 5001;
 	public final static int SENSOR_TYPE_BATTERY = 5002;
@@ -99,6 +100,7 @@ public class SensorList
 		case SENSOR_TYPE_ACCELEROMETER: return AccelerometerSensor.getAccelerometerSensor(context);
 		case SENSOR_TYPE_BLUETOOTH: return BluetoothSensor.getBluetoothSensor(context);
 		case SENSOR_TYPE_LOCATION: return LocationSensor.getLocationSensor(context);
+		case SENSOR_TYPE_MICROPHONE: return MicrophoneSensor.getMicrophoneSensor(context);
 		case SENSOR_TYPE_WIFI: return WifiSensor.getWifiSensor(context);
 		case SENSOR_TYPE_BATTERY: return BatterySensor.getBatterySensor(context);
 		case SENSOR_TYPE_PHONE_STATE: return PhoneStateSensor.getPhoneStateSensor(context);
@@ -161,25 +163,25 @@ public class SensorList
 	{
 		switch (sensorType)
 		{
-		case SensorList.SENSOR_TYPE_ACCELEROMETER:
+		case SensorUtils.SENSOR_TYPE_ACCELEROMETER:
 			return SENSOR_NAME_ACCELEROMETER;
-		case SensorList.SENSOR_TYPE_BATTERY:
+		case SensorUtils.SENSOR_TYPE_BATTERY:
 			return SENSOR_NAME_BATTERY;
-		case SensorList.SENSOR_TYPE_BLUETOOTH:
+		case SensorUtils.SENSOR_TYPE_BLUETOOTH:
 			return SENSOR_NAME_BLUETOOTH;
-		case SensorList.SENSOR_TYPE_LOCATION:
+		case SensorUtils.SENSOR_TYPE_LOCATION:
 			return SENSOR_NAME_LOCATION;
-		case SensorList.SENSOR_TYPE_MICROPHONE:
+		case SensorUtils.SENSOR_TYPE_MICROPHONE:
 			return SENSOR_NAME_MICROPHONE;
-		case SensorList.SENSOR_TYPE_PHONE_STATE:
+		case SensorUtils.SENSOR_TYPE_PHONE_STATE:
 			return SENSOR_NAME_PHONE_STATE;
-		case SensorList.SENSOR_TYPE_PROXIMITY:
+		case SensorUtils.SENSOR_TYPE_PROXIMITY:
 			return SENSOR_NAME_PROXIMITY;
-		case SensorList.SENSOR_TYPE_SCREEN:
+		case SensorUtils.SENSOR_TYPE_SCREEN:
 			return SENSOR_NAME_SCREEN;
-		case SensorList.SENSOR_TYPE_SMS:
+		case SensorUtils.SENSOR_TYPE_SMS:
 			return SENSOR_NAME_SMS;
-		case SensorList.SENSOR_TYPE_WIFI:
+		case SensorUtils.SENSOR_TYPE_WIFI:
 			return SENSOR_NAME_WIFI;
 		default:
 			throw new ESException(ESException.UNKNOWN_SENSOR_NAME, "unknown sensor type " + sensorType);

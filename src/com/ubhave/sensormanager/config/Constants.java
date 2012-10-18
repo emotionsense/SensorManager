@@ -1,6 +1,5 @@
 package com.ubhave.sensormanager.config;
 
-
 public class Constants
 {
 
@@ -22,7 +21,8 @@ public class Constants
 	public static final long WIFI_SLEEP_INTERVAL = 15 * 60 * 1000;	
 	
 	// classifier thresholds
-	public final static int LOCATION_CHANGE_DISTANCE_THRESHOLD = 100;
 	public final static int ACCELEROMETER_MOVEMENT_THRESHOLD = 25;
+	public final static int LOCATION_CHANGE_DISTANCE_THRESHOLD = 100;
+	public static final int MICROPHONE_SOUND_THRESHOLD = 800;
 
 }

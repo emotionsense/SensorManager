@@ -18,7 +18,7 @@ import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.pullsensor.BluetoothData;
 import com.ubhave.sensormanager.data.pullsensor.ESBluetoothDevice;
 import com.ubhave.sensormanager.logs.ESLogger;
-import com.ubhave.sensormanager.sensors.SensorList;
+import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class BluetoothSensor extends AbstractPullSensor
 {
@@ -117,7 +117,7 @@ public class BluetoothSensor extends AbstractPullSensor
 
 	public int getSensorType()
 	{
-		return SensorList.SENSOR_TYPE_BLUETOOTH;
+		return SensorUtils.SENSOR_TYPE_BLUETOOTH;
 	}
 
 	protected BluetoothData getMostRecentRawData()

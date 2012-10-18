@@ -10,7 +10,7 @@ import android.content.IntentFilter;
 
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.pushsensor.ScreenData;
-import com.ubhave.sensormanager.sensors.SensorList;
+import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class ScreenSensor extends AbstractPushSensor
 {
@@ -46,7 +46,7 @@ public class ScreenSensor extends AbstractPushSensor
 
 	public int getSensorType()
 	{
-		return SensorList.SENSOR_TYPE_SCREEN;
+		return SensorUtils.SENSOR_TYPE_SCREEN;
 	}
 
 	protected void onBroadcastReceived(Context context, Intent intent)

@@ -8,7 +8,6 @@ import android.util.Log;
 
 public class ESLogger
 {
-//	private static final String ERROR_TAG = "ERROR";
 
 	public static void log(String TAG, String message)
 	{
@@ -17,12 +16,12 @@ public class ESLogger
 
 	public static void error(String TAG, String message)
 	{
-		Log.e(TAG, message);		
-//		DataLogger.getDataLogger().logData(ERROR_TAG, TAG + " " + message);
+		Log.e(TAG, message);
 	}
 
 	public static void error(String TAG, Exception exp)
 	{
+		exp.printStackTrace();
 		error(TAG, Log.getStackTraceString(exp));
 	}
 

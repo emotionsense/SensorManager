@@ -12,7 +12,7 @@ import android.os.BatteryManager;
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.pushsensor.BatteryData;
-import com.ubhave.sensormanager.sensors.SensorList;
+import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class BatterySensor extends AbstractPushSensor
 {
@@ -52,7 +52,7 @@ public class BatterySensor extends AbstractPushSensor
 
 	public int getSensorType()
 	{
-		return SensorList.SENSOR_TYPE_BATTERY;
+		return SensorUtils.SENSOR_TYPE_BATTERY;
 	}
 
 	protected void onBroadcastReceived(Context context, Intent intent)

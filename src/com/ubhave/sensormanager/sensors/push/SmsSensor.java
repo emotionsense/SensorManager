@@ -19,7 +19,7 @@ import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.pushsensor.SmsData;
 import com.ubhave.sensormanager.logs.ESLogger;
-import com.ubhave.sensormanager.sensors.SensorList;
+import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class SmsSensor extends AbstractCommunicationSensor
 {
@@ -108,7 +108,7 @@ public class SmsSensor extends AbstractCommunicationSensor
 
 	public int getSensorType()
 	{
-		return SensorList.SENSOR_TYPE_SMS;
+		return SensorUtils.SENSOR_TYPE_SMS;
 	}
 
 	protected void onBroadcastReceived(Context context, Intent intent)

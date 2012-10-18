@@ -16,7 +16,7 @@ import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.pushsensor.PhoneStateData;
 import com.ubhave.sensormanager.logs.ESLogger;
-import com.ubhave.sensormanager.sensors.SensorList;
+import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class PhoneStateSensor extends AbstractCommunicationSensor
 {
@@ -199,7 +199,7 @@ public class PhoneStateSensor extends AbstractCommunicationSensor
 
 	public int getSensorType()
 	{
-		return SensorList.SENSOR_TYPE_PHONE_STATE;
+		return SensorUtils.SENSOR_TYPE_PHONE_STATE;
 	}
 
 	protected boolean startSensing(SensorConfig sensorConfig)

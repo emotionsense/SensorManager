@@ -17,7 +17,7 @@ import android.net.wifi.WifiManager;
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.pullsensor.WifiData;
-import com.ubhave.sensormanager.sensors.SensorList;
+import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class WifiSensor extends AbstractPullSensor
 {
@@ -85,7 +85,7 @@ public class WifiSensor extends AbstractPullSensor
 
 	public int getSensorType()
 	{
-		return SensorList.SENSOR_TYPE_WIFI;
+		return SensorUtils.SENSOR_TYPE_WIFI;
 	}
 
 	protected WifiData getMostRecentRawData()

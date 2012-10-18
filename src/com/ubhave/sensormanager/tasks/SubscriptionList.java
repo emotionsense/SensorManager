@@ -5,9 +5,12 @@ import java.util.Random;
 import android.util.SparseArray;
 
 import com.ubhave.sensormanager.ESException;
+import com.ubhave.sensormanager.logs.ESLogger;
 
 public class SubscriptionList
 {
+	private static String TAG = "SubscriptionList";
+	
 	private final SparseArray<Subscription> subscriptionMap;
 	private final Random keyGenerator;
 
@@ -21,6 +24,7 @@ public class SubscriptionList
 	{
 		if (!s.register()) // subscription already exists
 		{
+			ESLogger.log(TAG, "registerSubscription() subscription already exists for task: " + s.getTask().getSensorType() + " listener: " + s.getListener());
 			for (int i = 0; i < subscriptionMap.size(); i++)
 			{
 				int subscriptionId = subscriptionMap.keyAt(i);
@@ -36,6 +40,7 @@ public class SubscriptionList
 		{
 			int subscriptionId = randomKey();
 			subscriptionMap.append(subscriptionId, s);
+			ESLogger.log(TAG, "registerSubscription() new subscription created for task: " + s.getTask().getSensorType() + " listener: " + s.getListener());
 			return subscriptionId;
 		}
 	}

@@ -2,14 +2,20 @@ package com.ubhave.sensormanager.tasks;
 
 import java.util.ArrayList;
 
+import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.SensorDataListener;
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
+import com.ubhave.sensormanager.logs.ESLogger;
 import com.ubhave.sensormanager.sensors.AbstractSensor;
 import com.ubhave.sensormanager.sensors.SensorInterface;
+import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public abstract class AbstractSensorTask extends Thread
 {
+	
+	private static String TAG = "AbstractSensorTask"; 
+	
 	protected SensorInterface sensor;
 	protected Object syncObject = new Object();
 
@@ -36,9 +42,31 @@ public abstract class AbstractSensorTask extends Thread
 		state = STOPPED;
 		super.start();
 	}
+	
+	protected String getLogTag()
+	{
+		String sensorName = "";
+		
+		try
+		{
+			sensorName = SensorUtils.getSensorName(sensor.getSensorType());
+		}
+		catch (ESException exp)
+		{
+			ESLogger.error(TAG, exp);
+		}
+		return "SensorTask:" + sensorName;
+	}
+	
+	public int getSensorType()
+	{
+		return sensor.getSensorType();
+	}
 
 	public boolean registerSensorDataListener(SensorDataListener listener)
 	{
+		ESLogger.log(getLogTag(), "registerSensorDataListener() listener: " + listener);
+		
 		synchronized (listenerList)
 		{
 			for (int i = 0; i < listenerList.size(); i++)

@@ -12,7 +12,7 @@ import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.data.pullsensor.LocationData;
 import com.ubhave.sensormanager.logs.ESLogger;
-import com.ubhave.sensormanager.sensors.SensorList;
+import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class LocationSensor extends AbstractPullSensor
 {
@@ -87,7 +87,7 @@ public class LocationSensor extends AbstractPullSensor
 
 	public int getSensorType()
 	{
-		return SensorList.SENSOR_TYPE_LOCATION;
+		return SensorUtils.SENSOR_TYPE_LOCATION;
 	}
 
 	protected boolean startSensing(SensorConfig sensorConfig)

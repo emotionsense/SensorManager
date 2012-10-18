@@ -9,7 +9,7 @@ import android.util.SparseArray;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.logs.ESLogger;
 import com.ubhave.sensormanager.sensors.SensorInterface;
-import com.ubhave.sensormanager.sensors.SensorList;
+import com.ubhave.sensormanager.sensors.SensorUtils;
 import com.ubhave.sensormanager.tasks.AbstractSensorTask;
 import com.ubhave.sensormanager.tasks.PullSensorTask;
 import com.ubhave.sensormanager.tasks.PushSensorTask;
@@ -52,13 +52,13 @@ public class ESSensorManager implements ESSensorManagerInterface
 		sensorTaskMap = new SparseArray<AbstractSensorTask>();
 		subscriptionList = new SubscriptionList();
 
-		ArrayList<SensorInterface> sensors = SensorList.getAllSensors(appContext);
+		ArrayList<SensorInterface> sensors = SensorUtils.getAllSensors(appContext);
 
 		for (SensorInterface aSensor : sensors)
 		{
 			AbstractSensorTask sensorTask;
 
-			if (SensorList.isPullSensor(aSensor.getSensorType()))
+			if (SensorUtils.isPullSensor(aSensor.getSensorType()))
 			{
 				sensorTask = new PullSensorTask(aSensor);
 			}
@@ -66,6 +66,8 @@ public class ESSensorManager implements ESSensorManagerInterface
 			{
 				sensorTask = new PushSensorTask(aSensor);
 			}
+			
+			sensorTask.start();
 
 			sensorTaskMap.put(aSensor.getSensorType(), sensorTask);
 		}
@@ -76,6 +78,7 @@ public class ESSensorManager implements ESSensorManagerInterface
 		AbstractSensorTask task = sensorTaskMap.get(sensorId);
 		if (task != null)
 		{
+			ESLogger.log(TAG, "subscribeToSensorData() subscribing listener to sensorId " + sensorId);
 			Subscription subscription = new Subscription(task, listener);
 			int subscriptionId = subscriptionList.registerSubscription(subscription);
 			return subscriptionId;
