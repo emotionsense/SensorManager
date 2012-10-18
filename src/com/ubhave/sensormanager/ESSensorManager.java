@@ -12,6 +12,7 @@ import com.ubhave.sensormanager.sensors.SensorInterface;
 import com.ubhave.sensormanager.sensors.SensorList;
 import com.ubhave.sensormanager.tasks.AbstractSensorTask;
 import com.ubhave.sensormanager.tasks.PullSensorTask;
+import com.ubhave.sensormanager.tasks.PushSensorTask;
 import com.ubhave.sensormanager.tasks.Subscription;
 import com.ubhave.sensormanager.tasks.SubscriptionList;
 
@@ -52,10 +53,21 @@ public class ESSensorManager implements ESSensorManagerInterface
 		subscriptionList = new SubscriptionList();
 
 		ArrayList<SensorInterface> sensors = SensorList.getAllSensors(appContext);
+
 		for (SensorInterface aSensor : sensors)
 		{
-			PullSensorTask pullSensorTask = new PullSensorTask(aSensor);
-			sensorTaskMap.put(aSensor.getSensorType(), pullSensorTask);
+			AbstractSensorTask sensorTask;
+
+			if (SensorList.isPullSensor(aSensor.getSensorType()))
+			{
+				sensorTask = new PullSensorTask(aSensor);
+			}
+			else
+			{
+				sensorTask = new PushSensorTask(aSensor);
+			}
+
+			sensorTaskMap.put(aSensor.getSensorType(), sensorTask);
 		}
 	}
 
@@ -92,158 +104,4 @@ public class ESSensorManager implements ESSensorManagerInterface
 		return null;
 	}
 
-	// public void startAllSensors()
-	// {
-	// // start sensor threads
-	// for (SensorTask task : sensorTaskMap.values())
-	// {
-	// task.start();
-	// }
-	// }
-
-	// public synchronized void stopAllSensors()
-	// {
-	// for (SensorTask task : sensorTaskMap.values())
-	// {
-	// task.stopTask();
-	// }
-	// try
-	// {
-	// onSensorsStopped();
-	// }
-	// catch (ESException exp)
-	// {
-	// ESLogger.error(TAG, exp);
-	// }
-	// }
-
-	// public synchronized void pauseAllSensors(long pauseLength) throws
-	// ESException
-	// {
-	// for (SensorTask task : sensorTaskMap.values())
-	// {
-	// if (!task.isStopped())
-	// {
-	// task.pauseTask(pauseLength);
-	// }
-	// }
-	// }
-
-	// private void onSensorsStarted()
-	// {
-	// startNotification();
-	// startServiceAlarm();
-	// }
-
-	// private void onSensorsStopped() throws ESException
-	// {
-	// stopNotification();
-	// stopServiceAlarm();
-	// }
-
-	// private void stopNotification() throws ESException
-	// {
-	// ExperienceSenseService.getExperienceSenseService().stopNotification();
-	// }
-
-	// private void stopServiceAlarm()
-	// {
-	// ServiceAlarmReceiver.cancelAlarm(applicationContext);
-	// }
-
-	// private void startNotification()
-	// {
-	// // wait for experience service to start for a max of 10 seconds
-	// // as this is called during system start-up
-	// long totalWaitTime = 0;
-	// long sleepTime = 1000;
-	// ExperienceSenseService esService = null;
-	// while ((totalWaitTime < (long) (10 * 1000)) && (esService == null))
-	// {
-	// Utilities.sleep(sleepTime);
-	// totalWaitTime += sleepTime;
-	// try
-	// {
-	// esService = ExperienceSenseService.getExperienceSenseService();
-	// }
-	// catch (ESException e)
-	// {
-	// // ignore
-	// }
-	// }
-	//
-	// if (esService != null)
-	// {
-	// esService.startNotification();
-	// }
-	// else
-	// {
-	// ESLogger.error(TAG,
-	// " ExperienceSenseService.getExperienceSenseService() returned null.");
-	// }
-	// }
-
-	// private void startServiceAlarm()
-	// {
-	// ServiceAlarmReceiver.startAlarm(applicationContext);
-	// }
-
-	// public synchronized void startSensor(int sensorType) throws ESException
-	// {
-	// if (sensorTaskMap.containsKey(sensorType))
-	// {
-	// SensorTask sensorTask = sensorTaskMap.get(sensorType);
-	// sensorTask.startTask();
-	// onSensorsStarted();
-	// }
-	// else
-	// {
-	// throw new ESException(ESException.UNKNOWN_SENSOR_TYPE,
-	// "Invalid sensor type: " + sensorType);
-	// }
-	// }
-	//
-	// public synchronized void stopSensor(int sensorType) throws ESException
-	// {
-	// if (sensorTaskMap.containsKey(sensorType))
-	// {
-	// SensorTask sensorTask = sensorTaskMap.get(sensorType);
-	// sensorTask.stopTask();
-	// }
-	// else
-	// {
-	// throw new ESException(ESException.UNKNOWN_SENSOR_TYPE,
-	// "Invalid sensor type: " + sensorType);
-	// }
-	// }
-
-	// public synchronized void pauseSensor(int sensorType, long pauseLength)
-	// throws ESException
-	// {
-	// if (sensorTaskMap.containsKey(sensorType))
-	// {
-	// SensorTask sensorTask = sensorTaskMap.get(sensorType);
-	// sensorTask.pauseTask(pauseLength);
-	// }
-	// else
-	// {
-	// throw new ESException(ESException.UNKNOWN_SENSOR_TYPE,
-	// "Invalid sensor type: " + sensorType);
-	// }
-	// }
-
-	// public synchronized boolean isSensorStopped(int sensorType) throws
-	// ESException
-	// {
-	// if (sensorTaskMap.containsKey(sensorType))
-	// {
-	// SensorTask sensorTask = sensorTaskMap.get(sensorType);
-	// return sensorTask.isStopped();
-	// }
-	// else
-	// {
-	// throw new ESException(ESException.UNKNOWN_SENSOR_TYPE,
-	// "Invalid sensor type: " + sensorType);
-	// }
-	// }
 }

@@ -12,22 +12,20 @@ public abstract class AbstractSensorTask extends Thread
 {
 	protected SensorInterface sensor;
 	protected Object syncObject = new Object();
-	
+
 	protected int state;
 	protected long pauseTime;
-	
+
 	protected ArrayList<SensorDataListener> listenerList;
-//	protected ArrayList<SensorConfig> listenerConfigList;
 
 	public static final int RUNNING = 6123;
 	public static final int PAUSED = 6124;
 	public static final int STOPPED = 6125;
-	
+
 	public AbstractSensorTask(SensorInterface sensor)
 	{
 		this.sensor = sensor;
 		listenerList = new ArrayList<SensorDataListener>();
-//		listenerConfigList = new ArrayList<SensorConfig>();
 	}
 
 	public abstract void run();
@@ -43,7 +41,7 @@ public abstract class AbstractSensorTask extends Thread
 	{
 		synchronized (listenerList)
 		{
-			for (int i=0; i<listenerList.size(); i++)
+			for (int i = 0; i < listenerList.size(); i++)
 			{
 				if (listenerList.get(i) == listener)
 				{
@@ -55,7 +53,7 @@ public abstract class AbstractSensorTask extends Thread
 			return true;
 		}
 	}
-	
+
 	protected void publishData(SensorData sensorData)
 	{
 		synchronized (listenerList)
@@ -71,28 +69,17 @@ public abstract class AbstractSensorTask extends Thread
 	{
 		synchronized (listenerList)
 		{
-//			int index = listenerList.indexOf(listener);
 			listenerList.remove(listener);
 			if (listenerList.isEmpty())
 			{
 				stopTask();
 			}
-//			listenerConfigList.remove(index);
 		}
 	}
 
 	protected SensorConfig getSensorConfig()
 	{
-		// TODO
-//		SensorConfig sensorConfig;
-//		if (listenerConfigList.size() > 0)
-//		{
-//			sensorConfig = listenerConfigList.get(0);
-//		}
-//		else
-//		{
 		SensorConfig sensorConfig = AbstractSensor.getDefaultSensorConfig(sensor.getSensorType());
-//		}
 		return sensorConfig;
 	}
 
@@ -110,7 +97,7 @@ public abstract class AbstractSensorTask extends Thread
 			// ignore
 		}
 	}
-	
+
 	protected void stopTask()
 	{
 		if (state == STOPPED)
@@ -126,79 +113,4 @@ public abstract class AbstractSensorTask extends Thread
 			}
 		}
 	}
-
-//	public boolean isRunning()
-//	{
-//		return (state == RUNNING);
-//	}
-
-//	public boolean isPaused()
-//	{
-//		if (state == PAUSED)
-//		{
-//			return true;
-//		}
-//		return false;
-//	}
-
-//	public boolean isStopped()
-//	{
-//		if (state == STOPPED)
-//		{
-//			return true;
-//		}
-//		return false;
-//	}
-	
-//	protected void pauseTask(long delay) throws ESException
-//	{
-//		if (state == STOPPED)
-//		{
-//			throw new ESException(ESException.INVALID_STATE, "cannot pause() the sensor task in the stopped state");
-//		}
-//		else
-//		{
-//			pauseTime = delay;
-//			synchronized (syncObject)
-//			{
-//				state = PAUSED;
-//				this.interrupt();
-//			}
-//
-//		}
-//	}
-
-//	protected void logData(SensorData sensorData)
-//	{
-//		if (sensorData != null)
-//		{
-//			String sensorName = AbstractSensor.getSensorName(sensor.getSensorType());
-//			ESLogger.log("SensorManager", "Data from: " + sensorName);
-//			DataLogger.getDataLogger().logData(sensorName, sensorData.toString());
-//
-//			// update listeners
-//			for (SensorDataListener listener : listenerList)
-//			{
-//				listener.onDataSensed(sensorData);
-//			}
-//
-//			// if the battery level is less than 20% then stop sensing
-//			if (sensorData instanceof BatteryData)
-//			{
-//				BatteryData batteryData = (BatteryData) sensorData;
-//				if ((batteryData.getBatteryLevel() < Constants.STOP_SENSING_BATTERY_LEVEL) && (!batteryData.isCharging()))
-//				{
-////					try
-////					{
-////						// pause for 30 mins
-////						ESSensorManager.this.pauseAllSensors(30 * 60 * 1000);
-////					}
-////					catch (ESException exp)
-////					{
-////						ESLogger.error(TAG, exp);
-////					}
-//				}
-//			}
-//		}
-//	}
 }

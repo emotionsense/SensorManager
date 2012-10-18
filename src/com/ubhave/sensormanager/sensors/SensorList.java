@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.content.Context;
 
 import com.ubhave.sensormanager.ESException;
+import com.ubhave.sensormanager.logs.ESLogger;
 import com.ubhave.sensormanager.sensors.pull.AccelerometerSensor;
 import com.ubhave.sensormanager.sensors.pull.BluetoothSensor;
 import com.ubhave.sensormanager.sensors.pull.LocationSensor;
@@ -17,11 +18,13 @@ import com.ubhave.sensormanager.sensors.push.SmsSensor;
 
 public class SensorList
 {
+	private static String TAG = "SensorList";
+	
 	public final static int SENSOR_TYPE_ACCELEROMETER = 5001;
 	public final static int SENSOR_TYPE_BATTERY = 5002;
 	public final static int SENSOR_TYPE_BLUETOOTH = 5003;
 	public final static int SENSOR_TYPE_LOCATION = 5004;
-//	public final static int SENSOR_TYPE_MICROPHONE = 5005;
+	public final static int SENSOR_TYPE_MICROPHONE = 5005;
 	public final static int SENSOR_TYPE_PHONE_STATE = 5006;
 	public final static int SENSOR_TYPE_PROXIMITY = 5007;
 	public final static int SENSOR_TYPE_SCREEN = 5008;
@@ -32,7 +35,7 @@ public class SensorList
 	public final static String SENSOR_NAME_BATTERY = "battery";
 	public final static String SENSOR_NAME_BLUETOOTH = "bluetooth";
 	public final static String SENSOR_NAME_LOCATION = "location";
-//	public final static String SENSOR_NAME_MICROPHONE = "microphone";
+	public final static String SENSOR_NAME_MICROPHONE = "microphone";
 	public final static String SENSOR_NAME_PHONE_STATE = "phonestate";
 	public final static String SENSOR_NAME_PROXIMITY = "proximity";
 	public final static String SENSOR_NAME_SCREEN = "screen";
@@ -43,7 +46,7 @@ public class SensorList
 		SENSOR_TYPE_ACCELEROMETER,
 		SENSOR_TYPE_BLUETOOTH,
 		SENSOR_TYPE_LOCATION,
-//		SENSOR_TYPE_MICROPHONE,
+		SENSOR_TYPE_MICROPHONE,
 		SENSOR_TYPE_WIFI,
 		SENSOR_TYPE_BATTERY,
 		SENSOR_TYPE_PHONE_STATE,
@@ -52,38 +55,25 @@ public class SensorList
 		SENSOR_TYPE_SMS
 	};
 	
-	// Currently Unused
-//	private final static int[] PULL_SENSORS = new int[]{
-//		SENSOR_TYPE_ACCELEROMETER,
-//		SENSOR_TYPE_BLUETOOTH,
-//		SENSOR_TYPE_LOCATION,
-//		SENSOR_TYPE_MICROPHONE,
-//		SENSOR_TYPE_WIFI
-//	};
-//	
-//	private final static int[] PUSH_SENSORS = new int[]{
-//		SENSOR_TYPE_BATTERY,
-//		SENSOR_TYPE_PHONE_STATE,
-//		SENSOR_TYPE_PROXIMITY,
-//		SENSOR_TYPE_SCREEN,
-//		SENSOR_TYPE_SMS
-//	};
+	public static boolean isPullSensor(int sensorType)
+	{
+		switch (sensorType)
+		{
+		case SENSOR_TYPE_ACCELEROMETER:
+		case SENSOR_TYPE_BLUETOOTH:
+		case SENSOR_TYPE_LOCATION:
+		case SENSOR_TYPE_MICROPHONE:
+		case SENSOR_TYPE_WIFI:
+			return true;
+		default:
+			return false;
+		}
+	}
 	
 	public static ArrayList<SensorInterface> getAllSensors(Context applicationContext)
 	{
 		return getSensorList(ALL_SENSORS, applicationContext);
 	}
-	
-	// Currently Unused
-//	public static ArrayList<SensorInterface> getPullSensors(Context applicationContext)
-//	{
-//		return getSensorList(PULL_SENSORS, applicationContext);
-//	}
-//	
-//	public static ArrayList<SensorInterface> getPushSensors(Context applicationContext)
-//	{
-//		return getSensorList(PUSH_SENSORS, applicationContext);
-//	}
 
 	private static ArrayList<SensorInterface> getSensorList(int[] list, Context applicationContext)
 	{
@@ -96,7 +86,7 @@ public class SensorList
 			}
 			catch (ESException e)
 			{
-				// Permission denied or unknown id
+				ESLogger.error(TAG, e);
 			}
 		}
 		return sensors;
@@ -137,10 +127,10 @@ public class SensorList
 		{
 			return SENSOR_TYPE_LOCATION;
 		}
-//		else if (sensorName.equals(SENSOR_NAME_MICROPHONE))
-//		{
-//			return SENSOR_TYPE_MICROPHONE;
-//		}
+		else if (sensorName.equals(SENSOR_NAME_MICROPHONE))
+		{
+			return SENSOR_TYPE_MICROPHONE;
+		}
 		else if (sensorName.equals(SENSOR_NAME_PHONE_STATE))
 		{
 			return SENSOR_TYPE_PHONE_STATE;
@@ -179,8 +169,8 @@ public class SensorList
 			return SENSOR_NAME_BLUETOOTH;
 		case SensorList.SENSOR_TYPE_LOCATION:
 			return SENSOR_NAME_LOCATION;
-//		case SensorList.SENSOR_TYPE_MICROPHONE:
-//			return SENSOR_NAME_MICROPHONE;
+		case SensorList.SENSOR_TYPE_MICROPHONE:
+			return SENSOR_NAME_MICROPHONE;
 		case SensorList.SENSOR_TYPE_PHONE_STATE:
 			return SENSOR_NAME_PHONE_STATE;
 		case SensorList.SENSOR_TYPE_PROXIMITY:

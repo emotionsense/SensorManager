@@ -57,8 +57,7 @@ public class PullSensorTask extends AbstractSensorTask
 						// will have the sampling window, cycle information
 						ESLogger.log("SensorManager", "Pulling from: " + SensorList.getSensorName(sensor.getSensorType()));
 						SensorData sensorData = ((PullSensor) sensor).sense(sensorConfig);
-						// log sensed data
-//						logData(sensorData);
+						// publish sensed data
 						publishData(sensorData);
 					}
 					catch (InterruptedException exp)

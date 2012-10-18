@@ -52,11 +52,11 @@ public abstract class AbstractSensor implements SensorInterface
 			sensorConfig.set(SensorConfig.SENSOR_SLEEP_INTERVAL, Constants.LOCATION_SLEEP_INTERVAL);
 			sensorConfig.set(SensorConfig.SAMPLING_WINDOW_SIZE_IN_MILLIS, Constants.LOCATION_SAMPLING_WINDOW_SIZE_MILLIS);
 			break;
-//		case SensorList.SENSOR_TYPE_MICROPHONE:
-//			sensorConfig.set(SensorConfig.SENSOR_SLEEP_INTERVAL, Constants.MICROPHONE_SLEEP_INTERVAL);
-//			sensorConfig.set(SensorConfig.MIC_RECORDER, SensorConfig.MIC_RECORDER_VALUE_AUDIO_RECORD);
-//			sensorConfig.set(SensorConfig.SAMPLING_WINDOW_SIZE_IN_MILLIS, Constants.MICROPHONE_SAMPLING_WINDOW_SIZE_MILLIS);
-//			break;
+		case SensorList.SENSOR_TYPE_MICROPHONE:
+			sensorConfig.set(SensorConfig.SENSOR_SLEEP_INTERVAL, Constants.MICROPHONE_SLEEP_INTERVAL);
+			sensorConfig.set(SensorConfig.MIC_RECORDER, SensorConfig.MIC_RECORDER_VALUE_AUDIO_RECORD);
+			sensorConfig.set(SensorConfig.SAMPLING_WINDOW_SIZE_IN_MILLIS, Constants.MICROPHONE_SAMPLING_WINDOW_SIZE_MILLIS);
+			break;
 		case SensorList.SENSOR_TYPE_WIFI:
 			sensorConfig.set(SensorConfig.SENSOR_SLEEP_INTERVAL, Constants.WIFI_SLEEP_INTERVAL);
 			sensorConfig.set(SensorConfig.NUMBER_OF_SAMPLING_CYCLES, Constants.WIFI_SAMPLING_CYCLES);
