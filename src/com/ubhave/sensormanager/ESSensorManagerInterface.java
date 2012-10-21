@@ -9,4 +9,8 @@ public interface ESSensorManagerInterface
 	public void unsubscribeFromSensorData(int subscriptionId) throws ESException;
 
 	public SensorData getDataFromSensor(int sensorId);
+	
+	public void setSensorSampleTime(int sensorId, long sampleMillis);
+	
+	public void setSensorSleepTime(int sensorId, long sleepMillis);
 }
