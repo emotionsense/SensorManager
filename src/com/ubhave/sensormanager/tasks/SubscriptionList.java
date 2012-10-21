@@ -49,6 +49,7 @@ public class SubscriptionList
 	{
 		Subscription s = subscriptionMap.get(subscriptionId);
 		subscriptionMap.delete(subscriptionId);
+		ESLogger.log(TAG, "registerSubscription() deleted subscription created for task: " + s.getTask().getSensorType() + " listener: " + s.getListener());
 		return s;
 	}
 

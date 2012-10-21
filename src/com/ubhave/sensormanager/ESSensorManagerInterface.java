@@ -10,7 +10,7 @@ public interface ESSensorManagerInterface
 
 	public SensorData getDataFromSensor(int sensorId);
 	
-	public void setSensorSampleTime(int sensorId, long sampleMillis);
-	
-	public void setSensorSleepTime(int sensorId, long sleepMillis);
+//	public void setSensorSampleTime(int sensorId, long sampleMillis);
+//	
+//	public void setSensorSleepTime(int sensorId, long sleepMillis);
 }
