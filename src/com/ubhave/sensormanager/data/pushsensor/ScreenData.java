@@ -1,6 +1,7 @@
 package com.ubhave.sensormanager.data.pushsensor;
 
 import com.ubhave.sensormanager.data.SensorData;
+import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class ScreenData extends SensorData
 {
@@ -36,5 +37,10 @@ public class ScreenData extends SensorData
 	public String getDataString()
 	{
 		return "ScreenStatus " + getScreenStatusString();
+	}
+	
+	public int getSensorType()
+	{
+		return SensorUtils.SENSOR_TYPE_SCREEN;
 	}
 }

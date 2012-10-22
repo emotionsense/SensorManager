@@ -1,6 +1,7 @@
 package com.ubhave.sensormanager.data.pushsensor;
 
 import com.ubhave.sensormanager.data.SensorData;
+import com.ubhave.sensormanager.sensors.SensorUtils;
 
 import android.os.BatteryManager;
 
@@ -86,6 +87,11 @@ public class BatteryData extends SensorData
 		default:
 			return "UNKNOWN";
 		}
+	}
+	
+	public int getSensorType()
+	{
+		return SensorUtils.SENSOR_TYPE_BATTERY;
 	}
 
 }

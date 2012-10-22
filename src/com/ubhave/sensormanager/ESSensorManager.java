@@ -27,7 +27,7 @@ public class ESSensorManager implements ESSensorManagerInterface
 	private final SparseArray<AbstractSensorTask> sensorTaskMap;
 	private final SubscriptionList subscriptionList;
 
-	public static ESSensorManager getSensorManager(Context context) throws ESException
+	public static void startSensorManager(Context context) throws ESException
 	{
 		if (sensorManager == null)
 		{
@@ -44,6 +44,14 @@ public class ESSensorManager implements ESSensorManagerInterface
 						throw new ESException(ESException.PERMISSION_DENIED, "Sensor Manager requires android.permission.WAKE_LOCK");
 				}
 			}
+		}
+	}
+
+	public static ESSensorManager getSensorManager() throws ESException
+	{
+		if (sensorManager == null)
+		{
+			throw new ESException(ESException.SENSOR_MANAGER_NOT_STARTED, "sensor manager not started, start it before calling this method.");
 		}
 		return sensorManager;
 	}
@@ -125,6 +133,34 @@ public class ESSensorManager implements ESSensorManagerInterface
 		}
 
 		return sensorData;
+	}
+
+	@Override
+	public void enableAdaptiveSensing(int sensorId) throws ESException
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void disableAdaptiveSensing(int sensorId) throws ESException
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setSensingWindowLength(long windowLengthMillis) throws ESException
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setSleepWindowLength(long windowLengthMillis) throws ESException
+	{
+		// TODO Auto-generated method stub
+		
 	}
 
 }

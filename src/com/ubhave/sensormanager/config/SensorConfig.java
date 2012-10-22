@@ -17,9 +17,9 @@ public class SensorConfig
 	// accelerometer sampling window
 	public final static String SAMPLING_WINDOW_SIZE_IN_MILLIS = "SAMPLING_WINDOW_SIZE_IN_MILLIS";
 	// number of sampling cycles sets the number of times a sensor samples the
-	// data, and this is relevan for sensors like Bluetooth, Wifi, where there
+	// data, and this is relevant for sensors like Bluetooth, Wifi, where there
 	// is no fixed sampling window and the amount of sampling time
-	// depends on the number of devices in the environment. the no. of cylces
+	// depends on the number of devices in the environment. the no. of cycles
 	// sets the number of scans (wifi or bluetooth) to be performed
 	public final static String NUMBER_OF_SAMPLING_CYCLES = "NUMBER_OF_SAMPLING_CYCLES";
 

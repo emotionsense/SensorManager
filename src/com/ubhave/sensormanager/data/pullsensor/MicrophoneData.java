@@ -1,6 +1,7 @@
 package com.ubhave.sensormanager.data.pullsensor;
 
 import com.ubhave.sensormanager.data.SensorData;
+import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class MicrophoneData extends SensorData
 {
@@ -20,5 +21,10 @@ public class MicrophoneData extends SensorData
 	public String getDataString() 
 	{
 		return amplitudeString;
+	}
+
+	public int getSensorType()
+	{
+		return SensorUtils.SENSOR_TYPE_MICROPHONE;
 	}
 }

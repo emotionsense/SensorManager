@@ -1,6 +1,7 @@
 package com.ubhave.sensormanager.data.pushsensor;
 
 import com.ubhave.sensormanager.data.SensorData;
+import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class PhoneStateData extends SensorData
 {
@@ -51,27 +52,13 @@ public class PhoneStateData extends SensorData
 		return eventType == CALL_STATE_IDLE;
 	}
 
-//	public String getEventTypeString()
-//	{
-//		switch (eventType)
-//		{
-//		case ON_CALL_STATE_CHANGED:
-//			return "ON_CALL_STATE_CHANGED";
-//		case ON_CELL_LOCATION_CHANGED:
-//			return "ON_CELL_LOCATION_CHANGED";
-//		case ON_DATA_ACTIVITY:
-//			return "ON_DATA_ACTIVITY";
-//		case ON_DATA_CONNECTION_STATE_CHANGED:
-//			return "ON_DATA_CONNECTION_STATE_CHANGED";
-//		case ON_SERVICE_STATE_CHANGED:
-//			return "ON_SERVICE_STATE_CHANGED";
-//		default:
-//			return "";
-//		}
-//	}
-
 	public String getDataString()
 	{
 		return eventType + " " + data;
+	}
+	
+	public int getSensorType()
+	{
+		return SensorUtils.SENSOR_TYPE_PHONE_STATE;
 	}
 }

@@ -24,5 +24,11 @@ public class Constants
 	public final static int ACCELEROMETER_MOVEMENT_THRESHOLD = 25;
 	public final static int LOCATION_CHANGE_DISTANCE_THRESHOLD = 100;
 	public static final int MICROPHONE_SOUND_THRESHOLD = 800;
+	
+	// adaptive sensing constants
+	public final static double PROBABILITY_INITIAL_VALUE = 0.5;
+	public final static double MIN_PROBABILITY_VALUE = 0.1;
+	public final static double MAX_PROBABILITY_VALUE = 0.9;
+	public final static double ALPHA_VALUE = 0.5;
 
 }

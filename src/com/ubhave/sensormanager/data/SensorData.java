@@ -9,6 +9,8 @@ public abstract class SensorData
 	private SensorData prevSensorData;
 
 	public abstract String getDataString();
+	
+	public abstract int getSensorType();
 
 	public SensorData(long sensorTimestamp)
 	{

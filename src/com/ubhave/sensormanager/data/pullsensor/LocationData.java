@@ -1,6 +1,7 @@
 package com.ubhave.sensormanager.data.pullsensor;
 
 import com.ubhave.sensormanager.data.SensorData;
+import com.ubhave.sensormanager.sensors.SensorUtils;
 
 import android.location.Location;
 
@@ -49,6 +50,11 @@ public class LocationData extends SensorData
 		}
 
 		return sb.toString();
+	}
+	
+	public int getSensorType()
+	{
+		return SensorUtils.SENSOR_TYPE_LOCATION;
 	}
 
 }

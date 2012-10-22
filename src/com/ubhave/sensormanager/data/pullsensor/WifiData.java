@@ -3,6 +3,7 @@ package com.ubhave.sensormanager.data.pullsensor;
 import java.util.ArrayList;
 
 import com.ubhave.sensormanager.data.SensorData;
+import com.ubhave.sensormanager.sensors.SensorUtils;
 
 import android.net.wifi.ScanResult;
 
@@ -53,6 +54,11 @@ public class WifiData extends SensorData
 			sb.append("WIFI_DATA_NOT_AVAILABLE");
 		}
 		return sb.toString();
+	}
+	
+	public int getSensorType()
+	{
+		return SensorUtils.SENSOR_TYPE_WIFI;
 	}
 
 }

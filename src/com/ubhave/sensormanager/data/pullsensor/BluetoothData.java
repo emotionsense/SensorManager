@@ -3,6 +3,7 @@ package com.ubhave.sensormanager.data.pullsensor;
 import java.util.ArrayList;
 
 import com.ubhave.sensormanager.data.SensorData;
+import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class BluetoothData extends SensorData
 {
@@ -38,6 +39,11 @@ public class BluetoothData extends SensorData
 			sb.append("NO_DEVICES");
 		}
 		return sb.toString();
+	}
+	
+	public int getSensorType()
+	{
+		return SensorUtils.SENSOR_TYPE_BLUETOOTH;
 	}
 
 }

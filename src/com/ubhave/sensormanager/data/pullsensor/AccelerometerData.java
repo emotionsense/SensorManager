@@ -3,6 +3,7 @@ package com.ubhave.sensormanager.data.pullsensor;
 import java.util.ArrayList;
 
 import com.ubhave.sensormanager.data.SensorData;
+import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class AccelerometerData extends SensorData
 {
@@ -67,6 +68,11 @@ public class AccelerometerData extends SensorData
 		}
 
 		return sb.toString();
+	}
+	
+	public int getSensorType()
+	{
+		return SensorUtils.SENSOR_TYPE_ACCELEROMETER;
 	}
 
 }

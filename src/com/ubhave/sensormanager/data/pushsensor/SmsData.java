@@ -1,6 +1,7 @@
 package com.ubhave.sensormanager.data.pushsensor;
 
 import com.ubhave.sensormanager.data.SensorData;
+import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class SmsData extends SensorData
 {
@@ -45,5 +46,10 @@ public class SmsData extends SensorData
 	public String getDataString()
 	{
 		return "SMSLength " + contentLength + " NoOfWords " + noOfWords + " Address " + address + " Type " + eventType;
+	}
+	
+	public int getSensorType()
+	{
+		return SensorUtils.SENSOR_TYPE_SMS;
 	}
 }

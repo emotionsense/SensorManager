@@ -10,7 +10,11 @@ public interface ESSensorManagerInterface
 
 	public SensorData getDataFromSensor(int sensorId) throws ESException;
 	
-//	public void setSensorSampleTime(int sensorId, long sampleMillis);
-//	
-//	public void setSensorSleepTime(int sensorId, long sleepMillis);
+	public void enableAdaptiveSensing(int sensorId) throws ESException;
+	
+	public void disableAdaptiveSensing(int sensorId) throws ESException;
+	
+	public void setSensingWindowLength(long windowLengthMillis) throws ESException;
+	
+	public void setSleepWindowLength(long windowLengthMillis) throws ESException;
 }
