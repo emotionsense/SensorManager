@@ -42,23 +42,19 @@ public class PullSensorTask extends AbstractSensorTask
 							state = RUNNING;
 							continue;
 						}
-						else
-						{
-							long samplingInterval = (Long) sensorConfig.get(SensorConfig.SENSOR_SLEEP_INTERVAL);
-							syncObject.wait(samplingInterval);
-							if ((state == PAUSED) || (state == STOPPED))
-							{
-								continue;
-							}
-						}
-
-						// sense, this is a blocking call and returns when
+						
+						// SENSE
+						// sense() is a blocking call and returns when
 						// the sensing is complete, the sensorConfig object
 						// will have the sampling window, cycle information
 						ESLogger.log(getLogTag(), "Pulling from: " + SensorUtils.getSensorName(sensor.getSensorType()));
 						SensorData sensorData = ((PullSensor) sensor).sense(sensorConfig);
 						// publish sensed data
 						publishData(sensorData);
+						
+						// SLEEP
+						long samplingInterval = (Long) sensorConfig.get(SensorConfig.SENSOR_SLEEP_INTERVAL);
+						syncObject.wait(samplingInterval);
 					}
 					catch (InterruptedException exp)
 					{
