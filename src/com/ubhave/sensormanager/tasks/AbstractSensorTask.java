@@ -141,4 +141,16 @@ public abstract class AbstractSensorTask extends Thread
 			}
 		}
 	}
+	
+	public boolean isRunning()
+	{
+		if (state == RUNNING)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 }

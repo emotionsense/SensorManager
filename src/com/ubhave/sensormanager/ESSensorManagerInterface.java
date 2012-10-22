@@ -8,7 +8,7 @@ public interface ESSensorManagerInterface
 
 	public void unsubscribeFromSensorData(int subscriptionId) throws ESException;
 
-	public SensorData getDataFromSensor(int sensorId);
+	public SensorData getDataFromSensor(int sensorId) throws ESException;
 	
 //	public void setSensorSampleTime(int sensorId, long sampleMillis);
 //	

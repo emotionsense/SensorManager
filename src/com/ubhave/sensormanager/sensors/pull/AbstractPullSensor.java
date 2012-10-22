@@ -21,7 +21,6 @@ public abstract class AbstractPullSensor extends AbstractSensor implements PullS
 
 	protected abstract SensorData getMostRecentRawData();
 
-	// for push sensors
 	public SensorData sense(SensorConfig sensorConfig) throws ESException
 	{
 		if (isSensing)

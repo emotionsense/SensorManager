@@ -16,6 +16,12 @@ public class PullSensorTask extends AbstractSensorTask
 	{
 		super(sensor);
 	}
+	
+	public SensorData getCurrentSensorData(SensorConfig sensorConfig) throws ESException
+	{
+		SensorData sensorData = ((PullSensor) sensor).sense(sensorConfig);
+		return sensorData;
+	}
 
 	public void run()
 	{
@@ -27,7 +33,7 @@ public class PullSensorTask extends AbstractSensorTask
 				{
 					try
 					{
-						SensorConfig sensorConfig = getSensorConfig();
+						
 
 						if ((state == PAUSED) || (state == STOPPED))
 						{
@@ -48,7 +54,8 @@ public class PullSensorTask extends AbstractSensorTask
 						// the sensing is complete, the sensorConfig object
 						// will have the sampling window, cycle information
 						ESLogger.log(getLogTag(), "Pulling from: " + SensorUtils.getSensorName(sensor.getSensorType()));
-						SensorData sensorData = ((PullSensor) sensor).sense(sensorConfig);
+						SensorConfig sensorConfig = getSensorConfig();
+						SensorData sensorData = getCurrentSensorData(sensorConfig);
 						// publish sensed data
 						publishData(sensorData);
 						

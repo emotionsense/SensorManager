@@ -8,6 +8,7 @@ import android.util.SparseArray;
 
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.logs.ESLogger;
+import com.ubhave.sensormanager.sensors.AbstractSensor;
 import com.ubhave.sensormanager.sensors.SensorInterface;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 import com.ubhave.sensormanager.tasks.AbstractSensorTask;
@@ -66,7 +67,7 @@ public class ESSensorManager implements ESSensorManagerInterface
 			{
 				sensorTask = new PushSensorTask(aSensor);
 			}
-			
+
 			sensorTask.start();
 
 			sensorTaskMap.put(aSensor.getSensorType(), sensorTask);
@@ -102,9 +103,28 @@ public class ESSensorManager implements ESSensorManagerInterface
 		}
 	}
 
-	public SensorData getDataFromSensor(int sensorId)
+	public SensorData getDataFromSensor(int sensorId) throws ESException
 	{
-		return null;
+		SensorData sensorData = null;
+		AbstractSensorTask sensorTask = sensorTaskMap.get(sensorId);
+		if (sensorTask == null)
+		{
+			throw new ESException(ESException.UNKNOWN_SENSOR_TYPE, "Unknown sensor type: " + sensorId);
+		}
+		else if (!SensorUtils.isPullSensor(sensorTask.getSensorType()))
+		{
+			throw new ESException(ESException.OPERATION_NOT_SUPPORTED, "this method is supported only for pull sensors.");
+		}
+		else if (sensorTask.isRunning())
+		{
+			throw new ESException(ESException.OPERATION_NOT_SUPPORTED, "this method is supported only for sensors that are not currently running. please unregister all listeners to the sensor and then call this method.");
+		}
+		else
+		{
+			sensorData = ((PullSensorTask) sensorTask).getCurrentSensorData(AbstractSensor.getDefaultSensorConfig(sensorTask.getSensorType()));
+		}
+
+		return sensorData;
 	}
 
 }
