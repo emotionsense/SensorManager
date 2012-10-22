@@ -7,6 +7,7 @@ import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.logs.ESLogger;
 import com.ubhave.sensormanager.sensors.AbstractSensor;
+import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public abstract class AbstractPullSensor extends AbstractSensor implements PullSensor
 {
@@ -95,7 +96,7 @@ public abstract class AbstractPullSensor extends AbstractSensor implements PullS
 
 	public long getDefaultSamplingInterval() throws ESException
 	{
-		SensorConfig sensorConfig = getDefaultSensorConfig(getSensorType());
+		SensorConfig sensorConfig = SensorUtils.getDefaultSensorConfig(getSensorType());
 		if (sensorConfig.containsParameter(SensorConfig.SENSOR_SLEEP_INTERVAL))
 		{
 			return (Long) sensorConfig.get(SensorConfig.SENSOR_SLEEP_INTERVAL);

@@ -9,13 +9,10 @@ public class SensorConfig
 	public final static String SENSOR_ENABLED = "SENSOR_ENABLED";
 	public final static String SENSOR_ENABLED_VALUE = "yes";
 
-	public final static String MIC_RECORDER = "MIC_RECORDER";
-	public final static String MIC_RECORDER_VALUE_MEDIA_RECORDER = "MIC_RECORDER_VALUE_MEDIA_RECORDER";
-	public final static String MIC_RECORDER_VALUE_AUDIO_RECORD = "MIC_RECORDER_VALUE_AUDIO_RECORD";
-
 	// sampling window size sets the data capture duration from the sensor, like
 	// accelerometer sampling window
 	public final static String SAMPLING_WINDOW_SIZE_IN_MILLIS = "SAMPLING_WINDOW_SIZE_IN_MILLIS";
+
 	// number of sampling cycles sets the number of times a sensor samples the
 	// data, and this is relevant for sensors like Bluetooth, Wifi, where there
 	// is no fixed sampling window and the amount of sampling time

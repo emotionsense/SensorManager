@@ -8,7 +8,6 @@ import android.util.SparseArray;
 
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.logs.ESLogger;
-import com.ubhave.sensormanager.sensors.AbstractSensor;
 import com.ubhave.sensormanager.sensors.SensorInterface;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 import com.ubhave.sensormanager.tasks.AbstractSensorTask;
@@ -129,7 +128,7 @@ public class ESSensorManager implements ESSensorManagerInterface
 		}
 		else
 		{
-			sensorData = ((PullSensorTask) sensorTask).getCurrentSensorData(AbstractSensor.getDefaultSensorConfig(sensorTask.getSensorType()));
+			sensorData = ((PullSensorTask) sensorTask).getCurrentSensorData(SensorUtils.getDefaultSensorConfig(sensorTask.getSensorType()));
 		}
 
 		return sensorData;

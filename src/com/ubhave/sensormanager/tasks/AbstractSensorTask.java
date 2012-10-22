@@ -7,7 +7,6 @@ import com.ubhave.sensormanager.SensorDataListener;
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.logs.ESLogger;
-import com.ubhave.sensormanager.sensors.AbstractSensor;
 import com.ubhave.sensormanager.sensors.SensorInterface;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
@@ -107,7 +106,7 @@ public abstract class AbstractSensorTask extends Thread
 
 	protected SensorConfig getSensorConfig()
 	{
-		SensorConfig sensorConfig = AbstractSensor.getDefaultSensorConfig(sensor.getSensorType());
+		SensorConfig sensorConfig = SensorUtils.getDefaultSensorConfig(sensor.getSensorType());
 		return sensorConfig;
 	}
 
