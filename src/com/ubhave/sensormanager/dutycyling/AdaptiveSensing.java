@@ -1,8 +1,9 @@
 package com.ubhave.sensormanager.dutycyling;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Random;
+
+import android.util.SparseArray;
 
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.ESSensorManager;
@@ -32,7 +33,7 @@ public class AdaptiveSensing implements SensorDataListener
 		double probability = Constants.PROBABILITY_INITIAL_VALUE;
 	}
 
-	private HashMap<Integer, PullSensorDetails> sensorMap;
+	private SparseArray<PullSensorDetails> sensorMap;
 	private LinkedList<SensorData> sensorDataList;
 	private static AdaptiveSensing adaptiveSensing;
 	private static Object lock = new Object();
@@ -55,7 +56,7 @@ public class AdaptiveSensing implements SensorDataListener
 
 	private AdaptiveSensing()
 	{
-		sensorMap = new HashMap<Integer, AdaptiveSensing.PullSensorDetails>();
+		sensorMap = new SparseArray<PullSensorDetails>();
 		sensorDataList = new LinkedList<SensorData>();
 		random = new Random();
 	}
@@ -77,6 +78,14 @@ public class AdaptiveSensing implements SensorDataListener
 			throw exp;
 		}
 		sensorMap.put(sensor.getSensorType(), sensorDetails);
+	}
+	
+	public void unregisterSensor(SensorInterface sensor)
+	{
+		if (sensorMap.get(sensor.getSensorType()) != null)
+		{
+			sensorMap.remove(sensor.getSensorType());
+		}
 	}
 	
 	private void updateSamplingInterval(SensorData data)
