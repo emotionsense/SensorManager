@@ -32,16 +32,16 @@ public class SensorUtils
 	public final static int SENSOR_TYPE_SMS = 5009;
 	public final static int SENSOR_TYPE_WIFI = 5010;
 	
-	public final static String SENSOR_NAME_ACCELEROMETER = "accelerometer";
-	public final static String SENSOR_NAME_BATTERY = "battery";
-	public final static String SENSOR_NAME_BLUETOOTH = "bluetooth";
-	public final static String SENSOR_NAME_LOCATION = "location";
-	public final static String SENSOR_NAME_MICROPHONE = "microphone";
-	public final static String SENSOR_NAME_PHONE_STATE = "phonestate";
-	public final static String SENSOR_NAME_PROXIMITY = "proximity";
-	public final static String SENSOR_NAME_SCREEN = "screen";
-	public final static String SENSOR_NAME_SMS = "sms";
-	public final static String SENSOR_NAME_WIFI = "wifi";
+	public final static String SENSOR_NAME_ACCELEROMETER = "Accelerometer";
+	public final static String SENSOR_NAME_BATTERY = "Battery";
+	public final static String SENSOR_NAME_BLUETOOTH = "Bluetooth";
+	public final static String SENSOR_NAME_LOCATION = "Location";
+	public final static String SENSOR_NAME_MICROPHONE = "Microphone";
+	public final static String SENSOR_NAME_PHONE_STATE = "PhoneState";
+	public final static String SENSOR_NAME_PROXIMITY = "Proximity";
+	public final static String SENSOR_NAME_SCREEN = "Screen";
+	public final static String SENSOR_NAME_SMS = "SMS";
+	public final static String SENSOR_NAME_WIFI = "WiFi";
 	
 	private final static int[] ALL_SENSORS = new int[]{
 		SENSOR_TYPE_ACCELEROMETER,
