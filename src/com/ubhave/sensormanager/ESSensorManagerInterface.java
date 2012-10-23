@@ -12,6 +12,8 @@ public interface ESSensorManagerInterface
 	
 	public void setSensorConfig(int sensorId, String configKey, Object configValue) throws ESException;
 	
+	public Object getSensorConfigValue(int sensorId, String configKey) throws ESException;
+	
 //	public void enableAdaptiveSensing(int sensorId) throws ESException;
 //	public void disableAdaptiveSensing(int sensorId) throws ESException;
 //	public void setSensingWindowLength(long windowLengthMillis) throws ESException;

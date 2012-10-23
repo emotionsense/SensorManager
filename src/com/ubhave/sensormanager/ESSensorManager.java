@@ -141,6 +141,13 @@ public class ESSensorManager implements ESSensorManagerInterface
 		
 	}
 
+	@Override
+	public Object getSensorConfigValue(int sensorId, String configKey) throws ESException
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 
 }
