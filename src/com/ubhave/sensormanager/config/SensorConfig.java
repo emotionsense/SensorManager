@@ -11,7 +11,7 @@ public class SensorConfig
 
 	// sampling window size sets the data capture duration from the sensor, like
 	// accelerometer sampling window
-	public final static String SAMPLING_WINDOW_SIZE_IN_MILLIS = "SAMPLING_WINDOW_SIZE_IN_MILLIS";
+	public final static String SENSOR_SAMPLE_INTERVAL = "SAMPLING_WINDOW_SIZE_IN_MILLIS";
 
 	// number of sampling cycles sets the number of times a sensor samples the
 	// data, and this is relevant for sensors like Bluetooth, Wifi, where there

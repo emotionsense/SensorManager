@@ -50,9 +50,9 @@ public abstract class AbstractPullSensor extends AbstractSensor implements PullS
 					{
 						senseCompleteNotify.wait();
 					}
-					else if (sensorConfig.containsParameter(SensorConfig.SAMPLING_WINDOW_SIZE_IN_MILLIS))
+					else if (sensorConfig.containsParameter(SensorConfig.SENSOR_SAMPLE_INTERVAL))
 					{
-						long samplingWindowSize = (Long) sensorConfig.get(SensorConfig.SAMPLING_WINDOW_SIZE_IN_MILLIS);
+						long samplingWindowSize = (Long) sensorConfig.get(SensorConfig.SENSOR_SAMPLE_INTERVAL);
 						senseCompleteNotify.wait(samplingWindowSize);
 					}
 					else

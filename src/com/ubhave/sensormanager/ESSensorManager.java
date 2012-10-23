@@ -135,31 +135,12 @@ public class ESSensorManager implements ESSensorManagerInterface
 	}
 
 	@Override
-	public void enableAdaptiveSensing(int sensorId) throws ESException
+	public void setSensorConfig(int sensorId, String configKey, Object configValue) throws ESException
 	{
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
-	public void disableAdaptiveSensing(int sensorId) throws ESException
-	{
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setSensingWindowLength(long windowLengthMillis) throws ESException
-	{
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setSleepWindowLength(long windowLengthMillis) throws ESException
-	{
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 }
