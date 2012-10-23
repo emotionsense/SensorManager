@@ -7,7 +7,6 @@ import android.content.IntentFilter;
 
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.SensorDataListener;
-import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.logs.ESLogger;
 import com.ubhave.sensormanager.sensors.AbstractSensor;
@@ -41,7 +40,7 @@ public abstract class AbstractPushSensor extends AbstractSensor implements PushS
 		};
 	}
 
-	public void startSensing(SensorConfig sensorConfig, SensorDataListener listener) throws ESException
+	public void startSensing(SensorDataListener listener) throws ESException
 	{
 		if (isSensing)
 		{

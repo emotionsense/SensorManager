@@ -7,9 +7,11 @@ import android.content.pm.PackageManager;
 import android.util.SparseArray;
 
 import com.ubhave.sensormanager.data.SensorData;
+import com.ubhave.sensormanager.dutycyling.AdaptiveSensing;
 import com.ubhave.sensormanager.logs.ESLogger;
 import com.ubhave.sensormanager.sensors.SensorInterface;
 import com.ubhave.sensormanager.sensors.SensorUtils;
+import com.ubhave.sensormanager.sensors.pull.AbstractPullSensor;
 import com.ubhave.sensormanager.tasks.AbstractSensorTask;
 import com.ubhave.sensormanager.tasks.PullSensorTask;
 import com.ubhave.sensormanager.tasks.PushSensorTask;
@@ -110,15 +112,21 @@ public class ESSensorManager implements ESSensorManagerInterface
 		}
 	}
 
-	public SensorData getDataFromSensor(int sensorId) throws ESException
+	private AbstractSensorTask getSensorTask(int sensorId) throws ESException
 	{
-		SensorData sensorData = null;
 		AbstractSensorTask sensorTask = sensorTaskMap.get(sensorId);
 		if (sensorTask == null)
 		{
 			throw new ESException(ESException.UNKNOWN_SENSOR_TYPE, "Unknown sensor type: " + sensorId);
 		}
-		else if (!SensorUtils.isPullSensor(sensorTask.getSensorType()))
+		return sensorTask;
+	}
+
+	public SensorData getDataFromSensor(int sensorId) throws ESException
+	{
+		SensorData sensorData = null;
+		AbstractSensorTask sensorTask = getSensorTask(sensorId);
+		if (!SensorUtils.isPullSensor(sensorTask.getSensorType()))
 		{
 			throw new ESException(ESException.OPERATION_NOT_SUPPORTED, "this method is supported only for pull sensors.");
 		}
@@ -128,26 +136,53 @@ public class ESSensorManager implements ESSensorManagerInterface
 		}
 		else
 		{
-			sensorData = ((PullSensorTask) sensorTask).getCurrentSensorData(SensorUtils.getDefaultSensorConfig(sensorTask.getSensorType()));
+			sensorData = ((PullSensorTask) sensorTask).getCurrentSensorData();
 		}
 
 		return sensorData;
 	}
 
-	@Override
 	public void setSensorConfig(int sensorId, String configKey, Object configValue) throws ESException
 	{
-		// TODO Auto-generated method stub
-		
+		AbstractSensorTask sensorTask = getSensorTask(sensorId);
+		SensorInterface sensor = sensorTask.getSensor();
+		sensor.setSensorConfig(configKey, configValue);
 	}
 
-	@Override
 	public Object getSensorConfigValue(int sensorId, String configKey) throws ESException
 	{
-		// TODO Auto-generated method stub
-		return null;
+		AbstractSensorTask sensorTask = getSensorTask(sensorId);
+		SensorInterface sensor = sensorTask.getSensor();
+		return sensor.getSensorConfig(configKey);
 	}
 
-	
+	public void enableAdaptiveSensing(int sensorId) throws ESException
+	{
+		AbstractSensorTask sensorTask = getSensorTask(sensorId);
+		if (SensorUtils.isPullSensor(sensorId))
+		{
+			AbstractPullSensor pullSensor = (AbstractPullSensor) sensorTask.getSensor();
+			AdaptiveSensing.getAdaptiveSensing().registerSensor(sensorTask.getSensor(), SensorUtils.getSensorDataClassifier(sensorId), pullSensor);
+		}
+		else
+		{
+			throw new ESException(ESException.OPERATION_NOT_SUPPORTED, " adaptive sensing is supported only for pull sensors");
+		}
+
+	}
+
+	public void disableAdaptiveSensing(int sensorId) throws ESException
+	{
+		AbstractSensorTask sensorTask = getSensorTask(sensorId);
+		if (AdaptiveSensing.getAdaptiveSensing().isSensorRegistered(sensorTask.getSensor()))
+		{
+			AdaptiveSensing.getAdaptiveSensing().unregisterSensor(sensorTask.getSensor());
+		}
+		else
+		{
+			throw new ESException(ESException.OPERATION_NOT_SUPPORTED, " adaptive sensing not enabled for sensorId: " + sensorId);
+		}
+		
+	}
 
 }

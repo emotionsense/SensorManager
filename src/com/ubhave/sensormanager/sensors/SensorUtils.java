@@ -5,6 +5,12 @@ import java.util.ArrayList;
 import android.content.Context;
 
 import com.ubhave.sensormanager.ESException;
+import com.ubhave.sensormanager.classifier.AccelerometerDataClassifier;
+import com.ubhave.sensormanager.classifier.BluetoothDataClassifier;
+import com.ubhave.sensormanager.classifier.LocationDataClassifier;
+import com.ubhave.sensormanager.classifier.MicrophoneDataClassifier;
+import com.ubhave.sensormanager.classifier.SensorDataClassifier;
+import com.ubhave.sensormanager.classifier.WifiDataClassifier;
 import com.ubhave.sensormanager.config.Constants;
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.logs.ESLogger;
@@ -119,24 +125,24 @@ public class SensorUtils
 		switch (sensorType)
 		{
 		case SensorUtils.SENSOR_TYPE_ACCELEROMETER:
-			sensorConfig.set(SensorConfig.SENSOR_SLEEP_INTERVAL, Constants.ACCELEROMETER_SLEEP_INTERVAL);
-			sensorConfig.set(SensorConfig.SENSOR_SAMPLE_INTERVAL, Constants.ACCELEROMETER_SAMPLING_WINDOW_SIZE_MILLIS);
+			sensorConfig.set(SensorConfig.SLEEP_WINDOW_LENGTH_MILLIS, Constants.ACCELEROMETER_SLEEP_INTERVAL);
+			sensorConfig.set(SensorConfig.SENSE_WINDOW_LENGTH_MILLIS, Constants.ACCELEROMETER_SAMPLING_WINDOW_SIZE_MILLIS);
 			break;
 		case SensorUtils.SENSOR_TYPE_BLUETOOTH:
-			sensorConfig.set(SensorConfig.SENSOR_SLEEP_INTERVAL, Constants.BLUETOOTH_SLEEP_INTERVAL);
-			sensorConfig.set(SensorConfig.NUMBER_OF_SAMPLING_CYCLES, Constants.BLUETOOTH_SAMPLING_CYCLES);
+			sensorConfig.set(SensorConfig.SLEEP_WINDOW_LENGTH_MILLIS, Constants.BLUETOOTH_SLEEP_INTERVAL);
+			sensorConfig.set(SensorConfig.NUMBER_OF_SENSE_CYCLES, Constants.BLUETOOTH_SAMPLING_CYCLES);
 			break;
 		case SensorUtils.SENSOR_TYPE_LOCATION:
-			sensorConfig.set(SensorConfig.SENSOR_SLEEP_INTERVAL, Constants.LOCATION_SLEEP_INTERVAL);
-			sensorConfig.set(SensorConfig.SENSOR_SAMPLE_INTERVAL, Constants.LOCATION_SAMPLING_WINDOW_SIZE_MILLIS);
+			sensorConfig.set(SensorConfig.SLEEP_WINDOW_LENGTH_MILLIS, Constants.LOCATION_SLEEP_INTERVAL);
+			sensorConfig.set(SensorConfig.SENSE_WINDOW_LENGTH_MILLIS, Constants.LOCATION_SAMPLING_WINDOW_SIZE_MILLIS);
 			break;
 		case SensorUtils.SENSOR_TYPE_MICROPHONE:
-			sensorConfig.set(SensorConfig.SENSOR_SLEEP_INTERVAL, Constants.MICROPHONE_SLEEP_INTERVAL);
-			sensorConfig.set(SensorConfig.SENSOR_SAMPLE_INTERVAL, Constants.MICROPHONE_SAMPLING_WINDOW_SIZE_MILLIS);
+			sensorConfig.set(SensorConfig.SLEEP_WINDOW_LENGTH_MILLIS, Constants.MICROPHONE_SLEEP_INTERVAL);
+			sensorConfig.set(SensorConfig.SENSE_WINDOW_LENGTH_MILLIS, Constants.MICROPHONE_SAMPLING_WINDOW_SIZE_MILLIS);
 			break;
 		case SensorUtils.SENSOR_TYPE_WIFI:
-			sensorConfig.set(SensorConfig.SENSOR_SLEEP_INTERVAL, Constants.WIFI_SLEEP_INTERVAL);
-			sensorConfig.set(SensorConfig.NUMBER_OF_SAMPLING_CYCLES, Constants.WIFI_SAMPLING_CYCLES);
+			sensorConfig.set(SensorConfig.SLEEP_WINDOW_LENGTH_MILLIS, Constants.WIFI_SLEEP_INTERVAL);
+			sensorConfig.set(SensorConfig.NUMBER_OF_SENSE_CYCLES, Constants.WIFI_SAMPLING_CYCLES);
 			break;
 		}
 		return sensorConfig;
@@ -216,6 +222,25 @@ public class SensorUtils
 			return SENSOR_NAME_WIFI;
 		default:
 			throw new ESException(ESException.UNKNOWN_SENSOR_NAME, "unknown sensor type " + sensorType);
+		}
+	}
+	
+	public static SensorDataClassifier getSensorDataClassifier(int sensorType) throws ESException
+	{
+		switch (sensorType)
+		{
+		case SensorUtils.SENSOR_TYPE_ACCELEROMETER:
+			return new AccelerometerDataClassifier();
+		case SensorUtils.SENSOR_TYPE_BLUETOOTH:
+			return new BluetoothDataClassifier();
+		case SensorUtils.SENSOR_TYPE_LOCATION:
+			return new LocationDataClassifier();
+		case SensorUtils.SENSOR_TYPE_MICROPHONE:
+			return new MicrophoneDataClassifier();
+		case SensorUtils.SENSOR_TYPE_WIFI:
+			return new WifiDataClassifier();
+		default:
+			throw new ESException(ESException.UNKNOWN_SENSOR_TYPE, "sensor data classifier not support for the sensor type " + sensorType);
 		}
 	}
 	

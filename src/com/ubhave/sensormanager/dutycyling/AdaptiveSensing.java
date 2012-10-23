@@ -10,6 +10,7 @@ import com.ubhave.sensormanager.ESSensorManager;
 import com.ubhave.sensormanager.SensorDataListener;
 import com.ubhave.sensormanager.classifier.SensorDataClassifier;
 import com.ubhave.sensormanager.config.Constants;
+import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.logs.ESLogger;
 import com.ubhave.sensormanager.sensors.SensorInterface;
@@ -28,8 +29,8 @@ public class AdaptiveSensing implements SensorDataListener
 	{
 		SensorInterface sensor;
 		SensorDataClassifier classifier;
-		SamplingIntervalListener listener;
-		long samplingWindowLengthMillis;
+		SleepWindowListener listener;
+		SensorConfig sensorConfig;
 		double probability = Constants.PROBABILITY_INITIAL_VALUE;
 	}
 
@@ -61,7 +62,7 @@ public class AdaptiveSensing implements SensorDataListener
 		random = new Random();
 	}
 
-	public void registerSensor(SensorInterface sensor, SensorDataClassifier classifier, SamplingIntervalListener listener) throws ESException
+	public void registerSensor(SensorInterface sensor, SensorDataClassifier classifier, SleepWindowListener listener) throws ESException
 	{
 		PullSensorDetails sensorDetails = new PullSensorDetails();
 		sensorDetails.sensor = sensor;
@@ -85,6 +86,18 @@ public class AdaptiveSensing implements SensorDataListener
 		if (sensorMap.get(sensor.getSensorType()) != null)
 		{
 			sensorMap.remove(sensor.getSensorType());
+		}
+	}
+	
+	public boolean isSensorRegistered(SensorInterface sensor)
+	{
+		if (sensorMap.get(sensor.getSensorType()) == null)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
 		}
 	}
 	
@@ -116,7 +129,9 @@ public class AdaptiveSensing implements SensorDataListener
 		}
 		
 		// convert probability to sampling intervals in milliseconds
-		long intervalMilliSeconds = 0;
+		long sleepWindowMilliSeconds = 1000;
+		
+		long senseWindowLengthMillis = (Long)sensorDetails.sensorConfig.get(SensorConfig.SENSE_WINDOW_LENGTH_MILLIS);
 		
 		while (true)
 		{
@@ -127,12 +142,12 @@ public class AdaptiveSensing implements SensorDataListener
 			}
 			else
 			{
-				intervalMilliSeconds += sensorDetails.samplingWindowLengthMillis;
+				sleepWindowMilliSeconds += senseWindowLengthMillis;
 			}
 		}
 		
 		// update listener
-		sensorDetails.listener.onSamplingIntervalChanged(intervalMilliSeconds);
+		sensorDetails.listener.onSleepWindowLengthChanged(sleepWindowMilliSeconds);
 	
 	}
 

@@ -17,9 +17,9 @@ public class PullSensorTask extends AbstractSensorTask
 		super(sensor);
 	}
 	
-	public SensorData getCurrentSensorData(SensorConfig sensorConfig) throws ESException
+	public SensorData getCurrentSensorData() throws ESException
 	{
-		SensorData sensorData = ((PullSensor) sensor).sense(sensorConfig);
+		SensorData sensorData = ((PullSensor) sensor).sense();
 		return sensorData;
 	}
 
@@ -54,13 +54,12 @@ public class PullSensorTask extends AbstractSensorTask
 						// the sensing is complete, the sensorConfig object
 						// will have the sampling window, cycle information
 						ESLogger.log(getLogTag(), "Pulling from: " + SensorUtils.getSensorName(sensor.getSensorType()));
-						SensorConfig sensorConfig = getSensorConfig();
-						SensorData sensorData = getCurrentSensorData(sensorConfig);
+						SensorData sensorData = getCurrentSensorData();
 						// publish sensed data
 						publishData(sensorData);
 						
 						// SLEEP
-						long samplingInterval = (Long) sensorConfig.get(SensorConfig.SENSOR_SLEEP_INTERVAL);
+						long samplingInterval = (Long) sensor.getSensorConfig(SensorConfig.SLEEP_WINDOW_LENGTH_MILLIS);
 						syncObject.wait(samplingInterval);
 					}
 					catch (InterruptedException exp)

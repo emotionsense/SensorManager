@@ -145,7 +145,7 @@ public class BluetoothSensor extends AbstractPullSensor
 				}
 			}
 		}
-		cyclesRemaining = (Integer) sensorConfig.get(SensorConfig.NUMBER_OF_SAMPLING_CYCLES);
+		cyclesRemaining = (Integer) sensorConfig.get(SensorConfig.NUMBER_OF_SENSE_CYCLES);
 		bluetooth.startDiscovery();
 		return true;
 	}

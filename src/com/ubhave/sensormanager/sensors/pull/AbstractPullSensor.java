@@ -5,11 +5,11 @@ import android.content.Context;
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
+import com.ubhave.sensormanager.dutycyling.SleepWindowListener;
 import com.ubhave.sensormanager.logs.ESLogger;
 import com.ubhave.sensormanager.sensors.AbstractSensor;
-import com.ubhave.sensormanager.sensors.SensorUtils;
 
-public abstract class AbstractPullSensor extends AbstractSensor implements PullSensor
+public abstract class AbstractPullSensor extends AbstractSensor implements PullSensor, SleepWindowListener
 {
 	protected long pullSenseStartTimestamp;
 	
@@ -21,8 +21,13 @@ public abstract class AbstractPullSensor extends AbstractSensor implements PullS
 	}
 
 	protected abstract SensorData getMostRecentRawData();
+	
+	public void onSleepWindowLengthChanged(long sleepWindowLengthMillis)
+	{
+		sensorConfig.set(SensorConfig.SLEEP_WINDOW_LENGTH_MILLIS, sleepWindowLengthMillis);
+	}
 
-	public SensorData sense(SensorConfig sensorConfig) throws ESException
+	public SensorData sense() throws ESException
 	{
 		if (isSensing)
 		{
@@ -46,13 +51,13 @@ public abstract class AbstractPullSensor extends AbstractSensor implements PullS
 			{
 				try
 				{
-					if (sensorConfig.containsParameter(SensorConfig.NUMBER_OF_SAMPLING_CYCLES))
+					if (sensorConfig.containsParameter(SensorConfig.NUMBER_OF_SENSE_CYCLES))
 					{
 						senseCompleteNotify.wait();
 					}
-					else if (sensorConfig.containsParameter(SensorConfig.SENSOR_SAMPLE_INTERVAL))
+					else if (sensorConfig.containsParameter(SensorConfig.SENSE_WINDOW_LENGTH_MILLIS))
 					{
-						long samplingWindowSize = (Long) sensorConfig.get(SensorConfig.SENSOR_SAMPLE_INTERVAL);
+						long samplingWindowSize = (Long) sensorConfig.get(SensorConfig.SENSE_WINDOW_LENGTH_MILLIS);
 						senseCompleteNotify.wait(samplingWindowSize);
 					}
 					else
@@ -94,13 +99,4 @@ public abstract class AbstractPullSensor extends AbstractSensor implements PullS
 		}
 	}
 
-	public long getDefaultSamplingInterval() throws ESException
-	{
-		SensorConfig sensorConfig = SensorUtils.getDefaultSensorConfig(getSensorType());
-		if (sensorConfig.containsParameter(SensorConfig.SENSOR_SLEEP_INTERVAL))
-		{
-			return (Long) sensorConfig.get(SensorConfig.SENSOR_SLEEP_INTERVAL);
-		}
-		throw new ESException(ESException.CONFIG_NOT_SUPPORTED, "sampling interval parameter not supported for this sensor");
-	}
 }

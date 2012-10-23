@@ -2,7 +2,6 @@ package com.ubhave.sensormanager.tasks;
 
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.SensorDataListener;
-import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.logs.ESLogger;
 import com.ubhave.sensormanager.sensors.SensorInterface;
@@ -27,10 +26,9 @@ public class PushSensorTask extends AbstractSensorTask implements SensorDataList
 				{
 					if (!(((PushSensor) sensor).isSensing()))
 					{
-						SensorConfig sensorConfig = getSensorConfig();
 						try
 						{
-							((PushSensor) sensor).startSensing(sensorConfig, this);
+							((PushSensor) sensor).startSensing(this);
 						}
 						catch (ESException exp)
 						{

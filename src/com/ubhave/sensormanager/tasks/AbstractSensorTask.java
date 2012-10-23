@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.SensorDataListener;
-import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.logs.ESLogger;
 import com.ubhave.sensormanager.sensors.SensorInterface;
@@ -34,6 +33,11 @@ public abstract class AbstractSensorTask extends Thread
 	}
 
 	public abstract void run();
+	
+	public SensorInterface getSensor()
+	{
+		return sensor;
+	}
 
 	@Override
 	public void start()
@@ -102,12 +106,6 @@ public abstract class AbstractSensorTask extends Thread
 				stopTask();
 			}
 		}
-	}
-
-	protected SensorConfig getSensorConfig()
-	{
-		SensorConfig sensorConfig = SensorUtils.getDefaultSensorConfig(sensor.getSensorType());
-		return sensorConfig;
 	}
 
 	public void startTask()
