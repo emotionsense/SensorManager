@@ -2,6 +2,8 @@ package com.ubhave.sensormanager.tasks;
 
 import java.util.ArrayList;
 
+import android.os.AsyncTask;
+
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.SensorDataListener;
 import com.ubhave.sensormanager.data.SensorData;
@@ -11,6 +13,17 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public abstract class AbstractSensorTask extends Thread
 {
+	private class StopTask extends AsyncTask<Void, Void, Void>
+	{
+
+		@Override
+		protected Void doInBackground(Void... arg0)
+		{
+			stopTask();
+			return null;
+		}
+		
+	}
 	
 	private static String TAG = "AbstractSensorTask"; 
 	
@@ -103,7 +116,8 @@ public abstract class AbstractSensorTask extends Thread
 			listenerList.remove(listener);
 			if (listenerList.isEmpty())
 			{
-				stopTask();
+//				stopTask();
+				new StopTask().execute();
 			}
 		}
 	}
@@ -123,7 +137,7 @@ public abstract class AbstractSensorTask extends Thread
 		}
 	}
 
-	protected void stopTask()
+	private void stopTask()
 	{
 		if (state == STOPPED)
 		{
