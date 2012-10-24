@@ -127,22 +127,27 @@ public class SensorUtils
 		case SensorUtils.SENSOR_TYPE_ACCELEROMETER:
 			sensorConfig.set(SensorConfig.SLEEP_WINDOW_LENGTH_MILLIS, Constants.ACCELEROMETER_SLEEP_INTERVAL);
 			sensorConfig.set(SensorConfig.SENSE_WINDOW_LENGTH_MILLIS, Constants.ACCELEROMETER_SAMPLING_WINDOW_SIZE_MILLIS);
+			sensorConfig.set(SensorConfig.SENSOR_ENABLED, Constants.SENSOR_ENABLED);
 			break;
 		case SensorUtils.SENSOR_TYPE_BLUETOOTH:
 			sensorConfig.set(SensorConfig.SLEEP_WINDOW_LENGTH_MILLIS, Constants.BLUETOOTH_SLEEP_INTERVAL);
 			sensorConfig.set(SensorConfig.NUMBER_OF_SENSE_CYCLES, Constants.BLUETOOTH_SAMPLING_CYCLES);
+			sensorConfig.set(SensorConfig.SENSOR_ENABLED, Constants.SENSOR_ENABLED);
 			break;
 		case SensorUtils.SENSOR_TYPE_LOCATION:
 			sensorConfig.set(SensorConfig.SLEEP_WINDOW_LENGTH_MILLIS, Constants.LOCATION_SLEEP_INTERVAL);
 			sensorConfig.set(SensorConfig.SENSE_WINDOW_LENGTH_MILLIS, Constants.LOCATION_SAMPLING_WINDOW_SIZE_MILLIS);
+			sensorConfig.set(SensorConfig.SENSOR_ENABLED, Constants.SENSOR_ENABLED);
 			break;
 		case SensorUtils.SENSOR_TYPE_MICROPHONE:
 			sensorConfig.set(SensorConfig.SLEEP_WINDOW_LENGTH_MILLIS, Constants.MICROPHONE_SLEEP_INTERVAL);
 			sensorConfig.set(SensorConfig.SENSE_WINDOW_LENGTH_MILLIS, Constants.MICROPHONE_SAMPLING_WINDOW_SIZE_MILLIS);
+			sensorConfig.set(SensorConfig.SENSOR_ENABLED, Constants.SENSOR_ENABLED);
 			break;
 		case SensorUtils.SENSOR_TYPE_WIFI:
 			sensorConfig.set(SensorConfig.SLEEP_WINDOW_LENGTH_MILLIS, Constants.WIFI_SLEEP_INTERVAL);
 			sensorConfig.set(SensorConfig.NUMBER_OF_SENSE_CYCLES, Constants.WIFI_SAMPLING_CYCLES);
+			sensorConfig.set(SensorConfig.SENSOR_ENABLED, Constants.SENSOR_ENABLED);
 			break;
 		}
 		return sensorConfig;

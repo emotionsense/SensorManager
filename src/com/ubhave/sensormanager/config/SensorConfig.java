@@ -4,7 +4,9 @@ import java.util.HashMap;
 
 public class SensorConfig
 {
-
+	// Whether the sensor is enabled or not
+	public final static String SENSOR_ENABLED = "SENSOR_ENABLED";
+	
 	// sampling window size sets the data capture duration from the sensor, like
 	// accelerometer sampling window
 	public final static String SENSE_WINDOW_LENGTH_MILLIS = "SENSE_WINDOW_LENGTH_MILLIS";
