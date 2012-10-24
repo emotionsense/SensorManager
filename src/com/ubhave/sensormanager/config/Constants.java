@@ -6,9 +6,6 @@ public class Constants
 	public static final boolean TEST_MODE = true;
 	
 	public static final int STOP_SENSING_BATTERY_LEVEL = 20;
-	
-	public static final boolean SENSOR_ENABLED = true;
-	public static final boolean SENSOR_DISABLED = false;
 
 	public static final long ACCELEROMETER_SAMPLING_WINDOW_SIZE_MILLIS = 8000;
 	public static final int BLUETOOTH_SAMPLING_CYCLES = 1;
