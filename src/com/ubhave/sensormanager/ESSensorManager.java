@@ -28,7 +28,7 @@ public class ESSensorManager implements ESSensorManagerInterface
 	private final SparseArray<AbstractSensorTask> sensorTaskMap;
 	private final SubscriptionList subscriptionList;
 
-	public static void startSensorManager(Context context) throws ESException
+	public static ESSensorManager getSensorManager(Context context) throws ESException
 	{
 		if (sensorManager == null)
 		{
@@ -36,23 +36,22 @@ public class ESSensorManager implements ESSensorManagerInterface
 			{
 				if (sensorManager == null)
 				{
+					if (context == null)
+					{
+						throw new ESException(ESException.SENSOR_MANAGER_NOT_STARTED, " Sensor Manager not started as context object is null");
+					}
+
 					if (context.checkCallingOrSelfPermission("android.permission.WAKE_LOCK") == PackageManager.PERMISSION_GRANTED)
 					{
 						sensorManager = new ESSensorManager(context);
 						ESLogger.log(TAG, "started.");
 					}
 					else
+					{
 						throw new ESException(ESException.PERMISSION_DENIED, "Sensor Manager requires android.permission.WAKE_LOCK");
+					}
 				}
 			}
-		}
-	}
-
-	public static ESSensorManager getSensorManager() throws ESException
-	{
-		if (sensorManager == null)
-		{
-			throw new ESException(ESException.SENSOR_MANAGER_NOT_STARTED, "sensor manager not started, start it before calling this method.");
 		}
 		return sensorManager;
 	}
@@ -162,7 +161,7 @@ public class ESSensorManager implements ESSensorManagerInterface
 		if (SensorUtils.isPullSensor(sensorId))
 		{
 			AbstractPullSensor pullSensor = (AbstractPullSensor) sensorTask.getSensor();
-			AdaptiveSensing.getAdaptiveSensing().registerSensor(sensorTask.getSensor(), SensorUtils.getSensorDataClassifier(sensorId), pullSensor);
+			AdaptiveSensing.getAdaptiveSensing().registerSensor(sensorManager, sensorTask.getSensor(), SensorUtils.getSensorDataClassifier(sensorId), pullSensor);
 		}
 		else
 		{
@@ -176,13 +175,13 @@ public class ESSensorManager implements ESSensorManagerInterface
 		AbstractSensorTask sensorTask = getSensorTask(sensorId);
 		if (AdaptiveSensing.getAdaptiveSensing().isSensorRegistered(sensorTask.getSensor()))
 		{
-			AdaptiveSensing.getAdaptiveSensing().unregisterSensor(sensorTask.getSensor());
+			AdaptiveSensing.getAdaptiveSensing().unregisterSensor(sensorManager, sensorTask.getSensor());
 		}
 		else
 		{
 			throw new ESException(ESException.OPERATION_NOT_SUPPORTED, " adaptive sensing not enabled for sensorId: " + sensorId);
 		}
-		
+
 	}
 
 }

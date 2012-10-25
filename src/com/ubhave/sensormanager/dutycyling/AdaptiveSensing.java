@@ -6,7 +6,7 @@ import java.util.Random;
 import android.util.SparseArray;
 
 import com.ubhave.sensormanager.ESException;
-import com.ubhave.sensormanager.ESSensorManager;
+import com.ubhave.sensormanager.ESSensorManagerInterface;
 import com.ubhave.sensormanager.SensorDataListener;
 import com.ubhave.sensormanager.classifier.SensorDataClassifier;
 import com.ubhave.sensormanager.config.Constants;
@@ -31,6 +31,7 @@ public class AdaptiveSensing implements SensorDataListener
 		SensorDataClassifier classifier;
 		SleepWindowListener listener;
 		SensorConfig sensorConfig;
+		int subscriptionId;
 		double probability = Constants.PROBABILITY_INITIAL_VALUE;
 	}
 
@@ -62,7 +63,7 @@ public class AdaptiveSensing implements SensorDataListener
 		random = new Random();
 	}
 
-	public void registerSensor(SensorInterface sensor, SensorDataClassifier classifier, SleepWindowListener listener) throws ESException
+	public void registerSensor(ESSensorManagerInterface sensorManager, SensorInterface sensor, SensorDataClassifier classifier, SleepWindowListener listener) throws ESException
 	{
 		PullSensorDetails sensorDetails = new PullSensorDetails();
 		sensorDetails.sensor = sensor;
@@ -71,7 +72,8 @@ public class AdaptiveSensing implements SensorDataListener
 
 		try
 		{
-			ESSensorManager.getSensorManager().subscribeToSensorData(sensor.getSensorType(), this);
+			int subscriptionId = sensorManager.subscribeToSensorData(sensor.getSensorType(), this);
+			sensorDetails.subscriptionId = subscriptionId;
 		}
 		catch (ESException exp)
 		{
@@ -80,15 +82,17 @@ public class AdaptiveSensing implements SensorDataListener
 		}
 		sensorMap.put(sensor.getSensorType(), sensorDetails);
 	}
-	
-	public void unregisterSensor(SensorInterface sensor)
+
+	public void unregisterSensor(ESSensorManagerInterface sensorManager, SensorInterface sensor) throws ESException
 	{
-		if (sensorMap.get(sensor.getSensorType()) != null)
+		PullSensorDetails sensorDetails = sensorMap.get(sensor.getSensorType());
+		if (sensorDetails != null)
 		{
+			sensorManager.unsubscribeFromSensorData(sensorDetails.subscriptionId);
 			sensorMap.remove(sensor.getSensorType());
 		}
 	}
-	
+
 	public boolean isSensorRegistered(SensorInterface sensor)
 	{
 		if (sensorMap.get(sensor.getSensorType()) == null)
@@ -100,14 +104,14 @@ public class AdaptiveSensing implements SensorDataListener
 			return true;
 		}
 	}
-	
+
 	private void updateSamplingInterval(SensorData data)
 	{
 		int sensorType = data.getSensorType();
 		PullSensorDetails sensorDetails = sensorMap.get(sensorType);
 		double probability = sensorDetails.probability;
 		SensorDataClassifier classifier = sensorDetails.classifier;
-		
+
 		// classify as interesting or not
 		if (classifier.isInteresting(data))
 		{
@@ -117,7 +121,7 @@ public class AdaptiveSensing implements SensorDataListener
 		{
 			probability = probability - (Constants.ALPHA_VALUE * probability);
 		}
-		
+
 		// check min,max bounds
 		if (probability < Constants.MIN_PROBABILITY_VALUE)
 		{
@@ -127,12 +131,12 @@ public class AdaptiveSensing implements SensorDataListener
 		{
 			probability = Constants.MAX_PROBABILITY_VALUE;
 		}
-		
+
 		// convert probability to sampling intervals in milliseconds
 		long sleepWindowMilliSeconds = 1000;
-		
-		long senseWindowLengthMillis = (Long)sensorDetails.sensorConfig.get(SensorConfig.SENSE_WINDOW_LENGTH_MILLIS);
-		
+
+		long senseWindowLengthMillis = (Long) sensorDetails.sensorConfig.get(SensorConfig.SENSE_WINDOW_LENGTH_MILLIS);
+
 		while (true)
 		{
 			double randomNumber = random.nextDouble();
@@ -145,10 +149,10 @@ public class AdaptiveSensing implements SensorDataListener
 				sleepWindowMilliSeconds += senseWindowLengthMillis;
 			}
 		}
-		
+
 		// update listener
 		sensorDetails.listener.onSleepWindowLengthChanged(sleepWindowMilliSeconds);
-	
+
 	}
 
 	public void onDataSensed(SensorData data)
