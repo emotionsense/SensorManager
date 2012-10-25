@@ -22,11 +22,11 @@ public abstract class AbstractSensorTask extends Thread
 			stopTask();
 			return null;
 		}
-		
+
 	}
-	
-	private static String TAG = "AbstractSensorTask"; 
-	
+
+	private static String TAG = "AbstractSensorTask";
+
 	protected SensorInterface sensor;
 	protected Object syncObject = new Object();
 
@@ -46,7 +46,7 @@ public abstract class AbstractSensorTask extends Thread
 	}
 
 	public abstract void run();
-	
+
 	public SensorInterface getSensor()
 	{
 		return sensor;
@@ -58,11 +58,11 @@ public abstract class AbstractSensorTask extends Thread
 		state = STOPPED;
 		super.start();
 	}
-	
+
 	protected String getLogTag()
 	{
 		String sensorName = "";
-		
+
 		try
 		{
 			sensorName = SensorUtils.getSensorName(sensor.getSensorType());
@@ -73,7 +73,7 @@ public abstract class AbstractSensorTask extends Thread
 		}
 		return "SensorTask:" + sensorName;
 	}
-	
+
 	public int getSensorType()
 	{
 		return sensor.getSensorType();
@@ -82,7 +82,7 @@ public abstract class AbstractSensorTask extends Thread
 	public boolean registerSensorDataListener(SensorDataListener listener)
 	{
 		ESLogger.log(getLogTag(), "registerSensorDataListener() listener: " + listener);
-		
+
 		synchronized (listenerList)
 		{
 			for (int i = 0; i < listenerList.size(); i++)
@@ -116,7 +116,6 @@ public abstract class AbstractSensorTask extends Thread
 			listenerList.remove(listener);
 			if (listenerList.isEmpty())
 			{
-//				stopTask();
 				new StopTask().execute();
 			}
 		}
@@ -147,12 +146,18 @@ public abstract class AbstractSensorTask extends Thread
 		{
 			synchronized (syncObject)
 			{
-				state = STOPPED;
-				this.interrupt();
+				synchronized (listenerList)
+				{
+					if (listenerList.isEmpty())
+					{
+						state = STOPPED;
+						this.interrupt();
+					}
+				}
 			}
 		}
 	}
-	
+
 	public boolean isRunning()
 	{
 		if (state == RUNNING)
