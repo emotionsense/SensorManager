@@ -30,17 +30,16 @@ public class ESSensorManager implements ESSensorManagerInterface
 
 	public static ESSensorManager getSensorManager(Context context) throws ESException
 	{
+		if (context == null)
+		{
+			throw new ESException(ESException.INVALID_PARAMETER, " Invalid parameter, context object passed is null");
+		}
 		if (sensorManager == null)
 		{
 			synchronized (lock)
 			{
 				if (sensorManager == null)
 				{
-					if (context == null)
-					{
-						throw new ESException(ESException.SENSOR_MANAGER_NOT_STARTED, " Sensor Manager not started as context object is null");
-					}
-
 					if (context.checkCallingOrSelfPermission("android.permission.WAKE_LOCK") == PackageManager.PERMISSION_GRANTED)
 					{
 						sensorManager = new ESSensorManager(context);
