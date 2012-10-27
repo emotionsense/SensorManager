@@ -6,11 +6,13 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 public class MicrophoneData extends SensorData
 {
 	private final String amplitudeString;
+	private final long senseWindowLength;
 
-	public MicrophoneData(long senseStartTimestamp, String amplitudeString)
+	public MicrophoneData(long senseStartTimestamp, long senseWindowLength, String amplitudeString)
 	{
 		super(senseStartTimestamp);
 		this.amplitudeString = amplitudeString;
+		this.senseWindowLength = senseWindowLength;
 	}
 
 	public String getAmplitudeString()
@@ -21,6 +23,11 @@ public class MicrophoneData extends SensorData
 	public String getDataString() 
 	{
 		return amplitudeString;
+	}
+	
+	public long getLengthInMillis()
+	{
+		return senseWindowLength;
 	}
 
 	public int getSensorType()

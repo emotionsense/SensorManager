@@ -8,17 +8,24 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 public class AccelerometerData extends SensorData
 {
 
-	private ArrayList<float[]> sensorReadings;
+	private final ArrayList<float[]> sensorReadings;
+	private final long senseWindowLength;
 
-	public AccelerometerData(long senseStartTimestamp, ArrayList<float[]> sensorReadings)
+	public AccelerometerData(long senseStartTimestamp, long senseWindowLength, ArrayList<float[]> sensorReadings)
 	{
 		super(senseStartTimestamp);
 		this.sensorReadings = sensorReadings;
+		this.senseWindowLength = senseWindowLength;
 	}
 
 	public ArrayList<float[]> getSensorReadings()
 	{
 		return sensorReadings;
+	}
+	
+	public long getLengthInMillis()
+	{
+		return senseWindowLength;
 	}
 
 	public String getDataString()

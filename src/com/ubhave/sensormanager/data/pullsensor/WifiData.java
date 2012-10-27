@@ -10,7 +10,7 @@ import android.net.wifi.ScanResult;
 public class WifiData extends SensorData
 {
 
-	ArrayList<ScanResult> wifiScanData;
+	private ArrayList<ScanResult> wifiScanData;
 
 	public WifiData(long senseStartTimestamp, ArrayList<ScanResult> wifiScanResults)
 	{

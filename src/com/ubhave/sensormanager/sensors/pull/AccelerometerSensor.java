@@ -8,6 +8,8 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
+import com.ubhave.sensormanager.ESException;
+import com.ubhave.sensormanager.ESSensorManager;
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.pullsensor.AccelerometerData;
 import com.ubhave.sensormanager.logs.ESLogger;
@@ -25,6 +27,7 @@ public class AccelerometerSensor extends AbstractPullSensor
 	private SensorManager sensorManager; // Controls the hardware sensor
 
 	private ArrayList<float[]> sensorReadings;
+	private long senseWindowLength;
 
 	private static AccelerometerSensor accelerometerSensor;
 	private static Object lock = new Object();
@@ -109,17 +112,25 @@ public class AccelerometerSensor extends AbstractPullSensor
 		AccelerometerData accelerometerData;
 		synchronized (sensorReadings)
 		{
-			accelerometerData = new AccelerometerData(pullSenseStartTimestamp, sensorReadings);
+			accelerometerData = new AccelerometerData(pullSenseStartTimestamp, senseWindowLength, sensorReadings);
 		}
 		return accelerometerData;
 	}
 
 	protected boolean startSensing(SensorConfig sensorConfig)
 	{
-		sensorReadings = new ArrayList<float[]>();
+		try {
+			sensorReadings = new ArrayList<float[]>();
+			senseWindowLength = (Long) ESSensorManager.getSensorManager(applicationContext).getSensorConfigValue(SensorUtils.SENSOR_TYPE_ACCELEROMETER, SensorConfig.SENSE_WINDOW_LENGTH_MILLIS);
 
-		boolean registrationSuccess = sensorManager.registerListener(listener, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_GAME);
-		return registrationSuccess;
+			boolean registrationSuccess = sensorManager.registerListener(listener, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_GAME);
+			return registrationSuccess;
+		}
+		catch (ESException exp)
+		{
+			ESLogger.error(TAG, exp);
+			return false;
+		}
 	}
 
 	protected void stopSensing()
