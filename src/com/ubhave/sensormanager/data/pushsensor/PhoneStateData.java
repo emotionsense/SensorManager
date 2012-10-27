@@ -10,8 +10,6 @@ public class PhoneStateData extends SensorData
 	public static final int CALL_STATE_OFFHOOK = 54402;
 	public static final int CALL_STATE_RINGING = 54403;
 	public static final int CALL_STATE_OUTGOING = 54404;
-	
-//	public static final int ON_CALL_STATE_CHANGED = 5440;
 	public static final int ON_CELL_LOCATION_CHANGED = 5441;
 	public static final int ON_DATA_ACTIVITY = 5442;
 	public static final int ON_DATA_CONNECTION_STATE_CHANGED = 5443;

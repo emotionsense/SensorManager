@@ -85,7 +85,7 @@ public class SmsSensor extends AbstractCommunicationSensor
 						prevMessageId = messageId;
 
 						// add sender and body length to smsActivity
-						String logString = System.currentTimeMillis() + " "+SmsData.SMS_CONTENT_CHANGED+" " + content.length() + " words " + noOfWords + " address " + sentTo + " type " + cursor.getString(cursor.getColumnIndex("type")) + " timestamp "
+						String logString = System.currentTimeMillis() + " " + SmsData.SMS_CONTENT_CHANGED + " " + content.length() + " words " + noOfWords + " address " + sentTo + " type " + cursor.getString(cursor.getColumnIndex("type")) + " timestamp "
 								+ cursor.getString(cursor.getColumnIndex("date"));
 						ESLogger.log(TAG, logString);
 						logDataSensed(System.currentTimeMillis(), content.length(), noOfWords, sentTo, SmsData.SMS_CONTENT_CHANGED);

@@ -5,9 +5,8 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class SmsData extends SensorData
 {
-	public static final String SMS_RECEIVED = "";
+	public static final String SMS_RECEIVED = "SMSReceived";
 	public static final String SMS_CONTENT_CHANGED = "SMSContentChanged"; 
-	
 	
 	private int contentLength;
 	private int noOfWords;
