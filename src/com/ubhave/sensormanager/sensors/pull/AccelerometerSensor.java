@@ -8,7 +8,6 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
-import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.pullsensor.AccelerometerData;
 import com.ubhave.sensormanager.logs.ESLogger;
 import com.ubhave.sensormanager.sensors.SensorUtils;
@@ -114,7 +113,7 @@ public class AccelerometerSensor extends AbstractPullSensor
 		return accelerometerData;
 	}
 
-	protected boolean startSensing(SensorConfig sensorConfig)
+	protected boolean startSensing()
 	{
 		sensorReadings = new ArrayList<float[]>();
 

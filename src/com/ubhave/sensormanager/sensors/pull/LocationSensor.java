@@ -89,7 +89,7 @@ public class LocationSensor extends AbstractPullSensor
 		return SensorUtils.SENSOR_TYPE_LOCATION;
 	}
 
-	protected boolean startSensing(SensorConfig sensorConfig)
+	protected boolean startSensing()
 	{
 		lastLocation = null;
 		

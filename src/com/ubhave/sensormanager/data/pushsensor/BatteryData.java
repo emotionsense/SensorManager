@@ -1,10 +1,10 @@
 package com.ubhave.sensormanager.data.pushsensor;
 
+import android.os.BatteryManager;
+
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.sensors.SensorUtils;
-
-import android.os.BatteryManager;
 
 public class BatteryData extends SensorData
 {

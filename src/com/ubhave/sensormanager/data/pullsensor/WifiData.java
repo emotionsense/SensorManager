@@ -2,11 +2,11 @@ package com.ubhave.sensormanager.data.pullsensor;
 
 import java.util.ArrayList;
 
+import android.net.wifi.ScanResult;
+
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.sensors.SensorUtils;
-
-import android.net.wifi.ScanResult;
 
 public class WifiData extends SensorData
 {

@@ -12,7 +12,6 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
-import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.pushsensor.ProximityData;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
@@ -81,7 +80,7 @@ public class ProximitySensor extends AbstractPushSensor
 		return null;
 	}
 
-	protected boolean startSensing(SensorConfig sensorConfig)
+	protected boolean startSensing()
 	{
 		SensorManager sensorManager = (SensorManager) applicationContext.getSystemService(Context.SENSOR_SERVICE);
 		boolean registered = sensorManager.registerListener(sensorEventListener, sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY), SensorManager.SENSOR_DELAY_NORMAL);

@@ -94,7 +94,7 @@ public class WifiSensor extends AbstractPullSensor
 		return wifiData;
 	}
 
-	protected boolean startSensing(SensorConfig sensorConfig)
+	protected boolean startSensing()
 	{
 		wifiScanResults = null;
 		if (wifiManager.isWifiEnabled())

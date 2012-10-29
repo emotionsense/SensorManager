@@ -6,7 +6,6 @@ import android.content.Context;
 import android.media.MediaRecorder;
 
 import com.ubhave.sensormanager.ESException;
-import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.data.pullsensor.MicrophoneData;
 import com.ubhave.sensormanager.logs.ESLogger;
@@ -59,7 +58,7 @@ public class MicrophoneSensor extends AbstractPullSensor
 		return LOG_TAG;
 	}
 
-	protected boolean startSensing(SensorConfig sensorConfig)
+	protected boolean startSensing()
 	{
 		try
 		{

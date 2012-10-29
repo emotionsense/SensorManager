@@ -10,7 +10,6 @@ import android.content.IntentFilter;
 import android.os.BatteryManager;
 
 import com.ubhave.sensormanager.ESException;
-import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.pushsensor.BatteryData;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
@@ -76,7 +75,7 @@ public class BatterySensor extends AbstractPushSensor
 		return filters;
 	}
 
-	protected boolean startSensing(SensorConfig sensorConfig)
+	protected boolean startSensing()
 	{
 		// nothing to do
 		return true;

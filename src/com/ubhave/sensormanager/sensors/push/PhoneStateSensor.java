@@ -13,7 +13,6 @@ import android.telephony.ServiceState;
 import android.telephony.TelephonyManager;
 
 import com.ubhave.sensormanager.ESException;
-import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.pushsensor.PhoneStateData;
 import com.ubhave.sensormanager.logs.ESLogger;
 import com.ubhave.sensormanager.sensors.SensorUtils;
@@ -202,7 +201,7 @@ public class PhoneStateSensor extends AbstractCommunicationSensor
 		return SensorUtils.SENSOR_TYPE_PHONE_STATE;
 	}
 
-	protected boolean startSensing(SensorConfig sensorConfig)
+	protected boolean startSensing()
 	{
 		int interestedEvents = PhoneStateListener.LISTEN_CALL_STATE | PhoneStateListener.LISTEN_CELL_LOCATION | PhoneStateListener.LISTEN_DATA_ACTIVITY | PhoneStateListener.LISTEN_DATA_CONNECTION_STATE | PhoneStateListener.LISTEN_SERVICE_STATE;
 		telephonyManager.listen(phoneStateListener, interestedEvents);

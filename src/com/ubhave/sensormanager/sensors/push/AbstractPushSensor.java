@@ -51,7 +51,7 @@ public abstract class AbstractPushSensor extends AbstractSensor implements PushS
 		
 		isSensing = true;
 		this.sensorDataListener = listener;
-		startSensing(sensorConfig);
+		startSensing();
 		// register broadcast receiver
 		IntentFilter[] filters = getIntentFilters();
 		if ((filters != null) && (filters.length > 0))

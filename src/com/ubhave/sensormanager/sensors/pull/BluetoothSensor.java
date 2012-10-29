@@ -126,7 +126,7 @@ public class BluetoothSensor extends AbstractPullSensor
 		return bluetoothData;
 	}
 
-	protected boolean startSensing(SensorConfig sensorConfig)
+	protected boolean startSensing()
 	{
 		btDevices.clear();
 

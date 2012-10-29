@@ -1,10 +1,10 @@
 package com.ubhave.sensormanager.data.pullsensor;
 
+import android.location.Location;
+
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.sensors.SensorUtils;
-
-import android.location.Location;
 
 public class LocationData extends SensorData
 {

@@ -41,7 +41,7 @@ public abstract class AbstractPullSensor extends AbstractSensor implements PullS
 		SensorData sensorData = null;
 
 		// start sensing
-		boolean sensingStarted = startSensing(sensorConfig);
+		boolean sensingStarted = startSensing();
 		if (sensingStarted)
 		{
 			ESLogger.log(getLogTag(), "Sensing started.");

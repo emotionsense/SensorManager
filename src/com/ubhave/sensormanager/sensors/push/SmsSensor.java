@@ -16,7 +16,6 @@ import android.os.Handler;
 import android.telephony.SmsMessage;
 
 import com.ubhave.sensormanager.ESException;
-import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.pushsensor.SmsData;
 import com.ubhave.sensormanager.logs.ESLogger;
 import com.ubhave.sensormanager.sensors.SensorUtils;
@@ -156,7 +155,7 @@ public class SmsSensor extends AbstractCommunicationSensor
 		return filters;
 	}
 
-	protected boolean startSensing(SensorConfig sensorConfig)
+	protected boolean startSensing()
 	{
 		prevMessageId = "";
 

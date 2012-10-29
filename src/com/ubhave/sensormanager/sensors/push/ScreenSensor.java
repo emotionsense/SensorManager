@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 
-import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.pushsensor.ScreenData;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
@@ -72,7 +71,7 @@ public class ScreenSensor extends AbstractPushSensor
 		return filters;
 	}
 
-	protected boolean startSensing(SensorConfig sensorConfig)
+	protected boolean startSensing()
 	{
 		// nothing to do
 		return true;

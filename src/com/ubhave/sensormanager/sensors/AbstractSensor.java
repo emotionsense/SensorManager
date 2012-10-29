@@ -26,7 +26,7 @@ public abstract class AbstractSensor implements SensorInterface
 		return context.checkCallingOrSelfPermission(permission) == PackageManager.PERMISSION_GRANTED;
 	}
 
-	protected abstract boolean startSensing(SensorConfig sensorConfig);
+	protected abstract boolean startSensing();
 
 	protected abstract void stopSensing();
 
