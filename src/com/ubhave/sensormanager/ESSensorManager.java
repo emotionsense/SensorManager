@@ -40,15 +40,8 @@ public class ESSensorManager implements ESSensorManagerInterface
 			{
 				if (sensorManager == null)
 				{
-					if (context.checkCallingOrSelfPermission("android.permission.WAKE_LOCK") == PackageManager.PERMISSION_GRANTED)
-					{
-						sensorManager = new ESSensorManager(context);
-						ESLogger.log(TAG, "started.");
-					}
-					else
-					{
-						throw new ESException(ESException.PERMISSION_DENIED, "Sensor Manager requires android.permission.WAKE_LOCK");
-					}
+					sensorManager = new ESSensorManager(context);
+					ESLogger.log(TAG, "started.");
 				}
 			}
 		}
