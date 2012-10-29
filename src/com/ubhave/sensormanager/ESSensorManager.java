@@ -3,7 +3,6 @@ package com.ubhave.sensormanager;
 import java.util.ArrayList;
 
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.util.SparseArray;
 
 import com.ubhave.sensormanager.data.SensorData;
