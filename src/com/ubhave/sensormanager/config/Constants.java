@@ -16,6 +16,9 @@ public class Constants
 	public static final long MICROPHONE_SLEEP_INTERVAL = 2 * 60 * 1000;
 	public static final long WIFI_SLEEP_INTERVAL = 15 * 60 * 1000;	
 	
+	// low battery threshold
+	public static final int LOW_BATTERY_THRESHOLD_LEVEL = 20; 
+	
 	// classifier thresholds
 	public final static int ACCELEROMETER_MOVEMENT_THRESHOLD = 25;
 	public final static int LOCATION_CHANGE_DISTANCE_THRESHOLD = 100;

@@ -80,10 +80,13 @@ public class PushSensorTask extends AbstractSensorTask implements SensorDataList
 		}
 	}
 
-	@Override
 	public void onDataSensed(SensorData data)
 	{
 		super.publishData(data);
+	}
+
+	public void onCrossingLowBatteryThreshold(boolean isBelowThreshold)
+	{
 	}
 
 }

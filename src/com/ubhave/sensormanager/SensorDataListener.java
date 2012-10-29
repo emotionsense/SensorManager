@@ -6,5 +6,7 @@ public interface SensorDataListener
 {
 	
 	public void onDataSensed(SensorData data);
+	
+	public void onCrossingLowBatteryThreshold(boolean isBelowThreshold);
 
 }

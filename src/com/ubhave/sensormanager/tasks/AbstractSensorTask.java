@@ -6,7 +6,10 @@ import android.os.AsyncTask;
 
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.SensorDataListener;
+import com.ubhave.sensormanager.config.Constants;
+import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
+import com.ubhave.sensormanager.data.pushsensor.BatteryData;
 import com.ubhave.sensormanager.logs.ESLogger;
 import com.ubhave.sensormanager.sensors.SensorInterface;
 import com.ubhave.sensormanager.sensors.SensorUtils;
@@ -20,6 +23,24 @@ public abstract class AbstractSensorTask extends Thread
 		protected Void doInBackground(Void... arg0)
 		{
 			stopTask();
+			return null;
+		}
+
+	}
+
+	private class NotificationTask extends AsyncTask<Void, Void, Void>
+	{
+		private SensorData sensorData;
+
+		public NotificationTask(SensorData sensorData)
+		{
+			this.sensorData = sensorData;
+		}
+
+		@Override
+		protected Void doInBackground(Void... arg0)
+		{
+			notifications(sensorData);
 			return null;
 		}
 
@@ -106,6 +127,64 @@ public abstract class AbstractSensorTask extends Thread
 			{
 				listener.onDataSensed(sensorData);
 			}
+		}
+
+		// check for any triggers/notifications to be sent
+		// based on the received sensorData
+		new NotificationTask(sensorData).execute();
+
+	}
+
+	protected void publishBatteryNotification(boolean isBelowThreshold)
+	{
+		synchronized (listenerList)
+		{
+			for (SensorDataListener listener : listenerList)
+			{
+				listener.onCrossingLowBatteryThreshold(isBelowThreshold);
+			}
+		}
+	}
+
+	private boolean isBelowThresholdNotified = false;
+	private boolean isAboveThresholdNotified = false;
+
+	protected void notifications(SensorData sensorData)
+	{
+		if (sensorData instanceof BatteryData)
+		{
+			BatteryData batteryData = (BatteryData) sensorData;
+			int currLevel = batteryData.getBatteryLevel();
+
+			int batteryThreshold = Constants.LOW_BATTERY_THRESHOLD_LEVEL;
+			try
+			{
+				batteryThreshold = (Integer) sensor.getSensorConfig(SensorConfig.LOW_BATTERY_THRESHOLD);
+			}
+			catch (ESException exp)
+			{
+				ESLogger.error(TAG, exp);
+			}
+
+			if (currLevel < batteryThreshold)
+			{
+				if (!isBelowThresholdNotified)
+				{
+					publishBatteryNotification(true);
+					isBelowThresholdNotified = true;
+					isAboveThresholdNotified = false;
+				}
+			}
+			else if (currLevel > batteryThreshold)
+			{
+				if (!isAboveThresholdNotified)
+				{
+					publishBatteryNotification(false);
+					isBelowThresholdNotified = false;
+					isAboveThresholdNotified = true;
+				}
+			}
+
 		}
 	}
 

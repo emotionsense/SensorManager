@@ -206,4 +206,8 @@ public class AdaptiveSensing implements SensorDataListener
 		}
 	}
 
+	public void onCrossingLowBatteryThreshold(boolean isBelowThreshold)
+	{	
+	}
+
 }

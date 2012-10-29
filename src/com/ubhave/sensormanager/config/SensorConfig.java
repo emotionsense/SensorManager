@@ -23,6 +23,9 @@ public class SensorConfig implements Cloneable
 	public final static String LOCATION_ACCURACY = "LOCATION_ACCURACY";
 	public final static String LOCATION_ACCURACY_COARSE = "LOCATION_ACCURACY_COARSE";
 	public final static String LOCATION_ACCURACY_FINE = "LOCATION_ACCURACY_FINE";
+	
+	// battery level at which sensing should be enabled/disabled
+	public final static String LOW_BATTERY_THRESHOLD = "LOW_BATTERY_THRESHOLD";
 
 	private HashMap<String, Object> configParams;
 

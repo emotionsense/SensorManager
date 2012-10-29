@@ -128,6 +128,9 @@ public class SensorUtils
 			sensorConfig.setParameter(SensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, Constants.ACCELEROMETER_SLEEP_INTERVAL);
 			sensorConfig.setParameter(SensorConfig.SENSE_WINDOW_LENGTH_MILLIS, Constants.ACCELEROMETER_SAMPLING_WINDOW_SIZE_MILLIS);
 			break;
+		case SensorUtils.SENSOR_TYPE_BATTERY:
+			sensorConfig.setParameter(SensorConfig.LOW_BATTERY_THRESHOLD, (Integer)Constants.LOW_BATTERY_THRESHOLD_LEVEL);
+			break;
 		case SensorUtils.SENSOR_TYPE_BLUETOOTH:
 			sensorConfig.setParameter(SensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, Constants.BLUETOOTH_SLEEP_INTERVAL);
 			sensorConfig.setParameter(SensorConfig.NUMBER_OF_SENSE_CYCLES, Constants.BLUETOOTH_SAMPLING_CYCLES);
