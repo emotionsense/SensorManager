@@ -49,6 +49,14 @@ public class SensorConfig implements Cloneable
 		}
 		return false;
 	}
+	
+	public void removeParameter(String parameterName)
+	{
+		if (configParams.containsKey(parameterName))
+		{
+			configParams.remove(parameterName);
+		}
+	}
 
 	public SensorConfig clone()
 	{

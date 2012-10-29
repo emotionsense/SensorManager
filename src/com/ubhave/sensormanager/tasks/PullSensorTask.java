@@ -20,6 +20,12 @@ public class PullSensorTask extends AbstractSensorTask
 	public SensorData getCurrentSensorData() throws ESException
 	{
 		SensorData sensorData = ((PullSensor) sensor).sense();
+
+		// since this is a one-off query for sensor data, sleep interval
+		// is not relevant in this case
+		SensorConfig sensorConfig = sensorData.getSensorConfig();
+		sensorConfig.removeParameter(SensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS);
+
 		return sensorData;
 	}
 
