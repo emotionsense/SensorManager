@@ -24,7 +24,7 @@ public abstract class AbstractPullSensor extends AbstractSensor implements PullS
 	
 	public void onSleepWindowLengthChanged(long sleepWindowLengthMillis)
 	{
-		sensorConfig.set(SensorConfig.SLEEP_WINDOW_LENGTH_MILLIS, sleepWindowLengthMillis);
+		sensorConfig.set(SensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, sleepWindowLengthMillis);
 	}
 
 	public SensorData sense() throws ESException

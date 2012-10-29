@@ -59,7 +59,7 @@ public class PullSensorTask extends AbstractSensorTask
 						publishData(sensorData);
 						
 						// SLEEP
-						long samplingInterval = (Long) sensor.getSensorConfig(SensorConfig.SLEEP_WINDOW_LENGTH_MILLIS);
+						long samplingInterval = (Long) sensor.getSensorConfig(SensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS);
 						syncObject.wait(samplingInterval);
 					}
 					catch (InterruptedException exp)

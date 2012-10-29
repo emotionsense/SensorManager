@@ -17,7 +17,7 @@ public class SensorConfig implements Cloneable
 	public final static String NUMBER_OF_SENSE_CYCLES = "NUMBER_OF_SENSE_CYCLES";
 
 	// this is the sleep interval between two consecutive sensor samplings
-	public final static String SLEEP_WINDOW_LENGTH_MILLIS = "SLEEP_WINDOW_LENGTH_MILLIS";
+	public final static String POST_SENSE_SLEEP_LENGTH_MILLIS = "POST_SENSE_SLEEP_LENGTH_MILLIS";
 
 	private HashMap<String, Object> configParams;
 
