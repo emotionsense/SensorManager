@@ -18,6 +18,11 @@ public class SensorConfig implements Cloneable
 
 	// this is the sleep interval between two consecutive sensor samplings
 	public final static String POST_SENSE_SLEEP_LENGTH_MILLIS = "POST_SENSE_SLEEP_LENGTH_MILLIS";
+	
+	// location accuracy
+	public final static String LOCATION_ACCURACY = "LOCATION_ACCURACY";
+	public final static String LOCATION_ACCURACY_COARSE = "LOCATION_ACCURACY_COARSE";
+	public final static String LOCATION_ACCURACY_FINE = "LOCATION_ACCURACY_FINE";
 
 	private HashMap<String, Object> configParams;
 
@@ -26,12 +31,12 @@ public class SensorConfig implements Cloneable
 		configParams = new HashMap<String, Object>();
 	}
 
-	public void set(String parameterName, Object parameterValue)
+	public void setParameter(String parameterName, Object parameterValue)
 	{
 		configParams.put(parameterName, parameterValue);
 	}
 
-	public Object get(String parameterName)
+	public Object getParameter(String parameterName)
 	{
 		Object parameterValue = null;
 		if (configParams.containsKey(parameterName))
@@ -64,7 +69,7 @@ public class SensorConfig implements Cloneable
 		for (String key : configParams.keySet())
 		{
 			Object obj = configParams.get(key);
-			clonedSensorConfig.set(key, obj);
+			clonedSensorConfig.setParameter(key, obj);
 		}
 
 		return clonedSensorConfig;

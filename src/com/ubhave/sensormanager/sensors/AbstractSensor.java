@@ -13,14 +13,14 @@ public abstract class AbstractSensor implements SensorInterface
 	protected final Context applicationContext;
 	protected final Object senseCompleteNotify;
 	protected final SensorConfig sensorConfig;
-	
+
 	public AbstractSensor(Context context)
 	{
 		applicationContext = context;
 		senseCompleteNotify = new Object();
 		sensorConfig = SensorUtils.getDefaultSensorConfig(getSensorType());
 	}
-	
+
 	protected static boolean permissionGranted(Context context, String permission)
 	{
 		return context.checkCallingOrSelfPermission(permission) == PackageManager.PERMISSION_GRANTED;
@@ -36,24 +36,33 @@ public abstract class AbstractSensor implements SensorInterface
 	{
 		return isSensing;
 	}
-	
+
 	public void setSensorConfig(String configKey, Object configValue) throws ESException
 	{
-		if (sensorConfig.containsParameter(configKey))
-		{
-			sensorConfig.set(configKey, configValue);
-		}
-		else
+		// default parameters can be overridden through this method
+
+		if (!sensorConfig.containsParameter(configKey))
 		{
 			throw new ESException(ESException.INVALID_SENSOR_CONFIG, "Invalid sensor config, key: " + configKey + " value: " + configValue);
 		}
+
+		// check permissions for the config
+		if (configKey.equals(SensorConfig.LOCATION_ACCURACY_FINE))
+		{
+			if (!permissionGranted(applicationContext, "android.permission.ACCESS_FINE_LOCATION"))
+			{
+				throw new ESException(ESException.PERMISSION_DENIED, "Location Sensor: Fine Location Permission Not Granted!");
+			}
+		}
+
+		sensorConfig.setParameter(configKey, configValue);
 	}
-	
+
 	public Object getSensorConfig(String configKey) throws ESException
 	{
 		if (sensorConfig.containsParameter(configKey))
 		{
-			return sensorConfig.get(configKey);
+			return sensorConfig.getParameter(configKey);
 		}
 		else
 		{

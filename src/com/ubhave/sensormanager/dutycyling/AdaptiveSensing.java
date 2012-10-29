@@ -135,7 +135,7 @@ public class AdaptiveSensing implements SensorDataListener
 		// convert probability to sampling intervals in milliseconds
 		long sleepWindowMilliSeconds = 1000;
 
-		long senseWindowLengthMillis = (Long) sensorDetails.sensorConfig.get(SensorConfig.SENSE_WINDOW_LENGTH_MILLIS);
+		long senseWindowLengthMillis = (Long) sensorDetails.sensorConfig.getParameter(SensorConfig.SENSE_WINDOW_LENGTH_MILLIS);
 
 		while (true)
 		{

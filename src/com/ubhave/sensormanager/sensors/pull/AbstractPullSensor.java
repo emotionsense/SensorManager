@@ -24,7 +24,7 @@ public abstract class AbstractPullSensor extends AbstractSensor implements PullS
 	
 	public void onSleepWindowLengthChanged(long sleepWindowLengthMillis)
 	{
-		sensorConfig.set(SensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, sleepWindowLengthMillis);
+		sensorConfig.setParameter(SensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, sleepWindowLengthMillis);
 	}
 
 	public SensorData sense() throws ESException
@@ -57,7 +57,7 @@ public abstract class AbstractPullSensor extends AbstractSensor implements PullS
 					}
 					else if (sensorConfig.containsParameter(SensorConfig.SENSE_WINDOW_LENGTH_MILLIS))
 					{
-						long samplingWindowSize = (Long) sensorConfig.get(SensorConfig.SENSE_WINDOW_LENGTH_MILLIS);
+						long samplingWindowSize = (Long) sensorConfig.getParameter(SensorConfig.SENSE_WINDOW_LENGTH_MILLIS);
 						senseCompleteNotify.wait(samplingWindowSize);
 					}
 					else

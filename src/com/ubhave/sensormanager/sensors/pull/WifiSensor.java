@@ -100,7 +100,7 @@ public class WifiSensor extends AbstractPullSensor
 		if (wifiManager.isWifiEnabled())
 		{
 			wifiScanResults = new ArrayList<ScanResult>();
-			cyclesRemaining = (Integer) sensorConfig.get(SensorConfig.NUMBER_OF_SENSE_CYCLES);
+			cyclesRemaining = (Integer) sensorConfig.getParameter(SensorConfig.NUMBER_OF_SENSE_CYCLES);
 			applicationContext.registerReceiver(wifiReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
 			wifiManager.startScan();
 			return true;
