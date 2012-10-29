@@ -1,5 +1,7 @@
 package com.ubhave.sensormanager.data;
 
+import com.ubhave.sensormanager.config.SensorConfig;
+
 public abstract class SensorData
 {
 	// for pull sensor: this is the time at which sensing cycle is started
@@ -7,19 +9,27 @@ public abstract class SensorData
 	private final long sensorDataTimestamp;
 
 	private SensorData prevSensorData;
+	
+	private SensorConfig sensorConfig;
 
 	public abstract String getDataString();
 	
 	public abstract int getSensorType();
 
-	public SensorData(long sensorTimestamp)
+	public SensorData(long sensorTimestamp, SensorConfig config)
 	{
 		sensorDataTimestamp = sensorTimestamp;
+		this.sensorConfig = config;
 	}
 
 	public long getTimestamp()
 	{
 		return sensorDataTimestamp;
+	}
+	
+	public SensorConfig getSensorConfig()
+	{
+		return sensorConfig;
 	}
 
 	public SensorData getPrevSensorData()

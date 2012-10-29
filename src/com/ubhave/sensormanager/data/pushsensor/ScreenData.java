@@ -1,5 +1,6 @@
 package com.ubhave.sensormanager.data.pushsensor;
 
+import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
@@ -10,9 +11,9 @@ public class ScreenData extends SensorData
 	public static final int SCREEN_OFF = 0;
 	public static final int SCREEN_ON = 1;
 
-	public ScreenData(long recvTimestamp, int screenStatus)
+	public ScreenData(long recvTimestamp, int screenStatus, SensorConfig sensorConfig)
 	{
-		super(recvTimestamp);
+		super(recvTimestamp, sensorConfig);
 		this.screenStatus = screenStatus;
 	}
 	

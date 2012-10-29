@@ -2,9 +2,9 @@ package com.ubhave.sensormanager.config;
 
 import java.util.HashMap;
 
-public class SensorConfig
+public class SensorConfig implements Cloneable
 {
-	
+
 	// sampling window size sets the data capture duration from the sensor, like
 	// accelerometer sampling window
 	public final static String SENSE_WINDOW_LENGTH_MILLIS = "SENSE_WINDOW_LENGTH_MILLIS";
@@ -48,6 +48,18 @@ public class SensorConfig
 			return true;
 		}
 		return false;
+	}
+
+	public SensorConfig clone()
+	{
+		SensorConfig clonedSensorConfig = new SensorConfig();
+		for (String key : configParams.keySet())
+		{
+			Object obj = configParams.get(key);
+			clonedSensorConfig.set(key, obj);
+		}
+
+		return clonedSensorConfig;
 	}
 
 }

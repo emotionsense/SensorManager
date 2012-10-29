@@ -97,7 +97,7 @@ public class SmsSensor extends AbstractCommunicationSensor
 
 	private void logDataSensed(long timestamp, int contentLength, int noOfWords, String addr, String eventType)
 	{
-		SmsData smsData = new SmsData(timestamp, contentLength, noOfWords, addr, eventType);
+		SmsData smsData = new SmsData(timestamp, contentLength, noOfWords, addr, eventType, sensorConfig.clone());
 		onDataSensed(smsData);
 	}
 

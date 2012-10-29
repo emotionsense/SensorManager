@@ -65,7 +65,7 @@ public class BatterySensor extends AbstractPushSensor
         int status = intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
         int health = intent.getIntExtra(BatteryManager.EXTRA_HEALTH, -1);
 
-        BatteryData batteryData = new BatteryData(System.currentTimeMillis(), level, scale, temp, voltage, plugged, status, health);
+        BatteryData batteryData = new BatteryData(System.currentTimeMillis(), level, scale, temp, voltage, plugged, status, health, sensorConfig.clone());
         onDataSensed(batteryData);
 	}
 

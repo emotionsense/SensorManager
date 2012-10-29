@@ -54,12 +54,12 @@ public class ScreenSensor extends AbstractPushSensor
 
 		if (intent.getAction().equals(Intent.ACTION_SCREEN_ON))
 		{
-			ScreenData screenData = new ScreenData(System.currentTimeMillis(), ScreenData.SCREEN_ON);
+			ScreenData screenData = new ScreenData(System.currentTimeMillis(), ScreenData.SCREEN_ON, sensorConfig.clone());
 			onDataSensed(screenData);
 		}
 		else if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF))
 		{
-			ScreenData screenData = new ScreenData(System.currentTimeMillis(), ScreenData.SCREEN_OFF);
+			ScreenData screenData = new ScreenData(System.currentTimeMillis(), ScreenData.SCREEN_OFF, sensorConfig.clone());
 			onDataSensed(screenData);			
 		}
 	}

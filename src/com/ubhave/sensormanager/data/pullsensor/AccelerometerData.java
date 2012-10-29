@@ -2,6 +2,7 @@ package com.ubhave.sensormanager.data.pullsensor;
 
 import java.util.ArrayList;
 
+import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
@@ -9,23 +10,16 @@ public class AccelerometerData extends SensorData
 {
 
 	private final ArrayList<float[]> sensorReadings;
-	private final long senseWindowLength;
 
-	public AccelerometerData(long senseStartTimestamp, long senseWindowLength, ArrayList<float[]> sensorReadings)
+	public AccelerometerData(long senseStartTimestamp, ArrayList<float[]> sensorReadings, SensorConfig sensorConfig)
 	{
-		super(senseStartTimestamp);
+		super(senseStartTimestamp, sensorConfig);
 		this.sensorReadings = sensorReadings;
-		this.senseWindowLength = senseWindowLength;
 	}
 
 	public ArrayList<float[]> getSensorReadings()
 	{
 		return sensorReadings;
-	}
-	
-	public long getLengthInMillis()
-	{
-		return senseWindowLength;
 	}
 
 	public String getDataString()

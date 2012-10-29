@@ -1,5 +1,6 @@
 package com.ubhave.sensormanager.data.pushsensor;
 
+import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
@@ -15,9 +16,9 @@ public class BatteryData extends SensorData
 	private int status;
 	private int health;
 
-	public BatteryData(long timestamp, int level, int scale, int temperature, int voltage, int plugged, int status, int health)
+	public BatteryData(long timestamp, int level, int scale, int temperature, int voltage, int plugged, int status, int health, SensorConfig sensorConfig)
 	{
-		super(timestamp);
+		super(timestamp, sensorConfig);
 		this.level = level;
 		this.scale = scale;
 		this.temperature = temperature;

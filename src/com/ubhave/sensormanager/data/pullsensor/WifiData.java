@@ -2,6 +2,7 @@ package com.ubhave.sensormanager.data.pullsensor;
 
 import java.util.ArrayList;
 
+import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
@@ -12,9 +13,9 @@ public class WifiData extends SensorData
 
 	private ArrayList<ScanResult> wifiScanData;
 
-	public WifiData(long senseStartTimestamp, ArrayList<ScanResult> wifiScanResults)
+	public WifiData(long senseStartTimestamp, ArrayList<ScanResult> wifiScanResults, SensorConfig sensorConfig)
 	{
-		super(senseStartTimestamp);
+		super(senseStartTimestamp, sensorConfig);
 		this.wifiScanData = wifiScanResults;
 	}
 

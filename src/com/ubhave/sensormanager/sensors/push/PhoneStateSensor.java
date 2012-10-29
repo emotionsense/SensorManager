@@ -115,7 +115,7 @@ public class PhoneStateSensor extends AbstractCommunicationSensor
 	{
 		if (isSensing)
 		{
-			PhoneStateData phoneStateData = new PhoneStateData(System.currentTimeMillis(), eventType, data);
+			PhoneStateData phoneStateData = new PhoneStateData(System.currentTimeMillis(), eventType, data, sensorConfig.clone());
 			onDataSensed(phoneStateData);
 			ESLogger.log(TAG, phoneStateData.toString());
 		}

@@ -1,5 +1,6 @@
 package com.ubhave.sensormanager.data.pullsensor;
 
+import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
@@ -10,9 +11,9 @@ public class LocationData extends SensorData
 
 	Location location;
 
-	public LocationData(long senseStartTimestamp, Location location)
+	public LocationData(long senseStartTimestamp, Location location, SensorConfig sensorConfig)
 	{
-		super(senseStartTimestamp);
+		super(senseStartTimestamp, sensorConfig);
 		this.location = location;
 	}
 

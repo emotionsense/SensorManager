@@ -58,7 +58,7 @@ public class LocationSensor extends AbstractPullSensor
 				if (isSensing)
 				{
 					lastLocation = loc;
-					LocationData data = new LocationData(System.currentTimeMillis(), loc);
+					LocationData data = new LocationData(System.currentTimeMillis(), loc, sensorConfig.clone());
 					ESLogger.log(TAG, data.toString());
 				}
 			}
@@ -105,7 +105,7 @@ public class LocationSensor extends AbstractPullSensor
 
 	protected SensorData getMostRecentRawData()
 	{
-		LocationData locationData = new LocationData(pullSenseStartTimestamp, lastLocation);
+		LocationData locationData = new LocationData(pullSenseStartTimestamp, lastLocation, sensorConfig.clone());
 		return locationData;
 	}
 }

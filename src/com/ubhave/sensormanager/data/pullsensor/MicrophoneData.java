@@ -1,18 +1,17 @@
 package com.ubhave.sensormanager.data.pullsensor;
 
+import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class MicrophoneData extends SensorData
 {
 	private final String amplitudeString;
-	private final long senseWindowLength;
 
-	public MicrophoneData(long senseStartTimestamp, long senseWindowLength, String amplitudeString)
+	public MicrophoneData(long senseStartTimestamp, String amplitudeString, SensorConfig sensorConfig)
 	{
-		super(senseStartTimestamp);
+		super(senseStartTimestamp, sensorConfig);
 		this.amplitudeString = amplitudeString;
-		this.senseWindowLength = senseWindowLength;
 	}
 
 	public String getAmplitudeString()
@@ -23,11 +22,6 @@ public class MicrophoneData extends SensorData
 	public String getDataString() 
 	{
 		return amplitudeString;
-	}
-	
-	public long getLengthInMillis()
-	{
-		return senseWindowLength;
 	}
 
 	public int getSensorType()

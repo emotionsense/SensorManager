@@ -6,7 +6,6 @@ import android.content.Context;
 import android.media.MediaRecorder;
 
 import com.ubhave.sensormanager.ESException;
-import com.ubhave.sensormanager.ESSensorManager;
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.data.pullsensor.MicrophoneData;
@@ -21,7 +20,6 @@ public class MicrophoneSensor extends AbstractPullSensor
 	private final MediaRecorder recorder;
 
 	private String amplitudeString = "";
-	private long senseWindowLength;
 
 	private static MicrophoneSensor microphoneSensor;
 	private static Object lock = new Object();
@@ -67,34 +65,28 @@ public class MicrophoneSensor extends AbstractPullSensor
 		{
 			// for amplitude
 			amplitudeString = "";
-			
+
 			recorder.prepare();
 			recorder.start();
 
 			// query amplitude in an async thread
-			try {
-				senseWindowLength = (Long) ESSensorManager.getSensorManager(applicationContext).getSensorConfigValue(SensorUtils.SENSOR_TYPE_MICROPHONE, SensorConfig.SENSE_WINDOW_LENGTH_MILLIS);
-				(new Thread()
-				{
-					public void run()
-					{	
-						// capture max amplitude @20Hz
-
-						// ignore fist call
-						recorder.getMaxAmplitude();
-						
-						while (isSensing())
-						{
-							amplitudeString = amplitudeString + ((amplitudeString.length() > 0)?",":"") + recorder.getMaxAmplitude();
-							Utilities.sleep(50);
-						}
-					}
-				}).start();
-			}
-			catch (ESException e)
+			(new Thread()
 			{
-				e.printStackTrace();
-			}
+				public void run()
+				{
+					// capture max amplitude @20Hz
+
+					// ignore fist call
+					recorder.getMaxAmplitude();
+
+					while (isSensing())
+					{
+						amplitudeString = amplitudeString + ((amplitudeString.length() > 0) ? "," : "") + recorder.getMaxAmplitude();
+						Utilities.sleep(50);
+					}
+				}
+			}).start();
+
 		}
 		catch (IOException exp)
 		{
@@ -118,7 +110,7 @@ public class MicrophoneSensor extends AbstractPullSensor
 
 	protected SensorData getMostRecentRawData()
 	{
-		return new MicrophoneData(pullSenseStartTimestamp, senseWindowLength, amplitudeString);
+		return new MicrophoneData(pullSenseStartTimestamp, amplitudeString, sensorConfig.clone());
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.ubhave.sensormanager.data.pushsensor;
 
+import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
@@ -18,9 +19,9 @@ public class PhoneStateData extends SensorData
 	private int eventType;
 	private String data;
 
-	public PhoneStateData(long dataReceivedTimestamp, int eventType, String data)
+	public PhoneStateData(long dataReceivedTimestamp, int eventType, String data, SensorConfig sensorConfig)
 	{
-		super(dataReceivedTimestamp);
+		super(dataReceivedTimestamp, sensorConfig);
 		this.eventType = eventType;
 		this.data = data;
 	}

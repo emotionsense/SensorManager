@@ -2,6 +2,7 @@ package com.ubhave.sensormanager.data.pullsensor;
 
 import java.util.ArrayList;
 
+import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
@@ -10,9 +11,9 @@ public class BluetoothData extends SensorData
 
 	ArrayList<ESBluetoothDevice> bluetoothDevices;
 
-	public BluetoothData(long senseStartTimestamp, ArrayList<ESBluetoothDevice> btDevices)
+	public BluetoothData(long senseStartTimestamp, ArrayList<ESBluetoothDevice> btDevices, SensorConfig sensorConfig)
 	{
-		super(senseStartTimestamp);
+		super(senseStartTimestamp, sensorConfig);
 		bluetoothDevices = btDevices;
 	}
 

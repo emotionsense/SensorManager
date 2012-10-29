@@ -1,5 +1,6 @@
 package com.ubhave.sensormanager.data.pushsensor;
 
+import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
@@ -13,9 +14,9 @@ public class SmsData extends SensorData
 	private String address;
 	private String eventType;
 
-	public SmsData(long recvTimestamp, int smsLength, int noOfWords, String addr, String eventType)
+	public SmsData(long recvTimestamp, int smsLength, int noOfWords, String addr, String eventType, SensorConfig sensorConfig)
 	{
-		super(recvTimestamp);
+		super(recvTimestamp, sensorConfig);
 		this.contentLength = smsLength;
 		this.noOfWords = noOfWords;
 		this.address = addr;
