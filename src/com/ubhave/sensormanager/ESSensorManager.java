@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.content.Context;
 import android.util.SparseArray;
 
+import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.dutycyling.AdaptiveSensing;
 import com.ubhave.sensormanager.logs.ESLogger;
@@ -144,6 +145,16 @@ public class ESSensorManager implements ESSensorManagerInterface
 		AbstractSensorTask sensorTask = getSensorTask(sensorId);
 		SensorInterface sensor = sensorTask.getSensor();
 		return sensor.getSensorConfig(configKey);
+	}
+
+	public void setBatteryThresholdValue(int value) throws ESException
+	{
+		setSensorConfig(SensorUtils.SENSOR_TYPE_BATTERY, SensorConfig.LOW_BATTERY_THRESHOLD, value);
+	}
+
+	public Integer getBatteryThresholdValue(int value) throws ESException
+	{
+		return (Integer) getSensorConfigValue(SensorUtils.SENSOR_TYPE_BATTERY, SensorConfig.LOW_BATTERY_THRESHOLD);
 	}
 
 	public void enableAdaptiveSensing(int sensorId) throws ESException
