@@ -1,6 +1,7 @@
 package com.ubhave.sensormanager;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.content.Context;
 import android.util.SparseArray;
@@ -18,7 +19,7 @@ import com.ubhave.sensormanager.tasks.PushSensorTask;
 import com.ubhave.sensormanager.tasks.Subscription;
 import com.ubhave.sensormanager.tasks.SubscriptionList;
 
-public class ESSensorManager implements ESSensorManagerInterface
+public class ESSensorManager implements ESSensorManagerInterface, SensorDataListener
 {
 	private static final String TAG = "ESSensorManager";
 
@@ -41,6 +42,7 @@ public class ESSensorManager implements ESSensorManagerInterface
 				if (sensorManager == null)
 				{
 					sensorManager = new ESSensorManager(context);
+					sensorManager.setup();
 					ESLogger.log(TAG, "started.");
 				}
 			}
@@ -72,6 +74,13 @@ public class ESSensorManager implements ESSensorManagerInterface
 
 			sensorTaskMap.put(aSensor.getSensorType(), sensorTask);
 		}
+	}
+
+	private void setup() throws ESException
+	{
+		// initial setup
+		// register with battery sensor
+		subscribeToSensorData(SensorUtils.SENSOR_TYPE_BATTERY, this);
 	}
 
 	public synchronized int subscribeToSensorData(int sensorId, SensorDataListener listener) throws ESException
@@ -183,7 +192,20 @@ public class ESSensorManager implements ESSensorManagerInterface
 		{
 			throw new ESException(ESException.OPERATION_NOT_SUPPORTED, " adaptive sensing not enabled for sensorId: " + sensorId);
 		}
+	}
 
+	public void onDataSensed(SensorData data)
+	{
+		// ignore
+	}
+
+	public void onCrossingLowBatteryThreshold(boolean isBelowThreshold)
+	{
+		List<Subscription> subscribers = subscriptionList.getAllSubscriptions();
+		for (Subscription sub : subscribers)
+		{
+			sub.getListener().onCrossingLowBatteryThreshold(isBelowThreshold);
+		}
 	}
 
 }

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.os.AsyncTask;
 
 import com.ubhave.sensormanager.ESException;
+import com.ubhave.sensormanager.ESSensorManager;
 import com.ubhave.sensormanager.SensorDataListener;
 import com.ubhave.sensormanager.config.Constants;
 import com.ubhave.sensormanager.config.SensorConfig;
@@ -137,11 +138,17 @@ public abstract class AbstractSensorTask extends Thread
 
 	protected void publishBatteryNotification(boolean isBelowThreshold)
 	{
+		// publish only to sensor manager, which in turn publishes to
+		// all other listeners
 		synchronized (listenerList)
 		{
 			for (SensorDataListener listener : listenerList)
 			{
-				listener.onCrossingLowBatteryThreshold(isBelowThreshold);
+				if (listener instanceof ESSensorManager)
+				{
+					listener.onCrossingLowBatteryThreshold(isBelowThreshold);
+					break;
+				}
 			}
 		}
 	}

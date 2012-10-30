@@ -1,5 +1,7 @@
 package com.ubhave.sensormanager.tasks;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import android.util.SparseArray;
@@ -10,7 +12,7 @@ import com.ubhave.sensormanager.logs.ESLogger;
 public class SubscriptionList
 {
 	private static String TAG = "SubscriptionList";
-	
+
 	private final SparseArray<Subscription> subscriptionMap;
 	private final Random keyGenerator;
 
@@ -51,6 +53,20 @@ public class SubscriptionList
 		subscriptionMap.delete(subscriptionId);
 		ESLogger.log(TAG, "registerSubscription() deleted subscription created for task: " + s.getTask().getSensorType() + " listener: " + s.getListener());
 		return s;
+	}
+
+	public List<Subscription> getAllSubscriptions()
+	{
+		ArrayList<Subscription> list = new ArrayList<Subscription>();
+		for (int i = 0; i < subscriptionMap.size(); i++)
+		{
+			Subscription sub = subscriptionMap.valueAt(i);
+			if (sub != null)
+			{
+				list.add(sub);
+			}
+		}
+		return list;
 	}
 
 	private int randomKey() throws ESException
