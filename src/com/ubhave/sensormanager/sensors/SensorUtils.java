@@ -148,6 +148,8 @@ public class SensorUtils
 			sensorConfig.setParameter(SensorConfig.NUMBER_OF_SENSE_CYCLES, Constants.WIFI_SAMPLING_CYCLES);
 			break;
 		}
+		
+		sensorConfig.setParameter(SensorConfig.ADAPTIVE_SENSING_ENABLED, false);
 		return sensorConfig;
 	}
 

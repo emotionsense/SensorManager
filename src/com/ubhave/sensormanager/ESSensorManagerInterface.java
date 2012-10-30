@@ -24,10 +24,4 @@ public interface ESSensorManagerInterface
 	
 	public Object getGlobalConfig(String configKey) throws ESException;
 	
-	/*
-	 * Enabling/disabling adaptive sensing 
-	 */
-	public void enableAdaptiveSensing(int sensorId) throws ESException;
-
-	public void disableAdaptiveSensing(int sensorId) throws ESException;
 }

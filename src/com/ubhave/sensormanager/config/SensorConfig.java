@@ -23,6 +23,9 @@ public class SensorConfig extends AbstractConfig implements Cloneable
 	public final static String LOCATION_ACCURACY_COARSE = "LOCATION_ACCURACY_COARSE";
 	public final static String LOCATION_ACCURACY_FINE = "LOCATION_ACCURACY_FINE";
 	
+	// whether adaptive sensing is enabled for all sensors
+	public final static String ADAPTIVE_SENSING_ENABLED = "ADAPTIVE_SENSING";
+	
 	public SensorConfig clone()
 	{
 		SensorConfig clonedSensorConfig = new SensorConfig();

@@ -7,6 +7,7 @@ import android.content.Context;
 import android.util.SparseArray;
 
 import com.ubhave.sensormanager.config.GlobalConfig;
+import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.dutycyling.AdaptiveSensing;
 import com.ubhave.sensormanager.logs.ESLogger;
@@ -149,6 +150,17 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 		AbstractSensorTask sensorTask = getSensorTask(sensorId);
 		SensorInterface sensor = sensorTask.getSensor();
 		sensor.setSensorConfig(configKey, configValue);
+		
+		if (configKey.equals(SensorConfig.ADAPTIVE_SENSING_ENABLED))
+		{
+			if ((Boolean) configValue)
+			{
+				enableAdaptiveSensing(sensorId);
+			}
+			else {
+				disableAdaptiveSensing(sensorId);
+			}
+		}
 	}
 
 	public Object getSensorConfigValue(int sensorId, String configKey) throws ESException
@@ -170,7 +182,7 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 		return config.getParameter(configKey);
 	}
 
-	public void enableAdaptiveSensing(int sensorId) throws ESException
+	private void enableAdaptiveSensing(int sensorId) throws ESException
 	{
 		AbstractSensorTask sensorTask = getSensorTask(sensorId);
 		if (SensorUtils.isPullSensor(sensorId))
@@ -185,7 +197,7 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 
 	}
 
-	public void disableAdaptiveSensing(int sensorId) throws ESException
+	private void disableAdaptiveSensing(int sensorId) throws ESException
 	{
 		AbstractSensorTask sensorTask = getSensorTask(sensorId);
 		if (AdaptiveSensing.getAdaptiveSensing().isSensorRegistered(sensorTask.getSensor()))
