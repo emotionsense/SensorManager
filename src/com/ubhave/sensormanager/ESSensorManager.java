@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.PowerManager;
 import android.util.SparseArray;
 
@@ -182,6 +183,11 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 
 		if (configKey.equals(GlobalConfig.ACQUIRE_WAKE_LOCK))
 		{
+			if (applicationContext.checkCallingOrSelfPermission("android.permission.WAKE_LOCK") == PackageManager.PERMISSION_GRANTED)
+			{
+				throw new ESException(ESException.PERMISSION_DENIED, "Sensor Manager requires android.permission.WAKE_LOCK");
+			}
+
 			if ((Boolean) configValue)
 			{
 				acquireWakeLock();
