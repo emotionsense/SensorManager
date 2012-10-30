@@ -6,6 +6,7 @@ import java.util.List;
 import android.content.Context;
 import android.util.SparseArray;
 
+import com.ubhave.sensormanager.config.GlobalConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.dutycyling.AdaptiveSensing;
 import com.ubhave.sensormanager.logs.ESLogger;
@@ -27,6 +28,7 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 
 	private final SparseArray<AbstractSensorTask> sensorTaskMap;
 	private final SubscriptionList subscriptionList;
+	private final GlobalConfig config;
 
 	public static ESSensorManager getSensorManager(Context context) throws ESException
 	{
@@ -53,6 +55,7 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 	{
 		sensorTaskMap = new SparseArray<AbstractSensorTask>();
 		subscriptionList = new SubscriptionList();
+		config = GlobalConfig.getDefaultGlobalConfig();
 
 		ArrayList<SensorInterface> sensors = SensorUtils.getAllSensors(appContext);
 
@@ -155,15 +158,16 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 		return sensor.getSensorConfig(configKey);
 	}
 
-	public void setBatteryThresholdValue(int value) throws ESException
+	@Override
+	public void setGlobalConfig(String configKey, Object configValue) throws ESException
 	{
-//		setSensorConfig(SensorUtils.SENSOR_TYPE_BATTERY, SensorConfig.LOW_BATTERY_THRESHOLD, value);
+		config.setParameter(configKey, configValue);
 	}
 
-	public Integer getBatteryThresholdValue(int value) throws ESException
+	@Override
+	public Object getGlobalConfig(String configKey) throws ESException
 	{
-		return 0;
-//		return (Integer) getSensorConfigValue(SensorUtils.SENSOR_TYPE_BATTERY, SensorConfig.LOW_BATTERY_THRESHOLD);
+		return config.getParameter(configKey);
 	}
 
 	public void enableAdaptiveSensing(int sensorId) throws ESException

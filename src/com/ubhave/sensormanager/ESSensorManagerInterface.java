@@ -20,9 +20,9 @@ public interface ESSensorManagerInterface
 	
 	public Object getSensorConfigValue(int sensorId, String configKey) throws ESException;
 	
-	public void setBatteryThresholdValue(int value) throws ESException;
+	public void setGlobalConfig(String configKey, Object configValue) throws ESException;
 	
-	public Integer getBatteryThresholdValue(int value) throws ESException;
+	public Object getGlobalConfig(String configKey) throws ESException;
 	
 	/*
 	 * Enabling/disabling adaptive sensing 
