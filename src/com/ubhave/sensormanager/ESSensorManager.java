@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
+import android.os.PowerManager;
 import android.util.SparseArray;
 
 import com.ubhave.sensormanager.config.GlobalConfig;
@@ -27,6 +28,8 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 	private static ESSensorManager sensorManager;
 	private static Object lock = new Object();
 
+	private final Context applicationContext;
+	private PowerManager.WakeLock wakeLock;
 	private final SparseArray<AbstractSensorTask> sensorTaskMap;
 	private final SubscriptionList subscriptionList;
 	private final GlobalConfig config;
@@ -54,6 +57,7 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 
 	private ESSensorManager(final Context appContext)
 	{
+		applicationContext = appContext;
 		sensorTaskMap = new SparseArray<AbstractSensorTask>();
 		subscriptionList = new SubscriptionList();
 		config = GlobalConfig.getDefaultGlobalConfig();
@@ -150,14 +154,15 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 		AbstractSensorTask sensorTask = getSensorTask(sensorId);
 		SensorInterface sensor = sensorTask.getSensor();
 		sensor.setSensorConfig(configKey, configValue);
-		
+
 		if (configKey.equals(SensorConfig.ADAPTIVE_SENSING_ENABLED))
 		{
 			if ((Boolean) configValue)
 			{
 				enableAdaptiveSensing(sensorId);
 			}
-			else {
+			else
+			{
 				disableAdaptiveSensing(sensorId);
 			}
 		}
@@ -174,12 +179,39 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 	public void setGlobalConfig(String configKey, Object configValue) throws ESException
 	{
 		config.setParameter(configKey, configValue);
+
+		if (configKey.equals(GlobalConfig.ACQUIRE_WAKE_LOCK))
+		{
+			if ((Boolean) configValue)
+			{
+				acquireWakeLock();
+			}
+			else
+			{
+				releaseWakeLock();
+			}
+		}
 	}
 
 	@Override
 	public Object getGlobalConfig(String configKey) throws ESException
 	{
 		return config.getParameter(configKey);
+	}
+
+	private void acquireWakeLock()
+	{
+		PowerManager pm = (PowerManager) applicationContext.getSystemService(Context.POWER_SERVICE);
+		wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "Wakelock");
+		wakeLock.acquire();
+	}
+
+	private void releaseWakeLock()
+	{
+		if (wakeLock != null)
+		{
+			wakeLock.release();
+		}
 	}
 
 	private void enableAdaptiveSensing(int sensorId) throws ESException
