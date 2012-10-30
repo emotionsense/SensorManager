@@ -1,8 +1,7 @@
 package com.ubhave.sensormanager.config;
 
-import java.util.HashMap;
 
-public class SensorConfig implements Cloneable
+public class SensorConfig extends AbstractConfig implements Cloneable
 {
 
 	// sampling window size sets the data capture duration from the sensor, like
@@ -24,48 +23,6 @@ public class SensorConfig implements Cloneable
 	public final static String LOCATION_ACCURACY_COARSE = "LOCATION_ACCURACY_COARSE";
 	public final static String LOCATION_ACCURACY_FINE = "LOCATION_ACCURACY_FINE";
 	
-	// battery level at which sensing should be enabled/disabled
-	public final static String LOW_BATTERY_THRESHOLD = "LOW_BATTERY_THRESHOLD";
-
-	private HashMap<String, Object> configParams;
-
-	public SensorConfig()
-	{
-		configParams = new HashMap<String, Object>();
-	}
-
-	public void setParameter(String parameterName, Object parameterValue)
-	{
-		configParams.put(parameterName, parameterValue);
-	}
-
-	public Object getParameter(String parameterName)
-	{
-		Object parameterValue = null;
-		if (configParams.containsKey(parameterName))
-		{
-			parameterValue = configParams.get(parameterName);
-		}
-		return parameterValue;
-	}
-
-	public boolean containsParameter(String parameterName)
-	{
-		if (configParams.containsKey(parameterName))
-		{
-			return true;
-		}
-		return false;
-	}
-	
-	public void removeParameter(String parameterName)
-	{
-		if (configParams.containsKey(parameterName))
-		{
-			configParams.remove(parameterName);
-		}
-	}
-
 	public SensorConfig clone()
 	{
 		SensorConfig clonedSensorConfig = new SensorConfig();

@@ -28,7 +28,7 @@ import com.ubhave.sensormanager.sensors.push.SmsSensor;
 public class SensorUtils
 {
 	private static String TAG = "SensorUtils";
-	
+
 	public final static int SENSOR_TYPE_ACCELEROMETER = 5001;
 	public final static int SENSOR_TYPE_BATTERY = 5002;
 	public final static int SENSOR_TYPE_BLUETOOTH = 5003;
@@ -39,7 +39,7 @@ public class SensorUtils
 	public final static int SENSOR_TYPE_SCREEN = 5008;
 	public final static int SENSOR_TYPE_SMS = 5009;
 	public final static int SENSOR_TYPE_WIFI = 5010;
-	
+
 	public final static String SENSOR_NAME_ACCELEROMETER = "Accelerometer";
 	public final static String SENSOR_NAME_BATTERY = "Battery";
 	public final static String SENSOR_NAME_BLUETOOTH = "Bluetooth";
@@ -50,20 +50,10 @@ public class SensorUtils
 	public final static String SENSOR_NAME_SCREEN = "Screen";
 	public final static String SENSOR_NAME_SMS = "SMS";
 	public final static String SENSOR_NAME_WIFI = "WiFi";
-	
-	private final static int[] ALL_SENSORS = new int[]{
-		SENSOR_TYPE_ACCELEROMETER,
-		SENSOR_TYPE_BLUETOOTH,
-		SENSOR_TYPE_LOCATION,
-		SENSOR_TYPE_MICROPHONE,
-		SENSOR_TYPE_WIFI,
-		SENSOR_TYPE_BATTERY,
-		SENSOR_TYPE_PHONE_STATE,
-		SENSOR_TYPE_PROXIMITY,
-		SENSOR_TYPE_SCREEN,
-		SENSOR_TYPE_SMS
-	};
-	
+
+	private final static int[] ALL_SENSORS = new int[] { SENSOR_TYPE_ACCELEROMETER, SENSOR_TYPE_BLUETOOTH, SENSOR_TYPE_LOCATION, SENSOR_TYPE_MICROPHONE, SENSOR_TYPE_WIFI, SENSOR_TYPE_BATTERY, SENSOR_TYPE_PHONE_STATE, SENSOR_TYPE_PROXIMITY,
+			SENSOR_TYPE_SCREEN, SENSOR_TYPE_SMS };
+
 	public static boolean isPullSensor(int sensorType)
 	{
 		switch (sensorType)
@@ -78,7 +68,7 @@ public class SensorUtils
 			return false;
 		}
 	}
-	
+
 	public static ArrayList<SensorInterface> getAllSensors(Context applicationContext)
 	{
 		return getSensorList(ALL_SENSORS, applicationContext);
@@ -89,7 +79,8 @@ public class SensorUtils
 		ArrayList<SensorInterface> sensors = new ArrayList<SensorInterface>();
 		for (int sensorId : list)
 		{
-			try {
+			try
+			{
 				SensorInterface sensor = getSensor(sensorId, applicationContext);
 				sensors.add(sensor);
 			}
@@ -100,25 +91,36 @@ public class SensorUtils
 		}
 		return sensors;
 	}
-	
+
 	private static SensorInterface getSensor(int id, Context context) throws ESException
 	{
-		switch(id)
+		switch (id)
 		{
-		case SENSOR_TYPE_ACCELEROMETER: return AccelerometerSensor.getAccelerometerSensor(context);
-		case SENSOR_TYPE_BLUETOOTH: return BluetoothSensor.getBluetoothSensor(context);
-		case SENSOR_TYPE_LOCATION: return LocationSensor.getLocationSensor(context);
-		case SENSOR_TYPE_MICROPHONE: return MicrophoneSensor.getMicrophoneSensor(context);
-		case SENSOR_TYPE_WIFI: return WifiSensor.getWifiSensor(context);
-		case SENSOR_TYPE_BATTERY: return BatterySensor.getBatterySensor(context);
-		case SENSOR_TYPE_PHONE_STATE: return PhoneStateSensor.getPhoneStateSensor(context);
-		case SENSOR_TYPE_PROXIMITY: return ProximitySensor.getProximitySensor(context);
-		case SENSOR_TYPE_SCREEN: return ScreenSensor.getScreenSensor(context);
-		case SENSOR_TYPE_SMS: return SmsSensor.getSmsSensor(context);
-		default: throw new ESException(ESException.UNKNOWN_SENSOR_TYPE, "Unknown sensor id");
-		}	
+		case SENSOR_TYPE_ACCELEROMETER:
+			return AccelerometerSensor.getAccelerometerSensor(context);
+		case SENSOR_TYPE_BLUETOOTH:
+			return BluetoothSensor.getBluetoothSensor(context);
+		case SENSOR_TYPE_LOCATION:
+			return LocationSensor.getLocationSensor(context);
+		case SENSOR_TYPE_MICROPHONE:
+			return MicrophoneSensor.getMicrophoneSensor(context);
+		case SENSOR_TYPE_WIFI:
+			return WifiSensor.getWifiSensor(context);
+		case SENSOR_TYPE_BATTERY:
+			return BatterySensor.getBatterySensor(context);
+		case SENSOR_TYPE_PHONE_STATE:
+			return PhoneStateSensor.getPhoneStateSensor(context);
+		case SENSOR_TYPE_PROXIMITY:
+			return ProximitySensor.getProximitySensor(context);
+		case SENSOR_TYPE_SCREEN:
+			return ScreenSensor.getScreenSensor(context);
+		case SENSOR_TYPE_SMS:
+			return SmsSensor.getSmsSensor(context);
+		default:
+			throw new ESException(ESException.UNKNOWN_SENSOR_TYPE, "Unknown sensor id");
+		}
 	}
-	
+
 	public static SensorConfig getDefaultSensorConfig(int sensorType)
 	{
 		SensorConfig sensorConfig = new SensorConfig();
@@ -128,9 +130,9 @@ public class SensorUtils
 			sensorConfig.setParameter(SensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, Constants.ACCELEROMETER_SLEEP_INTERVAL);
 			sensorConfig.setParameter(SensorConfig.SENSE_WINDOW_LENGTH_MILLIS, Constants.ACCELEROMETER_SAMPLING_WINDOW_SIZE_MILLIS);
 			break;
-		case SensorUtils.SENSOR_TYPE_BATTERY:
-			sensorConfig.setParameter(SensorConfig.LOW_BATTERY_THRESHOLD, (Integer)Constants.LOW_BATTERY_THRESHOLD_LEVEL);
-			break;
+//		case SensorUtils.SENSOR_TYPE_BATTERY:
+//			sensorConfig.setParameter(SensorConfig.LOW_BATTERY_THRESHOLD, (Integer) Constants.LOW_BATTERY_THRESHOLD_LEVEL);
+//			break;
 		case SensorUtils.SENSOR_TYPE_BLUETOOTH:
 			sensorConfig.setParameter(SensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, Constants.BLUETOOTH_SLEEP_INTERVAL);
 			sensorConfig.setParameter(SensorConfig.NUMBER_OF_SENSE_CYCLES, Constants.BLUETOOTH_SAMPLING_CYCLES);
@@ -151,7 +153,7 @@ public class SensorUtils
 		}
 		return sensorConfig;
 	}
-	
+
 	public static int getSensorType(String sensorName) throws ESException
 	{
 		if (sensorName.equals(SENSOR_NAME_ACCELEROMETER))
@@ -199,7 +201,7 @@ public class SensorUtils
 			throw new ESException(ESException.UNKNOWN_SENSOR_NAME, "unknown sensor name " + sensorName);
 		}
 	}
-	
+
 	public static String getSensorName(int sensorType) throws ESException
 	{
 		switch (sensorType)
@@ -228,7 +230,7 @@ public class SensorUtils
 			throw new ESException(ESException.UNKNOWN_SENSOR_NAME, "unknown sensor type " + sensorType);
 		}
 	}
-	
+
 	public static SensorDataClassifier getSensorDataClassifier(int sensorType) throws ESException
 	{
 		switch (sensorType)
@@ -247,5 +249,5 @@ public class SensorUtils
 			throw new ESException(ESException.UNKNOWN_SENSOR_TYPE, "sensor data classifier not support for the sensor type " + sensorType);
 		}
 	}
-	
+
 }

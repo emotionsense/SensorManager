@@ -8,7 +8,7 @@ import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.ESSensorManager;
 import com.ubhave.sensormanager.SensorDataListener;
 import com.ubhave.sensormanager.config.Constants;
-import com.ubhave.sensormanager.config.SensorConfig;
+import com.ubhave.sensormanager.config.GlobalConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.data.pushsensor.BatteryData;
 import com.ubhave.sensormanager.logs.ESLogger;
@@ -166,7 +166,7 @@ public abstract class AbstractSensorTask extends Thread
 			int batteryThreshold = Constants.LOW_BATTERY_THRESHOLD_LEVEL;
 			try
 			{
-				batteryThreshold = (Integer) sensor.getSensorConfig(SensorConfig.LOW_BATTERY_THRESHOLD);
+				batteryThreshold = (Integer) sensor.getSensorConfig(GlobalConfig.LOW_BATTERY_THRESHOLD);
 			}
 			catch (ESException exp)
 			{
