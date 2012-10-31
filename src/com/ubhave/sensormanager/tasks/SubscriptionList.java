@@ -22,7 +22,7 @@ public class SubscriptionList
 		keyGenerator = new Random();
 	}
 
-	public int registerSubscription(Subscription s) throws ESException
+	public synchronized int registerSubscription(Subscription s) throws ESException
 	{
 		if (!s.register()) // subscription already exists
 		{
@@ -47,7 +47,7 @@ public class SubscriptionList
 		}
 	}
 
-	public Subscription removeSubscription(int subscriptionId)
+	public synchronized Subscription removeSubscription(int subscriptionId)
 	{
 		Subscription s = subscriptionMap.get(subscriptionId);
 		subscriptionMap.delete(subscriptionId);
@@ -55,7 +55,7 @@ public class SubscriptionList
 		return s;
 	}
 
-	public List<Subscription> getAllSubscriptions()
+	public synchronized List<Subscription> getAllSubscriptions()
 	{
 		ArrayList<Subscription> list = new ArrayList<Subscription>();
 		for (int i = 0; i < subscriptionMap.size(); i++)
@@ -69,7 +69,7 @@ public class SubscriptionList
 		return list;
 	}
 	
-	public Subscription getSubscription(int subscriptionId)
+	public synchronized Subscription getSubscription(int subscriptionId)
 	{
 		return subscriptionMap.get(subscriptionId);
 	}
