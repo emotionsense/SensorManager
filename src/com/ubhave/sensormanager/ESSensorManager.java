@@ -258,23 +258,23 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 		List<Subscription> subscribers = subscriptionList.getAllSubscriptions();
 		for (Subscription sub : subscribers)
 		{
-			sub.getListener().onCrossingLowBatteryThreshold(isBelowThreshold);
+			if (!sub.isPaused())
+			{
+				sub.getListener().onCrossingLowBatteryThreshold(isBelowThreshold);
+			}
 		}
 	}
 
-	
 	public void pauseSubscription(int subscriptionId) throws ESException
 	{
-//		Subscription s = subscriptionList.getSubscription(subscriptionId);
-//		s.pause();
-		
-		Subscription s = subscriptionList.removeSubscription(subscriptionId);
-		// add to pause list
+		Subscription s = subscriptionList.getSubscription(subscriptionId);
+		s.pause();
 	}
 
 	public void unPauseSubscription(int subscriptionId) throws ESException
 	{
-		// ignore
+		Subscription s = subscriptionList.getSubscription(subscriptionId);
+		s.unpause();
 	}
 
 }
