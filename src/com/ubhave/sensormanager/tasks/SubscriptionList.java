@@ -68,6 +68,11 @@ public class SubscriptionList
 		}
 		return list;
 	}
+	
+	public Subscription getSubscription(int subscriptionId)
+	{
+		return subscriptionMap.get(subscriptionId);
+	}
 
 	private int randomKey() throws ESException
 	{

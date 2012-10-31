@@ -262,4 +262,19 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 		}
 	}
 
+	
+	public void pauseSubscription(int subscriptionId) throws ESException
+	{
+//		Subscription s = subscriptionList.getSubscription(subscriptionId);
+//		s.pause();
+		
+		Subscription s = subscriptionList.removeSubscription(subscriptionId);
+		// add to pause list
+	}
+
+	public void unPauseSubscription(int subscriptionId) throws ESException
+	{
+		// ignore
+	}
+
 }

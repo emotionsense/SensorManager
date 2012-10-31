@@ -14,6 +14,14 @@ public interface ESSensorManagerInterface
 	public SensorData getDataFromSensor(int sensorId) throws ESException;
 	
 	/*
+	 * Pause / Unpause
+	 */
+	
+	public void pauseSubscription(int subscriptionId) throws ESException;
+	
+	public void unPauseSubscription(int subscriptionId) throws ESException;
+	
+	/*
 	 * Getting/setting configuration parameters
 	 */
 	public void setSensorConfig(int sensorId, String configKey, Object configValue) throws ESException;
