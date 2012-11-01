@@ -14,22 +14,22 @@ public class Subscription
 		this.listener = listener;
 		this.isPaused = false;
 	}
-	
+
 	public AbstractSensorTask getTask()
 	{
 		return task;
 	}
-	
+
 	public SensorDataListener getListener()
 	{
 		return listener;
 	}
-	
+
 	public boolean register()
 	{
 		return task.registerSensorDataListener(listener);
 	}
-	
+
 	public void unregister()
 	{
 		task.unregisterSensorDataListener(listener);

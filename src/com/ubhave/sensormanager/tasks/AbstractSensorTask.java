@@ -7,7 +7,6 @@ import android.os.AsyncTask;
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.ESSensorManager;
 import com.ubhave.sensormanager.SensorDataListener;
-import com.ubhave.sensormanager.config.Constants;
 import com.ubhave.sensormanager.config.GlobalConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.data.pushsensor.BatteryData;
@@ -163,15 +162,7 @@ public abstract class AbstractSensorTask extends Thread
 			BatteryData batteryData = (BatteryData) sensorData;
 			int currLevel = batteryData.getBatteryLevel();
 
-			int batteryThreshold = Constants.LOW_BATTERY_THRESHOLD_LEVEL;
-			try
-			{
-				batteryThreshold = (Integer) sensor.getSensorConfig(GlobalConfig.LOW_BATTERY_THRESHOLD);
-			}
-			catch (ESException exp)
-			{
-				ESLogger.error(TAG, exp);
-			}
+			int batteryThreshold = (Integer) GlobalConfig.getGlobalConfig().getParameter(GlobalConfig.LOW_BATTERY_THRESHOLD);
 
 			if (currLevel < batteryThreshold)
 			{

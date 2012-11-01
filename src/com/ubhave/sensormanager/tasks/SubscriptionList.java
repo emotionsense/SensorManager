@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import android.util.Log;
 import android.util.SparseArray;
 
 import com.ubhave.sensormanager.ESException;
@@ -58,6 +59,8 @@ public class SubscriptionList
 	public synchronized List<Subscription> getAllSubscriptions()
 	{
 		ArrayList<Subscription> list = new ArrayList<Subscription>();
+		Log.d("LOG", "List size is: "+subscriptionMap.size());
+		
 		for (int i = 0; i < subscriptionMap.size(); i++)
 		{
 			Subscription sub = subscriptionMap.valueAt(i);

@@ -6,6 +6,7 @@ import java.util.List;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.PowerManager;
+import android.util.Log;
 import android.util.SparseArray;
 
 import com.ubhave.sensormanager.config.GlobalConfig;
@@ -61,7 +62,7 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 		applicationContext = appContext;
 		sensorTaskMap = new SparseArray<AbstractSensorTask>();
 		subscriptionList = new SubscriptionList();
-		config = GlobalConfig.getDefaultGlobalConfig();
+		config = GlobalConfig.getGlobalConfig();
 
 		ArrayList<SensorInterface> sensors = SensorUtils.getAllSensors(appContext);
 
@@ -255,10 +256,11 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 
 	public void onCrossingLowBatteryThreshold(boolean isBelowThreshold)
 	{
+		Log.d("Sensor Manager", "Low battery threshold event: "+isBelowThreshold);
 		List<Subscription> subscribers = subscriptionList.getAllSubscriptions();
 		for (Subscription sub : subscribers)
 		{
-			if (!sub.isPaused())
+			if (!(sub.getListener() instanceof ESSensorManager))
 			{
 				sub.getListener().onCrossingLowBatteryThreshold(isBelowThreshold);
 			}
