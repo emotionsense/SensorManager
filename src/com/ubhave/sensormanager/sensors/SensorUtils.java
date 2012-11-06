@@ -20,6 +20,7 @@ import com.ubhave.sensormanager.sensors.pull.LocationSensor;
 import com.ubhave.sensormanager.sensors.pull.MicrophoneSensor;
 import com.ubhave.sensormanager.sensors.pull.WifiSensor;
 import com.ubhave.sensormanager.sensors.push.BatterySensor;
+import com.ubhave.sensormanager.sensors.push.ConnectionStateSensor;
 import com.ubhave.sensormanager.sensors.push.PhoneStateSensor;
 import com.ubhave.sensormanager.sensors.push.ProximitySensor;
 import com.ubhave.sensormanager.sensors.push.ScreenSensor;
@@ -118,6 +119,8 @@ public class SensorUtils
 			return ScreenSensor.getScreenSensor(context);
 		case SENSOR_TYPE_SMS:
 			return SmsSensor.getSmsSensor(context);
+		case SENSOR_TYPE_CONNECTION_STATE:
+			return ConnectionStateSensor.getConnectionStateSensor(context);
 		default:
 			throw new ESException(ESException.UNKNOWN_SENSOR_TYPE, "Unknown sensor id");
 		}
@@ -227,6 +230,8 @@ public class SensorUtils
 			return SENSOR_NAME_SMS;
 		case SensorUtils.SENSOR_TYPE_WIFI:
 			return SENSOR_NAME_WIFI;
+		case SensorUtils.SENSOR_TYPE_CONNECTION_STATE:
+			return SENSOR_NAME_CONNECTION_STATE;
 		default:
 			throw new ESException(ESException.UNKNOWN_SENSOR_NAME, "unknown sensor type " + sensorType);
 		}

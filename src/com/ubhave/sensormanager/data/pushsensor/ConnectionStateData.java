@@ -114,7 +114,10 @@ public class ConnectionStateData extends SensorData
 	@Override
 	public String getDataString()
 	{
-		return "";
+		return "Is connected: "+isConnected
+				+"\nConnected/connecting: "+isConnectedOrConnecting
+				+"\nAvailable: "+isAvailable
+				+"\nType: "+networkType;
 	}
 
 	@Override

@@ -19,7 +19,7 @@ public class ConnectionStateSensor extends AbstractPushSensor
 	private static ConnectionStateSensor connectionSensor;
 	private static final Object lock = new Object();
 
-	public static ConnectionStateSensor getPhoneStateSensor(Context context) throws ESException
+	public static ConnectionStateSensor getConnectionStateSensor(Context context) throws ESException
 	{
 		if (connectionSensor == null)
 		{
@@ -27,8 +27,7 @@ public class ConnectionStateSensor extends AbstractPushSensor
 			{
 				if (connectionSensor == null)
 				{
-					if (permissionGranted(context, "android.net.conn.CONNECTIVITY_CHANGE")
-							&& permissionGranted(context, "android.permission.ACCESS_WIFI_STATE")
+					if (permissionGranted(context, "android.permission.ACCESS_WIFI_STATE")
 							&& permissionGranted(context, "android.permission.ACCESS_NETWORK_STATE"))
 					{
 						connectionSensor = new ConnectionStateSensor(context);
