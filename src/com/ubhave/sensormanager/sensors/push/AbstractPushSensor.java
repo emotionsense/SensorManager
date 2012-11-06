@@ -49,7 +49,6 @@ public abstract class AbstractPushSensor extends AbstractSensor implements PushS
 			throw new ESException(ESException.SENSOR_ALREADY_SENSING, "sensor already sensing");
 		}
 		
-		isSensing = true;
 		this.sensorDataListener = listener;
 		startSensing();
 		// register broadcast receiver
@@ -62,6 +61,7 @@ public abstract class AbstractPushSensor extends AbstractSensor implements PushS
 			}
 		}
 
+		isSensing = true;
 		ESLogger.log(getLogTag(), "Sensing started.");
 	}
 
@@ -73,15 +73,15 @@ public abstract class AbstractPushSensor extends AbstractSensor implements PushS
 			ESLogger.log(getLogTag(), "sensing not sensing");
 			throw new ESException(ESException.SENSOR_NOT_SENSING, "sensor not sensing");
 		}
-		isSensing = false;
-		stopSensing();
 		
+		stopSensing();
 		IntentFilter[] filters = getIntentFilters();
 		if ((filters != null) && (filters.length > 0))
 		{
 			applicationContext.unregisterReceiver(broadcastReceiver);
 		}
 
+		isSensing = false;
 		ESLogger.log(getLogTag(), "Sensing stopped.");
 	}
 

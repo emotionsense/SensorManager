@@ -39,6 +39,7 @@ public class SensorUtils
 	public final static int SENSOR_TYPE_SCREEN = 5008;
 	public final static int SENSOR_TYPE_SMS = 5009;
 	public final static int SENSOR_TYPE_WIFI = 5010;
+	public final static int SENSOR_TYPE_CONNECTION_STATE = 5011;
 
 	public final static String SENSOR_NAME_ACCELEROMETER = "Accelerometer";
 	public final static String SENSOR_NAME_BATTERY = "Battery";
@@ -50,9 +51,10 @@ public class SensorUtils
 	public final static String SENSOR_NAME_SCREEN = "Screen";
 	public final static String SENSOR_NAME_SMS = "SMS";
 	public final static String SENSOR_NAME_WIFI = "WiFi";
+	public final static String SENSOR_NAME_CONNECTION_STATE = "Connection";
 
 	private final static int[] ALL_SENSORS = new int[] { SENSOR_TYPE_ACCELEROMETER, SENSOR_TYPE_BLUETOOTH, SENSOR_TYPE_LOCATION, SENSOR_TYPE_MICROPHONE, SENSOR_TYPE_WIFI, SENSOR_TYPE_BATTERY, SENSOR_TYPE_PHONE_STATE, SENSOR_TYPE_PROXIMITY,
-			SENSOR_TYPE_SCREEN, SENSOR_TYPE_SMS };
+			SENSOR_TYPE_SCREEN, SENSOR_TYPE_SMS, SENSOR_TYPE_CONNECTION_STATE };
 
 	public static boolean isPullSensor(int sensorType)
 	{
