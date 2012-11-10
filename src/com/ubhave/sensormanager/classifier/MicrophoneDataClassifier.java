@@ -1,3 +1,25 @@
+/* **************************************************
+ Copyright (c) 2012, University of Cambridge
+ Neal Lathia, neal.lathia@cl.cam.ac.uk
+ Kiran Rachuri, kiran.rachuri@cl.cam.ac.uk
+
+This library was developed as part of the EPSRC Ubhave (Ubiquitous and
+Social Computing for Positive Behaviour Change) Project. For more
+information, please visit http://www.emotionsense.org
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY
+SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
+IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+ ************************************************** */
+
 package com.ubhave.sensormanager.classifier;
 
 import com.ubhave.sensormanager.config.Constants;
@@ -19,36 +41,36 @@ public class MicrophoneDataClassifier implements SensorDataClassifier
 			return true;
 		}
 	}
-	
-    private boolean isSilent(String amplitudeData)
-    {
-        amplitudeData = amplitudeData.trim();
 
-        double avgAmplitude = 0;
-        String[] amplitudes = amplitudeData.split(",");
-        for (String aValue : amplitudes)
-        {
-            aValue = aValue.trim();
-            double parsedValue = 0;
-            try
-            {
-                parsedValue = Double.parseDouble(aValue);
-            }
-            catch (NumberFormatException nfe)
-            {
-                nfe.printStackTrace();
-            }
-            avgAmplitude += parsedValue;
-        }
-        avgAmplitude = avgAmplitude / amplitudes.length;
-        if (avgAmplitude > Constants.MICROPHONE_SOUND_THRESHOLD)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
-    }
+	private boolean isSilent(String amplitudeData)
+	{
+		amplitudeData = amplitudeData.trim();
+
+		double avgAmplitude = 0;
+		String[] amplitudes = amplitudeData.split(",");
+		for (String aValue : amplitudes)
+		{
+			aValue = aValue.trim();
+			double parsedValue = 0;
+			try
+			{
+				parsedValue = Double.parseDouble(aValue);
+			}
+			catch (NumberFormatException nfe)
+			{
+				nfe.printStackTrace();
+			}
+			avgAmplitude += parsedValue;
+		}
+		avgAmplitude = avgAmplitude / amplitudes.length;
+		if (avgAmplitude > Constants.MICROPHONE_SOUND_THRESHOLD)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
 
 }
