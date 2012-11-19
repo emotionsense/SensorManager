@@ -48,6 +48,16 @@ public class ProximityData extends SensorData
 		}
 		return false;
 	}
+	
+	public float getDistance()
+	{
+		return distance;
+	}
+	
+	public float getMaxRange()
+	{
+		return maxRange;
+	}
 
 	public String getDataString()
 	{

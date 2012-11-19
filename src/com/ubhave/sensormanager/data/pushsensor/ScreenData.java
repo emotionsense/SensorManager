@@ -51,6 +51,11 @@ public class ScreenData extends SensorData
 			return "UNKNOWN";
 		}
 	}
+	
+	public boolean isOff()
+	{
+		return screenStatus == SCREEN_OFF;
+	}
 
 	public boolean isOn()
 	{

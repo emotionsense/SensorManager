@@ -59,6 +59,11 @@ public class SmsData extends SensorData
 	{
 		return address;
 	}
+	
+	public String getEventType()
+	{
+		return eventType;
+	}
 
 	public boolean wasReceived()
 	{
