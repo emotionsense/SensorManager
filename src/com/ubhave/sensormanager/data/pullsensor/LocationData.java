@@ -30,8 +30,7 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class LocationData extends SensorData
 {
-
-	Location location;
+	private final Location location;
 
 	public LocationData(long senseStartTimestamp, Location location, SensorConfig sensorConfig)
 	{
@@ -42,37 +41,6 @@ public class LocationData extends SensorData
 	public Location getLocation()
 	{
 		return location;
-	}
-
-	public String getDataString()
-	{
-		StringBuilder sb = new StringBuilder();
-
-		if (location != null)
-		{
-			sb.append(location.getLatitude());
-			sb.append(",");
-			sb.append(location.getLongitude());
-			sb.append(",");
-			sb.append(location.getAccuracy());
-			sb.append(",");
-			sb.append(location.getSpeed());
-			sb.append(",");
-			sb.append(location.getBearing());
-			sb.append(",");
-			sb.append(location.getProvider());
-			sb.append(",");
-			sb.append(location.getSpeed());
-			sb.append(",");
-			sb.append(location.getTime());
-			sb.append(";");
-		}
-		else
-		{
-			sb.append("NO_LOCATION_DATA");
-		}
-
-		return sb.toString();
 	}
 
 	public int getSensorType()

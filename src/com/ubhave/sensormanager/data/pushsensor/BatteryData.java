@@ -55,6 +55,11 @@ public class BatteryData extends SensorData
 		return level;
 	}
 	
+	public int getPlugged()
+	{
+		return plugged;
+	}
+	
 	public int getScale()
 	{
 		return scale;
@@ -90,12 +95,6 @@ public class BatteryData extends SensorData
 		{
 			return false;
 		}
-	}
-
-	public String getDataString()
-	{
-		return "removed";
-//		return "Level " + level + "/" + scale + " Temperature " + temperature + " Voltage " + voltage + " Plugged " + plugged + " Status " + status + " " + getStatusString(status) + " Health " + health + " " + getHealthString(health);
 	}
 
 	public int getSensorType()

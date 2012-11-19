@@ -25,10 +25,10 @@ package com.ubhave.sensormanager.data.pullsensor;
 public class ESBluetoothDevice
 {
 
-	private long timestamp;
-	private String bluetoothDeviceAddress;
-	private String bluetoothDeviceName;
-	private float rssi;
+	private final long timestamp;
+	private final String bluetoothDeviceAddress;
+	private final String bluetoothDeviceName;
+	private final float rssi;
 
 	public ESBluetoothDevice(long ts, String btAddr, String btName, float btRssi)
 	{
@@ -68,10 +68,5 @@ public class ESBluetoothDevice
 		{
 			return false;
 		}
-	}
-
-	public String toString()
-	{
-		return "Timestamp: " + timestamp + " Device address: " + bluetoothDeviceAddress + " Device name: " + bluetoothDeviceName + " Rssi: " + rssi;
 	}
 }

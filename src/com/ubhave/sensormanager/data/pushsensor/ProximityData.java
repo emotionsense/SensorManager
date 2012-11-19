@@ -59,11 +59,6 @@ public class ProximityData extends SensorData
 		return maxRange;
 	}
 
-	public String getDataString()
-	{
-		return "Distance " + this.distance + " MaxRange " + maxRange;
-	}
-
 	public int getSensorType()
 	{
 		return SensorUtils.SENSOR_TYPE_PROXIMITY;

@@ -38,19 +38,6 @@ public class ScreenData extends SensorData
 		super(recvTimestamp, sensorConfig);
 		this.screenStatus = screenStatus;
 	}
-
-	public String getScreenStatusString()
-	{
-		switch (screenStatus)
-		{
-		case SCREEN_OFF:
-			return "SCREEN_OFF";
-		case SCREEN_ON:
-			return "SCREEN_ON";
-		default:
-			return "UNKNOWN";
-		}
-	}
 	
 	public boolean isOff()
 	{
@@ -60,11 +47,6 @@ public class ScreenData extends SensorData
 	public boolean isOn()
 	{
 		return screenStatus == SCREEN_ON;
-	}
-
-	public String getDataString()
-	{
-		return "ScreenStatus " + getScreenStatusString();
 	}
 
 	public int getSensorType()

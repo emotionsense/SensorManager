@@ -41,11 +41,6 @@ public class MicrophoneData extends SensorData
 		return amplitudeString;
 	}
 
-	public String getDataString()
-	{
-		return amplitudeString;
-	}
-
 	public int getSensorType()
 	{
 		return SensorUtils.SENSOR_TYPE_MICROPHONE;

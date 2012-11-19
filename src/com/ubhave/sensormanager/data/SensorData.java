@@ -36,8 +36,6 @@ public abstract class SensorData
 
 	private SensorConfig sensorConfig;
 
-	public abstract String getDataString();
-
 	public abstract int getSensorType();
 
 	public SensorData(long sensorTimestamp, SensorConfig config)
@@ -74,10 +72,4 @@ public abstract class SensorData
 
 		this.prevSensorData = prevSensorData;
 	}
-
-	public String toString()
-	{
-		return sensorDataTimestamp + " " + getDataString();
-	}
-
 }

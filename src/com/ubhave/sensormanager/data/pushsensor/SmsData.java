@@ -70,11 +70,6 @@ public class SmsData extends SensorData
 		return eventType.equals(SMS_RECEIVED);
 	}
 
-	public String getDataString()
-	{
-		return "SMSLength " + contentLength + " NoOfWords " + noOfWords + " Address " + address + " Type " + eventType;
-	}
-
 	public int getSensorType()
 	{
 		return SensorUtils.SENSOR_TYPE_SMS;

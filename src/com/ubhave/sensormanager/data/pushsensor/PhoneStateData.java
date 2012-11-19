@@ -73,11 +73,6 @@ public class PhoneStateData extends SensorData
 		return eventType == CALL_STATE_IDLE;
 	}
 
-	public String getDataString()
-	{
-		return eventType + " " + data;
-	}
-
 	public int getSensorType()
 	{
 		return SensorUtils.SENSOR_TYPE_PHONE_STATE;
