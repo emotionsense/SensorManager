@@ -33,21 +33,25 @@ import com.ubhave.sensormanager.sensors.pull.PullSensor;
 public class PullSensorTask extends AbstractSensorTask
 {
 	private final static String TAG = "PullSensorTask";
-	
+
 	public PullSensorTask(SensorInterface sensor)
 	{
 		super(sensor);
 	}
-	
-	public SensorData getCurrentSensorData() throws ESException
+
+	public SensorData getCurrentSensorData(boolean oneOffSensing) throws ESException
 	{
 		SensorData sensorData = ((PullSensor) sensor).sense();
 		// since this is a one-off query for sensor data, sleep interval
 		// is not relevant in this case
 		if (sensorData != null)
 		{
-			SensorConfig sensorConfig = sensorData.getSensorConfig();
-			sensorConfig.removeParameter(SensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS);
+			// remove sleep length value for the case of one-off sensing
+			if (oneOffSensing)
+			{
+				SensorConfig sensorConfig = sensorData.getSensorConfig();
+				sensorConfig.removeParameter(SensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS);
+			}
 		}
 		return sensorData;
 	}
@@ -62,7 +66,6 @@ public class PullSensorTask extends AbstractSensorTask
 				{
 					try
 					{
-						
 
 						if ((state == PAUSED) || (state == STOPPED))
 						{
@@ -77,16 +80,16 @@ public class PullSensorTask extends AbstractSensorTask
 							state = RUNNING;
 							continue;
 						}
-						
+
 						// SENSE
 						// sense() is a blocking call and returns when
 						// the sensing is complete, the sensorConfig object
 						// will have the sampling window, cycle information
 						ESLogger.log(getLogTag(), "Pulling from: " + SensorUtils.getSensorName(sensor.getSensorType()));
-						SensorData sensorData = getCurrentSensorData();
+						SensorData sensorData = getCurrentSensorData(false);
 						// publish sensed data
 						publishData(sensorData);
-						
+
 						// SLEEP
 						long samplingInterval = (Long) sensor.getSensorConfig(SensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS);
 						syncObject.wait(samplingInterval);

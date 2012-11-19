@@ -167,7 +167,7 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 		}
 		else
 		{
-			sensorData = ((PullSensorTask) sensorTask).getCurrentSensorData();
+			sensorData = ((PullSensorTask) sensorTask).getCurrentSensorData(true);
 		}
 
 		return sensorData;
