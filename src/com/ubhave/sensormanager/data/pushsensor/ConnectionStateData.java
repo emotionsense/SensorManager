@@ -136,6 +136,6 @@ public class ConnectionStateData extends SensorData
 	@Override
 	public int getSensorType()
 	{
-		return SensorUtils.SENSOR_TYPE_PHONE_STATE;
+		return SensorUtils.SENSOR_TYPE_CONNECTION_STATE;
 	}
 }
