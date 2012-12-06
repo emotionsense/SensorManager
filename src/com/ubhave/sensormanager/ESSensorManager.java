@@ -28,7 +28,6 @@ import java.util.List;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.PowerManager;
-import android.util.Log;
 import android.util.SparseArray;
 
 import com.ubhave.sensormanager.config.GlobalConfig;
@@ -54,6 +53,10 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 
 	private final Context applicationContext;
 	private PowerManager.WakeLock wakeLock;
+	
+	private boolean isSubscribedToBattery;
+	private int batterySubscriptionId;
+	
 	private final SparseArray<AbstractSensorTask> sensorTaskMap;
 	private final SubscriptionList subscriptionList;
 	private final GlobalConfig config;
@@ -85,6 +88,7 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 		sensorTaskMap = new SparseArray<AbstractSensorTask>();
 		subscriptionList = new SubscriptionList();
 		config = GlobalConfig.getGlobalConfig();
+		isSubscribedToBattery = false;
 
 		ArrayList<SensorInterface> sensors = SensorUtils.getAllSensors(appContext);
 
@@ -110,8 +114,7 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 	private void setup() throws ESException
 	{
 		// initial setup
-		// register with battery sensor
-		subscribeToSensorData(SensorUtils.SENSOR_TYPE_BATTERY, this);
+		
 	}
 
 	public synchronized int subscribeToSensorData(int sensorId, SensorDataListener listener) throws ESException
@@ -119,6 +122,12 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 		AbstractSensorTask task = sensorTaskMap.get(sensorId);
 		if (task != null)
 		{
+			if (!isSubscribedToBattery)
+			{
+				// register with battery sensor
+				batterySubscriptionId = subscribeToSensorData(SensorUtils.SENSOR_TYPE_BATTERY, this);
+				isSubscribedToBattery = true;
+			}
 			ESLogger.log(TAG, "subscribeToSensorData() subscribing listener to sensorId " + sensorId);
 			Subscription subscription = new Subscription(task, listener);
 			int subscriptionId = subscriptionList.registerSubscription(subscription);
@@ -136,6 +145,11 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 		if (subscription != null)
 		{
 			subscription.unregister();
+			if (subscriptionList.getAllSubscriptions().size() == 1)
+			{
+				unsubscribeFromSensorData(batterySubscriptionId);
+				isSubscribedToBattery = false;
+			}
 		}
 		else
 		{
@@ -278,7 +292,6 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 
 	public void onCrossingLowBatteryThreshold(boolean isBelowThreshold)
 	{
-		Log.d("Sensor Manager", "Low battery threshold event: " + isBelowThreshold);
 		List<Subscription> subscribers = subscriptionList.getAllSubscriptions();
 		for (Subscription sub : subscribers)
 		{
