@@ -34,9 +34,7 @@ import com.ubhave.sensormanager.classifier.SensorDataClassifier;
 import com.ubhave.sensormanager.config.Constants;
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
-import com.ubhave.sensormanager.logs.ESLogger;
 import com.ubhave.sensormanager.sensors.SensorInterface;
-import com.ubhave.sensormanager.util.Utilities;
 
 /*
  * This algorithm is fully described in the MobiCom '11 paper: 
@@ -45,7 +43,6 @@ import com.ubhave.sensormanager.util.Utilities;
 
 public class AdaptiveSensing implements SensorDataListener
 {
-	private static String TAG = "AdaptiveSensing";
 
 	class PullSensorDetails
 	{
@@ -99,7 +96,7 @@ public class AdaptiveSensing implements SensorDataListener
 		}
 		catch (ESException exp)
 		{
-			ESLogger.error(TAG, exp);
+			exp.printStackTrace();
 			throw exp;
 		}
 		sensorMap.put(sensor.getSensorType(), sensorDetails);
@@ -220,12 +217,23 @@ public class AdaptiveSensing implements SensorDataListener
 				}
 				catch (Exception exp)
 				{
-					ESLogger.error(TAG, exp);
-					Utilities.sleep(60000);
+					exp.printStackTrace();
+					AdaptiveSensing.sleep(60000);
 				}
 
 			}
-
+		}
+	}
+	
+	private static void sleep(long millis)
+	{
+		try
+		{
+			Thread.sleep(millis);
+		}
+		catch (Exception exp)
+		{
+			exp.printStackTrace();
 		}
 	}
 

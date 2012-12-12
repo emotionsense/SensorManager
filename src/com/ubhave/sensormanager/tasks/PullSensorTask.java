@@ -22,17 +22,18 @@ IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 package com.ubhave.sensormanager.tasks;
 
+import android.util.Log;
+
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
-import com.ubhave.sensormanager.logs.ESLogger;
 import com.ubhave.sensormanager.sensors.SensorInterface;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 import com.ubhave.sensormanager.sensors.pull.PullSensor;
 
 public class PullSensorTask extends AbstractSensorTask
 {
-	private final static String TAG = "PullSensorTask";
+//	private final static String TAG = "PullSensorTask";
 
 	public PullSensorTask(SensorInterface sensor)
 	{
@@ -85,7 +86,7 @@ public class PullSensorTask extends AbstractSensorTask
 						// sense() is a blocking call and returns when
 						// the sensing is complete, the sensorConfig object
 						// will have the sampling window, cycle information
-						ESLogger.log(getLogTag(), "Pulling from: " + SensorUtils.getSensorName(sensor.getSensorType()));
+						Log.d(getLogTag(), "Pulling from: " + SensorUtils.getSensorName(sensor.getSensorType()));
 						SensorData sensorData = getCurrentSensorData(false);
 						// publish sensed data
 						publishData(sensorData);
@@ -101,7 +102,7 @@ public class PullSensorTask extends AbstractSensorTask
 				}
 				catch (ESException e)
 				{
-					ESLogger.error(TAG, e);
+					e.printStackTrace();
 					try
 					{
 						Thread.sleep(30000);

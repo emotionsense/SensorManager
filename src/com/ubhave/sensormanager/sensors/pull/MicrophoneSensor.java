@@ -30,9 +30,7 @@ import android.media.MediaRecorder;
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.data.pullsensor.MicrophoneData;
-import com.ubhave.sensormanager.logs.ESLogger;
 import com.ubhave.sensormanager.sensors.SensorUtils;
-import com.ubhave.sensormanager.util.Utilities;
 
 public class MicrophoneSensor extends AbstractPullSensor
 {
@@ -103,7 +101,7 @@ public class MicrophoneSensor extends AbstractPullSensor
 					while (isSensing())
 					{
 						amplitudeString = amplitudeString + ((amplitudeString.length() > 0) ? "," : "") + recorder.getMaxAmplitude();
-						Utilities.sleep(50);
+						MicrophoneSensor.sleep(50);
 					}
 				}
 			}).start();
@@ -111,10 +109,22 @@ public class MicrophoneSensor extends AbstractPullSensor
 		}
 		catch (IOException exp)
 		{
-			ESLogger.error(LOG_TAG, exp);
+			exp.printStackTrace();
 			return false;
 		}
 		return true;
+	}
+	
+	private static void sleep(long millis)
+	{
+		try
+		{
+			Thread.sleep(millis);
+		}
+		catch (Exception exp)
+		{
+			exp.printStackTrace();
+		}
 	}
 
 	protected void stopSensing()

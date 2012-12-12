@@ -32,10 +32,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.telephony.SmsMessage;
+import android.util.Log;
 
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.data.pushsensor.SmsData;
-import com.ubhave.sensormanager.logs.ESLogger;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class SmsSensor extends AbstractCommunicationSensor
@@ -104,7 +104,7 @@ public class SmsSensor extends AbstractCommunicationSensor
 						// add sender and body length to smsActivity
 						String logString = System.currentTimeMillis() + " " + SmsData.SMS_CONTENT_CHANGED + " " + content.length() + " words " + noOfWords + " address " + sentTo + " type " + cursor.getString(cursor.getColumnIndex("type")) + " timestamp "
 								+ cursor.getString(cursor.getColumnIndex("date"));
-						ESLogger.log(TAG, logString);
+						Log.d(TAG, logString);
 						logDataSensed(System.currentTimeMillis(), content.length(), noOfWords, sentTo, SmsData.SMS_CONTENT_CHANGED);
 					}
 				}
@@ -154,13 +154,13 @@ public class SmsSensor extends AbstractCommunicationSensor
 
 						// add sender and body length to smsActivity
 						String logString = System.currentTimeMillis() + " "+SmsData.SMS_RECEIVED+" " + contentLength + " words " + noOfWords + " address " + address + " timestamp " + smsMessagesArray[i].getTimestampMillis();
-						ESLogger.log(TAG, logString);
+						Log.d(TAG, logString);
 						logDataSensed(System.currentTimeMillis(), contentLength, noOfWords, address, SmsData.SMS_RECEIVED);
 					}
 				}
 				catch (Exception e)
 				{
-					ESLogger.error(TAG, e);
+					e.printStackTrace();
 				}
 			}
 		}

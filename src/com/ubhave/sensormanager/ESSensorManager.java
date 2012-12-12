@@ -28,13 +28,13 @@ import java.util.List;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.PowerManager;
+import android.util.Log;
 import android.util.SparseArray;
 
 import com.ubhave.sensormanager.config.GlobalConfig;
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.dutycyling.AdaptiveSensing;
-import com.ubhave.sensormanager.logs.ESLogger;
 import com.ubhave.sensormanager.sensors.SensorInterface;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 import com.ubhave.sensormanager.sensors.pull.AbstractPullSensor;
@@ -75,7 +75,6 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 				{
 					sensorManager = new ESSensorManager(context);
 					sensorManager.setup();
-					ESLogger.log(TAG, "started.");
 				}
 			}
 		}
@@ -128,7 +127,8 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 				batterySubscriptionId = subscribeToSensorData(SensorUtils.SENSOR_TYPE_BATTERY, this);
 				isSubscribedToBattery = true;
 			}
-			ESLogger.log(TAG, "subscribeToSensorData() subscribing listener to sensorId " + sensorId);
+			
+			Log.d(TAG, "subscribeToSensorData() subscribing listener to sensorId " + sensorId);
 			Subscription subscription = new Subscription(task, listener);
 			int subscriptionId = subscriptionList.registerSubscription(subscription);
 			return subscriptionId;

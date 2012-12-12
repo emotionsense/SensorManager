@@ -25,13 +25,12 @@ package com.ubhave.sensormanager.tasks;
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.SensorDataListener;
 import com.ubhave.sensormanager.data.SensorData;
-import com.ubhave.sensormanager.logs.ESLogger;
 import com.ubhave.sensormanager.sensors.SensorInterface;
 import com.ubhave.sensormanager.sensors.push.PushSensor;
 
 public class PushSensorTask extends AbstractSensorTask implements SensorDataListener
 {
-	private final static String TAG = "PushSensorTask";
+//	private final static String TAG = "PushSensorTask";
 	
 	public PushSensorTask(SensorInterface sensor)
 	{
@@ -54,7 +53,7 @@ public class PushSensorTask extends AbstractSensorTask implements SensorDataList
 						}
 						catch (ESException exp)
 						{
-							ESLogger.error(TAG, exp);
+							exp.printStackTrace();
 						}
 					}
 					else
@@ -75,7 +74,7 @@ public class PushSensorTask extends AbstractSensorTask implements SensorDataList
 						}
 						catch (ESException e)
 						{
-							ESLogger.error(TAG, e);
+							e.printStackTrace();
 						}
 					}
 					if (state == PAUSED)

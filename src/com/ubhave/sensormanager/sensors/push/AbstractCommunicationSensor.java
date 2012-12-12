@@ -27,12 +27,10 @@ import java.security.NoSuchAlgorithmException;
 
 import android.content.Context;
 
-import com.ubhave.sensormanager.logs.ESLogger;
-
 public abstract class AbstractCommunicationSensor extends AbstractPushSensor
 {
 
-	private final static String LOG_TAG = "CommunicationSensor";
+//	private final static String LOG_TAG = "CommunicationSensor";
 	
 	public AbstractCommunicationSensor(Context context)
 	{
@@ -58,7 +56,7 @@ public abstract class AbstractCommunicationSensor extends AbstractPushSensor
 		}
 		catch (NoSuchAlgorithmException e)
 		{
-			ESLogger.error(LOG_TAG, e);
+			e.printStackTrace();
 		}
 		mDigest.reset();
 		byte[] byteArray = mDigest.digest(phoneNumber.getBytes());

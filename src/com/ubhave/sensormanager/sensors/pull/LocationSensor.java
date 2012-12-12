@@ -33,7 +33,6 @@ import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.data.pullsensor.LocationData;
-import com.ubhave.sensormanager.logs.ESLogger;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class LocationSensor extends AbstractPullSensor
@@ -80,7 +79,7 @@ public class LocationSensor extends AbstractPullSensor
 				{
 					lastLocation = loc;
 					LocationData data = new LocationData(System.currentTimeMillis(), loc, sensorConfig.clone());
-					ESLogger.log(TAG, data.toString());
+					// TODO
 				}
 			}
 

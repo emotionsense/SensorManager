@@ -30,7 +30,6 @@ import android.util.Log;
 import android.util.SparseArray;
 
 import com.ubhave.sensormanager.ESException;
-import com.ubhave.sensormanager.logs.ESLogger;
 
 public class SubscriptionList
 {
@@ -49,7 +48,7 @@ public class SubscriptionList
 	{
 		if (!s.register()) // subscription already exists
 		{
-			ESLogger.log(TAG, "registerSubscription() subscription already exists for task: " + s.getTask().getSensorType() + " listener: " + s.getListener());
+			Log.d(TAG, "registerSubscription() subscription already exists for task: " + s.getTask().getSensorType() + " listener: " + s.getListener());
 			for (int i = 0; i < subscriptionMap.size(); i++)
 			{
 				int subscriptionId = subscriptionMap.keyAt(i);
@@ -65,7 +64,7 @@ public class SubscriptionList
 		{
 			int subscriptionId = randomKey();
 			subscriptionMap.append(subscriptionId, s);
-			ESLogger.log(TAG, "registerSubscription() new subscription created for task: " + s.getTask().getSensorType() + " listener: " + s.getListener());
+			Log.d(TAG, "registerSubscription() new subscription created for task: " + s.getTask().getSensorType() + " listener: " + s.getListener());
 			return subscriptionId;
 		}
 	}
@@ -74,7 +73,7 @@ public class SubscriptionList
 	{
 		Subscription s = subscriptionMap.get(subscriptionId);
 		subscriptionMap.delete(subscriptionId);
-		ESLogger.log(TAG, "registerSubscription() deleted subscription created for task: " + s.getTask().getSensorType() + " listener: " + s.getListener());
+		Log.d(TAG, "registerSubscription() deleted subscription created for task: " + s.getTask().getSensorType() + " listener: " + s.getListener());
 		return s;
 	}
 

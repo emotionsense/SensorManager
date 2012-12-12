@@ -25,6 +25,7 @@ package com.ubhave.sensormanager.sensors;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.classifier.AccelerometerDataClassifier;
@@ -35,7 +36,6 @@ import com.ubhave.sensormanager.classifier.SensorDataClassifier;
 import com.ubhave.sensormanager.classifier.WifiDataClassifier;
 import com.ubhave.sensormanager.config.Constants;
 import com.ubhave.sensormanager.config.SensorConfig;
-import com.ubhave.sensormanager.logs.ESLogger;
 import com.ubhave.sensormanager.sensors.pull.AccelerometerSensor;
 import com.ubhave.sensormanager.sensors.pull.BluetoothSensor;
 import com.ubhave.sensormanager.sensors.pull.LocationSensor;
@@ -111,7 +111,8 @@ public class SensorUtils
 			}
 			catch (ESException e)
 			{
-				ESLogger.error(TAG, e);
+//				ESLogger.error(TAG, e);
+				Log.d(TAG, "Warning: "+e.getMessage());
 			}
 		}
 		return sensors;

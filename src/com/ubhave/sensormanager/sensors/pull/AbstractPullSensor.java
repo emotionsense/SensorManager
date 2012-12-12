@@ -23,12 +23,12 @@ IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 package com.ubhave.sensormanager.sensors.pull;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.dutycyling.SleepWindowListener;
-import com.ubhave.sensormanager.logs.ESLogger;
 import com.ubhave.sensormanager.sensors.AbstractSensor;
 
 public abstract class AbstractPullSensor extends AbstractSensor implements PullSensor, SleepWindowListener
@@ -54,7 +54,6 @@ public abstract class AbstractPullSensor extends AbstractSensor implements PullS
 		if (isSensing)
 		{
 			// sensing already started
-			ESLogger.log(getLogTag(), "sensing already started");
 			throw new ESException(ESException.SENSOR_ALREADY_SENSING, "sensor busy");
 		}
 
@@ -66,7 +65,7 @@ public abstract class AbstractPullSensor extends AbstractSensor implements PullS
 		boolean sensingStarted = startSensing();
 		if (sensingStarted)
 		{
-			ESLogger.log(getLogTag(), "Sensing started.");
+			Log.d(getLogTag(), "Sensing started.");
 
 			// wait for sensing to complete
 			synchronized (senseCompleteNotify)
@@ -89,24 +88,22 @@ public abstract class AbstractPullSensor extends AbstractSensor implements PullS
 				}
 				catch (InterruptedException e)
 				{
-					ESLogger.error(getLogTag(), e);
+					e.printStackTrace();
 				}
 			}
 
 			// stop sensing
 			stopSensing();
 			isSensing = false;
-			ESLogger.log(getLogTag(), "Sensing stopped.");
+			Log.d(getLogTag(), "Sensing stopped.");
 
 			sensorData = getMostRecentRawData();
 			sensorData.setPrevSensorData(prevSensorData);
 			prevSensorData = sensorData;
-
-			ESLogger.log(getLogTag(), sensorData.toString());
 		}
 		else
 		{
-			ESLogger.log(getLogTag(), "Sensing not started.");
+			Log.d(getLogTag(), "Sensing not started.");
 			isSensing = false;
 		}
 

@@ -29,10 +29,10 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.util.Log;
 
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.data.pushsensor.ConnectionStateData;
-import com.ubhave.sensormanager.logs.ESLogger;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class ConnectionStateSensor extends AbstractPushSensor
@@ -82,7 +82,7 @@ public class ConnectionStateSensor extends AbstractPushSensor
 		}
 		else
 		{
-			ESLogger.log(getLogTag(), "logOnDataSensed() called while not sensing.");
+			Log.d(getLogTag(), "logOnDataSensed() called while not sensing.");
 		}
 	}
 

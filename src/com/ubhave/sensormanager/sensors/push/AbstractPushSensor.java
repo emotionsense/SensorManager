@@ -26,11 +26,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.util.Log;
 
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.SensorDataListener;
 import com.ubhave.sensormanager.data.SensorData;
-import com.ubhave.sensormanager.logs.ESLogger;
 import com.ubhave.sensormanager.sensors.AbstractSensor;
 
 public abstract class AbstractPushSensor extends AbstractSensor implements PushSensor
@@ -56,7 +56,7 @@ public abstract class AbstractPushSensor extends AbstractSensor implements PushS
 				}
 				else
 				{
-					ESLogger.log(getLogTag(), "BroadcastReceiver.onReceive() called while not sensing.");
+					Log.d(getLogTag(), "BroadcastReceiver.onReceive() called while not sensing.");
 				}
 			}
 		};
@@ -67,7 +67,7 @@ public abstract class AbstractPushSensor extends AbstractSensor implements PushS
 		if (isSensing)
 		{
 			// sensing already started
-			ESLogger.log(getLogTag(), "sensing already sensing");
+			Log.d(getLogTag(), "sensing already sensing");
 			throw new ESException(ESException.SENSOR_ALREADY_SENSING, "sensor already sensing");
 		}
 		
@@ -84,7 +84,7 @@ public abstract class AbstractPushSensor extends AbstractSensor implements PushS
 		}
 
 		isSensing = true;
-		ESLogger.log(getLogTag(), "Sensing started.");
+		Log.d(getLogTag(), "Sensing started.");
 	}
 
 	public void stopSensing(SensorDataListener listener) throws ESException
@@ -92,7 +92,7 @@ public abstract class AbstractPushSensor extends AbstractSensor implements PushS
 		if (!isSensing)
 		{
 			// sensing already started
-			ESLogger.log(getLogTag(), "sensing not sensing");
+			Log.d(getLogTag(), "sensing not sensing");
 			throw new ESException(ESException.SENSOR_NOT_SENSING, "sensor not sensing");
 		}
 		
@@ -104,12 +104,12 @@ public abstract class AbstractPushSensor extends AbstractSensor implements PushS
 		}
 
 		isSensing = false;
-		ESLogger.log(getLogTag(), "Sensing stopped.");
+		Log.d(getLogTag(), "Sensing stopped.");
 	}
 
 	protected void onDataSensed(SensorData sensorData)
 	{
-		ESLogger.log(getLogTag(), sensorData.toString());
+		Log.d(getLogTag(), sensorData.toString());
 		if (sensorDataListener != null)
 		{
 			sensorDataListener.onDataSensed(sensorData);

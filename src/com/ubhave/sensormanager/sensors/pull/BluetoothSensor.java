@@ -30,12 +30,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.util.Log;
 
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.pullsensor.BluetoothData;
 import com.ubhave.sensormanager.data.pullsensor.ESBluetoothDevice;
-import com.ubhave.sensormanager.logs.ESLogger;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class BluetoothSensor extends AbstractPullSensor
@@ -77,7 +77,7 @@ public class BluetoothSensor extends AbstractPullSensor
 		bluetooth = BluetoothAdapter.getDefaultAdapter();
 		if (bluetooth == null)
 		{
-			ESLogger.log(TAG, "Device does not support Bluetooth");
+			Log.d(TAG, "Device does not support Bluetooth");
 			return;
 		}
 
@@ -102,7 +102,6 @@ public class BluetoothSensor extends AbstractPullSensor
 					if (!(btDevices.contains(esBluetoothDevice)))
 					{
 						btDevices.add(esBluetoothDevice);
-						ESLogger.log(TAG, "Found Bluetooth device: " + esBluetoothDevice.toString());
 					}
 				}
 				else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action))

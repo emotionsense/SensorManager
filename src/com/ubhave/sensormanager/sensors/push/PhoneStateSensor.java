@@ -29,10 +29,10 @@ import android.telephony.CellLocation;
 import android.telephony.PhoneStateListener;
 import android.telephony.ServiceState;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.data.pushsensor.PhoneStateData;
-import com.ubhave.sensormanager.logs.ESLogger;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class PhoneStateSensor extends AbstractCommunicationSensor
@@ -134,11 +134,11 @@ public class PhoneStateSensor extends AbstractCommunicationSensor
 		{
 			PhoneStateData phoneStateData = new PhoneStateData(System.currentTimeMillis(), eventType, data, sensorConfig.clone());
 			onDataSensed(phoneStateData);
-			ESLogger.log(TAG, phoneStateData.toString());
+			Log.d(TAG, phoneStateData.toString());
 		}
 		else 
 		{
-			ESLogger.log(getLogTag(), "logOnDataSensed() called while not sensing.");
+			Log.d(getLogTag(), "logOnDataSensed() called while not sensing.");
 		}
 	}
 

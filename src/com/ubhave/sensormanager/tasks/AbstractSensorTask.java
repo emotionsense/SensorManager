@@ -25,6 +25,7 @@ package com.ubhave.sensormanager.tasks;
 import java.util.ArrayList;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.ESSensorManager;
@@ -32,7 +33,6 @@ import com.ubhave.sensormanager.SensorDataListener;
 import com.ubhave.sensormanager.config.GlobalConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.data.pushsensor.BatteryData;
-import com.ubhave.sensormanager.logs.ESLogger;
 import com.ubhave.sensormanager.sensors.SensorInterface;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
@@ -68,7 +68,7 @@ public abstract class AbstractSensorTask extends Thread
 
 	}
 
-	private static String TAG = "AbstractSensorTask";
+//	private static String TAG = "AbstractSensorTask";
 
 	protected SensorInterface sensor;
 	protected Object syncObject = new Object();
@@ -112,7 +112,7 @@ public abstract class AbstractSensorTask extends Thread
 		}
 		catch (ESException exp)
 		{
-			ESLogger.error(TAG, exp);
+			exp.printStackTrace();
 		}
 		return "SensorTask:" + sensorName;
 	}
@@ -124,7 +124,7 @@ public abstract class AbstractSensorTask extends Thread
 
 	public boolean registerSensorDataListener(SensorDataListener listener)
 	{
-		ESLogger.log(getLogTag(), "registerSensorDataListener() listener: " + listener);
+		Log.d(getLogTag(), "registerSensorDataListener() listener: " + listener);
 
 		synchronized (listenerList)
 		{
