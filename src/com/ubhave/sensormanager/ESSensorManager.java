@@ -124,8 +124,8 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 			if (!isSubscribedToBattery)
 			{
 				// register with battery sensor
-				batterySubscriptionId = subscribeToSensorData(SensorUtils.SENSOR_TYPE_BATTERY, this);
 				isSubscribedToBattery = true;
+				batterySubscriptionId = subscribeToSensorData(SensorUtils.SENSOR_TYPE_BATTERY, this);
 			}
 			
 			Log.d(TAG, "subscribeToSensorData() subscribing listener to sensorId " + sensorId);
