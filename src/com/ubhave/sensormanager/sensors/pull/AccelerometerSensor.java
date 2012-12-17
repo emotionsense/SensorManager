@@ -29,7 +29,6 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.util.Log;
 
 import com.ubhave.sensormanager.data.pullsensor.AccelerometerData;
 import com.ubhave.sensormanager.sensors.SensorUtils;
@@ -109,7 +108,6 @@ public class AccelerometerSensor extends AbstractPullSensor
 				}
 			}
 		};
-		Log.d(TAG, "new listener created " + listener.toString());
 	}
 
 	protected String getLogTag()
