@@ -74,7 +74,6 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 				if (sensorManager == null)
 				{
 					sensorManager = new ESSensorManager(context);
-					sensorManager.setup();
 				}
 			}
 		}
@@ -94,7 +93,6 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 		for (SensorInterface aSensor : sensors)
 		{
 			AbstractSensorTask sensorTask;
-
 			if (SensorUtils.isPullSensor(aSensor.getSensorType()))
 			{
 				sensorTask = new PullSensorTask(aSensor);
@@ -105,15 +103,8 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 			}
 
 			sensorTask.start();
-
 			sensorTaskMap.put(aSensor.getSensorType(), sensorTask);
 		}
-	}
-
-	private void setup() throws ESException
-	{
-		// initial setup
-		
 	}
 
 	public synchronized int subscribeToSensorData(int sensorId, SensorDataListener listener) throws ESException
@@ -162,7 +153,7 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 		AbstractSensorTask sensorTask = sensorTaskMap.get(sensorId);
 		if (sensorTask == null)
 		{
-			throw new ESException(ESException.UNKNOWN_SENSOR_TYPE, "Unknown sensor type: " + sensorId);
+			throw new ESException(ESException.UNKNOWN_SENSOR_TYPE, "Unknown sensor type: " + sensorId+". Have you put the required permissions into your manifest?");
 		}
 		return sensorTask;
 	}
@@ -173,17 +164,16 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 		AbstractSensorTask sensorTask = getSensorTask(sensorId);
 		if (!SensorUtils.isPullSensor(sensorTask.getSensorType()))
 		{
-			throw new ESException(ESException.OPERATION_NOT_SUPPORTED, "this method is supported only for pull sensors.");
+			throw new ESException(ESException.OPERATION_NOT_SUPPORTED, "This method is supported only for pull sensors.");
 		}
 		else if (sensorTask.isRunning())
 		{
-			throw new ESException(ESException.OPERATION_NOT_SUPPORTED, "this method is supported only for sensors that are not currently running. please unregister all listeners to the sensor and then call this method.");
+			throw new ESException(ESException.OPERATION_NOT_SUPPORTED, "This method is supported only for sensors tasks that are not currently running. Please unregister all your listeners to the sensor to call this method.");
 		}
 		else
 		{
 			sensorData = ((PullSensorTask) sensorTask).getCurrentSensorData(true);
 		}
-
 		return sensorData;
 	}
 
