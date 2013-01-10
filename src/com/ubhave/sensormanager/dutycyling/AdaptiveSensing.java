@@ -60,7 +60,7 @@ public class AdaptiveSensing implements SensorDataListener
 	private static Object lock = new Object();
 	private Random random;
 
-	public static AdaptiveSensing getAdaptiveSensing() throws ESException
+	public static AdaptiveSensing getAdaptiveSensing()
 	{
 		if (adaptiveSensing == null)
 		{

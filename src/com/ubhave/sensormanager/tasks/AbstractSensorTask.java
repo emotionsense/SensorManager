@@ -33,6 +33,7 @@ import com.ubhave.sensormanager.SensorDataListener;
 import com.ubhave.sensormanager.config.GlobalConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.data.pushsensor.BatteryData;
+import com.ubhave.sensormanager.dutycyling.AdaptiveSensing;
 import com.ubhave.sensormanager.sensors.SensorInterface;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
@@ -68,7 +69,7 @@ public abstract class AbstractSensorTask extends Thread
 
 	}
 
-//	private static String TAG = "AbstractSensorTask";
+	// private static String TAG = "AbstractSensorTask";
 
 	protected SensorInterface sensor;
 	protected Object syncObject = new Object();
@@ -216,6 +217,18 @@ public abstract class AbstractSensorTask extends Thread
 			if (listenerList.isEmpty())
 			{
 				new StopTask().execute();
+			}
+			else if (listenerList.size() == 1)
+			{
+				// if adaptive sensing is enabled then it'll also be
+				// a listener to the sensor, therefore, if adaptive sensing
+				// is the only listener then stop the sensor
+				if (AdaptiveSensing.getAdaptiveSensing().isSensorRegistered(this.getSensor())
+						&& listenerList.contains(AdaptiveSensing.getAdaptiveSensing()))
+				{
+					new StopTask().execute();
+				}
+
 			}
 		}
 	}
