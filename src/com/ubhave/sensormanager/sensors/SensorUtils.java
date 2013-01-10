@@ -76,8 +76,9 @@ public class SensorUtils
 	public final static String SENSOR_NAME_WIFI = "WiFi";
 	public final static String SENSOR_NAME_CONNECTION_STATE = "Connection";
 
-	private final static int[] ALL_SENSORS = new int[] { SENSOR_TYPE_ACCELEROMETER, SENSOR_TYPE_BLUETOOTH, SENSOR_TYPE_LOCATION, SENSOR_TYPE_MICROPHONE, SENSOR_TYPE_WIFI, SENSOR_TYPE_BATTERY, SENSOR_TYPE_PHONE_STATE, SENSOR_TYPE_PROXIMITY,
-			SENSOR_TYPE_SCREEN, SENSOR_TYPE_SMS, SENSOR_TYPE_CONNECTION_STATE };
+	private final static int[] ALL_SENSORS = new int[] { SENSOR_TYPE_ACCELEROMETER, SENSOR_TYPE_BLUETOOTH,
+			SENSOR_TYPE_LOCATION, SENSOR_TYPE_MICROPHONE, SENSOR_TYPE_WIFI, SENSOR_TYPE_BATTERY, SENSOR_TYPE_PHONE_STATE,
+			SENSOR_TYPE_PROXIMITY, SENSOR_TYPE_SCREEN, SENSOR_TYPE_SMS, SENSOR_TYPE_CONNECTION_STATE };
 
 	public static boolean isPullSensor(int sensorType)
 	{
@@ -111,8 +112,8 @@ public class SensorUtils
 			}
 			catch (ESException e)
 			{
-//				ESLogger.error(TAG, e);
-				Log.d(TAG, "Warning: "+e.getMessage());
+				// ESLogger.error(TAG, e);
+				Log.d(TAG, "Warning: " + e.getMessage());
 			}
 		}
 		return sensors;
@@ -156,24 +157,31 @@ public class SensorUtils
 		{
 		case SensorUtils.SENSOR_TYPE_ACCELEROMETER:
 			sensorConfig.setParameter(SensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, Constants.ACCELEROMETER_SLEEP_INTERVAL);
-			sensorConfig.setParameter(SensorConfig.SENSE_WINDOW_LENGTH_MILLIS, Constants.ACCELEROMETER_SAMPLING_WINDOW_SIZE_MILLIS);
+			sensorConfig.setParameter(SensorConfig.SENSE_WINDOW_LENGTH_MILLIS,
+					Constants.ACCELEROMETER_SAMPLING_WINDOW_SIZE_MILLIS);
 			break;
 		case SensorUtils.SENSOR_TYPE_BLUETOOTH:
 			sensorConfig.setParameter(SensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, Constants.BLUETOOTH_SLEEP_INTERVAL);
 			sensorConfig.setParameter(SensorConfig.NUMBER_OF_SENSE_CYCLES, Constants.BLUETOOTH_SAMPLING_CYCLES);
+			sensorConfig.setParameter(SensorConfig.SENSE_WINDOW_LENGTH_PER_CYCLE_MILLIS,
+					Constants.BLUETOOTH_SAMPLING_WINDOW_SIZE_PER_CYCLE_MILLIS);
 			break;
 		case SensorUtils.SENSOR_TYPE_LOCATION:
 			sensorConfig.setParameter(SensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, Constants.LOCATION_SLEEP_INTERVAL);
-			sensorConfig.setParameter(SensorConfig.SENSE_WINDOW_LENGTH_MILLIS, Constants.LOCATION_SAMPLING_WINDOW_SIZE_MILLIS);
+			sensorConfig.setParameter(SensorConfig.SENSE_WINDOW_LENGTH_MILLIS,
+					Constants.LOCATION_SAMPLING_WINDOW_SIZE_MILLIS);
 			sensorConfig.setParameter(SensorConfig.LOCATION_ACCURACY, SensorConfig.LOCATION_ACCURACY_COARSE);
 			break;
 		case SensorUtils.SENSOR_TYPE_MICROPHONE:
 			sensorConfig.setParameter(SensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, Constants.MICROPHONE_SLEEP_INTERVAL);
-			sensorConfig.setParameter(SensorConfig.SENSE_WINDOW_LENGTH_MILLIS, Constants.MICROPHONE_SAMPLING_WINDOW_SIZE_MILLIS);
+			sensorConfig.setParameter(SensorConfig.SENSE_WINDOW_LENGTH_MILLIS,
+					Constants.MICROPHONE_SAMPLING_WINDOW_SIZE_MILLIS);
 			break;
 		case SensorUtils.SENSOR_TYPE_WIFI:
 			sensorConfig.setParameter(SensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, Constants.WIFI_SLEEP_INTERVAL);
 			sensorConfig.setParameter(SensorConfig.NUMBER_OF_SENSE_CYCLES, Constants.WIFI_SAMPLING_CYCLES);
+			sensorConfig.setParameter(SensorConfig.SENSE_WINDOW_LENGTH_PER_CYCLE_MILLIS,
+					Constants.WIFI_SAMPLING_WINDOW_SIZE_PER_CYCLE_MILLIS);
 			break;
 		}
 
@@ -275,7 +283,8 @@ public class SensorUtils
 		case SensorUtils.SENSOR_TYPE_WIFI:
 			return new WifiDataClassifier();
 		default:
-			throw new ESException(ESException.UNKNOWN_SENSOR_TYPE, "sensor data classifier not support for the sensor type " + sensorType);
+			throw new ESException(ESException.UNKNOWN_SENSOR_TYPE, "sensor data classifier not support for the sensor type "
+					+ sensorType);
 		}
 	}
 

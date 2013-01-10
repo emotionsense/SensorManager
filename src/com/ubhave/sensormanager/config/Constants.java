@@ -28,9 +28,16 @@ public class Constants
 
 	public static final long ACCELEROMETER_SAMPLING_WINDOW_SIZE_MILLIS = 8000;
 	public static final int BLUETOOTH_SAMPLING_CYCLES = 1;
+	// bluetooth is operated in terms of number of sampling cycles
+	// but adaptive sensing requires a specification in terms of
+	// sampling window length, so define a constant that contains
+	// an approximation of the sampling window length
+	public static final int BLUETOOTH_SAMPLING_WINDOW_SIZE_PER_CYCLE_MILLIS = 12000;
 	public static final long LOCATION_SAMPLING_WINDOW_SIZE_MILLIS = 60000;
 	public static final long MICROPHONE_SAMPLING_WINDOW_SIZE_MILLIS = 5000;
 	public static final int WIFI_SAMPLING_CYCLES = 1;
+	// similarly for wifi
+	public static final int WIFI_SAMPLING_WINDOW_SIZE_PER_CYCLE_MILLIS = 5000;
 
 	public static final long ACCELEROMETER_SLEEP_INTERVAL = 2 * 60 * 1000;
 	public static final long BLUETOOTH_SLEEP_INTERVAL = 15 * 60 * 1000;

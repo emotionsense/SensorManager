@@ -82,7 +82,8 @@ public class AdaptiveSensing implements SensorDataListener
 		random = new Random();
 	}
 
-	public void registerSensor(ESSensorManagerInterface sensorManager, SensorInterface sensor, SensorDataClassifier classifier, SleepWindowListener listener) throws ESException
+	public void registerSensor(ESSensorManagerInterface sensorManager, SensorInterface sensor,
+			SensorDataClassifier classifier, SleepWindowListener listener) throws ESException
 	{
 		PullSensorDetails sensorDetails = new PullSensorDetails();
 		sensorDetails.sensor = sensor;
@@ -155,7 +156,29 @@ public class AdaptiveSensing implements SensorDataListener
 		// milliseconds
 		long sleepWindowMilliSeconds = 1000;
 
-		long senseWindowLengthMillis = (Long) sensorDetails.sensorConfig.getParameter(SensorConfig.SENSE_WINDOW_LENGTH_MILLIS);
+		// initialise to a default value
+		long senseWindowLengthMillis = 1000;
+
+		if (sensorDetails.sensorConfig.containsParameter(SensorConfig.SENSE_WINDOW_LENGTH_MILLIS))
+		{
+			senseWindowLengthMillis = (Long) sensorDetails.sensorConfig
+					.getParameter(SensorConfig.SENSE_WINDOW_LENGTH_MILLIS);
+		}
+		else if (sensorDetails.sensorConfig.containsParameter(SensorConfig.NUMBER_OF_SENSE_CYCLES)
+				&& sensorDetails.sensorConfig.containsParameter(SensorConfig.SENSE_WINDOW_LENGTH_PER_CYCLE_MILLIS))
+		{
+			// if wifi or bluetooth sensor then the sense window length should
+			// be calculated as (number of cycles * cycle length)
+			long numCycles = (Long)sensorDetails.sensorConfig.getParameter(SensorConfig.NUMBER_OF_SENSE_CYCLES);
+			long cycleLengthMillis = (Long)sensorDetails.sensorConfig.getParameter(SensorConfig.SENSE_WINDOW_LENGTH_PER_CYCLE_MILLIS);
+			senseWindowLengthMillis = numCycles * cycleLengthMillis;
+		}
+		else
+		{
+			// TODO
+			// throw exception
+			return;
+		}
 
 		while (true)
 		{
@@ -224,7 +247,7 @@ public class AdaptiveSensing implements SensorDataListener
 			}
 		}
 	}
-	
+
 	private static void sleep(long millis)
 	{
 		try
