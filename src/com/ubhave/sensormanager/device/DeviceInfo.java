@@ -20,40 +20,38 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
 IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  ************************************************** */
 
-package com.ubhave.sensormanager.data.pullsensor;
+package com.ubhave.sensormanager.device;
 
-import java.util.ArrayList;
+import java.util.TimeZone;
 
-import com.ubhave.sensormanager.config.SensorConfig;
-import com.ubhave.sensormanager.data.SensorData;
-import com.ubhave.sensormanager.sensors.SensorUtils;
+import android.os.Build;
 
-public class AccelerometerData extends SensorData
+public class DeviceInfo
 {
-	private final ArrayList<float[]> sensorReadings;
-	private final ArrayList<Long> sensorReadingTimestamps;
-
-	public AccelerometerData(long senseStartTimestamp, ArrayList<float[]> sensorReadings,
-			ArrayList<Long> sensorReadingTimestamps, SensorConfig sensorConfig)
+	public static String getDeviceDetails()
 	{
-		super(senseStartTimestamp, sensorConfig);
-		this.sensorReadings = sensorReadings;
-		this.sensorReadingTimestamps = sensorReadingTimestamps;
-	}
+		StringBuilder sb = new StringBuilder();
 
-	public ArrayList<float[]> getSensorReadings()
-	{
-		return sensorReadings;
+		sb.append("BOOTLOADER: " + Build.BOOTLOADER + ";");
+		sb.append("BRAND: " + Build.BRAND + ";");
+		sb.append("DEVICE: " + Build.DEVICE + ";");
+		sb.append("DISPLAY: " + Build.DISPLAY + ";");
+		sb.append("MANUFACTURER: " + Build.MANUFACTURER + ";");
+		sb.append("MODEL: " + Build.MODEL + ";");
+		sb.append("PRODUCT: " + Build.PRODUCT + ";");
+		sb.append("RADIO: " + Build.RADIO + ";");
+		sb.append("VERSION.CODENAME: " + Build.VERSION.CODENAME + ";");
+		
+		return sb.toString();
 	}
 	
-	public ArrayList<Long> getSensorReadingTimestamps()
+	public static String getTimeZoneId()
 	{
-		return sensorReadingTimestamps;
+		return TimeZone.getDefault().getID();
 	}
-
-	public int getSensorType()
+	
+	public static String getTimeZoneDisplayName()
 	{
-		return SensorUtils.SENSOR_TYPE_ACCELEROMETER;
+		return TimeZone.getDefault().getDisplayName();
 	}
-
 }

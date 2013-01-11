@@ -42,6 +42,7 @@ public class AccelerometerSensor extends AbstractPullSensor
 	private SensorManager sensorManager; // Controls the hardware sensor
 
 	private ArrayList<float[]> sensorReadings;
+	private ArrayList<Long> sensorReadingTimestamps;
 
 	private static AccelerometerSensor accelerometerSensor;
 	private static Object lock = new Object();
@@ -97,7 +98,7 @@ public class AccelerometerSensor extends AbstractPullSensor
 								}
 
 								sensorReadings.add(data);
-
+								sensorReadingTimestamps.add(event.timestamp);
 							}
 						}
 					}
@@ -125,7 +126,8 @@ public class AccelerometerSensor extends AbstractPullSensor
 		AccelerometerData accelerometerData;
 		synchronized (sensorReadings)
 		{
-			accelerometerData = new AccelerometerData(pullSenseStartTimestamp, sensorReadings, sensorConfig.clone());
+			accelerometerData = new AccelerometerData(pullSenseStartTimestamp, sensorReadings, sensorReadingTimestamps,
+					sensorConfig.clone());
 		}
 		return accelerometerData;
 	}
@@ -133,8 +135,10 @@ public class AccelerometerSensor extends AbstractPullSensor
 	protected boolean startSensing()
 	{
 		sensorReadings = new ArrayList<float[]>();
+		sensorReadingTimestamps = new ArrayList<Long>();
 
-		boolean registrationSuccess = sensorManager.registerListener(listener, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_GAME);
+		boolean registrationSuccess = sensorManager.registerListener(listener,
+				sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_GAME);
 		return registrationSuccess;
 	}
 
