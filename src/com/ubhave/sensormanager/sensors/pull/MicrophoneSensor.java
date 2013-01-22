@@ -23,6 +23,7 @@ IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 package com.ubhave.sensormanager.sensors.pull;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import android.content.Context;
 import android.media.MediaRecorder;
@@ -38,7 +39,8 @@ public class MicrophoneSensor extends AbstractPullSensor
 	private final static String LOG_TAG = "MicrophoneSensor";
 	private final MediaRecorder recorder;
 
-	private String amplitudeString = "";
+	private ArrayList<Integer> maxAmplitudeList;
+	private ArrayList<Long> timestampList;
 
 	private static MicrophoneSensor microphoneSensor;
 	private static Object lock = new Object();
@@ -83,7 +85,9 @@ public class MicrophoneSensor extends AbstractPullSensor
 		try
 		{
 			// for amplitude
-			amplitudeString = "";
+			maxAmplitudeList = new ArrayList<Integer>();
+			// for timestamp
+			timestampList = new ArrayList<Long>();
 
 			recorder.prepare();
 			recorder.start();
@@ -100,7 +104,8 @@ public class MicrophoneSensor extends AbstractPullSensor
 
 					while (isSensing())
 					{
-						amplitudeString = amplitudeString + ((amplitudeString.length() > 0) ? "," : "") + recorder.getMaxAmplitude();
+						maxAmplitudeList.add(recorder.getMaxAmplitude());
+						timestampList.add(System.currentTimeMillis());
 						MicrophoneSensor.sleep(50);
 					}
 				}
@@ -141,7 +146,15 @@ public class MicrophoneSensor extends AbstractPullSensor
 
 	protected SensorData getMostRecentRawData()
 	{
-		return new MicrophoneData(pullSenseStartTimestamp, amplitudeString, sensorConfig.clone());
+		int[] maxAmpArray = new int[maxAmplitudeList.size()];
+		long[] timestampArray = new long[timestampList.size()];
+		for (int i = 0; i < maxAmplitudeList.size(); i++)
+		{
+			maxAmpArray[i] = maxAmplitudeList.get(i);
+			timestampArray[i] = timestampList.get(i);
+		}
+		
+		return new MicrophoneData(pullSenseStartTimestamp, maxAmpArray, timestampArray, sensorConfig.clone());
 	}
 
 }

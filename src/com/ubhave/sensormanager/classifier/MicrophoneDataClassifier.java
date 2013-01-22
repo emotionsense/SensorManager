@@ -32,7 +32,7 @@ public class MicrophoneDataClassifier implements SensorDataClassifier
 	public boolean isInteresting(SensorData sensorData)
 	{
 		MicrophoneData data = (MicrophoneData) sensorData;
-		if (isSilent(data.getAmplitudeString()))
+		if (isSilent(data.getAmplitudeArray()))
 		{
 			return false;
 		}
@@ -42,27 +42,15 @@ public class MicrophoneDataClassifier implements SensorDataClassifier
 		}
 	}
 
-	private boolean isSilent(String amplitudeData)
+	private boolean isSilent(int[] amplitudeData)
 	{
-		amplitudeData = amplitudeData.trim();
-
 		double avgAmplitude = 0;
-		String[] amplitudes = amplitudeData.split(",");
-		for (String aValue : amplitudes)
+
+		for (int aValue : amplitudeData)
 		{
-			aValue = aValue.trim();
-			double parsedValue = 0;
-			try
-			{
-				parsedValue = Double.parseDouble(aValue);
-			}
-			catch (NumberFormatException nfe)
-			{
-				nfe.printStackTrace();
-			}
-			avgAmplitude += parsedValue;
+			avgAmplitude += aValue;
 		}
-		avgAmplitude = avgAmplitude / amplitudes.length;
+		avgAmplitude = avgAmplitude / (double)amplitudeData.length;
 		if (avgAmplitude > Constants.MICROPHONE_SOUND_THRESHOLD)
 		{
 			return false;

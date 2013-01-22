@@ -30,6 +30,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
+import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.pullsensor.AccelerometerData;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
@@ -98,7 +99,7 @@ public class AccelerometerSensor extends AbstractPullSensor
 								}
 
 								sensorReadings.add(data);
-								sensorReadingTimestamps.add(event.timestamp);
+								sensorReadingTimestamps.add(System.currentTimeMillis());
 							}
 						}
 					}
@@ -136,9 +137,16 @@ public class AccelerometerSensor extends AbstractPullSensor
 	{
 		sensorReadings = new ArrayList<float[]>();
 		sensorReadingTimestamps = new ArrayList<Long>();
+		
+		int sensorDelay = SensorManager.SENSOR_DELAY_GAME;
+		
+		if (sensorConfig.containsParameter(SensorConfig.ACCELEROMETER_SAMPLING_DELAY))
+		{
+			sensorDelay = (Integer)sensorConfig.getParameter(SensorConfig.ACCELEROMETER_SAMPLING_DELAY);
+		}
 
 		boolean registrationSuccess = sensorManager.registerListener(listener,
-				sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_GAME);
+				sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), sensorDelay);
 		return registrationSuccess;
 	}
 

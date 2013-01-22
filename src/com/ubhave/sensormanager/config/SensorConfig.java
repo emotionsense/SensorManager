@@ -45,6 +45,9 @@ public class SensorConfig extends AbstractConfig implements Cloneable
 	// this is the sleep interval between two consecutive sensor samplings
 	public final static String POST_SENSE_SLEEP_LENGTH_MILLIS = "POST_SENSE_SLEEP_LENGTH_MILLIS";
 
+	// accelerometer sensing delay
+	public final static String ACCELEROMETER_SAMPLING_DELAY = "ACCELEROMETER_SAMPLING_DELAY";  
+	
 	// location accuracy
 	public final static String LOCATION_ACCURACY = "LOCATION_ACCURACY";
 	public final static String LOCATION_ACCURACY_COARSE = "LOCATION_ACCURACY_COARSE";

@@ -78,7 +78,6 @@ public class LocationSensor extends AbstractPullSensor
 				if (isSensing)
 				{
 					lastLocation = loc;
-					//LocationData data = new LocationData(System.currentTimeMillis(), loc, sensorConfig.clone());
 				}
 			}
 
