@@ -25,6 +25,7 @@ package com.ubhave.sensormanager.sensors;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.hardware.SensorManager;
 import android.util.Log;
 
 import com.ubhave.sensormanager.ESException;
@@ -157,6 +158,7 @@ public class SensorUtils
 		{
 		case SensorUtils.SENSOR_TYPE_ACCELEROMETER:
 			sensorConfig.setParameter(SensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, Constants.ACCELEROMETER_SLEEP_INTERVAL);
+			sensorConfig.setParameter(SensorConfig.ACCELEROMETER_SAMPLING_DELAY, SensorManager.SENSOR_DELAY_GAME);
 			sensorConfig.setParameter(SensorConfig.SENSE_WINDOW_LENGTH_MILLIS,
 					Constants.ACCELEROMETER_SAMPLING_WINDOW_SIZE_MILLIS);
 			break;

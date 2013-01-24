@@ -73,7 +73,7 @@ public class SubscriptionList
 	{
 		Subscription s = subscriptionMap.get(subscriptionId);
 		subscriptionMap.delete(subscriptionId);
-		Log.d(TAG, "registerSubscription() deleted subscription created for task: " + s.getTask().getSensorType() + " listener: " + s.getListener());
+		Log.d(TAG, "removeSubscription() deleted subscription created for task: " + s.getTask().getSensorType() + " listener: " + s.getListener());
 		return s;
 	}
 

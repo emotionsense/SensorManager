@@ -55,11 +55,13 @@ public class LocationSensor extends AbstractPullSensor
 			{
 				if (locationSensor == null)
 				{
-					if (permissionGranted(context, "android.permission.ACCESS_COARSE_LOCATION"))
+					if ((permissionGranted(context, "android.permission.ACCESS_COARSE_LOCATION"))
+							|| (permissionGranted(context, "android.permission.ACCESS_FINE_LOCATION")))
 					{
 						locationSensor = new LocationSensor(context);
 					}
-					else throw new ESException(ESException. PERMISSION_DENIED, "Location Sensor: Permission Not Granted!");
+					else
+						throw new ESException(ESException.PERMISSION_DENIED, "Location Sensor: Permission Not Granted!");
 				}
 			}
 		}
@@ -111,18 +113,21 @@ public class LocationSensor extends AbstractPullSensor
 	protected boolean startSensing()
 	{
 		lastLocation = null;
-		
-		String accuracyConfig = (String)sensorConfig.getParameter(SensorConfig.LOCATION_ACCURACY);
-		
+
+		String accuracyConfig = (String) sensorConfig.getParameter(SensorConfig.LOCATION_ACCURACY);
+
 		if ((accuracyConfig != null) && (accuracyConfig.equals(SensorConfig.LOCATION_ACCURACY_FINE)))
 		{
-			locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 0, locListener, Looper.getMainLooper());
-			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0, locListener, Looper.getMainLooper());
+			locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 0, locListener,
+					Looper.getMainLooper());
+			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0, locListener,
+					Looper.getMainLooper());
 		}
 		else
 		{
-			locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 0, locListener, Looper.getMainLooper());
-		}		
+			locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 0, locListener,
+					Looper.getMainLooper());
+		}
 		return true;
 	}
 
