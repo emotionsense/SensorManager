@@ -51,6 +51,22 @@ public class ConnectionStateData extends SensorData
 		setNetworkType(activeNetwork);
 		setWifiDetails(wifiInfo);
 	}
+	
+	public ConnectionStateData(long dataReceivedTimestamp,
+			boolean isConnectedOrConnecting,
+			boolean isAvailable,
+			boolean isConnected,
+			int networkType,
+			int roamingType,
+			final SensorConfig sensorConfig)
+	{
+		super(dataReceivedTimestamp, sensorConfig);
+		this.isConnectedOrConnecting = isConnectedOrConnecting;
+		this.isConnected = isConnected;
+		this.isAvailable = isAvailable;
+		this.roamingType = roamingType;
+		this.networkType = networkType;
+	}
 
 	private void setNetworkType(final NetworkInfo activeNetwork)
 	{
