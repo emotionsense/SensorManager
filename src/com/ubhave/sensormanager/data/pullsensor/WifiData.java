@@ -24,8 +24,6 @@ package com.ubhave.sensormanager.data.pullsensor;
 
 import java.util.ArrayList;
 
-import android.net.wifi.ScanResult;
-
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.sensors.SensorUtils;
@@ -33,15 +31,15 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 public class WifiData extends SensorData
 {
 
-	private ArrayList<ScanResult> wifiScanData;
+	private ArrayList<WifiScanResult> wifiScanData;
 
-	public WifiData(long senseStartTimestamp, ArrayList<ScanResult> wifiScanResults, SensorConfig sensorConfig)
+	public WifiData(long senseStartTimestamp, ArrayList<WifiScanResult> wifiScanResults, SensorConfig sensorConfig)
 	{
 		super(senseStartTimestamp, sensorConfig);
 		this.wifiScanData = wifiScanResults;
 	}
 
-	public ArrayList<ScanResult> getWifiScanData()
+	public ArrayList<WifiScanResult> getWifiScanData()
 	{
 		return wifiScanData;
 	}

@@ -24,10 +24,9 @@ package com.ubhave.sensormanager.classifier;
 
 import java.util.ArrayList;
 
-import android.net.wifi.ScanResult;
-
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.data.pullsensor.WifiData;
+import com.ubhave.sensormanager.data.pullsensor.WifiScanResult;
 
 public class WifiDataClassifier extends SocialClassifier implements SensorDataClassifier
 {
@@ -57,14 +56,14 @@ public class WifiDataClassifier extends SocialClassifier implements SensorDataCl
 
 		if (data != null)
 		{
-			ArrayList<ScanResult> list = data.getWifiScanData();
+			ArrayList<WifiScanResult> list = data.getWifiScanData();
 			if (list != null)
 			{
 				deviceList = new String[list.size()];
 				int i = 0;
-				for (ScanResult sr : list)
+				for (WifiScanResult sr : list)
 				{
-					deviceList[i++] = sr.BSSID;
+					deviceList[i++] = sr.getBssid();
 				}
 			}
 		}

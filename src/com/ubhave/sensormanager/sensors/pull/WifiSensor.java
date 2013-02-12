@@ -35,6 +35,7 @@ import android.net.wifi.WifiManager;
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.pullsensor.WifiData;
+import com.ubhave.sensormanager.data.pullsensor.WifiScanResult;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class WifiSensor extends AbstractPullSensor
@@ -44,7 +45,7 @@ public class WifiSensor extends AbstractPullSensor
 
 	private WifiManager wifiManager;
 	private BroadcastReceiver wifiReceiver;
-	private ArrayList<ScanResult> wifiScanResults;
+	private ArrayList<WifiScanResult> wifiScanResults;
 
 	private int cyclesRemaining;
 	private static WifiSensor wifiSensor;
@@ -64,7 +65,8 @@ public class WifiSensor extends AbstractPullSensor
 					{
 						wifiSensor = new WifiSensor(context);
 					}
-					else throw new ESException(ESException. PERMISSION_DENIED, "Wifi Sensor : Permission not Granted");
+					else
+						throw new ESException(ESException.PERMISSION_DENIED, "Wifi Sensor : Permission not Granted");
 				}
 			}
 		}
@@ -80,7 +82,12 @@ public class WifiSensor extends AbstractPullSensor
 			public void onReceive(Context context, Intent intent)
 			{
 				List<ScanResult> wifiList = wifiManager.getScanResults();
-				wifiScanResults.addAll(wifiList);
+				for (ScanResult result : wifiList)
+				{
+					WifiScanResult wifiScanResult = new WifiScanResult(result.SSID, result.BSSID, result.capabilities,
+							result.level, result.frequency);
+					wifiScanResults.add(wifiScanResult);
+				}
 
 				cyclesRemaining -= 1;
 				if ((cyclesRemaining > 0) && (wifiManager.isWifiEnabled()))
@@ -117,7 +124,7 @@ public class WifiSensor extends AbstractPullSensor
 		wifiScanResults = null;
 		if (wifiManager.isWifiEnabled())
 		{
-			wifiScanResults = new ArrayList<ScanResult>();
+			wifiScanResults = new ArrayList<WifiScanResult>();
 			cyclesRemaining = (Integer) sensorConfig.getParameter(SensorConfig.NUMBER_OF_SENSE_CYCLES);
 			applicationContext.registerReceiver(wifiReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
 			wifiManager.startScan();
