@@ -51,7 +51,7 @@ public abstract class AbstractSensorTask extends Thread
 
 	}
 
-	private class NotificationTask extends AsyncTask<Void, Void, Void>
+	private class NotificationTask extends Thread
 	{
 		private SensorData sensorData;
 
@@ -61,10 +61,9 @@ public abstract class AbstractSensorTask extends Thread
 		}
 
 		@Override
-		protected Void doInBackground(Void... arg0)
+		public void run()
 		{
 			notifications(sensorData);
-			return null;
 		}
 
 	}
@@ -154,7 +153,7 @@ public abstract class AbstractSensorTask extends Thread
 
 		// check for any triggers/notifications to be sent
 		// based on the received sensorData
-		new NotificationTask(sensorData).execute();
+		new NotificationTask(sensorData).start();
 
 	}
 
