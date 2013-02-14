@@ -22,6 +22,7 @@ IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 package com.ubhave.sensormanager.sensors.pull;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -79,11 +80,19 @@ public class MicrophoneSensor extends AbstractPullSensor
 	{
 		try
 		{
+			// delete old file
+			String tempFileName = applicationContext.getFilesDir().getAbsolutePath() + "/test.3gpp";
+			File file = new File(tempFileName);
+			if (file.exists())
+			{
+				file.delete();
+			}
+			
 			recorder = new MediaRecorder();
 			recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
 			recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
 			recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-			recorder.setOutputFile("/dev/null");
+			recorder.setOutputFile(tempFileName);
 			
 			// for amplitude
 			maxAmplitudeList = new ArrayList<Integer>();
