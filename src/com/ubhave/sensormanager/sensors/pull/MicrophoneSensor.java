@@ -37,7 +37,7 @@ public class MicrophoneSensor extends AbstractPullSensor
 {
 
 	private final static String LOG_TAG = "MicrophoneSensor";
-	private final MediaRecorder recorder;
+	private MediaRecorder recorder;
 
 	private ArrayList<Integer> maxAmplitudeList;
 	private ArrayList<Long> timestampList;
@@ -68,11 +68,6 @@ public class MicrophoneSensor extends AbstractPullSensor
 	private MicrophoneSensor(Context context)
 	{
 		super(context);
-		recorder = new MediaRecorder();
-		recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-		recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-		recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-		recorder.setOutputFile("/dev/null");
 	}
 
 	protected String getLogTag()
@@ -84,6 +79,12 @@ public class MicrophoneSensor extends AbstractPullSensor
 	{
 		try
 		{
+			recorder = new MediaRecorder();
+			recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+			recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+			recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+			recorder.setOutputFile("/dev/null");
+			
 			// for amplitude
 			maxAmplitudeList = new ArrayList<Integer>();
 			// for timestamp
