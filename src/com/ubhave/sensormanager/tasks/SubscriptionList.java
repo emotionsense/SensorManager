@@ -48,7 +48,8 @@ public class SubscriptionList
 	{
 		if (!s.register()) // subscription already exists
 		{
-			Log.d(TAG, "registerSubscription() subscription already exists for task: " + s.getTask().getSensorType() + " listener: " + s.getListener());
+			Log.d(TAG, "registerSubscription() subscription already exists for task: " + s.getTask().getSensorType()
+					+ " listener: " + s.getListener());
 			for (int i = 0; i < subscriptionMap.size(); i++)
 			{
 				int subscriptionId = subscriptionMap.keyAt(i);
@@ -64,7 +65,8 @@ public class SubscriptionList
 		{
 			int subscriptionId = randomKey();
 			subscriptionMap.append(subscriptionId, s);
-			Log.d(TAG, "registerSubscription() new subscription created for task: " + s.getTask().getSensorType() + " listener: " + s.getListener());
+			Log.d(TAG, "registerSubscription() new subscription created for task: " + s.getTask().getSensorType()
+					+ " listener: " + s.getListener());
 			return subscriptionId;
 		}
 	}
@@ -72,16 +74,25 @@ public class SubscriptionList
 	public synchronized Subscription removeSubscription(int subscriptionId)
 	{
 		Subscription s = subscriptionMap.get(subscriptionId);
-		subscriptionMap.delete(subscriptionId);
-		Log.d(TAG, "removeSubscription() deleted subscription created for task: " + s.getTask().getSensorType() + " listener: " + s.getListener());
+		if (s == null)
+		{
+			Log.d(TAG, "removeSubscription() invalid subscription id: " + subscriptionId);
+			return null;
+		}
+		else
+		{
+			Log.d(TAG, "removeSubscription() deleting subscription created for task: " + s.getTask().getSensorType()
+					+ " listener: " + s.getListener());
+			subscriptionMap.delete(subscriptionId);
+		}
 		return s;
 	}
 
 	public synchronized List<Subscription> getAllSubscriptions()
 	{
 		ArrayList<Subscription> list = new ArrayList<Subscription>();
-		Log.d("LOG", "List size is: "+subscriptionMap.size());
-		
+		Log.d("LOG", "List size is: " + subscriptionMap.size());
+
 		for (int i = 0; i < subscriptionMap.size(); i++)
 		{
 			Subscription sub = subscriptionMap.valueAt(i);
@@ -92,7 +103,7 @@ public class SubscriptionList
 		}
 		return list;
 	}
-	
+
 	public synchronized Subscription getSubscription(int subscriptionId)
 	{
 		return subscriptionMap.get(subscriptionId);
