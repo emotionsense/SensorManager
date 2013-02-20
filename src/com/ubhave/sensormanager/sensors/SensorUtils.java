@@ -38,6 +38,7 @@ import com.ubhave.sensormanager.classifier.WifiDataClassifier;
 import com.ubhave.sensormanager.config.Constants;
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.sensors.pull.AccelerometerSensor;
+import com.ubhave.sensormanager.sensors.pull.ApplicationSensor;
 import com.ubhave.sensormanager.sensors.pull.BluetoothSensor;
 import com.ubhave.sensormanager.sensors.pull.LocationSensor;
 import com.ubhave.sensormanager.sensors.pull.MicrophoneSensor;
@@ -64,6 +65,7 @@ public class SensorUtils
 	public final static int SENSOR_TYPE_SMS = 5009;
 	public final static int SENSOR_TYPE_WIFI = 5010;
 	public final static int SENSOR_TYPE_CONNECTION_STATE = 5011;
+	public final static int SENSOR_TYPE_APPLICATION = 5012;
 
 	public final static String SENSOR_NAME_ACCELEROMETER = "Accelerometer";
 	public final static String SENSOR_NAME_BATTERY = "Battery";
@@ -76,10 +78,12 @@ public class SensorUtils
 	public final static String SENSOR_NAME_SMS = "SMS";
 	public final static String SENSOR_NAME_WIFI = "WiFi";
 	public final static String SENSOR_NAME_CONNECTION_STATE = "Connection";
+	public final static String SENSOR_NAME_APPLICATION = "Application";
 
 	public final static int[] ALL_SENSORS = new int[] { SENSOR_TYPE_ACCELEROMETER, SENSOR_TYPE_BLUETOOTH,
 			SENSOR_TYPE_LOCATION, SENSOR_TYPE_MICROPHONE, SENSOR_TYPE_WIFI, SENSOR_TYPE_BATTERY, SENSOR_TYPE_PHONE_STATE,
-			SENSOR_TYPE_PROXIMITY, SENSOR_TYPE_SCREEN, SENSOR_TYPE_SMS, SENSOR_TYPE_CONNECTION_STATE };
+			SENSOR_TYPE_PROXIMITY, SENSOR_TYPE_SCREEN, SENSOR_TYPE_SMS, SENSOR_TYPE_CONNECTION_STATE,
+			SENSOR_TYPE_APPLICATION };
 
 	public static boolean isPullSensor(int sensorType)
 	{
@@ -90,6 +94,7 @@ public class SensorUtils
 		case SENSOR_TYPE_LOCATION:
 		case SENSOR_TYPE_MICROPHONE:
 		case SENSOR_TYPE_WIFI:
+		case SENSOR_TYPE_APPLICATION:
 			return true;
 		default:
 			return false;
@@ -146,6 +151,8 @@ public class SensorUtils
 			return SmsSensor.getSmsSensor(context);
 		case SENSOR_TYPE_CONNECTION_STATE:
 			return ConnectionStateSensor.getConnectionStateSensor(context);
+		case SENSOR_TYPE_APPLICATION:
+			return ApplicationSensor.getApplicationSensor(context);
 		default:
 			throw new ESException(ESException.UNKNOWN_SENSOR_TYPE, "Unknown sensor id");
 		}
@@ -184,6 +191,10 @@ public class SensorUtils
 			sensorConfig.setParameter(SensorConfig.NUMBER_OF_SENSE_CYCLES, Constants.WIFI_SAMPLING_CYCLES);
 			sensorConfig.setParameter(SensorConfig.SENSE_WINDOW_LENGTH_PER_CYCLE_MILLIS,
 					Constants.WIFI_SAMPLING_WINDOW_SIZE_PER_CYCLE_MILLIS);
+			break;
+		case SensorUtils.SENSOR_TYPE_APPLICATION:
+			sensorConfig.setParameter(SensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, Constants.APPLICATON_SLEEP_INTERVAL);
+			sensorConfig.setParameter(SensorConfig.NUMBER_OF_SENSE_CYCLES, Constants.APPLCATION_SAMPLING_CYCLES);
 			break;
 		}
 
@@ -233,6 +244,10 @@ public class SensorUtils
 		{
 			return SENSOR_TYPE_WIFI;
 		}
+		else if (sensorName.equals(SENSOR_NAME_APPLICATION))
+		{
+			return SENSOR_TYPE_APPLICATION;
+		}
 		else
 		{
 			throw new ESException(ESException.UNKNOWN_SENSOR_NAME, "unknown sensor name " + sensorName);
@@ -265,6 +280,8 @@ public class SensorUtils
 			return SENSOR_NAME_WIFI;
 		case SensorUtils.SENSOR_TYPE_CONNECTION_STATE:
 			return SENSOR_NAME_CONNECTION_STATE;
+		case SensorUtils.SENSOR_TYPE_APPLICATION:
+			return SENSOR_NAME_APPLICATION;
 		default:
 			throw new ESException(ESException.UNKNOWN_SENSOR_NAME, "unknown sensor type " + sensorType);
 		}

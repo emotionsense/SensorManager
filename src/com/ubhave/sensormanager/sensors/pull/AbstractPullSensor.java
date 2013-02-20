@@ -34,16 +34,16 @@ import com.ubhave.sensormanager.sensors.AbstractSensor;
 public abstract class AbstractPullSensor extends AbstractSensor implements PullSensor, SleepWindowListener
 {
 	protected long pullSenseStartTimestamp;
-	
+
 	protected SensorData prevSensorData;
-	
+
 	public AbstractPullSensor(Context context)
 	{
 		super(context);
 	}
 
 	protected abstract SensorData getMostRecentRawData();
-	
+
 	public void onSleepWindowLengthChanged(long sleepWindowLengthMillis)
 	{
 		sensorConfig.setParameter(SensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, sleepWindowLengthMillis);
@@ -74,7 +74,10 @@ public abstract class AbstractPullSensor extends AbstractSensor implements PullS
 				{
 					if (sensorConfig.containsParameter(SensorConfig.NUMBER_OF_SENSE_CYCLES))
 					{
-						senseCompleteNotify.wait();
+						while (isSensing)
+						{
+							senseCompleteNotify.wait(500);
+						}
 					}
 					else if (sensorConfig.containsParameter(SensorConfig.SENSE_WINDOW_LENGTH_MILLIS))
 					{
@@ -83,7 +86,8 @@ public abstract class AbstractPullSensor extends AbstractSensor implements PullS
 					}
 					else
 					{
-						throw new ESException(ESException.INVALID_SENSOR_CONFIG, "Invalid Sensor Config, window size or no. of cycles should in in the config");
+						throw new ESException(ESException.INVALID_SENSOR_CONFIG,
+								"Invalid Sensor Config, window size or no. of cycles should in in the config");
 					}
 				}
 				catch (InterruptedException e)
@@ -115,6 +119,7 @@ public abstract class AbstractPullSensor extends AbstractSensor implements PullS
 		synchronized (senseCompleteNotify)
 		{
 			senseCompleteNotify.notify();
+			isSensing = false;
 		}
 	}
 

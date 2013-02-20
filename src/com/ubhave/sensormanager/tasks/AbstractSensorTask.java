@@ -147,7 +147,14 @@ public abstract class AbstractSensorTask extends Thread
 		{
 			for (SensorDataListener listener : listenerList)
 			{
-				listener.onDataSensed(sensorData);
+				if (sensorData != null)
+				{
+					listener.onDataSensed(sensorData);
+				}
+				else
+				{
+					Log.d(getLogTag(), "sensorData is null");
+				}
 			}
 		}
 
