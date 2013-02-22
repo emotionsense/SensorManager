@@ -158,7 +158,7 @@ public class MicrophoneSensor extends AbstractPullSensor
 	{
 		int[] maxAmpArray = new int[maxAmplitudeList.size()];
 		long[] timestampArray = new long[timestampList.size()];
-		for (int i = 0; i < maxAmplitudeList.size(); i++)
+		for (int i = 0; (i < maxAmplitudeList.size() && i < timestampList.size()); i++)
 		{
 			maxAmpArray[i] = maxAmplitudeList.get(i);
 			timestampArray[i] = timestampList.get(i);
