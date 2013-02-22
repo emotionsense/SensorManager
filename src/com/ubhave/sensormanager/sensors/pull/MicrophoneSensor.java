@@ -46,6 +46,8 @@ public class MicrophoneSensor extends AbstractPullSensor
 	private static MicrophoneSensor microphoneSensor;
 	private static Object lock = new Object();
 
+	private boolean recorderStopped = false;
+
 	public static MicrophoneSensor getMicrophoneSensor(Context context) throws ESException
 	{
 		if (microphoneSensor == null)
@@ -87,13 +89,13 @@ public class MicrophoneSensor extends AbstractPullSensor
 			{
 				file.delete();
 			}
-			
+
 			recorder = new MediaRecorder();
 			recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
 			recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
 			recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 			recorder.setOutputFile(tempFileName);
-			
+
 			// for amplitude
 			maxAmplitudeList = new ArrayList<Integer>();
 			// for timestamp
@@ -101,6 +103,8 @@ public class MicrophoneSensor extends AbstractPullSensor
 
 			recorder.prepare();
 			recorder.start();
+
+			recorderStopped = false;
 
 			// query amplitude in an async thread
 			(new Thread()
@@ -114,8 +118,14 @@ public class MicrophoneSensor extends AbstractPullSensor
 
 					while (isSensing())
 					{
-						maxAmplitudeList.add(recorder.getMaxAmplitude());
-						timestampList.add(System.currentTimeMillis());
+						synchronized (recorder)
+						{
+							if (!recorderStopped)
+							{
+								maxAmplitudeList.add(recorder.getMaxAmplitude());
+								timestampList.add(System.currentTimeMillis());
+							}
+						}
 						MicrophoneSensor.sleep(50);
 					}
 				}
@@ -129,7 +139,7 @@ public class MicrophoneSensor extends AbstractPullSensor
 		}
 		return true;
 	}
-	
+
 	private static void sleep(long millis)
 	{
 		try
@@ -145,8 +155,12 @@ public class MicrophoneSensor extends AbstractPullSensor
 	protected void stopSensing()
 	{
 		// for amplitude
-		recorder.stop();
-		recorder.release();
+		synchronized (recorder)
+		{
+			recorder.stop();
+			recorder.release();
+			recorderStopped = true;
+		}
 	}
 
 	public int getSensorType()
@@ -163,7 +177,7 @@ public class MicrophoneSensor extends AbstractPullSensor
 			maxAmpArray[i] = maxAmplitudeList.get(i);
 			timestampArray[i] = timestampList.get(i);
 		}
-		
+
 		return new MicrophoneData(pullSenseStartTimestamp, maxAmpArray, timestampArray, sensorConfig.clone());
 	}
 
