@@ -24,7 +24,7 @@ package com.ubhave.sensormanager.classifier;
 
 import android.location.Location;
 
-import com.ubhave.sensormanager.config.Constants;
+import com.ubhave.sensormanager.config.SensorManagerConstants;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.data.pullsensor.LocationData;
 
@@ -63,7 +63,7 @@ public class LocationDataClassifier implements SensorDataClassifier
 	{
 		if ((loc1 != null) && (loc2 != null))
 		{
-			if (loc1.distanceTo(loc2) < Constants.LOCATION_CHANGE_DISTANCE_THRESHOLD)
+			if (loc1.distanceTo(loc2) < SensorManagerConstants.LOCATION_CHANGE_DISTANCE_THRESHOLD)
 			{
 				return true;
 			}

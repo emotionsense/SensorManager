@@ -35,7 +35,7 @@ import com.ubhave.sensormanager.classifier.LocationDataClassifier;
 import com.ubhave.sensormanager.classifier.MicrophoneDataClassifier;
 import com.ubhave.sensormanager.classifier.SensorDataClassifier;
 import com.ubhave.sensormanager.classifier.WifiDataClassifier;
-import com.ubhave.sensormanager.config.Constants;
+import com.ubhave.sensormanager.config.SensorManagerConstants;
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.sensors.pull.AccelerometerSensor;
 import com.ubhave.sensormanager.sensors.pull.ApplicationSensor;
@@ -164,37 +164,37 @@ public class SensorUtils
 		switch (sensorType)
 		{
 		case SensorUtils.SENSOR_TYPE_ACCELEROMETER:
-			sensorConfig.setParameter(SensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, Constants.ACCELEROMETER_SLEEP_INTERVAL);
+			sensorConfig.setParameter(SensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, SensorManagerConstants.ACCELEROMETER_SLEEP_INTERVAL);
 			sensorConfig.setParameter(SensorConfig.ACCELEROMETER_SAMPLING_DELAY, SensorManager.SENSOR_DELAY_GAME);
 			sensorConfig.setParameter(SensorConfig.SENSE_WINDOW_LENGTH_MILLIS,
-					Constants.ACCELEROMETER_SAMPLING_WINDOW_SIZE_MILLIS);
+					SensorManagerConstants.ACCELEROMETER_SAMPLING_WINDOW_SIZE_MILLIS);
 			break;
 		case SensorUtils.SENSOR_TYPE_BLUETOOTH:
-			sensorConfig.setParameter(SensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, Constants.BLUETOOTH_SLEEP_INTERVAL);
-			sensorConfig.setParameter(SensorConfig.NUMBER_OF_SENSE_CYCLES, Constants.BLUETOOTH_SAMPLING_CYCLES);
+			sensorConfig.setParameter(SensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, SensorManagerConstants.BLUETOOTH_SLEEP_INTERVAL);
+			sensorConfig.setParameter(SensorConfig.NUMBER_OF_SENSE_CYCLES, SensorManagerConstants.BLUETOOTH_SAMPLING_CYCLES);
 			sensorConfig.setParameter(SensorConfig.SENSE_WINDOW_LENGTH_PER_CYCLE_MILLIS,
-					Constants.BLUETOOTH_SAMPLING_WINDOW_SIZE_PER_CYCLE_MILLIS);
+					SensorManagerConstants.BLUETOOTH_SAMPLING_WINDOW_SIZE_PER_CYCLE_MILLIS);
 			break;
 		case SensorUtils.SENSOR_TYPE_LOCATION:
-			sensorConfig.setParameter(SensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, Constants.LOCATION_SLEEP_INTERVAL);
+			sensorConfig.setParameter(SensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, SensorManagerConstants.LOCATION_SLEEP_INTERVAL);
 			sensorConfig.setParameter(SensorConfig.SENSE_WINDOW_LENGTH_MILLIS,
-					Constants.LOCATION_SAMPLING_WINDOW_SIZE_MILLIS);
+					SensorManagerConstants.LOCATION_SAMPLING_WINDOW_SIZE_MILLIS);
 			sensorConfig.setParameter(SensorConfig.LOCATION_ACCURACY, SensorConfig.LOCATION_ACCURACY_COARSE);
 			break;
 		case SensorUtils.SENSOR_TYPE_MICROPHONE:
-			sensorConfig.setParameter(SensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, Constants.MICROPHONE_SLEEP_INTERVAL);
+			sensorConfig.setParameter(SensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, SensorManagerConstants.MICROPHONE_SLEEP_INTERVAL);
 			sensorConfig.setParameter(SensorConfig.SENSE_WINDOW_LENGTH_MILLIS,
-					Constants.MICROPHONE_SAMPLING_WINDOW_SIZE_MILLIS);
+					SensorManagerConstants.MICROPHONE_SAMPLING_WINDOW_SIZE_MILLIS);
 			break;
 		case SensorUtils.SENSOR_TYPE_WIFI:
-			sensorConfig.setParameter(SensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, Constants.WIFI_SLEEP_INTERVAL);
-			sensorConfig.setParameter(SensorConfig.NUMBER_OF_SENSE_CYCLES, Constants.WIFI_SAMPLING_CYCLES);
+			sensorConfig.setParameter(SensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, SensorManagerConstants.WIFI_SLEEP_INTERVAL);
+			sensorConfig.setParameter(SensorConfig.NUMBER_OF_SENSE_CYCLES, SensorManagerConstants.WIFI_SAMPLING_CYCLES);
 			sensorConfig.setParameter(SensorConfig.SENSE_WINDOW_LENGTH_PER_CYCLE_MILLIS,
-					Constants.WIFI_SAMPLING_WINDOW_SIZE_PER_CYCLE_MILLIS);
+					SensorManagerConstants.WIFI_SAMPLING_WINDOW_SIZE_PER_CYCLE_MILLIS);
 			break;
 		case SensorUtils.SENSOR_TYPE_APPLICATION:
-			sensorConfig.setParameter(SensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, Constants.APPLICATON_SLEEP_INTERVAL);
-			sensorConfig.setParameter(SensorConfig.NUMBER_OF_SENSE_CYCLES, Constants.APPLCATION_SAMPLING_CYCLES);
+			sensorConfig.setParameter(SensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, SensorManagerConstants.APPLICATON_SLEEP_INTERVAL);
+			sensorConfig.setParameter(SensorConfig.NUMBER_OF_SENSE_CYCLES, SensorManagerConstants.APPLCATION_SAMPLING_CYCLES);
 			break;
 		}
 

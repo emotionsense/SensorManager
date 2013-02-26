@@ -22,7 +22,7 @@ IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 package com.ubhave.sensormanager.config;
 
-public class Constants
+public class SensorManagerConstants
 {
 	public static final int STOP_SENSING_BATTERY_LEVEL = 20;
 

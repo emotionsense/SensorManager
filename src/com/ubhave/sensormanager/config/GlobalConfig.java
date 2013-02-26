@@ -52,7 +52,7 @@ public class GlobalConfig extends AbstractConfig
 	private static GlobalConfig getDefaultGlobalConfig()
 	{
 		GlobalConfig config = new GlobalConfig();
-		config.setParameter(LOW_BATTERY_THRESHOLD, (Integer) Constants.LOW_BATTERY_THRESHOLD_LEVEL);
+		config.setParameter(LOW_BATTERY_THRESHOLD, (Integer) SensorManagerConstants.LOW_BATTERY_THRESHOLD_LEVEL);
 		return config;
 	}
 

@@ -31,7 +31,7 @@ import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.ESSensorManagerInterface;
 import com.ubhave.sensormanager.SensorDataListener;
 import com.ubhave.sensormanager.classifier.SensorDataClassifier;
-import com.ubhave.sensormanager.config.Constants;
+import com.ubhave.sensormanager.config.SensorManagerConstants;
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.sensors.SensorInterface;
@@ -51,7 +51,7 @@ public class AdaptiveSensing implements SensorDataListener
 		SleepWindowListener listener;
 		SensorConfig sensorConfig;
 		int subscriptionId;
-		double probability = Constants.PROBABILITY_INITIAL_VALUE;
+		double probability = SensorManagerConstants.PROBABILITY_INITIAL_VALUE;
 	}
 
 	private SparseArray<PullSensorDetails> sensorMap;
@@ -135,21 +135,21 @@ public class AdaptiveSensing implements SensorDataListener
 		// classify as interesting or not
 		if (classifier.isInteresting(data))
 		{
-			probability = probability + (Constants.ALPHA_VALUE * (1 - probability));
+			probability = probability + (SensorManagerConstants.ALPHA_VALUE * (1 - probability));
 		}
 		else
 		{
-			probability = probability - (Constants.ALPHA_VALUE * probability);
+			probability = probability - (SensorManagerConstants.ALPHA_VALUE * probability);
 		}
 
 		// check min,max bounds
-		if (probability < Constants.MIN_PROBABILITY_VALUE)
+		if (probability < SensorManagerConstants.MIN_PROBABILITY_VALUE)
 		{
-			probability = Constants.MIN_PROBABILITY_VALUE;
+			probability = SensorManagerConstants.MIN_PROBABILITY_VALUE;
 		}
-		else if (probability > Constants.MAX_PROBABILITY_VALUE)
+		else if (probability > SensorManagerConstants.MAX_PROBABILITY_VALUE)
 		{
-			probability = Constants.MAX_PROBABILITY_VALUE;
+			probability = SensorManagerConstants.MAX_PROBABILITY_VALUE;
 		}
 
 		// convert probability to sampling intervals in
