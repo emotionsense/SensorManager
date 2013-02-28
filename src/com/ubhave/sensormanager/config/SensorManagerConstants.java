@@ -46,7 +46,7 @@ public class SensorManagerConstants
 	public static final long LOCATION_SLEEP_INTERVAL = 15 * 60 * 1000;
 	public static final long MICROPHONE_SLEEP_INTERVAL = 2 * 60 * 1000;
 	public static final long WIFI_SLEEP_INTERVAL = 15 * 60 * 1000;
-	public static final long APPLICATON_SLEEP_INTERVAL = 2 * 60 * 1000;
+	public static final long APPLICATON_SLEEP_INTERVAL = 5 * 60 * 1000;
 
 	// low battery threshold
 	public static final int LOW_BATTERY_THRESHOLD_LEVEL = 20;
