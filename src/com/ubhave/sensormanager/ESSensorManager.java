@@ -244,16 +244,26 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 		else
 		{
 			PowerManager pm = (PowerManager) applicationContext.getSystemService(Context.POWER_SERVICE);
-			wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "Wakelock_"+System.currentTimeMillis());
+			wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "Wakelock_" + System.currentTimeMillis());
 			wakeLock.acquire();
 		}
 	}
 
 	private void releaseWakeLock()
 	{
-		if (wakeLock != null)
+		try
 		{
-			wakeLock.release();
+			if (wakeLock != null)
+			{
+				if (wakeLock.isHeld())
+				{
+					wakeLock.release();
+				}
+			}
+		}
+		catch (Throwable thr)
+		{
+			// ignore, perhaps wake lock has already been released
 		}
 	}
 
