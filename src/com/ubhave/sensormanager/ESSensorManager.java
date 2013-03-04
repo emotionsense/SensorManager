@@ -53,10 +53,10 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 
 	private final Context applicationContext;
 	private PowerManager.WakeLock wakeLock;
-	
+
 	private boolean isSubscribedToBattery;
 	private int batterySubscriptionId;
-	
+
 	private final SparseArray<AbstractSensorTask> sensorTaskMap;
 	private final SubscriptionList subscriptionList;
 	private final GlobalConfig config;
@@ -118,7 +118,7 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 				isSubscribedToBattery = true;
 				batterySubscriptionId = subscribeToSensorData(SensorUtils.SENSOR_TYPE_BATTERY, this);
 			}
-			
+
 			Log.d(TAG, "subscribeToSensorData() subscribing listener to sensorId " + sensorId);
 			Subscription subscription = new Subscription(task, listener);
 			int subscriptionId = subscriptionList.registerSubscription(subscription);
@@ -153,7 +153,8 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 		AbstractSensorTask sensorTask = sensorTaskMap.get(sensorId);
 		if (sensorTask == null)
 		{
-			throw new ESException(ESException.UNKNOWN_SENSOR_TYPE, "Unknown sensor type: " + sensorId+". Have you put the required permissions into your manifest?");
+			throw new ESException(ESException.UNKNOWN_SENSOR_TYPE, "Unknown sensor type: " + sensorId
+					+ ". Have you put the required permissions into your manifest?");
 		}
 		return sensorTask;
 	}
@@ -168,7 +169,9 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 		}
 		else if (sensorTask.isRunning())
 		{
-			throw new ESException(ESException.OPERATION_NOT_SUPPORTED, "This method is supported only for sensors tasks that are not currently running. Please unregister all your listeners to the sensor to call this method.");
+			throw new ESException(
+					ESException.OPERATION_NOT_SUPPORTED,
+					"This method is supported only for sensors tasks that are not currently running. Please unregister all your listeners to the sensor to call this method.");
 		}
 		else
 		{
@@ -234,9 +237,16 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 
 	private void acquireWakeLock()
 	{
-		PowerManager pm = (PowerManager) applicationContext.getSystemService(Context.POWER_SERVICE);
-		wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "Wakelock");
-		wakeLock.acquire();
+		if ((wakeLock != null) && (wakeLock.isHeld()))
+		{
+			return;
+		}
+		else
+		{
+			PowerManager pm = (PowerManager) applicationContext.getSystemService(Context.POWER_SERVICE);
+			wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "Wakelock_"+System.currentTimeMillis());
+			wakeLock.acquire();
+		}
 	}
 
 	private void releaseWakeLock()
@@ -253,11 +263,13 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 		if (SensorUtils.isPullSensor(sensorId))
 		{
 			AbstractPullSensor pullSensor = (AbstractPullSensor) sensorTask.getSensor();
-			AdaptiveSensing.getAdaptiveSensing().registerSensor(sensorManager, sensorTask.getSensor(), SensorUtils.getSensorDataClassifier(sensorId), pullSensor);
+			AdaptiveSensing.getAdaptiveSensing().registerSensor(sensorManager, sensorTask.getSensor(),
+					SensorUtils.getSensorDataClassifier(sensorId), pullSensor);
 		}
 		else
 		{
-			throw new ESException(ESException.OPERATION_NOT_SUPPORTED, " adaptive sensing is supported only for pull sensors");
+			throw new ESException(ESException.OPERATION_NOT_SUPPORTED,
+					" adaptive sensing is supported only for pull sensors");
 		}
 
 	}
@@ -271,7 +283,8 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 		}
 		else
 		{
-			throw new ESException(ESException.OPERATION_NOT_SUPPORTED, " adaptive sensing not enabled for sensorId: " + sensorId);
+			throw new ESException(ESException.OPERATION_NOT_SUPPORTED, " adaptive sensing not enabled for sensorId: "
+					+ sensorId);
 		}
 	}
 
