@@ -35,29 +35,45 @@ public class SmsData extends SensorData
 	private int noOfWords;
 	private String address;
 	private String eventType;
-
-	public SmsData(long recvTimestamp, int smsLength, int noOfWords, String addr, String eventType, SensorConfig sensorConfig)
+	
+	public SmsData(long recvTimestamp, SensorConfig config)
 	{
-		super(recvTimestamp, sensorConfig);
-		this.contentLength = smsLength;
-		this.noOfWords = noOfWords;
-		this.address = addr;
-		this.eventType = eventType;
+		super(recvTimestamp, config);
+	}
+	
+	public void setContentLength(int n)
+	{
+		contentLength = n;
 	}
 
 	public int getContentLength()
 	{
 		return contentLength;
 	}
+	
+	public void setNumberOfWords(int n)
+	{
+		noOfWords = n;
+	}
 
 	public int getNoOfWords()
 	{
 		return noOfWords;
 	}
+	
+	public void setAddress(String a)
+	{
+		address = a;
+	}
 
 	public String getAddress()
 	{
 		return address;
+	}
+	
+	public void setEventType(String e)
+	{
+		eventType = e;
 	}
 	
 	public String getEventType()

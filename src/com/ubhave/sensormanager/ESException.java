@@ -40,6 +40,7 @@ public class ESException extends Exception
 	public static final int CONFIG_SERVICE_NOT_STARTED = 8010;
 	public static final int OPERATION_NOT_SUPPORTED = 8011;
 	public static final int INVALID_PARAMETER = 8012;
+	public static final int DATA_NOT_PROCESSED = 8013;
 
 	private int errorCode;
 	private String message;

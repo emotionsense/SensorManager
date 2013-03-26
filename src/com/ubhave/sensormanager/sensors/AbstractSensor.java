@@ -27,6 +27,8 @@ import android.content.pm.PackageManager;
 
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.config.SensorConfig;
+import com.ubhave.sensormanager.config.SensorManagerConstants;
+import com.ubhave.sensormanager.process.AbstractProcessor;
 
 public abstract class AbstractSensor implements SensorInterface
 {
@@ -90,6 +92,37 @@ public abstract class AbstractSensor implements SensorInterface
 		else
 		{
 			throw new ESException(ESException.INVALID_SENSOR_CONFIG, "Invalid sensor config, key: " + configKey);
+		}
+	}
+	
+	private boolean getRawData()
+	{
+		if (sensorConfig.containsParameter(SensorConfig.DATA_SET_RAW_VALUES))
+		{
+			return (Boolean) sensorConfig.getParameter(SensorConfig.DATA_SET_RAW_VALUES);
+		}
+		return SensorManagerConstants.GET_RAW_DATA;
+	}
+	
+	private boolean getProcessedData()
+	{
+		if (sensorConfig.containsParameter(SensorConfig.DATA_EXTRACT_FEATURES))
+		{
+			return (Boolean) sensorConfig.getParameter(SensorConfig.DATA_EXTRACT_FEATURES);
+		}
+		return SensorManagerConstants.GET_PROCESSED_DATA;
+	}
+	
+	protected AbstractProcessor getProcessor(int type)
+	{
+		try
+		{
+			return AbstractProcessor.getProcessor(type, getRawData(), getProcessedData());
+		}
+		catch (ESException e)
+		{
+			e.printStackTrace();
+			return null;
 		}
 	}
 

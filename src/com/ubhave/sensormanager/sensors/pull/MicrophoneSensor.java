@@ -39,6 +39,7 @@ public class MicrophoneSensor extends AbstractPullSensor
 
 	private final static String LOG_TAG = "MicrophoneSensor";
 	private MediaRecorder recorder;
+	private String fileName;
 
 	private ArrayList<Integer> maxAmplitudeList;
 	private ArrayList<Long> timestampList;
@@ -83,8 +84,8 @@ public class MicrophoneSensor extends AbstractPullSensor
 		try
 		{
 			// delete old file
-			String tempFileName = applicationContext.getFilesDir().getAbsolutePath() + "/test.3gpp";
-			File file = new File(tempFileName);
+			fileName = applicationContext.getFilesDir().getAbsolutePath() + "/test.3gpp";
+			File file = new File(fileName);
 			if (file.exists())
 			{
 				file.delete();
@@ -94,7 +95,7 @@ public class MicrophoneSensor extends AbstractPullSensor
 			recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
 			recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
 			recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-			recorder.setOutputFile(tempFileName);
+			recorder.setOutputFile(fileName);
 
 			// for amplitude
 			maxAmplitudeList = new ArrayList<Integer>();
@@ -115,7 +116,6 @@ public class MicrophoneSensor extends AbstractPullSensor
 
 					// ignore fist call
 					recorder.getMaxAmplitude();
-
 					while (isSensing())
 					{
 						synchronized (recorder)
@@ -128,6 +128,7 @@ public class MicrophoneSensor extends AbstractPullSensor
 						}
 						MicrophoneSensor.sleep(50);
 					}
+					
 				}
 			}).start();
 

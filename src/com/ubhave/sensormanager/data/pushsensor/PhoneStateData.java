@@ -39,18 +39,36 @@ public class PhoneStateData extends SensorData
 	public static final int ON_SERVICE_STATE_CHANGED = 5444;
 
 	private int eventType;
-	private String data;
+	private String data, number;
 
-	public PhoneStateData(long dataReceivedTimestamp, int eventType, String data, SensorConfig sensorConfig)
+	public PhoneStateData(long dataReceivedTimestamp, SensorConfig sensorConfig)
 	{
 		super(dataReceivedTimestamp, sensorConfig);
-		this.eventType = eventType;
-		this.data = data;
+	}
+	
+	public void setNumber(String n)
+	{
+		number = n;
+	}
+	
+	public String getNumber()
+	{
+		return number;
+	}
+	
+	public void setEventType(int e)
+	{
+		eventType = e;
 	}
 
 	public int getEventType()
 	{
 		return eventType;
+	}
+	
+	public void setData(String d)
+	{
+		data = d;
 	}
 
 	public String getData()
