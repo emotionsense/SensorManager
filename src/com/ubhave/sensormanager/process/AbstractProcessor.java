@@ -1,6 +1,7 @@
 package com.ubhave.sensormanager.process;
 
 import com.ubhave.sensormanager.ESException;
+import com.ubhave.sensormanager.process.push.SMSProcessor;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public abstract class AbstractProcessor
