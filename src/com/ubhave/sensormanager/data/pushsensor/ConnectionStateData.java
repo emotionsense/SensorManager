@@ -49,22 +49,6 @@ public class ConnectionStateData extends SensorData
 	{
 		super(timestamp, config);
 	}
-	
-//	public ConnectionStateData(long dataReceivedTimestamp,
-//			boolean isConnectedOrConnecting,
-//			boolean isAvailable,
-//			boolean isConnected,
-//			int networkType,
-//			int roamingType,
-//			final SensorConfig sensorConfig)
-//	{
-//		super(dataReceivedTimestamp, sensorConfig);
-//		this.isConnectedOrConnecting = isConnectedOrConnecting;
-//		this.isConnected = isConnected;
-//		this.isAvailable = isAvailable;
-//		this.roamingType = roamingType;
-//		this.networkType = networkType;
-//	}
 
 	public void setNetworkType(final NetworkInfo activeNetwork)
 	{
@@ -116,30 +100,60 @@ public class ConnectionStateData extends SensorData
 			ssid = null;
 		}
 	}
+	
+	public void setSSID(String s)
+	{
+		ssid = s;
+	}
 
 	public String getSSID()
 	{
 		return ssid;
+	}
+	
+	public void setAvailable(boolean a)
+	{
+		isAvailable = a;
 	}
 
 	public boolean isAvailable()
 	{
 		return isAvailable;
 	}
+	
+	public void setConnectedOrConnecting(boolean b)
+	{
+		isConnectedOrConnecting = b;
+	}
 
 	public boolean isConnectedOrConnecting()
 	{
 		return isConnectedOrConnecting;
+	}
+	
+	public void setConnected(boolean b)
+	{
+		isConnected = b;
 	}
 
 	public boolean isConnected()
 	{
 		return isConnected;
 	}
+	
+	public void setNetworkType(int n)
+	{
+		networkType = n;
+	}
 
 	public int getNetworkType()
 	{
 		return networkType;
+	}
+	
+	public void setRoamingStatus(int s)
+	{
+		roamingType = s;
 	}
 
 	public int getRoamingStatus()
