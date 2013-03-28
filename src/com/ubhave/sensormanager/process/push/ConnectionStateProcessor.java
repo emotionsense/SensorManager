@@ -1,10 +1,10 @@
 package com.ubhave.sensormanager.process.push;
 
-import android.content.Intent;
-import android.os.BatteryManager;
+import android.net.NetworkInfo;
+import android.net.wifi.WifiInfo;
 
 import com.ubhave.sensormanager.config.SensorConfig;
-import com.ubhave.sensormanager.data.pushsensor.BatteryData;
+import com.ubhave.sensormanager.data.pushsensor.ConnectionStateData;
 import com.ubhave.sensormanager.process.AbstractProcessor;
 
 public class ConnectionStateProcessor extends AbstractProcessor
@@ -14,32 +14,11 @@ public class ConnectionStateProcessor extends AbstractProcessor
 		super(rw, sp);
 	}
 	
-	public BatteryData process(long recvTime, SensorConfig config, Intent dataIntent)
+	public ConnectionStateData process(long recvTime, SensorConfig config, NetworkInfo activeNetwork, WifiInfo wifiInfo)
 	{
-		BatteryData data = new BatteryData(recvTime, config);
-		if (super.setRawData)
-		{
-			int level = dataIntent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
-			data.setBatteryLevel(level);
-			
-	        int scale = dataIntent.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
-	        data.setScale(scale);
-	        
-	        int temp = dataIntent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, -1);
-	        data.setTemperature(temp);
-	        
-	        int voltage = dataIntent.getIntExtra(BatteryManager.EXTRA_VOLTAGE, -1);
-	        data.setVoltage(voltage);
-	        
-	        int plugged = dataIntent.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1);
-	        data.setPlugged(plugged);
-	        
-	        int status = dataIntent.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
-	        data.setStatus(status);
-	        
-	        int health = dataIntent.getIntExtra(BatteryManager.EXTRA_HEALTH, -1);
-	        data.setHealth(health);
-		}
+		ConnectionStateData data = new ConnectionStateData(recvTime, config);
+		data.setNetworkType(activeNetwork);
+		data.setWifiDetails(wifiInfo);
 		return data;
 	}
 

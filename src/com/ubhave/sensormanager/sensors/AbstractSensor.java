@@ -113,11 +113,17 @@ public abstract class AbstractSensor implements SensorInterface
 		return SensorManagerConstants.GET_PROCESSED_DATA;
 	}
 	
-	protected AbstractProcessor getProcessor(int type)
+	protected AbstractProcessor getProcessor()
 	{
 		try
 		{
-			return AbstractProcessor.getProcessor(type, getRawData(), getProcessedData());
+			boolean rawData = getRawData();
+			boolean processedData = getProcessedData();
+			if (!rawData && !processedData)
+			{
+				// TODO handle error
+			}
+			return AbstractProcessor.getProcessor(getSensorType(), rawData, processedData);
 		}
 		catch (ESException e)
 		{

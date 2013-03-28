@@ -106,7 +106,7 @@ public class SmsSensor extends AbstractPushSensor
 
 	private void logDataSensed(long timestamp, String content, String addr, String eventType)
 	{
-		SMSProcessor processor = (SMSProcessor) getProcessor(SensorUtils.SENSOR_TYPE_SMS);
+		SMSProcessor processor = (SMSProcessor) getProcessor();
 		if (processor != null)
 		{
 			SmsData data = (SmsData) processor.process(timestamp, sensorConfig.clone(), content, addr, eventType);

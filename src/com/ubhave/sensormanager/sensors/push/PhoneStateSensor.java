@@ -132,7 +132,7 @@ public class PhoneStateSensor extends AbstractPushSensor
 	{
 		if (isSensing)
 		{
-			PhoneStateProcessor processor = (PhoneStateProcessor) getProcessor(SensorUtils.SENSOR_TYPE_PHONE_STATE);
+			PhoneStateProcessor processor = (PhoneStateProcessor) getProcessor();
 			if (processor != null)
 			{
 				PhoneStateData phoneStateData = processor.process(System.currentTimeMillis(), sensorConfig.clone(), eventType, data, number);

@@ -33,6 +33,7 @@ import android.util.Log;
 
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.data.pushsensor.ConnectionStateData;
+import com.ubhave.sensormanager.process.push.ConnectionStateProcessor;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class ConnectionStateSensor extends AbstractPushSensor
@@ -77,7 +78,8 @@ public class ConnectionStateSensor extends AbstractPushSensor
 			WifiManager wifiMgr = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
 			WifiInfo wifiInfo = wifiMgr.getConnectionInfo();
 			
-			ConnectionStateData data = new ConnectionStateData(System.currentTimeMillis(), activeNetwork, wifiInfo, sensorConfig.clone());
+			ConnectionStateProcessor processor = (ConnectionStateProcessor) getProcessor();
+			ConnectionStateData data = processor.process(System.currentTimeMillis(), sensorConfig.clone(), activeNetwork, wifiInfo);
 			onDataSensed(data);
 		}
 		else
