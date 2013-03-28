@@ -30,20 +30,27 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class AccelerometerData extends SensorData
 {
-	private final ArrayList<float[]> sensorReadings;
-	private final ArrayList<Long> sensorReadingTimestamps;
+	private ArrayList<float[]> sensorReadings;
+	private ArrayList<Long> sensorReadingTimestamps;
 
-	public AccelerometerData(long senseStartTimestamp, ArrayList<float[]> sensorReadings,
-			ArrayList<Long> sensorReadingTimestamps, SensorConfig sensorConfig)
+	public AccelerometerData(long senseStartTimestamp, SensorConfig sensorConfig)
 	{
 		super(senseStartTimestamp, sensorConfig);
+	}
+	
+	public void setSensorReadings(ArrayList<float[]> sensorReadings)
+	{
 		this.sensorReadings = sensorReadings;
-		this.sensorReadingTimestamps = sensorReadingTimestamps;
 	}
 
 	public ArrayList<float[]> getSensorReadings()
 	{
 		return sensorReadings;
+	}
+	
+	public void setSensorReadingTimestamps(ArrayList<Long> sensorReadingTimestamps)
+	{
+		this.sensorReadingTimestamps = sensorReadingTimestamps;
 	}
 	
 	public ArrayList<Long> getSensorReadingTimestamps()

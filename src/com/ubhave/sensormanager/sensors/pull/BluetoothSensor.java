@@ -139,7 +139,8 @@ public class BluetoothSensor extends AbstractPullSensor
 
 	protected BluetoothData getMostRecentRawData()
 	{
-		BluetoothData bluetoothData = new BluetoothData(pullSenseStartTimestamp, btDevices, sensorConfig.clone());
+		BluetoothData bluetoothData = new BluetoothData(pullSenseStartTimestamp, sensorConfig.clone());
+		bluetoothData.setBluetoothDevices(btDevices);
 		return bluetoothData;
 	}
 

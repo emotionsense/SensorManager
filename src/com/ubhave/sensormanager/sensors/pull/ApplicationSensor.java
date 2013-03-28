@@ -82,8 +82,9 @@ public class ApplicationSensor extends AbstractPullSensor
 
 	protected ApplicationData getMostRecentRawData()
 	{
-		ApplicationData applicationData = new ApplicationData(pullSenseStartTimestamp, runningApplications,
+		ApplicationData applicationData = new ApplicationData(pullSenseStartTimestamp,
 				sensorConfig.clone());
+		applicationData.setApplications(runningApplications);
 		return applicationData;
 	}
 

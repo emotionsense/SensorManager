@@ -127,8 +127,9 @@ public class AccelerometerSensor extends AbstractPullSensor
 		AccelerometerData accelerometerData;
 		synchronized (sensorReadings)
 		{
-			accelerometerData = new AccelerometerData(pullSenseStartTimestamp, sensorReadings, sensorReadingTimestamps,
-					sensorConfig.clone());
+			accelerometerData = new AccelerometerData(pullSenseStartTimestamp, sensorConfig.clone());
+			accelerometerData.setSensorReadings(sensorReadings);
+			accelerometerData.setSensorReadingTimestamps(sensorReadingTimestamps);
 		}
 		return accelerometerData;
 	}
@@ -137,12 +138,12 @@ public class AccelerometerSensor extends AbstractPullSensor
 	{
 		sensorReadings = new ArrayList<float[]>();
 		sensorReadingTimestamps = new ArrayList<Long>();
-		
+
 		int sensorDelay = SensorManager.SENSOR_DELAY_GAME;
-		
+
 		if (sensorConfig.containsParameter(SensorConfig.ACCELEROMETER_SAMPLING_DELAY))
 		{
-			sensorDelay = (Integer)sensorConfig.getParameter(SensorConfig.ACCELEROMETER_SAMPLING_DELAY);
+			sensorDelay = (Integer) sensorConfig.getParameter(SensorConfig.ACCELEROMETER_SAMPLING_DELAY);
 		}
 
 		boolean registrationSuccess = sensorManager.registerListener(listener,

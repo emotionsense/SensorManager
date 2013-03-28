@@ -178,8 +178,11 @@ public class MicrophoneSensor extends AbstractPullSensor
 			maxAmpArray[i] = maxAmplitudeList.get(i);
 			timestampArray[i] = timestampList.get(i);
 		}
+		MicrophoneData micData = new MicrophoneData(pullSenseStartTimestamp, sensorConfig.clone());
+		micData.setMaxAmplitudeArray(maxAmpArray);
+		micData.setTimestampArray(timestampArray);
 
-		return new MicrophoneData(pullSenseStartTimestamp, maxAmpArray, timestampArray, sensorConfig.clone());
+		return micData;
 	}
 
 }

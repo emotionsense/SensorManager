@@ -30,12 +30,16 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class BluetoothData extends SensorData
 {
-	private final ArrayList<ESBluetoothDevice> bluetoothDevices;
+	private ArrayList<ESBluetoothDevice> bluetoothDevices;
 
-	public BluetoothData(long senseStartTimestamp, ArrayList<ESBluetoothDevice> btDevices, SensorConfig sensorConfig)
+	public BluetoothData(long senseStartTimestamp, SensorConfig sensorConfig)
 	{
 		super(senseStartTimestamp, sensorConfig);
-		bluetoothDevices = btDevices;
+	}
+	
+	public void setBluetoothDevices(ArrayList<ESBluetoothDevice> btDevices)
+	{
+		this.bluetoothDevices = btDevices;
 	}
 
 	public ArrayList<ESBluetoothDevice> getBluetoothDevices()
