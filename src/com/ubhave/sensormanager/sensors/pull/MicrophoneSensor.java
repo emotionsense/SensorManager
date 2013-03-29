@@ -32,6 +32,7 @@ import android.media.MediaRecorder;
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.data.pullsensor.MicrophoneData;
+import com.ubhave.sensormanager.process.pull.AudioProcessor;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class MicrophoneSensor extends AbstractPullSensor
@@ -46,6 +47,7 @@ public class MicrophoneSensor extends AbstractPullSensor
 
 	private static MicrophoneSensor microphoneSensor;
 	private static Object lock = new Object();
+	private MicrophoneData micData;
 
 	private boolean recorderStopped = false;
 
@@ -171,6 +173,11 @@ public class MicrophoneSensor extends AbstractPullSensor
 
 	protected SensorData getMostRecentRawData()
 	{
+		return micData;
+	}
+	
+	protected void processSensorData()
+	{
 		int[] maxAmpArray = new int[maxAmplitudeList.size()];
 		long[] timestampArray = new long[timestampList.size()];
 		for (int i = 0; (i < maxAmplitudeList.size() && i < timestampList.size()); i++)
@@ -178,11 +185,9 @@ public class MicrophoneSensor extends AbstractPullSensor
 			maxAmpArray[i] = maxAmplitudeList.get(i);
 			timestampArray[i] = timestampList.get(i);
 		}
-		MicrophoneData micData = new MicrophoneData(pullSenseStartTimestamp, sensorConfig.clone());
-		micData.setMaxAmplitudeArray(maxAmpArray);
-		micData.setTimestampArray(timestampArray);
-
-		return micData;
+		
+		AudioProcessor processor = (AudioProcessor)getProcessor();
+		micData = processor.process(pullSenseStartTimestamp, maxAmpArray, timestampArray, sensorConfig.clone());
 	}
 
 }

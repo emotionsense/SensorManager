@@ -43,6 +43,8 @@ public abstract class AbstractPullSensor extends AbstractSensor implements PullS
 	}
 
 	protected abstract SensorData getMostRecentRawData();
+	
+	protected abstract void processSensorData();
 
 	public void onSleepWindowLengthChanged(long sleepWindowLengthMillis)
 	{
@@ -100,6 +102,8 @@ public abstract class AbstractPullSensor extends AbstractSensor implements PullS
 			stopSensing();
 			isSensing = false;
 			Log.d(getLogTag(), "Sensing stopped.");
+			
+			processSensorData();
 
 			sensorData = getMostRecentRawData();
 			sensorData.setPrevSensorData(prevSensorData);

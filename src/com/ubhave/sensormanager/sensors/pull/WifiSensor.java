@@ -36,6 +36,7 @@ import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.pullsensor.WifiData;
 import com.ubhave.sensormanager.data.pullsensor.WifiScanResult;
+import com.ubhave.sensormanager.process.pull.WifiProcessor;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class WifiSensor extends AbstractPullSensor
@@ -50,6 +51,7 @@ public class WifiSensor extends AbstractPullSensor
 	private int cyclesRemaining;
 	private static WifiSensor wifiSensor;
 	private static Object lock = new Object();
+	private WifiData wifiData;
 
 	public static WifiSensor getWifiSensor(Context context) throws ESException
 	{
@@ -115,9 +117,13 @@ public class WifiSensor extends AbstractPullSensor
 
 	protected WifiData getMostRecentRawData()
 	{
-		WifiData wifiData = new WifiData(pullSenseStartTimestamp, sensorConfig.clone());
-		wifiData.setWifiScanData(wifiScanResults);
 		return wifiData;
+	}
+	
+	protected void processSensorData()
+	{
+		WifiProcessor processor = (WifiProcessor)getProcessor();
+		wifiData = processor.process(cyclesRemaining, wifiScanResults, sensorConfig.clone());
 	}
 
 	protected boolean startSensing()
