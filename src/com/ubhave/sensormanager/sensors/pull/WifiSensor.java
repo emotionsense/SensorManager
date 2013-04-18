@@ -33,7 +33,7 @@ import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 
 import com.ubhave.sensormanager.ESException;
-import com.ubhave.sensormanager.config.SensorConfig;
+import com.ubhave.sensormanager.config.sensors.pull.PullSensorConfig;
 import com.ubhave.sensormanager.data.pullsensor.WifiData;
 import com.ubhave.sensormanager.data.pullsensor.WifiScanResult;
 import com.ubhave.sensormanager.process.pull.WifiProcessor;
@@ -132,7 +132,7 @@ public class WifiSensor extends AbstractPullSensor
 		if (wifiManager.isWifiEnabled())
 		{
 			wifiScanResults = new ArrayList<WifiScanResult>();
-			cyclesRemaining = (Integer) sensorConfig.getParameter(SensorConfig.NUMBER_OF_SENSE_CYCLES);
+			cyclesRemaining = (Integer) sensorConfig.getParameter(PullSensorConfig.NUMBER_OF_SENSE_CYCLES);
 			applicationContext.registerReceiver(wifiReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
 			wifiManager.startScan();
 			return true;

@@ -27,7 +27,7 @@ import android.content.pm.PackageManager;
 
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.config.SensorConfig;
-import com.ubhave.sensormanager.config.SensorManagerConstants;
+import com.ubhave.sensormanager.config.sensors.pull.LocationConfig;
 import com.ubhave.sensormanager.process.AbstractProcessor;
 
 public abstract class AbstractSensor implements SensorInterface
@@ -63,16 +63,14 @@ public abstract class AbstractSensor implements SensorInterface
 
 	public void setSensorConfig(String configKey, Object configValue) throws ESException
 	{
-		// default parameters can be overridden through this
-		// method
-
+		// default parameters can be overridden through this method
 		if (!sensorConfig.containsParameter(configKey))
 		{
 			throw new ESException(ESException.INVALID_SENSOR_CONFIG, "Invalid sensor config, key: " + configKey + " value: " + configValue);
 		}
 
 		// check permissions for the config
-		if (configKey.equals(SensorConfig.LOCATION_ACCURACY_FINE))
+		if (configKey.equals(LocationConfig.LOCATION_ACCURACY_FINE))
 		{
 			if (!permissionGranted(applicationContext, "android.permission.ACCESS_FINE_LOCATION"))
 			{
@@ -101,7 +99,7 @@ public abstract class AbstractSensor implements SensorInterface
 		{
 			return (Boolean) sensorConfig.getParameter(SensorConfig.DATA_SET_RAW_VALUES);
 		}
-		return SensorManagerConstants.GET_RAW_DATA;
+		return SensorConfig.GET_RAW_DATA;
 	}
 	
 	private boolean getProcessedData()
@@ -110,7 +108,7 @@ public abstract class AbstractSensor implements SensorInterface
 		{
 			return (Boolean) sensorConfig.getParameter(SensorConfig.DATA_EXTRACT_FEATURES);
 		}
-		return SensorManagerConstants.GET_PROCESSED_DATA;
+		return SensorConfig.GET_PROCESSED_DATA;
 	}
 	
 	protected AbstractProcessor getProcessor()

@@ -31,8 +31,8 @@ import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.ESSensorManagerInterface;
 import com.ubhave.sensormanager.SensorDataListener;
 import com.ubhave.sensormanager.classifier.SensorDataClassifier;
-import com.ubhave.sensormanager.config.SensorManagerConstants;
 import com.ubhave.sensormanager.config.SensorConfig;
+import com.ubhave.sensormanager.config.sensors.pull.PullSensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.sensors.SensorInterface;
 
@@ -51,7 +51,7 @@ public class AdaptiveSensing implements SensorDataListener
 		SleepWindowListener listener;
 		SensorConfig sensorConfig;
 		int subscriptionId;
-		double probability = SensorManagerConstants.PROBABILITY_INITIAL_VALUE;
+		double probability = SensorConfig.PROBABILITY_INITIAL_VALUE;
 	}
 
 	private SparseArray<PullSensorDetails> sensorMap;
@@ -135,21 +135,21 @@ public class AdaptiveSensing implements SensorDataListener
 		// classify as interesting or not
 		if (classifier.isInteresting(data))
 		{
-			probability = probability + (SensorManagerConstants.ALPHA_VALUE * (1 - probability));
+			probability = probability + (SensorConfig.ALPHA_VALUE * (1 - probability));
 		}
 		else
 		{
-			probability = probability - (SensorManagerConstants.ALPHA_VALUE * probability);
+			probability = probability - (SensorConfig.ALPHA_VALUE * probability);
 		}
 
 		// check min,max bounds
-		if (probability < SensorManagerConstants.MIN_PROBABILITY_VALUE)
+		if (probability < SensorConfig.DEFAULT_MIN_PROBABILITY_VALUE)
 		{
-			probability = SensorManagerConstants.MIN_PROBABILITY_VALUE;
+			probability = SensorConfig.DEFAULT_MIN_PROBABILITY_VALUE;
 		}
-		else if (probability > SensorManagerConstants.MAX_PROBABILITY_VALUE)
+		else if (probability > SensorConfig.DEFAULT_MAX_PROBABILITY_VALUE)
 		{
-			probability = SensorManagerConstants.MAX_PROBABILITY_VALUE;
+			probability = SensorConfig.DEFAULT_MAX_PROBABILITY_VALUE;
 		}
 
 		// convert probability to sampling intervals in
@@ -159,18 +159,18 @@ public class AdaptiveSensing implements SensorDataListener
 		// initialise to a default value
 		long senseWindowLengthMillis = 1000;
 
-		if (sensorDetails.sensorConfig.containsParameter(SensorConfig.SENSE_WINDOW_LENGTH_MILLIS))
+		if (sensorDetails.sensorConfig.containsParameter(PullSensorConfig.SENSE_WINDOW_LENGTH_MILLIS))
 		{
 			senseWindowLengthMillis = (Long) sensorDetails.sensorConfig
-					.getParameter(SensorConfig.SENSE_WINDOW_LENGTH_MILLIS);
+					.getParameter(PullSensorConfig.SENSE_WINDOW_LENGTH_MILLIS);
 		}
-		else if (sensorDetails.sensorConfig.containsParameter(SensorConfig.NUMBER_OF_SENSE_CYCLES)
-				&& sensorDetails.sensorConfig.containsParameter(SensorConfig.SENSE_WINDOW_LENGTH_PER_CYCLE_MILLIS))
+		else if (sensorDetails.sensorConfig.containsParameter(PullSensorConfig.NUMBER_OF_SENSE_CYCLES)
+				&& sensorDetails.sensorConfig.containsParameter(PullSensorConfig.SENSE_WINDOW_LENGTH_PER_CYCLE_MILLIS))
 		{
 			// if wifi or bluetooth sensor then the sense window length should
 			// be calculated as (number of cycles * cycle length)
-			long numCycles = (Long)sensorDetails.sensorConfig.getParameter(SensorConfig.NUMBER_OF_SENSE_CYCLES);
-			long cycleLengthMillis = (Long)sensorDetails.sensorConfig.getParameter(SensorConfig.SENSE_WINDOW_LENGTH_PER_CYCLE_MILLIS);
+			long numCycles = (Long)sensorDetails.sensorConfig.getParameter(PullSensorConfig.NUMBER_OF_SENSE_CYCLES);
+			long cycleLengthMillis = (Long)sensorDetails.sensorConfig.getParameter(PullSensorConfig.SENSE_WINDOW_LENGTH_PER_CYCLE_MILLIS);
 			senseWindowLengthMillis = numCycles * cycleLengthMillis;
 		}
 		else

@@ -33,7 +33,7 @@ import android.content.IntentFilter;
 import android.util.Log;
 
 import com.ubhave.sensormanager.ESException;
-import com.ubhave.sensormanager.config.SensorConfig;
+import com.ubhave.sensormanager.config.sensors.pull.PullSensorConfig;
 import com.ubhave.sensormanager.data.pullsensor.BluetoothData;
 import com.ubhave.sensormanager.data.pullsensor.ESBluetoothDevice;
 import com.ubhave.sensormanager.process.pull.BluetoothProcessor;
@@ -173,7 +173,7 @@ public class BluetoothSensor extends AbstractPullSensor
 				}
 			}
 		}
-		cyclesRemaining = (Integer) sensorConfig.getParameter(SensorConfig.NUMBER_OF_SENSE_CYCLES);
+		cyclesRemaining = (Integer) sensorConfig.getParameter(PullSensorConfig.NUMBER_OF_SENSE_CYCLES);
 		bluetooth.startDiscovery();
 		return true;
 	}

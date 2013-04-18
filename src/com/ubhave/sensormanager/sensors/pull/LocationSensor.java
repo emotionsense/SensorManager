@@ -30,7 +30,7 @@ import android.os.Bundle;
 import android.os.Looper;
 
 import com.ubhave.sensormanager.ESException;
-import com.ubhave.sensormanager.config.SensorConfig;
+import com.ubhave.sensormanager.config.sensors.pull.LocationConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.data.pullsensor.LocationData;
 import com.ubhave.sensormanager.process.pull.LocationProcessor;
@@ -116,9 +116,9 @@ public class LocationSensor extends AbstractPullSensor
 	{
 		lastLocation = null;
 
-		String accuracyConfig = (String) sensorConfig.getParameter(SensorConfig.LOCATION_ACCURACY);
+		String accuracyConfig = (String) sensorConfig.getParameter(LocationConfig.ACCURACY_TYPE);
 
-		if ((accuracyConfig != null) && (accuracyConfig.equals(SensorConfig.LOCATION_ACCURACY_FINE)))
+		if ((accuracyConfig != null) && (accuracyConfig.equals(LocationConfig.LOCATION_ACCURACY_FINE)))
 		{
 			locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 0, locListener,
 					Looper.getMainLooper());

@@ -26,6 +26,7 @@ import android.util.Log;
 
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.config.SensorConfig;
+import com.ubhave.sensormanager.config.sensors.pull.PullSensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.sensors.SensorInterface;
 import com.ubhave.sensormanager.sensors.SensorUtils;
@@ -51,7 +52,7 @@ public class PullSensorTask extends AbstractSensorTask
 			if (oneOffSensing)
 			{
 				SensorConfig sensorConfig = sensorData.getSensorConfig();
-				sensorConfig.removeParameter(SensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS);
+				sensorConfig.removeParameter(PullSensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS);
 			}
 		}
 		return sensorData;
@@ -92,7 +93,7 @@ public class PullSensorTask extends AbstractSensorTask
 						publishData(sensorData);
 
 						// SLEEP
-						long samplingInterval = (Long) sensor.getSensorConfig(SensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS);
+						long samplingInterval = (Long) sensor.getSensorConfig(PullSensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS);
 						syncObject.wait(samplingInterval);
 					}
 					catch (InterruptedException exp)
