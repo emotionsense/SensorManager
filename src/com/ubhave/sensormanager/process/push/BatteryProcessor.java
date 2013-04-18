@@ -1,5 +1,6 @@
 package com.ubhave.sensormanager.process.push;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.BatteryManager;
 
@@ -9,15 +10,14 @@ import com.ubhave.sensormanager.process.AbstractProcessor;
 
 public class BatteryProcessor extends AbstractProcessor
 {
-	public BatteryProcessor(boolean rw, boolean sp)
+	public BatteryProcessor(Context c, boolean rw, boolean sp)
 	{
-		super(rw, sp);
+		super(c, rw, sp);
 	}
 
 	public BatteryData process(long recvTime, SensorConfig config, Intent dataIntent)
 	{
 		BatteryData data = new BatteryData(recvTime, config);
-
 		if (setRawData)
 		{
 			int level = dataIntent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
@@ -41,12 +41,6 @@ public class BatteryProcessor extends AbstractProcessor
 			int health = dataIntent.getIntExtra(BatteryManager.EXTRA_HEALTH, -1);
 			data.setHealth(health);
 		}
-
-		if (setProcessedData)
-		{
-			// process
-		}
-
 		return data;
 	}
 
