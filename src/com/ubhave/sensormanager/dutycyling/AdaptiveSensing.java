@@ -51,7 +51,7 @@ public class AdaptiveSensing implements SensorDataListener
 		SleepWindowListener listener;
 		SensorConfig sensorConfig;
 		int subscriptionId;
-		double probability = SensorConfig.PROBABILITY_INITIAL_VALUE;
+		double probability = PullSensorConfig.PROBABILITY_INITIAL_VALUE;
 	}
 
 	private SparseArray<PullSensorDetails> sensorMap;
@@ -135,21 +135,21 @@ public class AdaptiveSensing implements SensorDataListener
 		// classify as interesting or not
 		if (classifier.isInteresting(data))
 		{
-			probability = probability + (SensorConfig.ALPHA_VALUE * (1 - probability));
+			probability = probability + (PullSensorConfig.ALPHA_VALUE * (1 - probability));
 		}
 		else
 		{
-			probability = probability - (SensorConfig.ALPHA_VALUE * probability);
+			probability = probability - (PullSensorConfig.ALPHA_VALUE * probability);
 		}
 
 		// check min,max bounds
-		if (probability < SensorConfig.DEFAULT_MIN_PROBABILITY_VALUE)
+		if (probability < PullSensorConfig.DEFAULT_MIN_PROBABILITY_VALUE)
 		{
-			probability = SensorConfig.DEFAULT_MIN_PROBABILITY_VALUE;
+			probability = PullSensorConfig.DEFAULT_MIN_PROBABILITY_VALUE;
 		}
-		else if (probability > SensorConfig.DEFAULT_MAX_PROBABILITY_VALUE)
+		else if (probability > PullSensorConfig.DEFAULT_MAX_PROBABILITY_VALUE)
 		{
-			probability = SensorConfig.DEFAULT_MAX_PROBABILITY_VALUE;
+			probability = PullSensorConfig.DEFAULT_MAX_PROBABILITY_VALUE;
 		}
 
 		// convert probability to sampling intervals in
