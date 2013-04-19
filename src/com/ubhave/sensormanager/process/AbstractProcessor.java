@@ -12,6 +12,7 @@ import com.ubhave.sensormanager.process.pull.WifiProcessor;
 import com.ubhave.sensormanager.process.push.BatteryProcessor;
 import com.ubhave.sensormanager.process.push.ConnectionStateProcessor;
 import com.ubhave.sensormanager.process.push.PhoneStateProcessor;
+import com.ubhave.sensormanager.process.push.ProximityProcessor;
 import com.ubhave.sensormanager.process.push.SMSProcessor;
 import com.ubhave.sensormanager.process.push.ScreenProcessor;
 import com.ubhave.sensormanager.sensors.SensorUtils;
@@ -49,6 +50,8 @@ public abstract class AbstractProcessor
 			return new ScreenProcessor(c, setRawData, setProcessedData);
 		case SensorUtils.SENSOR_TYPE_SMS:
 			return new SMSProcessor(c, setRawData, setProcessedData);
+		case SensorUtils.SENSOR_TYPE_PROXIMITY:
+			return new ProximityProcessor(c, setRawData, setProcessedData);
 		default:
 			throw new ESException(ESException.UNKNOWN_SENSOR_TYPE, "No processor defined for this sensor.");
 		}
