@@ -13,6 +13,8 @@ public class AccelerometerConfig
 	public static final long DEFAULT_SAMPLING_WINDOW_SIZE_MILLIS = 8000;
 	public static final long DEFAULT_SLEEP_INTERVAL = 2 * 60 * 1000;
 	
-	// classifier thresholds
+	/*
+	 * Classifier thresholds
+	 */
 	public final static int ACCELEROMETER_MOVEMENT_THRESHOLD = 25;
 }
