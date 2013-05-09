@@ -140,6 +140,11 @@ public class MicrophoneSensor extends AbstractPullSensor
 			exp.printStackTrace();
 			return false;
 		}
+		catch (java.lang.RuntimeException e)
+		{
+			e.printStackTrace();
+			return false;
+		}
 		return true;
 	}
 
