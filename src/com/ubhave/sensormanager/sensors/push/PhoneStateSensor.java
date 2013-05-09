@@ -99,7 +99,10 @@ public class PhoneStateSensor extends AbstractPushSensor
 
 			public void onCellLocationChanged(CellLocation location)
 			{
-				logOnDataSensed(PhoneStateData.ON_CELL_LOCATION_CHANGED, location.toString(), null);
+				if (location != null)
+				{
+					logOnDataSensed(PhoneStateData.ON_CELL_LOCATION_CHANGED, location.toString(), null);
+				}
 			}
 
 			public void onDataActivity(int direction)
@@ -120,8 +123,11 @@ public class PhoneStateSensor extends AbstractPushSensor
 
 			public void onServiceStateChanged(ServiceState serviceState)
 			{
-				String serviceStateStr = getServiceStateString(serviceState.getState());
-				logOnDataSensed(PhoneStateData.ON_SERVICE_STATE_CHANGED, serviceStateStr + " " + serviceState.toString(), null);
+				if (serviceState != null)
+				{
+					String serviceStateStr = getServiceStateString(serviceState.getState());
+					logOnDataSensed(PhoneStateData.ON_SERVICE_STATE_CHANGED, serviceStateStr + " " + serviceState.toString(), null);
+				}
 			}
 
 		};
