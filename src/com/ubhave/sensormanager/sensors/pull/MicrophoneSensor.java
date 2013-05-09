@@ -23,7 +23,6 @@ IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 package com.ubhave.sensormanager.sensors.pull;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import android.content.Context;
@@ -135,14 +134,9 @@ public class MicrophoneSensor extends AbstractPullSensor
 			}).start();
 
 		}
-		catch (IOException exp)
+		catch (Exception exp)
 		{
 			exp.printStackTrace();
-			return false;
-		}
-		catch (java.lang.RuntimeException e)
-		{
-			e.printStackTrace();
 			return false;
 		}
 		return true;
