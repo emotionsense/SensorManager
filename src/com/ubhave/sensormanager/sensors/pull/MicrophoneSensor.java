@@ -36,6 +36,7 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class MicrophoneSensor extends AbstractPullSensor
 {
+
 	private final static String LOG_TAG = "MicrophoneSensor";
 	private MediaRecorder recorder;
 	private String fileName;
@@ -47,7 +48,7 @@ public class MicrophoneSensor extends AbstractPullSensor
 	private static Object lock = new Object();
 	private MicrophoneData micData;
 
-	private boolean isRecording = false;
+	private boolean recorderStopped = false;
 
 	public static MicrophoneSensor getMicrophoneSensor(Context context) throws ESException
 	{
@@ -72,21 +73,18 @@ public class MicrophoneSensor extends AbstractPullSensor
 	private MicrophoneSensor(Context context)
 	{
 		super(context);
-		isRecording = false;
 	}
 
 	protected String getLogTag()
 	{
 		return LOG_TAG;
 	}
-	
-	private boolean prepareToSense()
+
+	protected boolean startSensing()
 	{
 		try
 		{
-			maxAmplitudeList = new ArrayList<Integer>();
-			timestampList = new ArrayList<Long>();
-			
+			// delete old file
 			fileName = applicationContext.getFilesDir().getAbsolutePath() + "/test.3gpp";
 			File file = new File(fileName);
 			if (file.exists())
@@ -99,56 +97,49 @@ public class MicrophoneSensor extends AbstractPullSensor
 			recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
 			recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 			recorder.setOutputFile(fileName);
+
+			// for amplitude
+			maxAmplitudeList = new ArrayList<Integer>();
+			// for timestamp
+			timestampList = new ArrayList<Long>();
+
 			recorder.prepare();
 			recorder.start();
-			return true;
-		}
-		catch (Exception e)
-		{
-			e.printStackTrace();
-			return false;
-		}
-	}
 
-	protected boolean startSensing()
-	{
-		isRecording = prepareToSense();
-		if (isRecording)
-		{
-			try
+			recorderStopped = false;
+
+			// query amplitude in an async thread
+			(new Thread()
 			{
-				(new Thread()
+				public void run()
 				{
-					public void run()
+					// capture max amplitude @20Hz
+
+					// ignore fist call
+					recorder.getMaxAmplitude();
+					while (isSensing())
 					{
-						// capture max amplitude @20Hz ignore fist call
-						recorder.getMaxAmplitude();
-						while (isSensing())
+						synchronized (recorder)
 						{
-							synchronized (recorder)
+							if (!recorderStopped)
 							{
-								if (isRecording)
-								{
-									maxAmplitudeList.add(recorder.getMaxAmplitude());
-									timestampList.add(System.currentTimeMillis());
-								}
+								maxAmplitudeList.add(recorder.getMaxAmplitude());
+								timestampList.add(System.currentTimeMillis());
 							}
-							MicrophoneSensor.sleep(50);
 						}
+						MicrophoneSensor.sleep(50);
 					}
-				}).start();
-				return true;
-			}
-			catch (Exception e)
-			{
-				e.printStackTrace();
-				return false;
-			}
+					
+				}
+			}).start();
+
 		}
-		else
+		catch (Exception exp)
 		{
+			exp.printStackTrace();
 			return false;
 		}
+		return true;
 	}
 
 	private static void sleep(long millis)
@@ -165,18 +156,12 @@ public class MicrophoneSensor extends AbstractPullSensor
 
 	protected void stopSensing()
 	{
+		// for amplitude
 		synchronized (recorder)
 		{
-			try
-			{
-				recorder.stop();
-				recorder.release();
-				isRecording = false;
-			}
-			catch (Exception e)
-			{
-				e.printStackTrace();
-			}
+			recorder.stop();
+			recorder.release();
+			recorderStopped = true;
 		}
 	}
 
@@ -203,4 +188,5 @@ public class MicrophoneSensor extends AbstractPullSensor
 		AudioProcessor processor = (AudioProcessor)getProcessor();
 		micData = processor.process(pullSenseStartTimestamp, maxAmpArray, timestampArray, sensorConfig.clone());
 	}
+
 }
