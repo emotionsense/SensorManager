@@ -82,31 +82,22 @@ public class SmsSensor extends AbstractPushSensor
 				{
 					// check last sent message
 					Uri smsUri = Uri.parse("content://sms");
-					ContentResolver resolver = applicationContext.getContentResolver();
-					if (resolver != null)
-					{
-						Cursor cursor = resolver.query(smsUri, null, null, null, null);
-						if (cursor != null)
-						{
-							// last sms sent is the fist in the list
-							cursor.moveToNext();
-							if (!cursor.isAfterLast())
-							{
-								String content = cursor.getString(cursor.getColumnIndex("body"));
-								String sentTo = cursor.getString(cursor.getColumnIndex("address"));
-								String messageId = cursor.getString(cursor.getColumnIndex("_id"));
+					Cursor cursor = applicationContext.getContentResolver().query(smsUri, null, null, null, null);
+					
+					// last sms sent is the fist in the list
+					cursor.moveToNext();
+					String content = cursor.getString(cursor.getColumnIndex("body"));
+					String sentTo = cursor.getString(cursor.getColumnIndex("address"));
+					String messageId = cursor.getString(cursor.getColumnIndex("_id"));
 
-								if ((prevMessageId != null) && (prevMessageId.length() > 0) && (prevMessageId.equals(messageId)))
-								{
-									// ignore, message already logged
-								}
-								else
-								{
-									prevMessageId = messageId;
-									logDataSensed(System.currentTimeMillis(), content, sentTo, SmsData.SMS_CONTENT_CHANGED);
-								}
-							}
-						}	
+					if ((prevMessageId != null) && (prevMessageId.length() > 0) && (prevMessageId.equals(messageId)))
+					{
+						// ignore, message already logged
+					}
+					else
+					{
+						prevMessageId = messageId;
+						logDataSensed(System.currentTimeMillis(), content, sentTo, SmsData.SMS_CONTENT_CHANGED);
 					}
 				}
 			}
