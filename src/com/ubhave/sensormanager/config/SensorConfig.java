@@ -48,10 +48,6 @@ public class SensorConfig extends AbstractConfig implements Cloneable
 	// accelerometer sensing delay
 	public final static String ACCELEROMETER_SAMPLING_DELAY = "ACCELEROMETER_SAMPLING_DELAY";  
 	
-	// data preferences
-	public final static String DATA_SET_RAW_VALUES = "RAW_DATA";
-	public final static String DATA_EXTRACT_FEATURES = "EXTRACT_FEATURES";
-	
 	// location accuracy
 	public final static String LOCATION_ACCURACY = "LOCATION_ACCURACY";
 	public final static String LOCATION_ACCURACY_COARSE = "LOCATION_ACCURACY_COARSE";

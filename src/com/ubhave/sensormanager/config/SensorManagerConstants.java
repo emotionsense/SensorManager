@@ -61,9 +61,5 @@ public class SensorManagerConstants
 	public final static double MIN_PROBABILITY_VALUE = 0.1;
 	public final static double MAX_PROBABILITY_VALUE = 0.9;
 	public final static double ALPHA_VALUE = 0.5;
-	
-	// data preferences
-	public final static boolean GET_RAW_DATA = true;
-	public final static boolean GET_PROCESSED_DATA = false;
 
 }

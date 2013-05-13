@@ -29,13 +29,13 @@ import android.telephony.CellLocation;
 import android.telephony.PhoneStateListener;
 import android.telephony.ServiceState;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.data.pushsensor.PhoneStateData;
-import com.ubhave.sensormanager.process.PhoneStateProcessor;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
-public class PhoneStateSensor extends AbstractPushSensor
+public class PhoneStateSensor extends AbstractCommunicationSensor
 {
 
 	private static final String TAG = "PhoneStateSensor";
@@ -90,26 +90,26 @@ public class PhoneStateSensor extends AbstractPushSensor
 					break;
 				case TelephonyManager.CALL_STATE_RINGING:
 					stateType = PhoneStateData.CALL_STATE_RINGING;
-					stateString = "CALL_STATE_RINGING";
+					stateString = "CALL_STATE_RINGING" + " IncomingNumber " + hashPhoneNumber(incomingNumber);
 					break;
 				}
 
-				logOnDataSensed(stateType, stateString, incomingNumber);
+				logOnDataSensed(stateType, stateString);
 			}
 
 			public void onCellLocationChanged(CellLocation location)
 			{
-				logOnDataSensed(PhoneStateData.ON_CELL_LOCATION_CHANGED, location.toString(), null);
+				logOnDataSensed(PhoneStateData.ON_CELL_LOCATION_CHANGED, location.toString());
 			}
 
 			public void onDataActivity(int direction)
 			{
-				logOnDataSensed(PhoneStateData.ON_DATA_ACTIVITY, getDataActivityString(direction), null);
+				logOnDataSensed(PhoneStateData.ON_DATA_ACTIVITY, getDataActivityString(direction));
 			}
 
 			public void onDataConnectionStateChanged(int state)
 			{
-				logOnDataSensed(PhoneStateData.ON_DATA_CONNECTION_STATE_CHANGED, getDataConnectionStateString(state), null);
+				logOnDataSensed(PhoneStateData.ON_DATA_CONNECTION_STATE_CHANGED, getDataConnectionStateString(state));
 			}
 
 			public void onDataConnectionStateChanged(int state, int networkType)
@@ -121,30 +121,31 @@ public class PhoneStateSensor extends AbstractPushSensor
 			public void onServiceStateChanged(ServiceState serviceState)
 			{
 				String serviceStateStr = getServiceStateString(serviceState.getState());
-				logOnDataSensed(PhoneStateData.ON_SERVICE_STATE_CHANGED, serviceStateStr + " " + serviceState.toString(), null);
+				logOnDataSensed(PhoneStateData.ON_SERVICE_STATE_CHANGED, serviceStateStr + " " + serviceState.toString());
 			}
 
 		};
 
 	}
 
-	private void logOnDataSensed(int eventType, String data, String number)
+	private void logOnDataSensed(int eventType, String data)
 	{
 		if (isSensing)
 		{
-			PhoneStateProcessor processor = (PhoneStateProcessor) getProcessor(SensorUtils.SENSOR_TYPE_PHONE_STATE);
-			if (processor != null)
-			{
-				PhoneStateData phoneStateData = processor.process(System.currentTimeMillis(), sensorConfig.clone(), eventType, data, number);
-				onDataSensed(phoneStateData);
-			}
+			PhoneStateData phoneStateData = new PhoneStateData(System.currentTimeMillis(), eventType, data, sensorConfig.clone());
+			onDataSensed(phoneStateData);
+			Log.d(TAG, phoneStateData.toString());
+		}
+		else 
+		{
+			Log.d(getLogTag(), "logOnDataSensed() called while not sensing.");
 		}
 	}
 
 	protected void onBroadcastReceived(Context context, Intent intent)
 	{
 		String outgoingNumber = intent.getStringExtra(Intent.EXTRA_PHONE_NUMBER);
-		logOnDataSensed(PhoneStateData.CALL_STATE_OUTGOING, "CALL_STATE_OUTGOING ", outgoingNumber);
+		logOnDataSensed(PhoneStateData.CALL_STATE_OUTGOING, "OutgoingNumber " + hashPhoneNumber(outgoingNumber));
 	}
 
 	protected IntentFilter[] getIntentFilters()

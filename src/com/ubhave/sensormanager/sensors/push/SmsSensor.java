@@ -32,13 +32,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.telephony.SmsMessage;
+import android.util.Log;
 
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.data.pushsensor.SmsData;
-import com.ubhave.sensormanager.process.SMSProcessor;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
-public class SmsSensor extends AbstractPushSensor
+public class SmsSensor extends AbstractCommunicationSensor
 {
 	private static final String TAG = "SmsSensor";
 
@@ -83,12 +83,15 @@ public class SmsSensor extends AbstractPushSensor
 					// check last sent message
 					Uri smsUri = Uri.parse("content://sms");
 					Cursor cursor = applicationContext.getContentResolver().query(smsUri, null, null, null, null);
-					
 					// last sms sent is the fist in the list
 					cursor.moveToNext();
 					String content = cursor.getString(cursor.getColumnIndex("body"));
+					int noOfWords = content.split(" ").length;
 					String sentTo = cursor.getString(cursor.getColumnIndex("address"));
 					String messageId = cursor.getString(cursor.getColumnIndex("_id"));
+
+					// hash phone number
+					sentTo = hashPhoneNumber(sentTo);
 
 					if ((prevMessageId != null) && (prevMessageId.length() > 0) && (prevMessageId.equals(messageId)))
 					{
@@ -97,21 +100,22 @@ public class SmsSensor extends AbstractPushSensor
 					else
 					{
 						prevMessageId = messageId;
-						logDataSensed(System.currentTimeMillis(), content, sentTo, SmsData.SMS_CONTENT_CHANGED);
+
+						// add sender and body length to smsActivity
+						String logString = System.currentTimeMillis() + " " + SmsData.SMS_CONTENT_CHANGED + " " + content.length() + " words " + noOfWords + " address " + sentTo + " type " + cursor.getString(cursor.getColumnIndex("type")) + " timestamp "
+								+ cursor.getString(cursor.getColumnIndex("date"));
+						Log.d(TAG, logString);
+						logDataSensed(System.currentTimeMillis(), content.length(), noOfWords, sentTo, SmsData.SMS_CONTENT_CHANGED);
 					}
 				}
 			}
 		};
 	}
 
-	private void logDataSensed(long timestamp, String content, String addr, String eventType)
+	private void logDataSensed(long timestamp, int contentLength, int noOfWords, String addr, String eventType)
 	{
-		SMSProcessor processor = (SMSProcessor) getProcessor(SensorUtils.SENSOR_TYPE_SMS);
-		if (processor != null)
-		{
-			SmsData data = (SmsData) processor.process(timestamp, sensorConfig.clone(), content, addr, eventType);
-			onDataSensed(data);
-		}
+		SmsData smsData = new SmsData(timestamp, contentLength, noOfWords, addr, eventType, sensorConfig.clone());
+		onDataSensed(smsData);
 	}
 
 	public String getLogTag()
@@ -142,8 +146,16 @@ public class SmsSensor extends AbstractPushSensor
 						smsMessagesArray[i] = SmsMessage.createFromPdu((byte[]) pdusArray[i]);
 						String address = smsMessagesArray[i].getOriginatingAddress();
 						String content = smsMessagesArray[i].getMessageBody();
-						
-						logDataSensed(System.currentTimeMillis(), content, address, SmsData.SMS_RECEIVED);
+						int contentLength = content.length();
+						int noOfWords = content.split(" ").length;
+
+						// hash phone number
+						address = hashPhoneNumber(address);
+
+						// add sender and body length to smsActivity
+						String logString = System.currentTimeMillis() + " "+SmsData.SMS_RECEIVED+" " + contentLength + " words " + noOfWords + " address " + address + " timestamp " + smsMessagesArray[i].getTimestampMillis();
+						Log.d(TAG, logString);
+						logDataSensed(System.currentTimeMillis(), contentLength, noOfWords, address, SmsData.SMS_RECEIVED);
 					}
 				}
 				catch (Exception e)
