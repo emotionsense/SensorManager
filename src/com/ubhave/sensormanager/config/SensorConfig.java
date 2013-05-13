@@ -30,6 +30,14 @@ public class SensorConfig extends AbstractConfig implements Cloneable
 	public final static String DATA_SET_RAW_VALUES = "RAW_DATA";
 	public final static String DATA_EXTRACT_FEATURES = "EXTRACT_FEATURES";
 	
+	/*
+	 * Default values
+	 */
+	public final static double PROBABILITY_INITIAL_VALUE = 0.5;
+	public final static double DEFAULT_MIN_PROBABILITY_VALUE = 0.1;
+	public final static double DEFAULT_MAX_PROBABILITY_VALUE = 0.9;
+	public final static double ALPHA_VALUE = 0.5;
+	
 	// data preferences
 	public final static boolean GET_RAW_DATA = true;
 	public final static boolean GET_PROCESSED_DATA = false;

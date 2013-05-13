@@ -24,12 +24,4 @@ public class PullSensorConfig
 
 	// whether adaptive sensing is enabled for all sensors
 	public final static String ADAPTIVE_SENSING_ENABLED = "ADAPTIVE_SENSING";
-	
-	/*
-	 * Default values for adaptive sensing
-	 */
-	public final static double PROBABILITY_INITIAL_VALUE = 0.5;
-	public final static double DEFAULT_MIN_PROBABILITY_VALUE = 0.1;
-	public final static double DEFAULT_MAX_PROBABILITY_VALUE = 0.9;
-	public final static double ALPHA_VALUE = 0.5;
 }
