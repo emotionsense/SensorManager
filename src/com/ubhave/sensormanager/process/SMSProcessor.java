@@ -1,4 +1,4 @@
-package com.ubhave.sensormanager.process.push;
+package com.ubhave.sensormanager.process;
 
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.pushsensor.SmsData;

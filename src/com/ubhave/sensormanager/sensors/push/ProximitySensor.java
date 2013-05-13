@@ -31,7 +31,6 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
 import com.ubhave.sensormanager.data.pushsensor.ProximityData;
-import com.ubhave.sensormanager.process.push.ProximityProcessor;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class ProximitySensor extends AbstractPushSensor
@@ -67,9 +66,7 @@ public class ProximitySensor extends AbstractPushSensor
 			{
 				float distance = event.values[0];
 				float maxRange = event.sensor.getMaximumRange();
-				
-				ProximityProcessor processor = (ProximityProcessor) getProcessor(SensorUtils.SENSOR_TYPE_PROXIMITY);
-				ProximityData proximityData = processor.process(System.currentTimeMillis(), sensorConfig.clone(), distance, maxRange);
+				ProximityData proximityData = new ProximityData(System.currentTimeMillis(), distance, maxRange, sensorConfig.clone());
 				onDataSensed(proximityData);
 			}
 

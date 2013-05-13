@@ -37,15 +37,17 @@ public class BatteryData extends SensorData
 	private int plugged;
 	private int status;
 	private int health;
-	
-	public BatteryData(long timestamp, SensorConfig config)
+
+	public BatteryData(long timestamp, int level, int scale, int temperature, int voltage, int plugged, int status, int health, SensorConfig sensorConfig)
 	{
-		super(timestamp, config);
-	}
-	
-	public void setBatteryLevel(int l)
-	{
-		level = l;
+		super(timestamp, sensorConfig);
+		this.level = level;
+		this.scale = scale;
+		this.temperature = temperature;
+		this.voltage = voltage;
+		this.plugged = plugged;
+		this.status = status;
+		this.health = health;
 	}
 
 	public int getBatteryLevel()
@@ -53,19 +55,9 @@ public class BatteryData extends SensorData
 		return level;
 	}
 	
-	public void setPlugged(int p)
-	{
-		plugged = p;
-	}
-	
 	public int getPlugged()
 	{
 		return plugged;
-	}
-	
-	public void setScale(int s)
-	{
-		scale = s;
 	}
 	
 	public int getScale()
@@ -73,19 +65,9 @@ public class BatteryData extends SensorData
 		return scale;
 	}
 	
-	public void setTemperature(int t)
-	{
-		temperature = t;
-	}
-	
 	public int getTemperature()
 	{
 		return temperature;
-	}
-	
-	public void setVoltage(int v)
-	{
-		voltage = v;
 	}
 	
 	public int getVoltage()
@@ -93,19 +75,9 @@ public class BatteryData extends SensorData
 		return voltage;
 	}
 	
-	public void setStatus(int s)
-	{
-		status = s;
-	}
-	
 	public int getStatus()
 	{
 		return status;
-	}
-	
-	public void setHealth(int h)
-	{
-		health = h;
 	}
 	
 	public int getHealth()

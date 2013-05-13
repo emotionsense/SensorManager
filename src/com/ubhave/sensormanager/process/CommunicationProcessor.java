@@ -1,14 +1,11 @@
-package com.ubhave.sensormanager.process.push;
+package com.ubhave.sensormanager.process;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import com.ubhave.sensormanager.process.AbstractProcessor;
-
-public class ScreenProcessor extends AbstractProcessor
+public class CommunicationProcessor extends AbstractProcessor
 {
-	// TODO
-	public ScreenProcessor(boolean rw, boolean sp)
+	public CommunicationProcessor(boolean rw, boolean sp)
 	{
 		super(rw, sp);
 	}
