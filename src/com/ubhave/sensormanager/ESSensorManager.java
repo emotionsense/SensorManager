@@ -106,11 +106,6 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 			sensorTaskMap.put(aSensor.getSensorType(), sensorTask);
 		}
 	}
-	
-	public Context getApplicationContext()
-	{
-		return applicationContext;
-	}
 
 	public synchronized int subscribeToSensorData(int sensorId, SensorDataListener listener) throws ESException
 	{
