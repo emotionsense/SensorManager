@@ -14,8 +14,11 @@ public class ProximityProcessor extends AbstractProcessor
 	public ProximityData process(long recvTime, SensorConfig config, float distance, float maxRange)
 	{
 		ProximityData data = new ProximityData(recvTime, config);
-		data.setDistance(distance);
-		data.setMaxRange(maxRange);
+		if (super.setRawData)
+		{
+			data.setDistance(distance);
+			data.setMaxRange(maxRange);
+		}
 		return data;
 	}
 

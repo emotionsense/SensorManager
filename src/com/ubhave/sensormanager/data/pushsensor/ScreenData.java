@@ -32,16 +32,11 @@ public class ScreenData extends SensorData
 
 	public static final int SCREEN_OFF = 0;
 	public static final int SCREEN_ON = 1;
-	public static final int SCREEN_UNKNOWN = 2;
 
-	public ScreenData(long recvTimestamp, SensorConfig sensorConfig)
+	public ScreenData(long recvTimestamp, int screenStatus, SensorConfig sensorConfig)
 	{
 		super(recvTimestamp, sensorConfig);
-	}
-	
-	public void setStatus(int s)
-	{
-		screenStatus = s;
+		this.screenStatus = screenStatus;
 	}
 	
 	public boolean isOff()

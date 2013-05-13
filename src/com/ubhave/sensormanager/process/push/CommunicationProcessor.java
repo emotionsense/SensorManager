@@ -7,7 +7,7 @@ import com.ubhave.sensormanager.process.AbstractProcessor;
 
 public class CommunicationProcessor extends AbstractProcessor
 {
-
+	// TODO
 	public CommunicationProcessor(boolean rw, boolean sp)
 	{
 		super(rw, sp);

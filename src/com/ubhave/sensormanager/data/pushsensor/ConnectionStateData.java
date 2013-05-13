@@ -44,29 +44,31 @@ public class ConnectionStateData extends SensorData
 	private boolean isConnectedOrConnecting, isConnected, isAvailable;
 	private int networkType, roamingType;
 	private String ssid;
-	
-	public ConnectionStateData(long timestamp, final SensorConfig config)
+
+	public ConnectionStateData(long dataReceivedTimestamp, final NetworkInfo activeNetwork, final WifiInfo wifiInfo, final SensorConfig sensorConfig)
 	{
-		super(timestamp, config);
+		super(dataReceivedTimestamp, sensorConfig);
+		setNetworkType(activeNetwork);
+		setWifiDetails(wifiInfo);
 	}
 	
-//	public ConnectionStateData(long dataReceivedTimestamp,
-//			boolean isConnectedOrConnecting,
-//			boolean isAvailable,
-//			boolean isConnected,
-//			int networkType,
-//			int roamingType,
-//			final SensorConfig sensorConfig)
-//	{
-//		super(dataReceivedTimestamp, sensorConfig);
-//		this.isConnectedOrConnecting = isConnectedOrConnecting;
-//		this.isConnected = isConnected;
-//		this.isAvailable = isAvailable;
-//		this.roamingType = roamingType;
-//		this.networkType = networkType;
-//	}
+	public ConnectionStateData(long dataReceivedTimestamp,
+			boolean isConnectedOrConnecting,
+			boolean isAvailable,
+			boolean isConnected,
+			int networkType,
+			int roamingType,
+			final SensorConfig sensorConfig)
+	{
+		super(dataReceivedTimestamp, sensorConfig);
+		this.isConnectedOrConnecting = isConnectedOrConnecting;
+		this.isConnected = isConnected;
+		this.isAvailable = isAvailable;
+		this.roamingType = roamingType;
+		this.networkType = networkType;
+	}
 
-	public void setNetworkType(final NetworkInfo activeNetwork)
+	private void setNetworkType(final NetworkInfo activeNetwork)
 	{
 		if (activeNetwork == null)
 		{
@@ -105,7 +107,7 @@ public class ConnectionStateData extends SensorData
 		}
 	}
 
-	public void setWifiDetails(final WifiInfo wifiInfo)
+	private void setWifiDetails(final WifiInfo wifiInfo)
 	{
 		if (wifiInfo != null)
 		{

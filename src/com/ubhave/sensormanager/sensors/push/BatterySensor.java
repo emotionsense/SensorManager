@@ -74,7 +74,7 @@ public class BatterySensor extends AbstractPushSensor
 
 	protected void onBroadcastReceived(Context context, Intent dataIntent)
 	{
-        BatteryProcessor processor = (BatteryProcessor) getProcessor();
+        BatteryProcessor processor = (BatteryProcessor) super.getProcessor(SensorUtils.SENSOR_TYPE_BATTERY);
         BatteryData batteryData = processor.process(System.currentTimeMillis(), sensorConfig.clone(), dataIntent);
         onDataSensed(batteryData);
 	}

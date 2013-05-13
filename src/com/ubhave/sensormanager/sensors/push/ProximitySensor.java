@@ -68,7 +68,7 @@ public class ProximitySensor extends AbstractPushSensor
 				float distance = event.values[0];
 				float maxRange = event.sensor.getMaximumRange();
 				
-				ProximityProcessor processor = (ProximityProcessor) getProcessor();
+				ProximityProcessor processor = (ProximityProcessor) getProcessor(SensorUtils.SENSOR_TYPE_PROXIMITY);
 				ProximityData proximityData = processor.process(System.currentTimeMillis(), sensorConfig.clone(), distance, maxRange);
 				onDataSensed(proximityData);
 			}

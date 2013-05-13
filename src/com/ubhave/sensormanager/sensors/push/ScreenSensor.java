@@ -27,7 +27,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 
 import com.ubhave.sensormanager.data.pushsensor.ScreenData;
-import com.ubhave.sensormanager.process.push.ScreenProcessor;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class ScreenSensor extends AbstractPushSensor
@@ -69,11 +68,17 @@ public class ScreenSensor extends AbstractPushSensor
 
 	protected void onBroadcastReceived(Context context, Intent intent)
 	{
-		ScreenProcessor processor = (ScreenProcessor) super.getProcessor();
-		int status = ScreenData.SCREEN_UNKNOWN;
-		
-		ScreenData screenData = processor.process(System.currentTimeMillis(), sensorConfig.clone(), status);
-		onDataSensed(screenData);
+
+		if (intent.getAction().equals(Intent.ACTION_SCREEN_ON))
+		{
+			ScreenData screenData = new ScreenData(System.currentTimeMillis(), ScreenData.SCREEN_ON, sensorConfig.clone());
+			onDataSensed(screenData);
+		}
+		else if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF))
+		{
+			ScreenData screenData = new ScreenData(System.currentTimeMillis(), ScreenData.SCREEN_OFF, sensorConfig.clone());
+			onDataSensed(screenData);			
+		}
 	}
 
 	protected IntentFilter[] getIntentFilters()

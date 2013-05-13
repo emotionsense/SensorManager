@@ -14,14 +14,22 @@ public class PhoneStateProcessor extends CommunicationProcessor
 	public PhoneStateData process(long timestamp, SensorConfig config, int event, String details, String number)
 	{
 		PhoneStateData data = new PhoneStateData(timestamp, config);
-		data.setEventType(event);
-		data.setData(details);
-		if (number != null)
+		if (super.setRawData)
 		{
-			number = hashPhoneNumber(number);
-			data.setNumber(number);
+			data.setEventType(event);
+			data.setData(details);
+			if (number != null)
+			{
+				number = hashPhoneNumber(number);
+				data.setNumber(number);
+			}
 		}
 		
+		if (super.setProcessedData)
+		{
+			// TODO 
+			data.setDataProcessed(true);
+		}	
 		return data;
 	}
 }
