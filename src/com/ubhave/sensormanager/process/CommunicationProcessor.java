@@ -31,7 +31,6 @@ public class CommunicationProcessor extends AbstractProcessor
 		{
 			e.printStackTrace();
 		}
-		
 		mDigest.reset();
 		byte[] byteArray = mDigest.digest(phoneNumber.getBytes());
 		String hash = "";

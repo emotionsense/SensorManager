@@ -21,7 +21,6 @@ public class PhoneStateProcessor extends CommunicationProcessor
 			if (number != null)
 			{
 				number = hashPhoneNumber(number);
-				data.setNumber(number);
 			}
 		}
 		
