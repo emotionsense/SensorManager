@@ -33,7 +33,6 @@ import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.data.pullsensor.LocationData;
-import com.ubhave.sensormanager.process.pull.LocationProcessor;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class LocationSensor extends AbstractPullSensor
@@ -47,7 +46,6 @@ public class LocationSensor extends AbstractPullSensor
 	private LocationListener locListener;
 	private static LocationSensor locationSensor;
 	private static Object lock = new Object();
-	private LocationData locationData;
 
 	public static LocationSensor getLocationSensor(Context context) throws ESException
 	{
@@ -140,12 +138,8 @@ public class LocationSensor extends AbstractPullSensor
 
 	protected SensorData getMostRecentRawData()
 	{
+		LocationData locationData = new LocationData(pullSenseStartTimestamp, sensorConfig.clone());
+		locationData.setLocation(lastLocation);
 		return locationData;
-	}
-	
-	protected void processSensorData()
-	{
-		LocationProcessor processor = (LocationProcessor)getProcessor();
-		locationData = processor.process(pullSenseStartTimestamp, lastLocation, sensorConfig.clone());
 	}
 }

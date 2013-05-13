@@ -34,7 +34,6 @@ import android.util.Log;
 
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.data.pullsensor.ApplicationData;
-import com.ubhave.sensormanager.process.pull.ApplicationProcessor;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class ApplicationSensor extends AbstractPullSensor
@@ -44,7 +43,6 @@ public class ApplicationSensor extends AbstractPullSensor
 
 	private static ApplicationSensor applicationSensor;
 	private ArrayList<String> runningApplications;
-	private ApplicationData applicationData;
 	private static Object lock = new Object();
 
 	public static ApplicationSensor getApplicationSensor(Context context) throws ESException
@@ -84,14 +82,10 @@ public class ApplicationSensor extends AbstractPullSensor
 
 	protected ApplicationData getMostRecentRawData()
 	{
+		ApplicationData applicationData = new ApplicationData(pullSenseStartTimestamp,
+				sensorConfig.clone());
+		applicationData.setApplications(runningApplications);
 		return applicationData;
-	}
-	
-	protected void processSensorData()
-	{
-		ApplicationProcessor processor = (ApplicationProcessor) getProcessor();
-		applicationData = processor.process(pullSenseStartTimestamp, runningApplications, sensorConfig.clone());
-		
 	}
 
 	protected boolean startSensing()

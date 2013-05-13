@@ -32,7 +32,6 @@ import android.hardware.SensorManager;
 
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.pullsensor.AccelerometerData;
-import com.ubhave.sensormanager.process.pull.AccelerometerProcessor;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class AccelerometerSensor extends AbstractPullSensor
@@ -48,8 +47,6 @@ public class AccelerometerSensor extends AbstractPullSensor
 
 	private static AccelerometerSensor accelerometerSensor;
 	private static Object lock = new Object();
-	
-	private AccelerometerData accelerometerData;
 
 	public static AccelerometerSensor getAccelerometerSensor(Context context)
 	{
@@ -127,16 +124,14 @@ public class AccelerometerSensor extends AbstractPullSensor
 
 	protected AccelerometerData getMostRecentRawData()
 	{
-		return accelerometerData;
-	}
-	
-	protected void processSensorData()
-	{
+		AccelerometerData accelerometerData;
 		synchronized (sensorReadings)
 		{
-			AccelerometerProcessor processor = (AccelerometerProcessor)getProcessor();
-			accelerometerData = processor.process(pullSenseStartTimestamp, sensorReadings, sensorReadingTimestamps, sensorConfig.clone());
+			accelerometerData = new AccelerometerData(pullSenseStartTimestamp, sensorConfig.clone());
+			accelerometerData.setSensorReadings(sensorReadings);
+			accelerometerData.setSensorReadingTimestamps(sensorReadingTimestamps);
 		}
+		return accelerometerData;
 	}
 
 	protected boolean startSensing()

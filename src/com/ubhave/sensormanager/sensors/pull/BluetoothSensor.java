@@ -36,7 +36,6 @@ import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.pullsensor.BluetoothData;
 import com.ubhave.sensormanager.data.pullsensor.ESBluetoothDevice;
-import com.ubhave.sensormanager.process.pull.BluetoothProcessor;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class BluetoothSensor extends AbstractPullSensor
@@ -50,7 +49,6 @@ public class BluetoothSensor extends AbstractPullSensor
 
 	private static BluetoothSensor bluetoothSensor;
 	private static Object lock = new Object();
-	private BluetoothData bluetoothData;
 
 	public static BluetoothSensor getBluetoothSensor(Context context) throws ESException
 	{
@@ -65,8 +63,7 @@ public class BluetoothSensor extends AbstractPullSensor
 					{
 						bluetoothSensor = new BluetoothSensor(context);
 					}
-					else
-						throw new ESException(ESException.PERMISSION_DENIED, "Bluetooth Sensor : Permission not Granted");
+					else throw new ESException(ESException. PERMISSION_DENIED, "Bluetooth Sensor : Permission not Granted");
 				}
 			}
 		}
@@ -96,14 +93,11 @@ public class BluetoothSensor extends AbstractPullSensor
 				if (BluetoothDevice.ACTION_FOUND.equals(action))
 				{
 					// Get the BluetoothDevice object from the Intent
-					String deviceAddr = ((BluetoothDevice) intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE))
-							.getAddress();
-					String deviceName = ((BluetoothDevice) intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE))
-							.getName();
+					String deviceAddr = ((BluetoothDevice) intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)).getAddress();
+					String deviceName = ((BluetoothDevice) intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)).getName();
 					int rssi = (int) intent.getShortExtra(BluetoothDevice.EXTRA_RSSI, Short.MIN_VALUE);
 
-					ESBluetoothDevice esBluetoothDevice = new ESBluetoothDevice(System.currentTimeMillis(), deviceAddr,
-							deviceName, rssi);
+					ESBluetoothDevice esBluetoothDevice = new ESBluetoothDevice(System.currentTimeMillis(), deviceAddr, deviceName, rssi);
 
 					if (!(btDevices.contains(esBluetoothDevice)))
 					{
@@ -145,13 +139,9 @@ public class BluetoothSensor extends AbstractPullSensor
 
 	protected BluetoothData getMostRecentRawData()
 	{
+		BluetoothData bluetoothData = new BluetoothData(pullSenseStartTimestamp, sensorConfig.clone());
+		bluetoothData.setBluetoothDevices(btDevices);
 		return bluetoothData;
-	}
-
-	protected void processSensorData()
-	{
-		BluetoothProcessor processor = (BluetoothProcessor) getProcessor();
-		bluetoothData = processor.process(cyclesRemaining, btDevices, sensorConfig.clone());
 	}
 
 	protected boolean startSensing()
