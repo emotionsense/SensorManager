@@ -13,17 +13,17 @@ import com.ubhave.sensormanager.data.pushsensor.SmsData;
 public class SMSProcessor extends CommunicationProcessor
 {
 	/*
-	 * Note: Word Analysis of the SMS Message
-	 * Requires a file of the form:
-	 * word,category_1,...,category_n
+	 * Note: Sentiment Analysis of the SMS Message
+	 * 
+	 * A category count of each word
+	 * http://www.liwc.net/descriptiontable1.php
 	 */
-	
-	private final HashMap<String, ArrayList<String>> wordCategoryMap;
+	private final HashMap<String, ArrayList<String>> liwcMap;
 	
 	public SMSProcessor(Context c, boolean rw, boolean sp)
 	{
 		super(c, rw, sp);
-		wordCategoryMap = loadSentimentMap();
+		liwcMap = loadSentimentMap();
 	}
 
 	public SmsData process(long timestamp, SensorConfig config, String content, String address, String event)
@@ -59,11 +59,11 @@ public class SMSProcessor extends CommunicationProcessor
 	private ArrayList<String> getCategories(String word)
 	{
 		ArrayList<String> categories = new ArrayList<String>();
-		for (String liwcWord : wordCategoryMap.keySet())
+		for (String liwcWord : liwcMap.keySet())
 		{
 			if (word.matches(liwcWord))
 			{
-				categories.addAll(wordCategoryMap.get(liwcWord));
+				categories.addAll(liwcMap.get(liwcWord));
 			}
 		}
 		return categories;
