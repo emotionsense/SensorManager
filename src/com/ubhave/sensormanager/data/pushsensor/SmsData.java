@@ -22,8 +22,6 @@ IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 package com.ubhave.sensormanager.data.pushsensor;
 
-import java.util.HashMap;
-
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.sensors.SensorUtils;
@@ -37,22 +35,10 @@ public class SmsData extends SensorData
 	private int noOfWords;
 	private String address;
 	private String eventType;
-	private final HashMap<String, Integer> liwcCategories;
 	
 	public SmsData(long recvTimestamp, SensorConfig config)
 	{
 		super(recvTimestamp, config);
-		liwcCategories = new HashMap<String, Integer>();
-	}
-	
-	public void addCategory(String key)
-	{
-		Integer count = liwcCategories.get(key);
-		if (count == null)
-		{
-			count = 0;
-		}
-		liwcCategories.put(key, count + 1);
 	}
 	
 	public void setContentLength(int n)

@@ -31,7 +31,7 @@ public class SMSProcessor extends CommunicationProcessor
 		SmsData data = new SmsData(timestamp, config);
 		String[] words = content.split(" ");
 		
-		if (setRawData)
+		if (super.setRawData)
 		{
 			data.setNumberOfWords(words.length);
 			data.setContentLength(content.length());
@@ -39,11 +39,8 @@ public class SMSProcessor extends CommunicationProcessor
 			data.setEventType(event);
 		}
 		
-		if (setProcessedData)
+		if (super.setProcessedData)
 		{
-			/*
-			 * WARNING: untested
-			 */
 			for (String word : words)
 			{
 				ArrayList<String> categories = getCategories(word);
