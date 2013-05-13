@@ -24,7 +24,8 @@ public class SMSProcessor extends CommunicationProcessor
 		
 		if (super.setProcessedData)
 		{
-			// process
+			// TODO 
+			data.setDataProcessed(true);
 		}	
 		return data;
 	}

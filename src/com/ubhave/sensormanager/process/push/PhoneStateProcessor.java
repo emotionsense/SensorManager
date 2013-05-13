@@ -5,7 +5,7 @@ import com.ubhave.sensormanager.data.pushsensor.PhoneStateData;
 
 public class PhoneStateProcessor extends CommunicationProcessor
 {
-
+	
 	public PhoneStateProcessor(boolean rw, boolean sp)
 	{
 		super(rw, sp);
@@ -14,23 +14,14 @@ public class PhoneStateProcessor extends CommunicationProcessor
 	public PhoneStateData process(long timestamp, SensorConfig config, int event, String details, String number)
 	{
 		PhoneStateData data = new PhoneStateData(timestamp, config);
-
-		if (setRawData)
+		data.setEventType(event);
+		data.setData(details);
+		if (number != null)
 		{
-			data.setEventType(event);
-			data.setData(details);
-			if (number != null)
-			{
-				number = hashPhoneNumber(number);
-				data.setNumber(number);
-			}
+			number = hashPhoneNumber(number);
+			data.setNumber(number);
 		}
-
-		if (setProcessedData)
-		{
-			// process
-		}
-
+		
 		return data;
 	}
 }
