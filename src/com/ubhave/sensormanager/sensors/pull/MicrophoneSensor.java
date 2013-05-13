@@ -23,7 +23,6 @@ IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 package com.ubhave.sensormanager.sensors.pull;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import android.content.Context;
@@ -46,7 +45,7 @@ public class MicrophoneSensor extends AbstractPullSensor
 	private static MicrophoneSensor microphoneSensor;
 	private static Object lock = new Object();
 
-	private boolean recorderStopped = false;
+	private boolean isRecording;
 
 	public static MicrophoneSensor getMicrophoneSensor(Context context) throws ESException
 	{
@@ -71,68 +70,73 @@ public class MicrophoneSensor extends AbstractPullSensor
 	private MicrophoneSensor(Context context)
 	{
 		super(context);
+		isRecording = false;
 	}
 
 	protected String getLogTag()
 	{
 		return LOG_TAG;
 	}
-
-	protected boolean startSensing()
+	
+	private boolean prepareRecorder()
 	{
 		try
 		{
-			// delete old file
 			String tempFileName = applicationContext.getFilesDir().getAbsolutePath() + "/test.3gpp";
 			File file = new File(tempFileName);
 			if (file.exists())
 			{
 				file.delete();
 			}
-
+			
 			recorder = new MediaRecorder();
 			recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
 			recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
 			recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 			recorder.setOutputFile(tempFileName);
-
-			// for amplitude
-			maxAmplitudeList = new ArrayList<Integer>();
-			// for timestamp
-			timestampList = new ArrayList<Long>();
-
+			
 			recorder.prepare();
 			recorder.start();
-
-			recorderStopped = false;
-
-			// query amplitude in an async thread
-			(new Thread()
-			{
-				public void run()
-				{
-					// capture max amplitude @20Hz
-
-					// ignore fist call
-					recorder.getMaxAmplitude();
-
-					while (isSensing())
-					{
-						synchronized (recorder)
-						{
-							if (!recorderStopped)
-							{
-								maxAmplitudeList.add(recorder.getMaxAmplitude());
-								timestampList.add(System.currentTimeMillis());
-							}
-						}
-						MicrophoneSensor.sleep(50);
-					}
-				}
-			}).start();
-
+			return true;
 		}
-		catch (IOException exp)
+		catch (Throwable e)
+		{
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	protected boolean startSensing()
+	{
+		try
+		{
+			maxAmplitudeList = new ArrayList<Integer>();
+			timestampList = new ArrayList<Long>();
+			isRecording = prepareRecorder();
+			if (isRecording)
+			{
+				(new Thread()
+				{
+					public void run()
+					{
+						recorder.getMaxAmplitude();
+						while (isSensing())
+						{
+							synchronized (recorder)
+							{
+								if (isRecording)
+								{
+									maxAmplitudeList.add(recorder.getMaxAmplitude());
+									timestampList.add(System.currentTimeMillis());
+								}
+							}
+							MicrophoneSensor.sleep(50);
+						}
+					}
+				}).start();
+			}
+		}
+		catch (Exception exp)
 		{
 			exp.printStackTrace();
 			return false;
@@ -154,12 +158,18 @@ public class MicrophoneSensor extends AbstractPullSensor
 
 	protected void stopSensing()
 	{
-		// for amplitude
 		synchronized (recorder)
 		{
-			recorder.stop();
-			recorder.release();
-			recorderStopped = true;
+			try
+			{
+				isRecording = false;
+				recorder.stop();
+				recorder.release();
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
 		}
 	}
 
