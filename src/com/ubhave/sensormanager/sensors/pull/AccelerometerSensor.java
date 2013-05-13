@@ -30,7 +30,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
-import com.ubhave.sensormanager.config.sensors.pull.AccelerometerConfig;
+import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.pullsensor.AccelerometerData;
 import com.ubhave.sensormanager.process.pull.AccelerometerProcessor;
 import com.ubhave.sensormanager.sensors.SensorUtils;
@@ -146,9 +146,9 @@ public class AccelerometerSensor extends AbstractPullSensor
 
 		int sensorDelay = SensorManager.SENSOR_DELAY_GAME;
 
-		if (sensorConfig.containsParameter(AccelerometerConfig.SAMPLING_DELAY))
+		if (sensorConfig.containsParameter(SensorConfig.ACCELEROMETER_SAMPLING_DELAY))
 		{
-			sensorDelay = (Integer) sensorConfig.getParameter(AccelerometerConfig.SAMPLING_DELAY);
+			sensorDelay = (Integer) sensorConfig.getParameter(SensorConfig.ACCELEROMETER_SAMPLING_DELAY);
 		}
 
 		boolean registrationSuccess = sensorManager.registerListener(listener,

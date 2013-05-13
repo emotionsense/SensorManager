@@ -22,7 +22,7 @@ IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 package com.ubhave.sensormanager.classifier;
 
-import com.ubhave.sensormanager.config.sensors.pull.MicrophoneConfig;
+import com.ubhave.sensormanager.config.SensorManagerConstants;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.data.pullsensor.MicrophoneData;
 
@@ -51,7 +51,7 @@ public class MicrophoneDataClassifier implements SensorDataClassifier
 			avgAmplitude += aValue;
 		}
 		avgAmplitude = avgAmplitude / (double)amplitudeData.length;
-		if (avgAmplitude > MicrophoneConfig.MICROPHONE_SOUND_THRESHOLD)
+		if (avgAmplitude > SensorManagerConstants.MICROPHONE_SOUND_THRESHOLD)
 		{
 			return false;
 		}

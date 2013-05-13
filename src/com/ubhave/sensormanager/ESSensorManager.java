@@ -32,7 +32,7 @@ import android.util.Log;
 import android.util.SparseArray;
 
 import com.ubhave.sensormanager.config.GlobalConfig;
-import com.ubhave.sensormanager.config.sensors.pull.PullSensorConfig;
+import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.dutycyling.AdaptiveSensing;
 import com.ubhave.sensormanager.sensors.SensorInterface;
@@ -191,7 +191,7 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 		SensorInterface sensor = sensorTask.getSensor();
 		sensor.setSensorConfig(configKey, configValue);
 
-		if (configKey.equals(PullSensorConfig.ADAPTIVE_SENSING_ENABLED))
+		if (configKey.equals(SensorConfig.ADAPTIVE_SENSING_ENABLED))
 		{
 			if ((Boolean) configValue)
 			{

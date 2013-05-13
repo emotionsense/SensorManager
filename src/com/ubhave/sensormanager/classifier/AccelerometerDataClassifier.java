@@ -24,7 +24,7 @@ package com.ubhave.sensormanager.classifier;
 
 import java.util.ArrayList;
 
-import com.ubhave.sensormanager.config.sensors.pull.AccelerometerConfig;
+import com.ubhave.sensormanager.config.SensorManagerConstants;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.data.pullsensor.AccelerometerData;
 
@@ -125,7 +125,7 @@ public class AccelerometerDataClassifier implements SensorDataClassifier
 			stddev = Math.sqrt(stddev);
 			stddevs[i] = stddev;
 
-			if (stddev < AccelerometerConfig.ACCELEROMETER_MOVEMENT_THRESHOLD)
+			if (stddev < SensorManagerConstants.ACCELEROMETER_MOVEMENT_THRESHOLD)
 			{
 				// We don't seem to be moving
 				status -= 1;
