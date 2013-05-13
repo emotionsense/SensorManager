@@ -121,7 +121,7 @@ public abstract class AbstractSensor implements SensorInterface
 			boolean processedData = getProcessedData();
 			if (!rawData && !processedData)
 			{
-				throw new ESException(ESException.INVALID_STATE, "No data requested from processor");
+				// TODO handle error
 			}
 			return AbstractProcessor.getProcessor(getSensorType(), rawData, processedData);
 		}
