@@ -26,7 +26,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.ubhave.sensormanager.ESException;
-import com.ubhave.sensormanager.config.SensorConfig;
+import com.ubhave.sensormanager.config.sensors.pull.PullSensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.dutycyling.SleepWindowListener;
 import com.ubhave.sensormanager.sensors.AbstractSensor;
@@ -43,10 +43,12 @@ public abstract class AbstractPullSensor extends AbstractSensor implements PullS
 	}
 
 	protected abstract SensorData getMostRecentRawData();
+	
+	protected abstract void processSensorData();
 
 	public void onSleepWindowLengthChanged(long sleepWindowLengthMillis)
 	{
-		sensorConfig.setParameter(SensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, sleepWindowLengthMillis);
+		sensorConfig.setParameter(PullSensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, sleepWindowLengthMillis);
 	}
 
 	public SensorData sense() throws ESException
@@ -72,16 +74,16 @@ public abstract class AbstractPullSensor extends AbstractSensor implements PullS
 			{
 				try
 				{
-					if (sensorConfig.containsParameter(SensorConfig.NUMBER_OF_SENSE_CYCLES))
+					if (sensorConfig.containsParameter(PullSensorConfig.NUMBER_OF_SENSE_CYCLES))
 					{
 						while (isSensing)
 						{
 							senseCompleteNotify.wait(500);
 						}
 					}
-					else if (sensorConfig.containsParameter(SensorConfig.SENSE_WINDOW_LENGTH_MILLIS))
+					else if (sensorConfig.containsParameter(PullSensorConfig.SENSE_WINDOW_LENGTH_MILLIS))
 					{
-						long samplingWindowSize = (Long) sensorConfig.getParameter(SensorConfig.SENSE_WINDOW_LENGTH_MILLIS);
+						long samplingWindowSize = (Long) sensorConfig.getParameter(PullSensorConfig.SENSE_WINDOW_LENGTH_MILLIS);
 						senseCompleteNotify.wait(samplingWindowSize);
 					}
 					else
@@ -100,6 +102,8 @@ public abstract class AbstractPullSensor extends AbstractSensor implements PullS
 			stopSensing();
 			isSensing = false;
 			Log.d(getLogTag(), "Sensing stopped.");
+			
+			processSensorData();
 
 			sensorData = getMostRecentRawData();
 			sensorData.setPrevSensorData(prevSensorData);

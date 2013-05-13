@@ -33,6 +33,7 @@ public abstract class SensorData
 	private final long sensorDataTimestamp;
 
 	private SensorData prevSensorData;
+	protected boolean isDataProcessed;
 
 	private SensorConfig sensorConfig;
 
@@ -42,6 +43,17 @@ public abstract class SensorData
 	{
 		sensorDataTimestamp = sensorTimestamp;
 		this.sensorConfig = config;
+		isDataProcessed = false;
+	}
+	
+	public void setDataProcessed(boolean value)
+	{
+		isDataProcessed = value;
+	}
+	
+	public boolean isDataProcessed()
+	{
+		return isDataProcessed;
 	}
 
 	public long getTimestamp()

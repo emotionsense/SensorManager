@@ -27,6 +27,8 @@ import android.content.pm.PackageManager;
 
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.config.SensorConfig;
+import com.ubhave.sensormanager.config.sensors.pull.LocationConfig;
+import com.ubhave.sensormanager.process.AbstractProcessor;
 
 public abstract class AbstractSensor implements SensorInterface
 {
@@ -61,16 +63,14 @@ public abstract class AbstractSensor implements SensorInterface
 
 	public void setSensorConfig(String configKey, Object configValue) throws ESException
 	{
-		// default parameters can be overridden through this
-		// method
-
+		// default parameters can be overridden through this method
 		if (!sensorConfig.containsParameter(configKey))
 		{
 			throw new ESException(ESException.INVALID_SENSOR_CONFIG, "Invalid sensor config, key: " + configKey + " value: " + configValue);
 		}
 
 		// check permissions for the config
-		if (configKey.equals(SensorConfig.LOCATION_ACCURACY_FINE))
+		if (configKey.equals(LocationConfig.LOCATION_ACCURACY_FINE))
 		{
 			if (!permissionGranted(applicationContext, "android.permission.ACCESS_FINE_LOCATION"))
 			{
@@ -90,6 +90,43 @@ public abstract class AbstractSensor implements SensorInterface
 		else
 		{
 			throw new ESException(ESException.INVALID_SENSOR_CONFIG, "Invalid sensor config, key: " + configKey);
+		}
+	}
+	
+	private boolean getRawData()
+	{
+		if (sensorConfig.containsParameter(SensorConfig.DATA_SET_RAW_VALUES))
+		{
+			return (Boolean) sensorConfig.getParameter(SensorConfig.DATA_SET_RAW_VALUES);
+		}
+		return SensorConfig.GET_RAW_DATA;
+	}
+	
+	private boolean getProcessedData()
+	{
+		if (sensorConfig.containsParameter(SensorConfig.DATA_EXTRACT_FEATURES))
+		{
+			return (Boolean) sensorConfig.getParameter(SensorConfig.DATA_EXTRACT_FEATURES);
+		}
+		return SensorConfig.GET_PROCESSED_DATA;
+	}
+	
+	protected AbstractProcessor getProcessor()
+	{
+		try
+		{
+			boolean rawData = getRawData();
+			boolean processedData = getProcessedData();
+			if (!rawData && !processedData)
+			{
+				throw new ESException(ESException.INVALID_STATE, "No data requested from processor");
+			}
+			return AbstractProcessor.getProcessor(applicationContext, getSensorType(), rawData, processedData);
+		}
+		catch (ESException e)
+		{
+			e.printStackTrace();
+			return null;
 		}
 	}
 

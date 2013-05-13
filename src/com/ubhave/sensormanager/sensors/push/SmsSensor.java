@@ -32,13 +32,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.telephony.SmsMessage;
-import android.util.Log;
 
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.data.pushsensor.SmsData;
+import com.ubhave.sensormanager.process.push.SMSProcessor;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
-public class SmsSensor extends AbstractCommunicationSensor
+public class SmsSensor extends AbstractPushSensor
 {
 	private static final String TAG = "SmsSensor";
 
@@ -82,40 +82,45 @@ public class SmsSensor extends AbstractCommunicationSensor
 				{
 					// check last sent message
 					Uri smsUri = Uri.parse("content://sms");
-					Cursor cursor = applicationContext.getContentResolver().query(smsUri, null, null, null, null);
-					// last sms sent is the fist in the list
-					cursor.moveToNext();
-					String content = cursor.getString(cursor.getColumnIndex("body"));
-					int noOfWords = content.split(" ").length;
-					String sentTo = cursor.getString(cursor.getColumnIndex("address"));
-					String messageId = cursor.getString(cursor.getColumnIndex("_id"));
-
-					// hash phone number
-					sentTo = hashPhoneNumber(sentTo);
-
-					if ((prevMessageId != null) && (prevMessageId.length() > 0) && (prevMessageId.equals(messageId)))
+					ContentResolver resolver = applicationContext.getContentResolver();
+					if (resolver != null)
 					{
-						// ignore, message already logged
-					}
-					else
-					{
-						prevMessageId = messageId;
+						Cursor cursor = resolver.query(smsUri, null, null, null, null);
+						if (cursor != null)
+						{
+							// last sms sent is the fist in the list
+							cursor.moveToNext();
+							if (!cursor.isAfterLast())
+							{
+								String content = cursor.getString(cursor.getColumnIndex("body"));
+								String sentTo = cursor.getString(cursor.getColumnIndex("address"));
+								String messageId = cursor.getString(cursor.getColumnIndex("_id"));
 
-						// add sender and body length to smsActivity
-						String logString = System.currentTimeMillis() + " " + SmsData.SMS_CONTENT_CHANGED + " " + content.length() + " words " + noOfWords + " address " + sentTo + " type " + cursor.getString(cursor.getColumnIndex("type")) + " timestamp "
-								+ cursor.getString(cursor.getColumnIndex("date"));
-						Log.d(TAG, logString);
-						logDataSensed(System.currentTimeMillis(), content.length(), noOfWords, sentTo, SmsData.SMS_CONTENT_CHANGED);
+								if ((prevMessageId != null) && (prevMessageId.length() > 0) && (prevMessageId.equals(messageId)))
+								{
+									// ignore, message already logged
+								}
+								else
+								{
+									prevMessageId = messageId;
+									logDataSensed(System.currentTimeMillis(), content, sentTo, SmsData.SMS_CONTENT_CHANGED);
+								}
+							}
+						}	
 					}
 				}
 			}
 		};
 	}
 
-	private void logDataSensed(long timestamp, int contentLength, int noOfWords, String addr, String eventType)
+	private void logDataSensed(long timestamp, String content, String addr, String eventType)
 	{
-		SmsData smsData = new SmsData(timestamp, contentLength, noOfWords, addr, eventType, sensorConfig.clone());
-		onDataSensed(smsData);
+		SMSProcessor processor = (SMSProcessor) getProcessor();
+		if (processor != null)
+		{
+			SmsData data = (SmsData) processor.process(timestamp, sensorConfig.clone(), content, addr, eventType);
+			onDataSensed(data);
+		}
 	}
 
 	public String getLogTag()
@@ -146,16 +151,8 @@ public class SmsSensor extends AbstractCommunicationSensor
 						smsMessagesArray[i] = SmsMessage.createFromPdu((byte[]) pdusArray[i]);
 						String address = smsMessagesArray[i].getOriginatingAddress();
 						String content = smsMessagesArray[i].getMessageBody();
-						int contentLength = content.length();
-						int noOfWords = content.split(" ").length;
-
-						// hash phone number
-						address = hashPhoneNumber(address);
-
-						// add sender and body length to smsActivity
-						String logString = System.currentTimeMillis() + " "+SmsData.SMS_RECEIVED+" " + contentLength + " words " + noOfWords + " address " + address + " timestamp " + smsMessagesArray[i].getTimestampMillis();
-						Log.d(TAG, logString);
-						logDataSensed(System.currentTimeMillis(), contentLength, noOfWords, address, SmsData.SMS_RECEIVED);
+						
+						logDataSensed(System.currentTimeMillis(), content, address, SmsData.SMS_RECEIVED);
 					}
 				}
 				catch (Exception e)

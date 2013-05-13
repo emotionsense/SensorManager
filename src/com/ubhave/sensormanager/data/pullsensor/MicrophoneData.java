@@ -28,19 +28,27 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class MicrophoneData extends SensorData
 {
-	private final int[] maxAmplitudeArray;
-	private final long[] timestampArray;
+	private int[] maxAmplitudeArray;
+	private long[] timestampArray;
 
-	public MicrophoneData(long senseStartTimestamp, int[] maxAmplitudeArray, long[] timestampArray, SensorConfig sensorConfig)
+	public MicrophoneData(long senseStartTimestamp, SensorConfig sensorConfig)
 	{
 		super(senseStartTimestamp, sensorConfig);
+	}
+	
+	public void setMaxAmplitudeArray(int[] maxAmplitudeArray)
+	{
 		this.maxAmplitudeArray = maxAmplitudeArray;
-		this.timestampArray = timestampArray;
 	}
 
 	public int[] getAmplitudeArray()
 	{
 		return maxAmplitudeArray;
+	}
+	
+	public void setTimestampArray(long[] timestampArray)
+	{
+		this.timestampArray = timestampArray;
 	}
 	
 	public long[] getTimestampArray()
