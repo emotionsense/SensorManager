@@ -115,8 +115,7 @@ public class WifiSensor extends AbstractPullSensor
 
 	protected WifiData getMostRecentRawData()
 	{
-		WifiData wifiData = new WifiData(pullSenseStartTimestamp, sensorConfig.clone());
-		wifiData.setWifiScanData(wifiScanResults);
+		WifiData wifiData = new WifiData(pullSenseStartTimestamp, wifiScanResults, sensorConfig.clone());
 		return wifiData;
 	}
 

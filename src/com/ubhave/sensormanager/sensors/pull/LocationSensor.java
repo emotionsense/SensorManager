@@ -138,8 +138,7 @@ public class LocationSensor extends AbstractPullSensor
 
 	protected SensorData getMostRecentRawData()
 	{
-		LocationData locationData = new LocationData(pullSenseStartTimestamp, sensorConfig.clone());
-		locationData.setLocation(lastLocation);
+		LocationData locationData = new LocationData(pullSenseStartTimestamp, lastLocation, sensorConfig.clone());
 		return locationData;
 	}
 }

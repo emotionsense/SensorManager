@@ -30,15 +30,11 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class LocationData extends SensorData
 {
-	private Location location;
+	private final Location location;
 
-	public LocationData(long senseStartTimestamp, SensorConfig sensorConfig)
+	public LocationData(long senseStartTimestamp, Location location, SensorConfig sensorConfig)
 	{
 		super(senseStartTimestamp, sensorConfig);
-	}
-	
-	public void setLocation(Location location)
-	{
 		this.location = location;
 	}
 
@@ -51,4 +47,5 @@ public class LocationData extends SensorData
 	{
 		return SensorUtils.SENSOR_TYPE_LOCATION;
 	}
+
 }

@@ -1,7 +1,6 @@
 package com.ubhave.sensormanager.process;
 
 import com.ubhave.sensormanager.ESException;
-import com.ubhave.sensormanager.process.pull.AudioProcessor;
 import com.ubhave.sensormanager.process.push.BatteryProcessor;
 import com.ubhave.sensormanager.process.push.ConnectionStateProcessor;
 import com.ubhave.sensormanager.process.push.PhoneStateProcessor;
