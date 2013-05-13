@@ -3,15 +3,14 @@ package com.ubhave.sensormanager.process.push;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import android.content.Context;
-
 import com.ubhave.sensormanager.process.AbstractProcessor;
 
 public class CommunicationProcessor extends AbstractProcessor
 {
-	public CommunicationProcessor(Context c, boolean rw, boolean sp)
+
+	public CommunicationProcessor(boolean rw, boolean sp)
 	{
-		super(c, rw, sp);
+		super(rw, sp);
 	}
 	
 	protected String hashPhoneNumber(String phoneNumber)
@@ -46,7 +45,7 @@ public class CommunicationProcessor extends AbstractProcessor
 			{
 				hexString = "0" + hexString;
 			}
-			hash += hexString.toUpperCase(); // TODO fix warning
+			hash += hexString.toUpperCase(); // TODO check this warning
 		}
 		return hash;
 	}

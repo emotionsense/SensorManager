@@ -123,7 +123,7 @@ public abstract class AbstractSensor implements SensorInterface
 			{
 				throw new ESException(ESException.INVALID_STATE, "No data requested from processor");
 			}
-			return AbstractProcessor.getProcessor(applicationContext, getSensorType(), rawData, processedData);
+			return AbstractProcessor.getProcessor(getSensorType(), rawData, processedData);
 		}
 		catch (ESException e)
 		{

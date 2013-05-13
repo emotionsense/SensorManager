@@ -1,7 +1,5 @@
 package com.ubhave.sensormanager.process;
 
-import android.content.Context;
-
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.process.pull.AccelerometerProcessor;
 import com.ubhave.sensormanager.process.pull.ApplicationProcessor;
@@ -18,48 +16,41 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public abstract class AbstractProcessor
 {
-	public static AbstractProcessor getProcessor(Context c, int sensorType, boolean setRawData, boolean setProcessedData) throws ESException
+	public static AbstractProcessor getProcessor(int sensorType, boolean setRawData, boolean setProcessedData) throws ESException
 	{
-		if (!setRawData && !setProcessedData)
-		{
-			throw new ESException(ESException.INVALID_STATE, "No data (raw/processed) requested from the processor");
-		}
-		
 		switch (sensorType)
 		{
 		case SensorUtils.SENSOR_TYPE_ACCELEROMETER:
-			return new AccelerometerProcessor(c, setRawData, setProcessedData);
+			return new AccelerometerProcessor(setRawData, setProcessedData);
 		case SensorUtils.SENSOR_TYPE_APPLICATION:
-			return new ApplicationProcessor(c, setRawData, setProcessedData);
+			return new ApplicationProcessor(setRawData, setProcessedData);
 		case SensorUtils.SENSOR_TYPE_BLUETOOTH:
-			return new BluetoothProcessor(c, setRawData, setProcessedData);
+			return new BluetoothProcessor(setRawData, setProcessedData);
 		case SensorUtils.SENSOR_TYPE_LOCATION:
-			return new LocationProcessor(c, setRawData, setProcessedData);
+			return new LocationProcessor(setRawData, setProcessedData);
 		case SensorUtils.SENSOR_TYPE_MICROPHONE:
-			return new AudioProcessor(c, setRawData, setProcessedData);
+			return new AudioProcessor(setRawData, setProcessedData);
 		case SensorUtils.SENSOR_TYPE_WIFI:
-			return new WifiProcessor(c, setRawData, setProcessedData);
+			return new WifiProcessor(setRawData, setProcessedData);
 		case SensorUtils.SENSOR_TYPE_BATTERY:
-			return new BatteryProcessor(c, setRawData, setProcessedData);
+			return new BatteryProcessor(setRawData, setProcessedData);
 		case SensorUtils.SENSOR_TYPE_CONNECTION_STATE:
-			return new ConnectionStateProcessor(c, setRawData, setProcessedData);
+			return new ConnectionStateProcessor(setRawData, setProcessedData);
 		case SensorUtils.SENSOR_TYPE_PHONE_STATE:
-			return new PhoneStateProcessor(c, setRawData, setProcessedData);
+			return new PhoneStateProcessor(setRawData, setProcessedData);
 		case SensorUtils.SENSOR_TYPE_SCREEN:
-			return new ScreenProcessor(c, setRawData, setProcessedData);
+			return new ScreenProcessor(setRawData, setProcessedData);
 		case SensorUtils.SENSOR_TYPE_SMS:
-			return new SMSProcessor(c, setRawData, setProcessedData);
+			return new SMSProcessor(setRawData, setProcessedData);
 		default:
 			throw new ESException(ESException.UNKNOWN_SENSOR_TYPE, "No processor defined for this sensor.");
 		}
 	}
 	
 	protected final boolean setRawData, setProcessedData;
-	protected final Context appContext;
 	
-	public AbstractProcessor(final Context context, final boolean rw, final boolean sp)
+	public AbstractProcessor(final boolean rw, final boolean sp)
 	{
-		this.appContext = context;
 		this.setRawData = rw;
 		this.setProcessedData = sp;
 	}

@@ -1,20 +1,20 @@
 package com.ubhave.sensormanager.process.push;
 
-import android.content.Context;
-
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.pushsensor.PhoneStateData;
 
 public class PhoneStateProcessor extends CommunicationProcessor
 {
-	public PhoneStateProcessor(final Context c, boolean rw, boolean sp)
+
+	public PhoneStateProcessor(boolean rw, boolean sp)
 	{
-		super(c, rw, sp);
+		super(rw, sp);
 	}
 
 	public PhoneStateData process(long timestamp, SensorConfig config, int event, String details, String number)
 	{
 		PhoneStateData data = new PhoneStateData(timestamp, config);
+
 		if (setRawData)
 		{
 			data.setEventType(event);
@@ -25,6 +25,12 @@ public class PhoneStateProcessor extends CommunicationProcessor
 				data.setNumber(number);
 			}
 		}
+
+		if (setProcessedData)
+		{
+			// process
+		}
+
 		return data;
 	}
 }
