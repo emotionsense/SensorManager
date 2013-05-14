@@ -70,16 +70,7 @@ public class ScreenSensor extends AbstractPushSensor
 	protected void onBroadcastReceived(Context context, Intent intent)
 	{
 		ScreenProcessor processor = (ScreenProcessor) super.getProcessor();
-		int status = ScreenData.SCREEN_UNKNOWN;
-		if (intent.getAction().equals(Intent.ACTION_SCREEN_ON))
-		{
-			status = ScreenData.SCREEN_ON;
-		}
-		else if (intent.getAction().equals(Intent.ACTION_SCREEN_OFF))
-		{
-			status = ScreenData.SCREEN_OFF;
-		}
-		ScreenData screenData = processor.process(System.currentTimeMillis(), sensorConfig.clone(), status);
+		ScreenData screenData = processor.process(System.currentTimeMillis(), sensorConfig.clone(), intent);
 		onDataSensed(screenData);
 	}
 
