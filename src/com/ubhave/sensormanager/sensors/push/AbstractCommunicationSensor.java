@@ -37,7 +37,7 @@ public abstract class AbstractCommunicationSensor extends AbstractPushSensor
 		super(context);
 	}
 	
-	protected String hashPhoneNumber(String phoneNumber)
+	public static String hashPhoneNumber(String phoneNumber)
 	{
 		if ((phoneNumber == null) || (phoneNumber.length() == 0))
 		{

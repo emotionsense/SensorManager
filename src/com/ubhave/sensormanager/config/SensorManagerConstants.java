@@ -40,6 +40,7 @@ public class SensorManagerConstants
 	public static final int WIFI_SAMPLING_WINDOW_SIZE_PER_CYCLE_MILLIS = 5000;
 	// application sensor sensing cycles // this should always be 1
 	public static final int APPLCATION_SAMPLING_CYCLES = 1;
+	public static final int CONTENT_READER_SAMPLING_CYCLES = 1;
 
 	public static final long ACCELEROMETER_SLEEP_INTERVAL = 2 * 60 * 1000;
 	public static final long BLUETOOTH_SLEEP_INTERVAL = 15 * 60 * 1000;
@@ -47,6 +48,7 @@ public class SensorManagerConstants
 	public static final long MICROPHONE_SLEEP_INTERVAL = 2 * 60 * 1000;
 	public static final long WIFI_SLEEP_INTERVAL = 15 * 60 * 1000;
 	public static final long APPLICATON_SLEEP_INTERVAL = 5 * 60 * 1000;
+	public static final long CONTENT_READER_SLEEP_INTERVAL = 6 * 60 * 60 * 1000;
 
 	// low battery threshold
 	public static final int LOW_BATTERY_THRESHOLD_LEVEL = 20;
