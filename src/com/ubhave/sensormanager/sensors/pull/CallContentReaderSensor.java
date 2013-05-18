@@ -41,7 +41,7 @@ public class CallContentReaderSensor extends ContentReaderSensor
 			{
 				if (callContentReaderSensor == null)
 				{
-					if (permissionGranted(context, "android.permission.READ_CALL_LOG "))
+					if (permissionGranted(context, "android.permission.READ_CONTACTS"))
 					{
 						callContentReaderSensor = new CallContentReaderSensor(context);
 					}

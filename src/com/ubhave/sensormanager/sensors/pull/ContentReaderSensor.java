@@ -22,6 +22,7 @@ IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 package com.ubhave.sensormanager.sensors.pull;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.content.ContentResolver;
@@ -36,7 +37,7 @@ import com.ubhave.sensormanager.sensors.push.AbstractCommunicationSensor;
 
 public abstract class ContentReaderSensor extends AbstractPullSensor
 {
-	protected HashMap<String, String> contentMap;
+	protected ArrayList<HashMap<String, String>> contentList;
 	protected static Object lock = new Object();
 
 	protected abstract String getContentURL();
@@ -54,7 +55,7 @@ public abstract class ContentReaderSensor extends AbstractPullSensor
 		{
 			public void run()
 			{
-				contentMap = new HashMap<String, String>();
+				contentList = new ArrayList<HashMap<String, String>>();
 
 				String url = getContentURL();
 				Uri uri = Uri.parse(url);
@@ -67,21 +68,43 @@ public abstract class ContentReaderSensor extends AbstractPullSensor
 
 				while (cursor.moveToNext())
 				{
+					HashMap<String, String> contentMap = new HashMap<String, String>();
 					for (String key : contentKeys)
 					{
 						String value = cursor.getString(cursor.getColumnIndex(key));
 
-						if (key.equals("number") || key.equals("address"))
+						if ((value == null) || (value.length() == 0))
 						{
-							value = AbstractCommunicationSensor.hashPhoneNumber(value);
+							value = "";
 						}
-						else if (key.equals("body"))
+						else
 						{
-							value = value.length() + "";
+							if (key.equals("number") || key.equals("address"))
+							{
+								value = AbstractCommunicationSensor.hashPhoneNumber(value);
+							}
+							else if (key.equals("body"))
+							{
+								int noOfWords = 0;
+								int charCount = 0;
+								if ((value != null) && (value.length() > 0))
+								{
+									charCount = value.length();
+									noOfWords = value.split(" ").length;
+								}
+
+								// no. of words
+								contentMap.put("bodyWordCount", noOfWords + "");
+
+								// no. of characters
+								key = "bodyLength";
+								value = charCount + "";
+							}
 						}
 
 						contentMap.put(key, value);
 					}
+					contentList.add(contentMap);
 				}
 				// sensing complete
 				notifySenseCyclesComplete();
@@ -95,11 +118,11 @@ public abstract class ContentReaderSensor extends AbstractPullSensor
 	protected void stopSensing()
 	{
 	}
-	
+
 	@Override
 	protected SensorData getMostRecentRawData()
 	{
-		ContentReaderData crData = new ContentReaderData(pullSenseStartTimestamp, contentMap, getSensorType(), sensorConfig);
+		ContentReaderData crData = new ContentReaderData(pullSenseStartTimestamp, contentList, getSensorType(), sensorConfig);
 		return crData;
 	}
 

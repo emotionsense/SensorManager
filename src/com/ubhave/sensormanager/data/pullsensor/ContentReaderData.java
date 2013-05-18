@@ -22,6 +22,7 @@ IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 package com.ubhave.sensormanager.data.pullsensor;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.ubhave.sensormanager.config.SensorConfig;
@@ -29,19 +30,19 @@ import com.ubhave.sensormanager.data.SensorData;
 
 public class ContentReaderData extends SensorData
 {
-	private final HashMap<String, String> contentMap;
+	private final ArrayList<HashMap<String, String>> contentList;
 	private final int sensorType;
 
-	public ContentReaderData(long sensorTimestamp, HashMap<String, String> contentMap, int sensorType, SensorConfig config)
+	public ContentReaderData(long sensorTimestamp, ArrayList<HashMap<String, String>> contentList, int sensorType, SensorConfig config)
 	{
 		super(sensorTimestamp, config);
-		this.contentMap = contentMap;
+		this.contentList = contentList;
 		this.sensorType = sensorType;
 	}
 
-	public HashMap<String, String> getContentMap()
+	public ArrayList<HashMap<String, String>> getContentList()
 	{
-		return contentMap;
+		return contentList;
 	}
 
 	@Override
