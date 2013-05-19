@@ -55,16 +55,21 @@ public abstract class ContentReaderSensor extends AbstractPullSensor
 		{
 			public void run()
 			{
+				// Some parameters that could be exposed through the config,
+				// which are currently set as constants in the code:
+				// 1) limit on number of rows - 100
+				// 2) columns to query
+
 				contentList = new ArrayList<HashMap<String, String>>();
 
 				String url = getContentURL();
 				Uri uri = Uri.parse(url);
 
-				ContentResolver contentResolver = applicationContext.getContentResolver();
-				Cursor cursor = contentResolver.query(uri, null, null, null, null);
-				Log.d(getLogTag(), "Total entries in the cursor" + cursor.getCount());
-
 				String[] contentKeys = getContentKeysArray();
+
+				ContentResolver contentResolver = applicationContext.getContentResolver();
+				Cursor cursor = contentResolver.query(uri, contentKeys, null, null, "date LIMIT 100");
+				Log.d(getLogTag(), "Total entries in the cursor" + cursor.getCount());
 
 				while (cursor.moveToNext())
 				{
