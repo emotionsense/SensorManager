@@ -28,6 +28,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Looper;
+import android.util.Log;
 
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.config.SensorConfig;
@@ -118,15 +119,37 @@ public class LocationSensor extends AbstractPullSensor
 
 		if ((accuracyConfig != null) && (accuracyConfig.equals(SensorConfig.LOCATION_ACCURACY_FINE)))
 		{
-			locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 0, locListener,
-					Looper.getMainLooper());
-			locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0, locListener,
-					Looper.getMainLooper());
+			if (locationManager.getAllProviders().contains(LocationManager.NETWORK_PROVIDER))
+			{
+				locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 0, locListener,
+						Looper.getMainLooper());
+			}
+			else
+			{
+				Log.d(TAG, "requestLocationUpdates(), Not registering with NETWORK_PROVIDER as it is unavailable");
+			}
+
+			if (locationManager.getAllProviders().contains(LocationManager.GPS_PROVIDER))
+			{
+				locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0, locListener,
+						Looper.getMainLooper());
+			}
+			else
+			{
+				Log.d(TAG, "requestLocationUpdates(), Not registering with GPS_PROVIDER as it is unavailable");
+			}
 		}
 		else
 		{
-			locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 0, locListener,
-					Looper.getMainLooper());
+			if (locationManager.getAllProviders().contains(LocationManager.NETWORK_PROVIDER))
+			{
+				locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 0, locListener,
+						Looper.getMainLooper());
+			}
+			else
+			{
+				Log.d(TAG, "requestLocationUpdates(), Not registering with NETWORK_PROVIDER as it is unavailable");
+			}
 		}
 		return true;
 	}
