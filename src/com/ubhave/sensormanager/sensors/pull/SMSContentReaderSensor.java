@@ -82,4 +82,11 @@ public class SMSContentReaderSensor extends ContentReaderSensor
 		return LOG_TAG;
 	}
 
+	@Override
+	protected void processSensorData()
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
 }

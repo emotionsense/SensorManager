@@ -39,6 +39,7 @@ import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.config.sensors.pull.AccelerometerConfig;
 import com.ubhave.sensormanager.config.sensors.pull.ApplicationConfig;
 import com.ubhave.sensormanager.config.sensors.pull.BluetoothConfig;
+import com.ubhave.sensormanager.config.sensors.pull.ContentReaderConfig;
 import com.ubhave.sensormanager.config.sensors.pull.LocationConfig;
 import com.ubhave.sensormanager.config.sensors.pull.MicrophoneConfig;
 import com.ubhave.sensormanager.config.sensors.pull.PullSensorConfig;
@@ -215,12 +216,12 @@ public class SensorUtils
 			sensorConfig.setParameter(PullSensorConfig.NUMBER_OF_SENSE_CYCLES, ApplicationConfig.APPLICATION_SAMPLING_CYCLES);
 			break;
 		case SensorUtils.SENSOR_TYPE_SMS_CONTENT_READER:
-			sensorConfig.setParameter(SensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, SensorManagerConstants.CONTENT_READER_SLEEP_INTERVAL);
-			sensorConfig.setParameter(SensorConfig.NUMBER_OF_SENSE_CYCLES, SensorManagerConstants.CONTENT_READER_SAMPLING_CYCLES);
+			sensorConfig.setParameter(PullSensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, ContentReaderConfig.CONTENT_READER_SLEEP_INTERVAL);
+			sensorConfig.setParameter(PullSensorConfig.NUMBER_OF_SENSE_CYCLES, ContentReaderConfig.CONTENT_READER_SAMPLING_CYCLES);
 			break;
 		case SensorUtils.SENSOR_TYPE_CALL_CONTENT_READER:
-			sensorConfig.setParameter(SensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, SensorManagerConstants.CONTENT_READER_SLEEP_INTERVAL);
-			sensorConfig.setParameter(SensorConfig.NUMBER_OF_SENSE_CYCLES, SensorManagerConstants.CONTENT_READER_SAMPLING_CYCLES);
+			sensorConfig.setParameter(PullSensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, ContentReaderConfig.CONTENT_READER_SLEEP_INTERVAL);
+			sensorConfig.setParameter(PullSensorConfig.NUMBER_OF_SENSE_CYCLES, ContentReaderConfig.CONTENT_READER_SAMPLING_CYCLES);
 			break;
 		}
 
