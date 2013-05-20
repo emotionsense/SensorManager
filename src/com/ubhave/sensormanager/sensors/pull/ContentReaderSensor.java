@@ -61,58 +61,63 @@ public abstract class ContentReaderSensor extends AbstractPullSensor
 				// 2) columns to query
 
 				contentList = new ArrayList<HashMap<String, String>>();
-
 				String url = getContentURL();
 				Uri uri = Uri.parse(url);
-
 				String[] contentKeys = getContentKeysArray();
-
-				ContentResolver contentResolver = applicationContext.getContentResolver();
-				Cursor cursor = contentResolver.query(uri, contentKeys, null, null, "date LIMIT 100");
-				Log.d(getLogTag(), "Total entries in the cursor" + cursor.getCount());
-
-				while (cursor.moveToNext())
+				try
 				{
-					HashMap<String, String> contentMap = new HashMap<String, String>();
-					for (String key : contentKeys)
+					ContentResolver contentResolver = applicationContext.getContentResolver();
+					Cursor cursor = contentResolver.query(uri, contentKeys, null, null, "date LIMIT 100");
+					Log.d(getLogTag(), "Total entries in the cursor" + cursor.getCount());
+					while (cursor.moveToNext())
 					{
-						String value = cursor.getString(cursor.getColumnIndex(key));
+						HashMap<String, String> contentMap = new HashMap<String, String>();
+						for (String key : contentKeys)
+						{
+							String value = cursor.getString(cursor.getColumnIndex(key));
 
-						if ((value == null) || (value.length() == 0))
-						{
-							value = "";
-						}
-						else
-						{
-							if (key.equals("number") || key.equals("address"))
+							if ((value == null) || (value.length() == 0))
 							{
-								value = AbstractCommunicationSensor.hashPhoneNumber(value);
+								value = "";
 							}
-							else if (key.equals("body"))
+							else
 							{
-								int noOfWords = 0;
-								int charCount = 0;
-								if ((value != null) && (value.length() > 0))
+								if (key.equals("number") || key.equals("address"))
 								{
-									charCount = value.length();
-									noOfWords = value.split(" ").length;
+									value = AbstractCommunicationSensor.hashPhoneNumber(value);
 								}
+								else if (key.equals("body"))
+								{
+									int noOfWords = 0;
+									int charCount = 0;
+									if ((value != null) && (value.length() > 0))
+									{
+										charCount = value.length();
+										noOfWords = value.split(" ").length;
+									}
 
-								// no. of words
-								contentMap.put("bodyWordCount", noOfWords + "");
+									// no. of words
+									contentMap.put("bodyWordCount", noOfWords + "");
 
-								// no. of characters
-								key = "bodyLength";
-								value = charCount + "";
+									// no. of characters
+									key = "bodyLength";
+									value = charCount + "";
+								}
 							}
+							contentMap.put(key, value);
 						}
-
-						contentMap.put(key, value);
+						contentList.add(contentMap);
 					}
-					contentList.add(contentMap);
 				}
-				// sensing complete
-				notifySenseCyclesComplete();
+				catch (Exception e)
+				{
+					e.printStackTrace();
+				}
+				finally
+				{
+					// sensing complete
+					notifySenseCyclesComplete();
+				}
 			}
 		}.start();
 
