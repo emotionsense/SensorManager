@@ -126,5 +126,4 @@ public abstract class AbstractPullSensor extends AbstractSensor implements PullS
 			isSensing = false;
 		}
 	}
-
 }

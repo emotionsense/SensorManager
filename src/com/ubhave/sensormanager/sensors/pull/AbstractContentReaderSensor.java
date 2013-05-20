@@ -32,19 +32,19 @@ import android.net.Uri;
 import android.util.Log;
 
 import com.ubhave.sensormanager.data.SensorData;
-import com.ubhave.sensormanager.data.pullsensor.ContentReaderData;
-import com.ubhave.sensormanager.sensors.push.AbstractCommunicationSensor;
+import com.ubhave.sensormanager.process.pull.ContentReaderProcessor;
 
-public abstract class ContentReaderSensor extends AbstractPullSensor
+public abstract class AbstractContentReaderSensor extends AbstractPullSensor
 {
 	protected ArrayList<HashMap<String, String>> contentList;
 	protected static Object lock = new Object();
+//	private ContentReaderData crData;
 
 	protected abstract String getContentURL();
 
 	protected abstract String[] getContentKeysArray();
 
-	public ContentReaderSensor(Context context)
+	public AbstractContentReaderSensor(Context context)
 	{
 		super(context);
 	}
@@ -57,7 +57,7 @@ public abstract class ContentReaderSensor extends AbstractPullSensor
 			{
 				// Some parameters that could be exposed through the config,
 				// which are currently set as constants in the code:
-				// 1) limit on number of rows - 100
+				// 1) limit on number of rows - 1000
 				// 2) columns to query
 
 				contentList = new ArrayList<HashMap<String, String>>();
@@ -67,46 +67,23 @@ public abstract class ContentReaderSensor extends AbstractPullSensor
 				try
 				{
 					ContentResolver contentResolver = applicationContext.getContentResolver();
-					Cursor cursor = contentResolver.query(uri, contentKeys, null, null, "date LIMIT 100");
-					Log.d(getLogTag(), "Total entries in the cursor" + cursor.getCount());
-					while (cursor.moveToNext())
+					Cursor cursor = contentResolver.query(uri, contentKeys, null, null, "date LIMIT 1000");
+					if (cursor != null)
 					{
-						HashMap<String, String> contentMap = new HashMap<String, String>();
-						for (String key : contentKeys)
+						cursor.moveToFirst();
+						Log.d(getLogTag(), "Total entries in the cursor: " + cursor.getCount());
+						while (!cursor.isAfterLast())
 						{
-							String value = cursor.getString(cursor.getColumnIndex(key));
-
-							if ((value == null) || (value.length() == 0))
+							HashMap<String, String> contentMap = new HashMap<String, String>();
+							for (String key : contentKeys)
 							{
-								value = "";
+								String value = cursor.getString(cursor.getColumnIndex(key));
+								contentMap.put(key, value);
 							}
-							else
-							{
-								if (key.equals("number") || key.equals("address"))
-								{
-									value = AbstractCommunicationSensor.hashPhoneNumber(value);
-								}
-								else if (key.equals("body"))
-								{
-									int noOfWords = 0;
-									int charCount = 0;
-									if ((value != null) && (value.length() > 0))
-									{
-										charCount = value.length();
-										noOfWords = value.split(" ").length;
-									}
-
-									// no. of words
-									contentMap.put("bodyWordCount", noOfWords + "");
-
-									// no. of characters
-									key = "bodyLength";
-									value = charCount + "";
-								}
-							}
-							contentMap.put(key, value);
+							contentList.add(contentMap);
+							cursor.moveToNext();
 						}
-						contentList.add(contentMap);
+						cursor.close();
 					}
 				}
 				catch (Exception e)
@@ -132,8 +109,13 @@ public abstract class ContentReaderSensor extends AbstractPullSensor
 	@Override
 	protected SensorData getMostRecentRawData()
 	{
-		ContentReaderData crData = new ContentReaderData(pullSenseStartTimestamp, contentList, getSensorType(), sensorConfig);
-		return crData;
+		ContentReaderProcessor processor = (ContentReaderProcessor) super.getProcessor();
+		return processor.process(pullSenseStartTimestamp, getSensorType(), contentList, sensorConfig);
 	}
-
+	
+	@Override
+	protected void processSensorData()
+	{
+		
+	}
 }

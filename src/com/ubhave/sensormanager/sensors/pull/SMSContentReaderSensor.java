@@ -27,7 +27,7 @@ import android.content.Context;
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
-public class SMSContentReaderSensor extends ContentReaderSensor
+public class SMSContentReaderSensor extends AbstractContentReaderSensor
 {
 	private static final String LOG_TAG = "SMSContentReaderSensor";
 	private static SMSContentReaderSensor smsContentReaderSensor;
@@ -81,12 +81,4 @@ public class SMSContentReaderSensor extends ContentReaderSensor
 	{
 		return LOG_TAG;
 	}
-
-	@Override
-	protected void processSensorData()
-	{
-		// TODO Auto-generated method stub
-		
-	}
-
 }

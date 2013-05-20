@@ -22,46 +22,36 @@ IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 package com.ubhave.sensormanager.data.pullsensor;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
 
-import com.ubhave.sensormanager.config.SensorConfig;
-import com.ubhave.sensormanager.data.SensorData;
-
-public class ContentReaderData extends SensorData
+public class ContentReaderResult
 {
-	private final ArrayList<ContentReaderResult> contentList;
-	private int sensorType;
-
-	public ContentReaderData(long sensorTimestamp, SensorConfig config)
+	private HashMap<String, String> contentMap;
+	
+	public ContentReaderResult()
 	{
-		super(sensorTimestamp, config);
-		contentList = new ArrayList<ContentReaderResult>();
+		contentMap = new HashMap<String, String>();
 	}
 	
-	public void addContent(final ContentReaderResult entry)
+	public void set(final String key, final String value)
 	{
-		contentList.add(entry);
+		contentMap.put(key, value);
 	}
 	
-	public int size()
+	public String get(final String key)
 	{
-		return contentList.size();
-	}
-
-	public ArrayList<ContentReaderResult> getContentList()
-	{
-		return contentList;
+		return contentMap.get(key);
 	}
 	
-	public void setSensorType(int type)
+	public Set<String> getKeys()
 	{
-		this.sensorType = type;
+		return contentMap.keySet();
 	}
-
-	@Override
-	public int getSensorType()
+	
+	public void setContentMap(final HashMap<String, String> map)
 	{
-		return sensorType;
+		this.contentMap = map;
 	}
 
 }

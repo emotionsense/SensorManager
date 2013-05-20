@@ -1,13 +1,12 @@
-package com.ubhave.sensormanager.process.push;
+package com.ubhave.sensormanager.process;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Locale;
 
 import android.content.Context;
 
-import com.ubhave.sensormanager.process.AbstractProcessor;
-
-public class CommunicationProcessor extends AbstractProcessor
+public abstract class CommunicationProcessor extends AbstractProcessor
 {
 	public CommunicationProcessor(Context c, boolean rw, boolean sp)
 	{
@@ -46,9 +45,8 @@ public class CommunicationProcessor extends AbstractProcessor
 			{
 				hexString = "0" + hexString;
 			}
-			hash += hexString.toUpperCase(); // TODO fix warning
+			hash += hexString.toUpperCase(Locale.ENGLISH);
 		}
 		return hash;
 	}
-
 }

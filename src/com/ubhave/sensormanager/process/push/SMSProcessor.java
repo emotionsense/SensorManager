@@ -9,6 +9,7 @@ import android.content.Context;
 
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.pushsensor.SmsData;
+import com.ubhave.sensormanager.process.CommunicationProcessor;
 
 public class SMSProcessor extends CommunicationProcessor
 {
