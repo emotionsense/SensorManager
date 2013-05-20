@@ -33,10 +33,14 @@ public class WifiData extends SensorData
 
 	private ArrayList<WifiScanResult> wifiScanData;
 
-	public WifiData(long senseStartTimestamp, ArrayList<WifiScanResult> wifiScanResults, SensorConfig sensorConfig)
+	public WifiData(long senseStartTimestamp, SensorConfig sensorConfig)
 	{
 		super(senseStartTimestamp, sensorConfig);
-		this.wifiScanData = wifiScanResults;
+	}
+
+	public void setWifiScanData(ArrayList<WifiScanResult> wifiScanData)
+	{
+		this.wifiScanData = wifiScanData;
 	}
 
 	public ArrayList<WifiScanResult> getWifiScanData()

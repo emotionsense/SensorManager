@@ -25,10 +25,10 @@ package com.ubhave.sensormanager.sensors.push;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.BatteryManager;
 
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.data.pushsensor.BatteryData;
+import com.ubhave.sensormanager.process.push.BatteryProcessor;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class BatterySensor extends AbstractPushSensor
@@ -72,17 +72,10 @@ public class BatterySensor extends AbstractPushSensor
 		return SensorUtils.SENSOR_TYPE_BATTERY;
 	}
 
-	protected void onBroadcastReceived(Context context, Intent intent)
+	protected void onBroadcastReceived(Context context, Intent dataIntent)
 	{
-        int level = intent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
-        int scale = intent.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
-        int temp = intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, -1);
-        int voltage = intent.getIntExtra(BatteryManager.EXTRA_VOLTAGE, -1);
-        int plugged = intent.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1);
-        int status = intent.getIntExtra(BatteryManager.EXTRA_STATUS, -1);
-        int health = intent.getIntExtra(BatteryManager.EXTRA_HEALTH, -1);
-
-        BatteryData batteryData = new BatteryData(System.currentTimeMillis(), level, scale, temp, voltage, plugged, status, health, sensorConfig.clone());
+        BatteryProcessor processor = (BatteryProcessor) getProcessor();
+        BatteryData batteryData = processor.process(System.currentTimeMillis(), sensorConfig.clone(), dataIntent);
         onDataSensed(batteryData);
 	}
 

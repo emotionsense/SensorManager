@@ -31,9 +31,10 @@ import android.os.Looper;
 import android.util.Log;
 
 import com.ubhave.sensormanager.ESException;
-import com.ubhave.sensormanager.config.SensorConfig;
+import com.ubhave.sensormanager.config.sensors.pull.LocationConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.data.pullsensor.LocationData;
+import com.ubhave.sensormanager.process.pull.LocationProcessor;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class LocationSensor extends AbstractPullSensor
@@ -47,6 +48,7 @@ public class LocationSensor extends AbstractPullSensor
 	private LocationListener locListener;
 	private static LocationSensor locationSensor;
 	private static Object lock = new Object();
+	private LocationData locationData;
 
 	public static LocationSensor getLocationSensor(Context context) throws ESException
 	{
@@ -115,9 +117,9 @@ public class LocationSensor extends AbstractPullSensor
 	{
 		lastLocation = null;
 
-		String accuracyConfig = (String) sensorConfig.getParameter(SensorConfig.LOCATION_ACCURACY);
+		String accuracyConfig = (String) sensorConfig.getParameter(LocationConfig.ACCURACY_TYPE);
 
-		if ((accuracyConfig != null) && (accuracyConfig.equals(SensorConfig.LOCATION_ACCURACY_FINE)))
+		if ((accuracyConfig != null) && (accuracyConfig.equals(LocationConfig.LOCATION_ACCURACY_FINE)))
 		{
 			if (locationManager.getAllProviders().contains(LocationManager.NETWORK_PROVIDER))
 			{
@@ -161,7 +163,12 @@ public class LocationSensor extends AbstractPullSensor
 
 	protected SensorData getMostRecentRawData()
 	{
-		LocationData locationData = new LocationData(pullSenseStartTimestamp, lastLocation, sensorConfig.clone());
 		return locationData;
+	}
+	
+	protected void processSensorData()
+	{
+		LocationProcessor processor = (LocationProcessor)getProcessor();
+		locationData = processor.process(pullSenseStartTimestamp, lastLocation, sensorConfig.clone());
 	}
 }

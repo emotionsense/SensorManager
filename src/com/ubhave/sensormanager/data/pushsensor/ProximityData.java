@@ -33,11 +33,9 @@ public class ProximityData extends SensorData
 	private float distance;
 	private float maxRange;
 
-	public ProximityData(long recvTimestamp, float distance, float maxRange, SensorConfig sensorConfig)
+	public ProximityData(long recvTimestamp, SensorConfig sensorConfig)
 	{
 		super(recvTimestamp, sensorConfig);
-		this.distance = distance;
-		this.maxRange = maxRange;
 	}
 
 	public boolean isNear()
@@ -49,9 +47,19 @@ public class ProximityData extends SensorData
 		return false;
 	}
 	
+	public void setDistance(float f)
+	{
+		distance = f;
+	}
+	
 	public float getDistance()
 	{
 		return distance;
+	}
+	
+	public void setMaxRange(float f)
+	{
+		maxRange = f;
 	}
 	
 	public float getMaxRange()

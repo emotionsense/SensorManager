@@ -35,8 +35,14 @@ import com.ubhave.sensormanager.classifier.LocationDataClassifier;
 import com.ubhave.sensormanager.classifier.MicrophoneDataClassifier;
 import com.ubhave.sensormanager.classifier.SensorDataClassifier;
 import com.ubhave.sensormanager.classifier.WifiDataClassifier;
-import com.ubhave.sensormanager.config.SensorManagerConstants;
 import com.ubhave.sensormanager.config.SensorConfig;
+import com.ubhave.sensormanager.config.sensors.pull.AccelerometerConfig;
+import com.ubhave.sensormanager.config.sensors.pull.ApplicationConfig;
+import com.ubhave.sensormanager.config.sensors.pull.BluetoothConfig;
+import com.ubhave.sensormanager.config.sensors.pull.LocationConfig;
+import com.ubhave.sensormanager.config.sensors.pull.MicrophoneConfig;
+import com.ubhave.sensormanager.config.sensors.pull.PullSensorConfig;
+import com.ubhave.sensormanager.config.sensors.pull.WifiConfig;
 import com.ubhave.sensormanager.sensors.pull.AccelerometerSensor;
 import com.ubhave.sensormanager.sensors.pull.ApplicationSensor;
 import com.ubhave.sensormanager.sensors.pull.BluetoothSensor;
@@ -176,37 +182,37 @@ public class SensorUtils
 		switch (sensorType)
 		{
 		case SensorUtils.SENSOR_TYPE_ACCELEROMETER:
-			sensorConfig.setParameter(SensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, SensorManagerConstants.ACCELEROMETER_SLEEP_INTERVAL);
-			sensorConfig.setParameter(SensorConfig.ACCELEROMETER_SAMPLING_DELAY, SensorManager.SENSOR_DELAY_GAME);
-			sensorConfig.setParameter(SensorConfig.SENSE_WINDOW_LENGTH_MILLIS,
-					SensorManagerConstants.ACCELEROMETER_SAMPLING_WINDOW_SIZE_MILLIS);
+			sensorConfig.setParameter(PullSensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, AccelerometerConfig.DEFAULT_SLEEP_INTERVAL);
+			sensorConfig.setParameter(AccelerometerConfig.SAMPLING_DELAY, SensorManager.SENSOR_DELAY_GAME);
+			sensorConfig.setParameter(PullSensorConfig.SENSE_WINDOW_LENGTH_MILLIS,
+					AccelerometerConfig.DEFAULT_SAMPLING_WINDOW_SIZE_MILLIS);
 			break;
 		case SensorUtils.SENSOR_TYPE_BLUETOOTH:
-			sensorConfig.setParameter(SensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, SensorManagerConstants.BLUETOOTH_SLEEP_INTERVAL);
-			sensorConfig.setParameter(SensorConfig.NUMBER_OF_SENSE_CYCLES, SensorManagerConstants.BLUETOOTH_SAMPLING_CYCLES);
-			sensorConfig.setParameter(SensorConfig.SENSE_WINDOW_LENGTH_PER_CYCLE_MILLIS,
-					SensorManagerConstants.BLUETOOTH_SAMPLING_WINDOW_SIZE_PER_CYCLE_MILLIS);
+			sensorConfig.setParameter(PullSensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, BluetoothConfig.DEFAULT_SLEEP_INTERVAL);
+			sensorConfig.setParameter(PullSensorConfig.NUMBER_OF_SENSE_CYCLES, BluetoothConfig.DEFAULT_SAMPLING_CYCLES);
+			sensorConfig.setParameter(PullSensorConfig.SENSE_WINDOW_LENGTH_PER_CYCLE_MILLIS,
+					BluetoothConfig.DEFAULT_SAMPLING_WINDOW_SIZE_PER_CYCLE_MILLIS);
 			break;
 		case SensorUtils.SENSOR_TYPE_LOCATION:
-			sensorConfig.setParameter(SensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, SensorManagerConstants.LOCATION_SLEEP_INTERVAL);
-			sensorConfig.setParameter(SensorConfig.SENSE_WINDOW_LENGTH_MILLIS,
-					SensorManagerConstants.LOCATION_SAMPLING_WINDOW_SIZE_MILLIS);
-			sensorConfig.setParameter(SensorConfig.LOCATION_ACCURACY, SensorConfig.LOCATION_ACCURACY_COARSE);
+			sensorConfig.setParameter(PullSensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, LocationConfig.DEFAULT_SLEEP_INTERVAL);
+			sensorConfig.setParameter(PullSensorConfig.SENSE_WINDOW_LENGTH_MILLIS,
+					LocationConfig.DEFAULT_SAMPLING_WINDOW_SIZE_MILLIS);
+			sensorConfig.setParameter(LocationConfig.ACCURACY_TYPE, LocationConfig.LOCATION_ACCURACY_COARSE);
 			break;
 		case SensorUtils.SENSOR_TYPE_MICROPHONE:
-			sensorConfig.setParameter(SensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, SensorManagerConstants.MICROPHONE_SLEEP_INTERVAL);
-			sensorConfig.setParameter(SensorConfig.SENSE_WINDOW_LENGTH_MILLIS,
-					SensorManagerConstants.MICROPHONE_SAMPLING_WINDOW_SIZE_MILLIS);
+			sensorConfig.setParameter(PullSensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, MicrophoneConfig.DEFAULT_SLEEP_INTERVAL);
+			sensorConfig.setParameter(PullSensorConfig.SENSE_WINDOW_LENGTH_MILLIS,
+					MicrophoneConfig.DEFAULT_SAMPLING_WINDOW_SIZE_MILLIS);
 			break;
 		case SensorUtils.SENSOR_TYPE_WIFI:
-			sensorConfig.setParameter(SensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, SensorManagerConstants.WIFI_SLEEP_INTERVAL);
-			sensorConfig.setParameter(SensorConfig.NUMBER_OF_SENSE_CYCLES, SensorManagerConstants.WIFI_SAMPLING_CYCLES);
-			sensorConfig.setParameter(SensorConfig.SENSE_WINDOW_LENGTH_PER_CYCLE_MILLIS,
-					SensorManagerConstants.WIFI_SAMPLING_WINDOW_SIZE_PER_CYCLE_MILLIS);
+			sensorConfig.setParameter(PullSensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, WifiConfig.DEFAULT_SLEEP_INTERVAL);
+			sensorConfig.setParameter(PullSensorConfig.NUMBER_OF_SENSE_CYCLES, WifiConfig.DEFAULT_SAMPLING_CYCLES);
+			sensorConfig.setParameter(PullSensorConfig.SENSE_WINDOW_LENGTH_PER_CYCLE_MILLIS,
+					WifiConfig.DEFAULT_SAMPLING_WINDOW_SIZE_PER_CYCLE_MILLIS);
 			break;
 		case SensorUtils.SENSOR_TYPE_APPLICATION:
-			sensorConfig.setParameter(SensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, SensorManagerConstants.APPLICATON_SLEEP_INTERVAL);
-			sensorConfig.setParameter(SensorConfig.NUMBER_OF_SENSE_CYCLES, SensorManagerConstants.APPLCATION_SAMPLING_CYCLES);
+			sensorConfig.setParameter(PullSensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, ApplicationConfig.DEFAULT_SLEEP_INTERVAL);
+			sensorConfig.setParameter(PullSensorConfig.NUMBER_OF_SENSE_CYCLES, ApplicationConfig.APPLICATION_SAMPLING_CYCLES);
 			break;
 		case SensorUtils.SENSOR_TYPE_SMS_CONTENT_READER:
 			sensorConfig.setParameter(SensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, SensorManagerConstants.CONTENT_READER_SLEEP_INTERVAL);
@@ -218,7 +224,7 @@ public class SensorUtils
 			break;
 		}
 
-		sensorConfig.setParameter(SensorConfig.ADAPTIVE_SENSING_ENABLED, false);
+		sensorConfig.setParameter(PullSensorConfig.ADAPTIVE_SENSING_ENABLED, false);
 		return sensorConfig;
 	}
 

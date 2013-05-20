@@ -32,9 +32,13 @@ public class ApplicationData extends SensorData
 {
 	private ArrayList<String> applications;
 
-	public ApplicationData(long senseStartTimestamp, ArrayList<String> applications, SensorConfig sensorConfig)
+	public ApplicationData(long senseStartTimestamp, SensorConfig sensorConfig)
 	{
 		super(senseStartTimestamp, sensorConfig);
+	}
+	
+	public void setApplications(ArrayList<String> applications)
+	{
 		this.applications = applications;
 	}
 
