@@ -86,12 +86,12 @@ public class ApplicationSensor extends AbstractPullSensor
 	{
 		return applicationData;
 	}
-	
+
 	protected void processSensorData()
 	{
 		ApplicationProcessor processor = (ApplicationProcessor) getProcessor();
 		applicationData = processor.process(pullSenseStartTimestamp, runningApplications, sensorConfig.clone());
-		
+
 	}
 
 	protected boolean startSensing()
@@ -100,29 +100,39 @@ public class ApplicationSensor extends AbstractPullSensor
 		{
 			public void run()
 			{
-				runningApplications = new ArrayList<String>();
-
-				ActivityManager activityManager = (ActivityManager) applicationContext
-						.getSystemService(Context.ACTIVITY_SERVICE);
-
-				List<RunningTaskInfo> taskInfos = activityManager.getRunningTasks(50);
-				PackageManager pm = applicationContext.getPackageManager();
-				for (RunningTaskInfo ti : taskInfos)
+				try
 				{
-					try
+					runningApplications = new ArrayList<String>();
+
+					ActivityManager activityManager = (ActivityManager) applicationContext
+							.getSystemService(Context.ACTIVITY_SERVICE);
+
+					List<RunningTaskInfo> taskInfos = activityManager.getRunningTasks(50);
+					PackageManager pm = applicationContext.getPackageManager();
+					for (RunningTaskInfo ti : taskInfos)
 					{
-						CharSequence c = pm.getApplicationLabel(pm.getApplicationInfo(ti.baseActivity.getPackageName(),
-								PackageManager.GET_META_DATA));
-						String appDetails = "(" + c.toString() + ") " + ti.baseActivity.flattenToShortString();
-						runningApplications.add(appDetails);
-					}
-					catch (NameNotFoundException e)
-					{
-						Log.e(TAG, Log.getStackTraceString(e));
+						try
+						{
+							CharSequence c = pm.getApplicationLabel(pm.getApplicationInfo(ti.baseActivity.getPackageName(),
+									PackageManager.GET_META_DATA));
+							String appDetails = "(" + c.toString() + ") " + ti.baseActivity.flattenToShortString();
+							runningApplications.add(appDetails);
+						}
+						catch (NameNotFoundException e)
+						{
+							Log.e(TAG, Log.getStackTraceString(e));
+						}
 					}
 				}
-				// sensing complete
-				notifySenseCyclesComplete();
+				catch (Exception e)
+				{
+					e.printStackTrace();
+				}
+				finally
+				{
+					// sensing complete
+					notifySenseCyclesComplete();
+				}
 			}
 		}.start();
 

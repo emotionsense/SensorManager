@@ -65,12 +65,20 @@ public class ProximitySensor extends AbstractPushSensor
 		{
 			public void onSensorChanged(SensorEvent event)
 			{
-				float distance = event.values[0];
-				float maxRange = event.sensor.getMaximumRange();
-				
-				ProximityProcessor processor = (ProximityProcessor) getProcessor();
-				ProximityData proximityData = processor.process(System.currentTimeMillis(), sensorConfig.clone(), distance, maxRange);
-				onDataSensed(proximityData);
+				try
+				{
+					float distance = event.values[0];
+					float maxRange = event.sensor.getMaximumRange();
+
+					ProximityProcessor processor = (ProximityProcessor) getProcessor();
+					ProximityData proximityData = processor.process(System.currentTimeMillis(), sensorConfig.clone(),
+							distance, maxRange);
+					onDataSensed(proximityData);
+				}
+				catch (Exception e)
+				{
+					e.printStackTrace();
+				}
 			}
 
 			public void onAccuracyChanged(Sensor sensor, int accuracy)
@@ -104,7 +112,8 @@ public class ProximitySensor extends AbstractPushSensor
 	protected boolean startSensing()
 	{
 		SensorManager sensorManager = (SensorManager) applicationContext.getSystemService(Context.SENSOR_SERVICE);
-		boolean registered = sensorManager.registerListener(sensorEventListener, sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY), SensorManager.SENSOR_DELAY_NORMAL);
+		boolean registered = sensorManager.registerListener(sensorEventListener,
+				sensorManager.getDefaultSensor(Sensor.TYPE_PROXIMITY), SensorManager.SENSOR_DELAY_NORMAL);
 		return registered;
 	}
 

@@ -103,7 +103,7 @@ public class MicrophoneSensor extends AbstractPullSensor
 			recorder.start();
 			return true;
 		}
-		catch (Exception e)
+		catch (Throwable e)
 		{
 			e.printStackTrace();
 			return false;
@@ -139,7 +139,7 @@ public class MicrophoneSensor extends AbstractPullSensor
 				}).start();
 				return true;
 			}
-			catch (Exception e)
+			catch (Throwable e)
 			{
 				e.printStackTrace();
 				return false;
@@ -173,7 +173,7 @@ public class MicrophoneSensor extends AbstractPullSensor
 				recorder.release();
 				isRecording = false;
 			}
-			catch (Exception e)
+			catch (Throwable e)
 			{
 				e.printStackTrace();
 			}

@@ -62,7 +62,8 @@ public class SmsSensor extends AbstractPushSensor
 					{
 						smsSensor = new SmsSensor(context);
 					}
-					else throw new ESException(ESException. PERMISSION_DENIED, "SMS Sensor : Permission not Granted");
+					else
+						throw new ESException(ESException.PERMISSION_DENIED, "SMS Sensor : Permission not Granted");
 				}
 			}
 		}
@@ -80,33 +81,42 @@ public class SmsSensor extends AbstractPushSensor
 			{
 				if (isSensing)
 				{
-					// check last sent message
-					Uri smsUri = Uri.parse("content://sms");
-					ContentResolver resolver = applicationContext.getContentResolver();
-					if (resolver != null)
+					try
 					{
-						Cursor cursor = resolver.query(smsUri, null, null, null, null);
-						if (cursor != null)
+						// check last sent message
+						Uri smsUri = Uri.parse("content://sms");
+						ContentResolver resolver = applicationContext.getContentResolver();
+						if (resolver != null)
 						{
-							// last sms sent is the fist in the list
-							cursor.moveToNext();
-							if (!cursor.isAfterLast())
+							Cursor cursor = resolver.query(smsUri, null, null, null, null);
+							if (cursor != null)
 							{
-								String content = cursor.getString(cursor.getColumnIndex("body"));
-								String sentTo = cursor.getString(cursor.getColumnIndex("address"));
-								String messageId = cursor.getString(cursor.getColumnIndex("_id"));
+								// last sms sent is the fist in the list
+								cursor.moveToNext();
+								if (!cursor.isAfterLast())
+								{
+									String content = cursor.getString(cursor.getColumnIndex("body"));
+									String sentTo = cursor.getString(cursor.getColumnIndex("address"));
+									String messageId = cursor.getString(cursor.getColumnIndex("_id"));
 
-								if ((prevMessageId != null) && (prevMessageId.length() > 0) && (prevMessageId.equals(messageId)))
-								{
-									// ignore, message already logged
-								}
-								else
-								{
-									prevMessageId = messageId;
-									logDataSensed(System.currentTimeMillis(), content, sentTo, SmsData.SMS_CONTENT_CHANGED);
+									if ((prevMessageId != null) && (prevMessageId.length() > 0)
+											&& (prevMessageId.equals(messageId)))
+									{
+										// ignore, message already logged
+									}
+									else
+									{
+										prevMessageId = messageId;
+										logDataSensed(System.currentTimeMillis(), content, sentTo,
+												SmsData.SMS_CONTENT_CHANGED);
+									}
 								}
 							}
-						}	
+						}
+					}
+					catch (Exception e)
+					{
+						e.printStackTrace();
 					}
 				}
 			}
@@ -151,7 +161,7 @@ public class SmsSensor extends AbstractPushSensor
 						smsMessagesArray[i] = SmsMessage.createFromPdu((byte[]) pdusArray[i]);
 						String address = smsMessagesArray[i].getOriginatingAddress();
 						String content = smsMessagesArray[i].getMessageBody();
-						
+
 						logDataSensed(System.currentTimeMillis(), content, address, SmsData.SMS_RECEIVED);
 					}
 				}

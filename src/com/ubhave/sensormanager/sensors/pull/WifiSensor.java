@@ -119,23 +119,31 @@ public class WifiSensor extends AbstractPullSensor
 	{
 		return wifiData;
 	}
-	
+
 	protected void processSensorData()
 	{
-		WifiProcessor processor = (WifiProcessor)getProcessor();
+		WifiProcessor processor = (WifiProcessor) getProcessor();
 		wifiData = processor.process(cyclesRemaining, wifiScanResults, sensorConfig.clone());
 	}
 
 	protected boolean startSensing()
 	{
-		wifiScanResults = null;
-		if (wifiManager.isWifiEnabled())
+		try
 		{
-			wifiScanResults = new ArrayList<WifiScanResult>();
-			cyclesRemaining = (Integer) sensorConfig.getParameter(PullSensorConfig.NUMBER_OF_SENSE_CYCLES);
-			applicationContext.registerReceiver(wifiReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
-			wifiManager.startScan();
-			return true;
+			wifiScanResults = null;
+			if (wifiManager.isWifiEnabled())
+			{
+				wifiScanResults = new ArrayList<WifiScanResult>();
+				cyclesRemaining = (Integer) sensorConfig.getParameter(PullSensorConfig.NUMBER_OF_SENSE_CYCLES);
+				applicationContext.registerReceiver(wifiReceiver,
+						new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
+				wifiManager.startScan();
+				return true;
+			}
+		}
+		catch (Exception exp)
+		{
+			exp.printStackTrace();
 		}
 		return false;
 	}

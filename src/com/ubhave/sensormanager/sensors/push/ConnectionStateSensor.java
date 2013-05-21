@@ -56,7 +56,8 @@ public class ConnectionStateSensor extends AbstractPushSensor
 						connectionSensor = new ConnectionStateSensor(context);
 					}
 					else
-						throw new ESException(ESException.PERMISSION_DENIED, "Connection Sensor Sensor : Permission not Granted");
+						throw new ESException(ESException.PERMISSION_DENIED,
+								"Connection Sensor Sensor : Permission not Granted");
 				}
 			}
 		}
@@ -72,15 +73,23 @@ public class ConnectionStateSensor extends AbstractPushSensor
 	{
 		if (isSensing)
 		{
-			ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-			NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-			
-			WifiManager wifiMgr = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-			WifiInfo wifiInfo = wifiMgr.getConnectionInfo();
-			
-			ConnectionStateProcessor processor = (ConnectionStateProcessor) getProcessor();
-			ConnectionStateData data = processor.process(System.currentTimeMillis(), sensorConfig.clone(), activeNetwork, wifiInfo);
-			onDataSensed(data);
+			try
+			{
+				ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+				NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+
+				WifiManager wifiMgr = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+				WifiInfo wifiInfo = wifiMgr.getConnectionInfo();
+
+				ConnectionStateProcessor processor = (ConnectionStateProcessor) getProcessor();
+				ConnectionStateData data = processor.process(System.currentTimeMillis(), sensorConfig.clone(),
+						activeNetwork, wifiInfo);
+				onDataSensed(data);
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
 		}
 		else
 		{
