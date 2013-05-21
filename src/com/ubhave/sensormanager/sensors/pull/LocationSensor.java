@@ -116,44 +116,50 @@ public class LocationSensor extends AbstractPullSensor
 	protected boolean startSensing()
 	{
 		lastLocation = null;
-
-		String accuracyConfig = (String) sensorConfig.getParameter(LocationConfig.ACCURACY_TYPE);
-
-		if ((accuracyConfig != null) && (accuracyConfig.equals(LocationConfig.LOCATION_ACCURACY_FINE)))
+		try
 		{
-			if (locationManager.getAllProviders().contains(LocationManager.NETWORK_PROVIDER))
+			String accuracyConfig = (String) sensorConfig.getParameter(LocationConfig.ACCURACY_TYPE);
+			if ((accuracyConfig != null) && (accuracyConfig.equals(LocationConfig.LOCATION_ACCURACY_FINE)))
 			{
-				locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 0, locListener,
-						Looper.getMainLooper());
-			}
-			else
-			{
-				Log.d(TAG, "requestLocationUpdates(), Not registering with NETWORK_PROVIDER as it is unavailable");
-			}
+				if (locationManager.getAllProviders().contains(LocationManager.NETWORK_PROVIDER))
+				{
+					locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 0, locListener,
+							Looper.getMainLooper());
+				}
+				else
+				{
+					Log.d(TAG, "requestLocationUpdates(), Not registering with NETWORK_PROVIDER as it is unavailable");
+				}
 
-			if (locationManager.getAllProviders().contains(LocationManager.GPS_PROVIDER))
-			{
-				locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0, locListener,
-						Looper.getMainLooper());
+				if (locationManager.getAllProviders().contains(LocationManager.GPS_PROVIDER))
+				{
+					locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0, locListener,
+							Looper.getMainLooper());
+				}
+				else
+				{
+					Log.d(TAG, "requestLocationUpdates(), Not registering with GPS_PROVIDER as it is unavailable");
+				}
 			}
 			else
 			{
-				Log.d(TAG, "requestLocationUpdates(), Not registering with GPS_PROVIDER as it is unavailable");
+				if (locationManager.getAllProviders().contains(LocationManager.NETWORK_PROVIDER))
+				{
+					locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 0, locListener,
+							Looper.getMainLooper());
+				}
+				else
+				{
+					Log.d(TAG, "requestLocationUpdates(), Not registering with NETWORK_PROVIDER as it is unavailable");
+				}
 			}
+			return true;
 		}
-		else
+		catch (Exception e)
 		{
-			if (locationManager.getAllProviders().contains(LocationManager.NETWORK_PROVIDER))
-			{
-				locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 0, locListener,
-						Looper.getMainLooper());
-			}
-			else
-			{
-				Log.d(TAG, "requestLocationUpdates(), Not registering with NETWORK_PROVIDER as it is unavailable");
-			}
+			e.printStackTrace();
+			return false;
 		}
-		return true;
 	}
 
 	protected void stopSensing()
