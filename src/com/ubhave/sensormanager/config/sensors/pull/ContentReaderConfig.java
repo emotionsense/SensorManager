@@ -11,4 +11,9 @@ public class ContentReaderConfig
 	public static final String CONTENT_MAP_WORDCOUNT_KEY = "bodyWordCount";
 	public static final String CONTENT_MAP_CHARCOUNT_KEY = "bodyLength";
 	
+	public static final String SMS_CONTENT_ADDRESS_KEY = "address";
+	public static final String SMS_CONTENT_TYPE_KEY = "type";
+	public static final String SMS_CONTENT_DATE_KEY = "date";
+	public static final String SMS_CONTENT_BODY_KEY = "body";
+	
 }
