@@ -39,6 +39,7 @@ import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.config.sensors.pull.AccelerometerConfig;
 import com.ubhave.sensormanager.config.sensors.pull.ApplicationConfig;
 import com.ubhave.sensormanager.config.sensors.pull.BluetoothConfig;
+import com.ubhave.sensormanager.config.sensors.pull.CameraConfig;
 import com.ubhave.sensormanager.config.sensors.pull.ContentReaderConfig;
 import com.ubhave.sensormanager.config.sensors.pull.LocationConfig;
 import com.ubhave.sensormanager.config.sensors.pull.MicrophoneConfig;
@@ -48,6 +49,7 @@ import com.ubhave.sensormanager.sensors.pull.AccelerometerSensor;
 import com.ubhave.sensormanager.sensors.pull.ApplicationSensor;
 import com.ubhave.sensormanager.sensors.pull.BluetoothSensor;
 import com.ubhave.sensormanager.sensors.pull.CallContentReaderSensor;
+import com.ubhave.sensormanager.sensors.pull.CameraSensor;
 import com.ubhave.sensormanager.sensors.pull.LocationSensor;
 import com.ubhave.sensormanager.sensors.pull.MicrophoneSensor;
 import com.ubhave.sensormanager.sensors.pull.SMSContentReaderSensor;
@@ -77,6 +79,7 @@ public class SensorUtils
 	public final static int SENSOR_TYPE_APPLICATION = 5012;
 	public final static int SENSOR_TYPE_SMS_CONTENT_READER = 5013;
 	public final static int SENSOR_TYPE_CALL_CONTENT_READER = 5014;
+	public final static int SENSOR_TYPE_CAMERA = 5015;
 
 	public final static String SENSOR_NAME_ACCELEROMETER = "Accelerometer";
 	public final static String SENSOR_NAME_BATTERY = "Battery";
@@ -92,11 +95,12 @@ public class SensorUtils
 	public final static String SENSOR_NAME_APPLICATION = "Application";
 	public final static String SENSOR_NAME_SMS_CONTENT_READER = "SMSContentReader";
 	public final static String SENSOR_NAME_CALL_CONTENT_READER = "CallContentReader";
+	public final static String SENSOR_NAME_CAMERA = "Camera";
 
 	public final static int[] ALL_SENSORS = new int[] { SENSOR_TYPE_ACCELEROMETER, SENSOR_TYPE_BLUETOOTH,
 			SENSOR_TYPE_LOCATION, SENSOR_TYPE_MICROPHONE, SENSOR_TYPE_WIFI, SENSOR_TYPE_BATTERY, SENSOR_TYPE_PHONE_STATE,
 			SENSOR_TYPE_PROXIMITY, SENSOR_TYPE_SCREEN, SENSOR_TYPE_SMS, SENSOR_TYPE_CONNECTION_STATE,
-			SENSOR_TYPE_APPLICATION, SENSOR_TYPE_SMS_CONTENT_READER, SENSOR_TYPE_CALL_CONTENT_READER };
+			SENSOR_TYPE_APPLICATION, SENSOR_TYPE_SMS_CONTENT_READER, SENSOR_TYPE_CALL_CONTENT_READER,  SENSOR_TYPE_CAMERA};
 
 	public static boolean isPullSensor(int sensorType)
 	{
@@ -110,6 +114,7 @@ public class SensorUtils
 		case SENSOR_TYPE_APPLICATION:
 		case SENSOR_TYPE_SMS_CONTENT_READER:
 		case SENSOR_TYPE_CALL_CONTENT_READER:
+		case SENSOR_TYPE_CAMERA:
 			return true;
 		default:
 			return false;
@@ -172,6 +177,8 @@ public class SensorUtils
 			return SMSContentReaderSensor.getSMSContentReaderSensor(context);
 		case SENSOR_TYPE_CALL_CONTENT_READER:
 			return CallContentReaderSensor.getCallContentReaderSensor(context);
+		case SENSOR_TYPE_CAMERA:
+			return CameraSensor.getCameraSensor(context);
 		default:
 			throw new ESException(ESException.UNKNOWN_SENSOR_TYPE, "Unknown sensor id");
 		}
@@ -222,6 +229,11 @@ public class SensorUtils
 		case SensorUtils.SENSOR_TYPE_CALL_CONTENT_READER:
 			sensorConfig.setParameter(PullSensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, ContentReaderConfig.CONTENT_READER_SLEEP_INTERVAL);
 			sensorConfig.setParameter(PullSensorConfig.NUMBER_OF_SENSE_CYCLES, ContentReaderConfig.CONTENT_READER_SAMPLING_CYCLES);
+			break;
+			
+		case SensorUtils.SENSOR_TYPE_CAMERA:
+			sensorConfig.setParameter(PullSensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, CameraConfig.DEFAULT_SLEEP_INTERVAL);
+			sensorConfig.setParameter(PullSensorConfig.NUMBER_OF_SENSE_CYCLES, CameraConfig.CAMERA_SAMPLING_CYCLES);
 			break;
 		}
 
@@ -283,6 +295,10 @@ public class SensorUtils
 		{
 			return SENSOR_TYPE_CALL_CONTENT_READER;
 		}
+		else if (sensorName.equals(SENSOR_NAME_CAMERA))
+		{
+			return SENSOR_TYPE_CAMERA;
+		}
 		else
 		{
 			throw new ESException(ESException.UNKNOWN_SENSOR_NAME, "unknown sensor name " + sensorName);
@@ -321,6 +337,8 @@ public class SensorUtils
 			return SENSOR_NAME_SMS_CONTENT_READER;
 		case SensorUtils.SENSOR_TYPE_CALL_CONTENT_READER:
 			return SENSOR_NAME_CALL_CONTENT_READER;
+		case SensorUtils.SENSOR_TYPE_CAMERA:
+			return SENSOR_NAME_CAMERA;
 		default:
 			throw new ESException(ESException.UNKNOWN_SENSOR_NAME, "unknown sensor type " + sensorType);
 		}

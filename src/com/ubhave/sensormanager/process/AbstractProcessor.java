@@ -7,6 +7,7 @@ import com.ubhave.sensormanager.process.pull.AccelerometerProcessor;
 import com.ubhave.sensormanager.process.pull.ApplicationProcessor;
 import com.ubhave.sensormanager.process.pull.AudioProcessor;
 import com.ubhave.sensormanager.process.pull.BluetoothProcessor;
+import com.ubhave.sensormanager.process.pull.CameraProcessor;
 import com.ubhave.sensormanager.process.pull.ContentReaderProcessor;
 import com.ubhave.sensormanager.process.pull.LocationProcessor;
 import com.ubhave.sensormanager.process.pull.WifiProcessor;
@@ -57,6 +58,8 @@ public abstract class AbstractProcessor
 			return new ContentReaderProcessor(c, setRawData, setProcessedData);
 		case SensorUtils.SENSOR_TYPE_SMS_CONTENT_READER:
 			return new ContentReaderProcessor(c, setRawData, setProcessedData);
+		case SensorUtils.SENSOR_TYPE_CAMERA:
+			return new CameraProcessor(c, setRawData, setProcessedData);
 		default:
 			throw new ESException(ESException.UNKNOWN_SENSOR_TYPE, "No processor defined for this sensor.");
 		}
