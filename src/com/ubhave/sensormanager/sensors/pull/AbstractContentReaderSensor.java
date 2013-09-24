@@ -116,6 +116,5 @@ public abstract class AbstractContentReaderSensor extends AbstractPullSensor
 	@Override
 	protected void processSensorData()
 	{
-		
 	}
 }

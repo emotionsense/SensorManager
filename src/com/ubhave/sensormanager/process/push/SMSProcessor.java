@@ -19,6 +19,7 @@ public class SMSProcessor extends CommunicationProcessor
 	 * word,category_1,...,category_n
 	 */
 	
+	private final static String wordMapFile = "UNIMPLEMENTED";
 	private final HashMap<String, ArrayList<String>> wordCategoryMap;
 	
 	public SMSProcessor(Context c, boolean rw, boolean sp)
@@ -75,7 +76,7 @@ public class SMSProcessor extends CommunicationProcessor
 		HashMap<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
 		try
 		{
-			BufferedReader in = new BufferedReader(new InputStreamReader(appContext.getAssets().open("liwc.csv")));
+			BufferedReader in = new BufferedReader(new InputStreamReader(appContext.getAssets().open(wordMapFile)));
 			String line;
 			while ((line = in.readLine()) != null)
 			{

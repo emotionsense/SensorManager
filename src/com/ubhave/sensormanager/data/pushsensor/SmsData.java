@@ -37,22 +37,22 @@ public class SmsData extends SensorData
 	private int noOfWords;
 	private String address;
 	private String eventType;
-	private final HashMap<String, Integer> liwcCategories;
+	private final HashMap<String, Integer> wordCategories;
 	
 	public SmsData(long recvTimestamp, SensorConfig config)
 	{
 		super(recvTimestamp, config);
-		liwcCategories = new HashMap<String, Integer>();
+		wordCategories = new HashMap<String, Integer>();
 	}
 	
 	public void addCategory(String key)
 	{
-		Integer count = liwcCategories.get(key);
+		Integer count = wordCategories.get(key);
 		if (count == null)
 		{
 			count = 0;
 		}
-		liwcCategories.put(key, count + 1);
+		wordCategories.put(key, count + 1);
 	}
 	
 	public void setContentLength(int n)
