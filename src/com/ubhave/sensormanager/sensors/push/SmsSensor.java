@@ -34,6 +34,7 @@ import android.os.Handler;
 import android.telephony.SmsMessage;
 
 import com.ubhave.sensormanager.ESException;
+import com.ubhave.sensormanager.config.sensors.pull.ContentReaderConfig;
 import com.ubhave.sensormanager.data.pushsensor.SmsData;
 import com.ubhave.sensormanager.process.push.SMSProcessor;
 import com.ubhave.sensormanager.sensors.SensorUtils;
@@ -98,7 +99,8 @@ public class SmsSensor extends AbstractPushSensor
 									String content = cursor.getString(cursor.getColumnIndex("body"));
 									String sentTo = cursor.getString(cursor.getColumnIndex("address"));
 									String messageId = cursor.getString(cursor.getColumnIndex("_id"));
-
+									// messageType - sent / received / draft etc.
+									String messageType = cursor.getString(cursor.getColumnIndex(ContentReaderConfig.SMS_CONTENT_TYPE_KEY));
 									if ((prevMessageId != null) && (prevMessageId.length() > 0)
 											&& (prevMessageId.equals(messageId)))
 									{
@@ -107,7 +109,7 @@ public class SmsSensor extends AbstractPushSensor
 									else
 									{
 										prevMessageId = messageId;
-										logDataSensed(System.currentTimeMillis(), content, sentTo,
+										logDataSensed(System.currentTimeMillis(), content, sentTo, messageType, 
 												SmsData.SMS_CONTENT_CHANGED);
 									}
 								}
@@ -123,12 +125,12 @@ public class SmsSensor extends AbstractPushSensor
 		};
 	}
 
-	private void logDataSensed(long timestamp, String content, String addr, String eventType)
+	private void logDataSensed(long timestamp, String content, String addr, String messageType, String eventType)
 	{
 		SMSProcessor processor = (SMSProcessor) getProcessor();
 		if (processor != null)
 		{
-			SmsData data = (SmsData) processor.process(timestamp, sensorConfig.clone(), content, addr, eventType);
+			SmsData data = (SmsData) processor.process(timestamp, sensorConfig.clone(), content, addr, messageType, eventType);
 			onDataSensed(data);
 		}
 	}
@@ -162,7 +164,9 @@ public class SmsSensor extends AbstractPushSensor
 						String address = smsMessagesArray[i].getOriginatingAddress();
 						String content = smsMessagesArray[i].getMessageBody();
 
-						logDataSensed(System.currentTimeMillis(), content, address, SmsData.SMS_RECEIVED);
+						// mesgType is null here as the last field (SmsData.SMS_RECEIVED) indicates
+						// that this is for a received SMS. 
+						logDataSensed(System.currentTimeMillis(), content, address, "", SmsData.SMS_RECEIVED);
 					}
 				}
 				catch (Exception e)

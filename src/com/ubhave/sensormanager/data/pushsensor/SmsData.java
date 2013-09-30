@@ -36,6 +36,7 @@ public class SmsData extends SensorData
 	private int contentLength;
 	private int noOfWords;
 	private String address;
+	private String messageType;
 	private String eventType;
 	private final HashMap<String, Integer> wordCategories;
 	
@@ -93,6 +94,16 @@ public class SmsData extends SensorData
 	public String getEventType()
 	{
 		return eventType;
+	}
+	
+	public void setMessageType(String mt)
+	{
+		messageType = mt;
+	}
+	
+	public String getMessageType()
+	{
+		return messageType;
 	}
 
 	public boolean wasReceived()

@@ -28,7 +28,7 @@ public class SMSProcessor extends CommunicationProcessor
 		wordCategoryMap = loadSentimentMap();
 	}
 
-	public SmsData process(long timestamp, SensorConfig config, String content, String address, String event)
+	public SmsData process(long timestamp, SensorConfig config, String content, String address, String mesgType, String event)
 	{
 		SmsData data = new SmsData(timestamp, config);
 		String[] words = content.split(" ");
@@ -38,6 +38,7 @@ public class SMSProcessor extends CommunicationProcessor
 			data.setNumberOfWords(words.length);
 			data.setContentLength(content.length());
 			data.setAddress(hashPhoneNumber(address));
+			data.setMessageType(mesgType);
 			data.setEventType(event);
 		}
 		
