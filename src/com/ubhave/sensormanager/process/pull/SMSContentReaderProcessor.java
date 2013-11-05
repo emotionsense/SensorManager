@@ -5,8 +5,11 @@ import java.util.Iterator;
 
 import android.content.Context;
 
+import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.config.sensors.pull.ContentReaderConfig;
+import com.ubhave.sensormanager.data.pullsensor.ContentReaderData;
 import com.ubhave.sensormanager.data.pullsensor.ContentReaderResult;
+import com.ubhave.sensormanager.data.pullsensor.SMSContentData;
 
 public class SMSContentReaderProcessor extends ContentReaderProcessor
 {
@@ -24,15 +27,16 @@ public class SMSContentReaderProcessor extends ContentReaderProcessor
 	}
 	
 	@Override
+	protected ContentReaderData getData(long senseStartTime, SensorConfig config)
+	{
+		return new SMSContentData(senseStartTime, config);
+	}
+	
+	@Override
 	protected ContentReaderResult getEntry(final HashMap<String, String> map)
 	{
 		try
-		{
-//			,
-//			ContentReaderConfig.SMS_CONTENT_TYPE_KEY,
-//			ContentReaderConfig.SMS_CONTENT_DATE_KEY,
-//			ContentReaderConfig.SMS_CONTENT_BODY_KEY
-			
+		{			
 			ContentReaderResult entry = new ContentReaderResult();
 			Iterator<String> iterator = map.keySet().iterator();
 			while (iterator.hasNext())

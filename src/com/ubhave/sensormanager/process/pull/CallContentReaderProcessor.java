@@ -5,7 +5,10 @@ import java.util.Iterator;
 
 import android.content.Context;
 
+import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.config.sensors.pull.ContentReaderConfig;
+import com.ubhave.sensormanager.data.pullsensor.CallContentData;
+import com.ubhave.sensormanager.data.pullsensor.ContentReaderData;
 import com.ubhave.sensormanager.data.pullsensor.ContentReaderResult;
 
 public class CallContentReaderProcessor extends ContentReaderProcessor
@@ -13,6 +16,12 @@ public class CallContentReaderProcessor extends ContentReaderProcessor
 	public CallContentReaderProcessor(final Context c, boolean rw, boolean sp)
 	{
 		super(c, rw, sp);
+	}
+	
+	@Override
+	protected ContentReaderData getData(long senseStartTime, SensorConfig config)
+	{
+		return new CallContentData(senseStartTime, config);
 	}
 	
 	@Override
