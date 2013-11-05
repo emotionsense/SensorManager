@@ -74,7 +74,7 @@ public class CallContentReaderSensor extends AbstractContentReaderSensor
 	@Override
 	protected String[] getContentKeysArray()
 	{
-		return new String[] { CallLog.Calls.NUMBER, CallLog.Calls.TYPE, CallLog.Calls.DATE };
+		return new String[] { CallLog.Calls.NUMBER, CallLog.Calls.TYPE, CallLog.Calls.DATE, CallLog.Calls.DURATION };
 	}
 
 	@Override

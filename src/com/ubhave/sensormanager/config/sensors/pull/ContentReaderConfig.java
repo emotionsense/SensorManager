@@ -7,7 +7,6 @@ public class ContentReaderConfig
 	
 	public static final String CONTENT_MAP_NUMBER_KEY = "number";
 	public static final String CONTENT_MAP_ADDRESS_KEY = "address";
-	public static final String CONTENT_MAP_BODY_KEY = "body";
 	public static final String CONTENT_MAP_WORDCOUNT_KEY = "bodyWordCount";
 	public static final String CONTENT_MAP_CHARCOUNT_KEY = "bodyLength";
 	

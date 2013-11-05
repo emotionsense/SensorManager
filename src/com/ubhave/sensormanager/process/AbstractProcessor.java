@@ -7,9 +7,10 @@ import com.ubhave.sensormanager.process.pull.AccelerometerProcessor;
 import com.ubhave.sensormanager.process.pull.ApplicationProcessor;
 import com.ubhave.sensormanager.process.pull.AudioProcessor;
 import com.ubhave.sensormanager.process.pull.BluetoothProcessor;
+import com.ubhave.sensormanager.process.pull.CallContentReaderProcessor;
 import com.ubhave.sensormanager.process.pull.CameraProcessor;
-import com.ubhave.sensormanager.process.pull.ContentReaderProcessor;
 import com.ubhave.sensormanager.process.pull.LocationProcessor;
+import com.ubhave.sensormanager.process.pull.SMSContentReaderProcessor;
 import com.ubhave.sensormanager.process.pull.WifiProcessor;
 import com.ubhave.sensormanager.process.push.BatteryProcessor;
 import com.ubhave.sensormanager.process.push.ConnectionStateProcessor;
@@ -55,9 +56,9 @@ public abstract class AbstractProcessor
 		case SensorUtils.SENSOR_TYPE_PROXIMITY:
 			return new ProximityProcessor(c, setRawData, setProcessedData);
 		case SensorUtils.SENSOR_TYPE_CALL_CONTENT_READER:
-			return new ContentReaderProcessor(c, setRawData, setProcessedData);
+			return new CallContentReaderProcessor(c, setRawData, setProcessedData);
 		case SensorUtils.SENSOR_TYPE_SMS_CONTENT_READER:
-			return new ContentReaderProcessor(c, setRawData, setProcessedData);
+			return new SMSContentReaderProcessor(c, setRawData, setProcessedData);
 		case SensorUtils.SENSOR_TYPE_CAMERA:
 			return new CameraProcessor(c, setRawData, setProcessedData);
 		default:

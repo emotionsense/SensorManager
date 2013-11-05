@@ -40,8 +40,6 @@ public abstract class AbstractContentReaderSensor extends AbstractPullSensor
 	protected ArrayList<HashMap<String, String>> contentList;
 	protected static Object lock = new Object();
 
-	// private ContentReaderData crData;
-
 	protected abstract String getContentURL();
 
 	protected abstract String[] getContentKeysArray();
