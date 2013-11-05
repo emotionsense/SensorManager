@@ -89,7 +89,6 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 		isSubscribedToBattery = false;
 
 		ArrayList<SensorInterface> sensors = SensorUtils.getAllSensors(appContext);
-
 		for (SensorInterface aSensor : sensors)
 		{
 			AbstractSensorTask sensorTask;
@@ -126,7 +125,7 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 
 			if (GlobalConfig.shouldLog())
 			{
-				Log.d(TAG, "subscribeToSensorData() subscribing listener to sensorId " + sensorId);
+				Log.d(TAG, "subscribeToSensorData() subscribing listener to sensor: " + SensorUtils.getSensorName(sensorId));
 			}
 			
 			Subscription subscription = new Subscription(task, listener);

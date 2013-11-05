@@ -139,7 +139,6 @@ public class SensorUtils
 			}
 			catch (ESException e)
 			{
-				// ESLogger.error(TAG, e);
 				if (GlobalConfig.shouldLog())
 				{
 					Log.d(TAG, "Warning: " + e.getMessage());
