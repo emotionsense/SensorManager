@@ -45,5 +45,4 @@ public class SensorConfig extends AbstractConfig implements Cloneable
 
 		return clonedSensorConfig;
 	}
-
 }

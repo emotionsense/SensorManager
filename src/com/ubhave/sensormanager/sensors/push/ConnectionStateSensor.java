@@ -32,6 +32,7 @@ import android.net.wifi.WifiManager;
 import android.util.Log;
 
 import com.ubhave.sensormanager.ESException;
+import com.ubhave.sensormanager.config.GlobalConfig;
 import com.ubhave.sensormanager.data.pushsensor.ConnectionStateData;
 import com.ubhave.sensormanager.process.push.ConnectionStateProcessor;
 import com.ubhave.sensormanager.sensors.SensorUtils;
@@ -91,7 +92,7 @@ public class ConnectionStateSensor extends AbstractPushSensor
 				e.printStackTrace();
 			}
 		}
-		else
+		else if (GlobalConfig.shouldLog())
 		{
 			Log.d(getLogTag(), "logOnDataSensed() called while not sensing.");
 		}

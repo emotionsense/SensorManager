@@ -23,15 +23,14 @@ IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 package com.ubhave.sensormanager.sensors.pull;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 
 import android.content.Context;
 import android.hardware.Camera;
 import android.util.Log;
 
 import com.ubhave.sensormanager.ESException;
+import com.ubhave.sensormanager.config.GlobalConfig;
 import com.ubhave.sensormanager.config.sensors.pull.CameraConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.data.pullsensor.CameraData;
@@ -134,15 +133,13 @@ public class CameraSensor extends AbstractPullSensor
 
 				notifySenseCyclesComplete();
 			}
-			catch (FileNotFoundException e)
+			catch (Exception e)
 			{
-				Log.d("CAMERA", e.getMessage());
+				if (GlobalConfig.shouldLog())
+				{
+					Log.d("CAMERA", e.getMessage());
+				}	
 			}
-			catch (IOException e)
-			{
-				Log.d("CAMERA", e.getMessage());
-			}
-
 		}
 	};
 

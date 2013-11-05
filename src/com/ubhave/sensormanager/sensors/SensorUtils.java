@@ -35,6 +35,7 @@ import com.ubhave.sensormanager.classifier.LocationDataClassifier;
 import com.ubhave.sensormanager.classifier.MicrophoneDataClassifier;
 import com.ubhave.sensormanager.classifier.SensorDataClassifier;
 import com.ubhave.sensormanager.classifier.WifiDataClassifier;
+import com.ubhave.sensormanager.config.GlobalConfig;
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.config.sensors.pull.AccelerometerConfig;
 import com.ubhave.sensormanager.config.sensors.pull.ApplicationConfig;
@@ -139,7 +140,10 @@ public class SensorUtils
 			catch (ESException e)
 			{
 				// ESLogger.error(TAG, e);
-				Log.d(TAG, "Warning: " + e.getMessage());
+				if (GlobalConfig.shouldLog())
+				{
+					Log.d(TAG, "Warning: " + e.getMessage());
+				}
 			}
 		}
 		return sensors;

@@ -30,6 +30,7 @@ import android.util.Log;
 
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.SensorDataListener;
+import com.ubhave.sensormanager.config.GlobalConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.sensors.AbstractSensor;
 
@@ -54,7 +55,7 @@ public abstract class AbstractPushSensor extends AbstractSensor implements PushS
 				{
 					onBroadcastReceived(context, intent);
 				}
-				else
+				else if (GlobalConfig.shouldLog())
 				{
 					Log.d(getLogTag(), "BroadcastReceiver.onReceive() called while not sensing.");
 				}
@@ -67,10 +68,13 @@ public abstract class AbstractPushSensor extends AbstractSensor implements PushS
 		if (isSensing)
 		{
 			// sensing already started
-			Log.d(getLogTag(), "sensing already sensing");
+			if (GlobalConfig.shouldLog())
+			{
+				Log.d(getLogTag(), "sensing already sensing");
+			}
 			throw new ESException(ESException.SENSOR_ALREADY_SENSING, "sensor already sensing");
 		}
-		
+
 		this.sensorDataListener = listener;
 		startSensing();
 		// register broadcast receiver
@@ -84,7 +88,10 @@ public abstract class AbstractPushSensor extends AbstractSensor implements PushS
 		}
 
 		isSensing = true;
-		Log.d(getLogTag(), "Sensing started.");
+		if (GlobalConfig.shouldLog())
+		{
+			Log.d(getLogTag(), "Sensing started.");
+		}
 	}
 
 	public void stopSensing(SensorDataListener listener) throws ESException
@@ -92,10 +99,13 @@ public abstract class AbstractPushSensor extends AbstractSensor implements PushS
 		if (!isSensing)
 		{
 			// sensing already started
-			Log.d(getLogTag(), "sensing not sensing");
+			if (GlobalConfig.shouldLog())
+			{
+				Log.d(getLogTag(), "sensing not sensing");
+			}
 			throw new ESException(ESException.SENSOR_NOT_SENSING, "sensor not sensing");
 		}
-		
+
 		stopSensing();
 		IntentFilter[] filters = getIntentFilters();
 		if ((filters != null) && (filters.length > 0))
@@ -104,12 +114,14 @@ public abstract class AbstractPushSensor extends AbstractSensor implements PushS
 		}
 
 		isSensing = false;
-		Log.d(getLogTag(), "Sensing stopped.");
+		if (GlobalConfig.shouldLog())
+		{
+			Log.d(getLogTag(), "Sensing stopped.");
+		}
 	}
 
 	protected void onDataSensed(SensorData sensorData)
 	{
-		Log.d(getLogTag(), sensorData.toString());
 		if (sensorDataListener != null)
 		{
 			sensorDataListener.onDataSensed(sensorData);

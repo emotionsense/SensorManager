@@ -29,7 +29,10 @@ public class GlobalConfig extends AbstractConfig
 
 	// battery level at which sensing should be enabled/disabled
 	public final static String LOW_BATTERY_THRESHOLD = "LOW_BATTERY_THRESHOLD";
+	public final static String PRINT_LOG_D_MESSAGES = "PRINT_LOG_D_MESSAGES";
 
+	private final static boolean DEFAULT_PRINT_LOG_D_MESSAGES = true;
+	
 	// acquire wake lock
 	public final static String ACQUIRE_WAKE_LOCK = "ACQUIRE_WAKE_LOCK";
 
@@ -55,7 +58,12 @@ public class GlobalConfig extends AbstractConfig
 	{
 		GlobalConfig config = new GlobalConfig();
 		config.setParameter(LOW_BATTERY_THRESHOLD, (Integer) BatteryConfig.LOW_BATTERY_THRESHOLD_LEVEL);
+		config.setParameter(PRINT_LOG_D_MESSAGES, DEFAULT_PRINT_LOG_D_MESSAGES);
 		return config;
 	}
-
+	
+	public static boolean shouldLog()
+	{
+		return (Boolean) getGlobalConfig().getParameter(PRINT_LOG_D_MESSAGES);
+	}
 }

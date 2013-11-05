@@ -124,8 +124,10 @@ public abstract class AbstractSensorTask extends Thread
 
 	public boolean registerSensorDataListener(SensorDataListener listener)
 	{
-		Log.d(getLogTag(), "registerSensorDataListener() listener: " + listener);
-
+		if (GlobalConfig.shouldLog())
+		{
+			Log.d(getLogTag(), "registerSensorDataListener() listener: " + listener);
+		}
 		synchronized (listenerList)
 		{
 			for (int i = 0; i < listenerList.size(); i++)
@@ -151,7 +153,7 @@ public abstract class AbstractSensorTask extends Thread
 				{
 					listener.onDataSensed(sensorData);
 				}
-				else
+				else if (GlobalConfig.shouldLog())
 				{
 					Log.d(getLogTag(), "sensorData is null");
 				}

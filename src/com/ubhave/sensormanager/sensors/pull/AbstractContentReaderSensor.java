@@ -31,6 +31,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.util.Log;
 
+import com.ubhave.sensormanager.config.GlobalConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.process.pull.ContentReaderProcessor;
 
@@ -38,7 +39,8 @@ public abstract class AbstractContentReaderSensor extends AbstractPullSensor
 {
 	protected ArrayList<HashMap<String, String>> contentList;
 	protected static Object lock = new Object();
-//	private ContentReaderData crData;
+
+	// private ContentReaderData crData;
 
 	protected abstract String getContentURL();
 
@@ -71,7 +73,11 @@ public abstract class AbstractContentReaderSensor extends AbstractPullSensor
 					if (cursor != null)
 					{
 						cursor.moveToFirst();
-						Log.d(getLogTag(), "Total entries in the cursor: " + cursor.getCount());
+						if (GlobalConfig.shouldLog())
+						{
+							Log.d(getLogTag(), "Total entries in the cursor: " + cursor.getCount());
+						}
+
 						while (!cursor.isAfterLast())
 						{
 							HashMap<String, String> contentMap = new HashMap<String, String>();
@@ -112,7 +118,7 @@ public abstract class AbstractContentReaderSensor extends AbstractPullSensor
 		ContentReaderProcessor processor = (ContentReaderProcessor) super.getProcessor();
 		return processor.process(pullSenseStartTimestamp, getSensorType(), contentList, sensorConfig);
 	}
-	
+
 	@Override
 	protected void processSensorData()
 	{

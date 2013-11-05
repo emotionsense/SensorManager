@@ -30,6 +30,7 @@ import android.util.Log;
 import android.util.SparseArray;
 
 import com.ubhave.sensormanager.ESException;
+import com.ubhave.sensormanager.config.GlobalConfig;
 
 public class SubscriptionList
 {
@@ -48,8 +49,12 @@ public class SubscriptionList
 	{
 		if (!s.register()) // subscription already exists
 		{
-			Log.d(TAG, "registerSubscription() subscription already exists for task: " + s.getTask().getSensorType()
-					+ " listener: " + s.getListener());
+			if (GlobalConfig.shouldLog())
+			{
+				Log.d(TAG, "registerSubscription() subscription already exists for task: " + s.getTask().getSensorType()
+						+ " listener: " + s.getListener());
+			}
+			
 			for (int i = 0; i < subscriptionMap.size(); i++)
 			{
 				int subscriptionId = subscriptionMap.keyAt(i);
@@ -65,8 +70,11 @@ public class SubscriptionList
 		{
 			int subscriptionId = randomKey();
 			subscriptionMap.append(subscriptionId, s);
-			Log.d(TAG, "registerSubscription() new subscription created for task: " + s.getTask().getSensorType()
-					+ " listener: " + s.getListener());
+			if (GlobalConfig.shouldLog())
+			{
+				Log.d(TAG, "registerSubscription() new subscription created for task: " + s.getTask().getSensorType()
+						+ " listener: " + s.getListener());
+			}
 			return subscriptionId;
 		}
 	}
@@ -76,13 +84,19 @@ public class SubscriptionList
 		Subscription s = subscriptionMap.get(subscriptionId);
 		if (s == null)
 		{
-			Log.d(TAG, "removeSubscription() invalid subscription id: " + subscriptionId);
+			if (GlobalConfig.shouldLog())
+			{
+				Log.d(TAG, "removeSubscription() invalid subscription id: " + subscriptionId);
+			}
 			return null;
 		}
 		else
 		{
-			Log.d(TAG, "removeSubscription() deleting subscription created for task: " + s.getTask().getSensorType()
-					+ " listener: " + s.getListener());
+			if (GlobalConfig.shouldLog())
+			{
+				Log.d(TAG, "removeSubscription() deleting subscription created for task: " + s.getTask().getSensorType()
+						+ " listener: " + s.getListener());
+			}
 			subscriptionMap.delete(subscriptionId);
 		}
 		return s;
@@ -91,8 +105,11 @@ public class SubscriptionList
 	public synchronized List<Subscription> getAllSubscriptions()
 	{
 		ArrayList<Subscription> list = new ArrayList<Subscription>();
-		Log.d("LOG", "List size is: " + subscriptionMap.size());
-
+		if (GlobalConfig.shouldLog())
+		{
+			Log.d("LOG", "List size is: " + subscriptionMap.size());
+		}
+		
 		for (int i = 0; i < subscriptionMap.size(); i++)
 		{
 			Subscription sub = subscriptionMap.valueAt(i);

@@ -124,14 +124,18 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 				batterySubscriptionId = subscribeToSensorData(SensorUtils.SENSOR_TYPE_BATTERY, this);
 			}
 
-			Log.d(TAG, "subscribeToSensorData() subscribing listener to sensorId " + sensorId);
+			if (GlobalConfig.shouldLog())
+			{
+				Log.d(TAG, "subscribeToSensorData() subscribing listener to sensorId " + sensorId);
+			}
+			
 			Subscription subscription = new Subscription(task, listener);
 			int subscriptionId = subscriptionList.registerSubscription(subscription);
 			return subscriptionId;
 		}
 		else
 		{
-			throw new ESException(ESException.UNKNOWN_SENSOR_TYPE, "Invalid sensor type: " + sensorId);
+			throw new ESException(ESException.UNKNOWN_SENSOR_TYPE, "Invalid sensor type: " + SensorUtils.getSensorName(sensorId)+" (Check permissions?)");
 		}
 	}
 

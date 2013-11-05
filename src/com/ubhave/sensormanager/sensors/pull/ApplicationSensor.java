@@ -39,7 +39,6 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class ApplicationSensor extends AbstractPullSensor
 {
-
 	private static final String TAG = "ApplicationSensor";
 
 	private static ApplicationSensor applicationSensor;

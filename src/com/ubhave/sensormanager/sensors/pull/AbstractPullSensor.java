@@ -26,6 +26,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.ubhave.sensormanager.ESException;
+import com.ubhave.sensormanager.config.GlobalConfig;
 import com.ubhave.sensormanager.config.sensors.pull.PullSensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.dutycyling.SleepWindowListener;
@@ -67,7 +68,10 @@ public abstract class AbstractPullSensor extends AbstractSensor implements PullS
 		boolean sensingStarted = startSensing();
 		if (sensingStarted)
 		{
-			Log.d(getLogTag(), "Sensing started.");
+			if (GlobalConfig.shouldLog())
+			{
+				Log.d(getLogTag(), "Sensing started.");
+			}
 
 			// wait for sensing to complete
 			synchronized (senseCompleteNotify)
@@ -97,21 +101,24 @@ public abstract class AbstractPullSensor extends AbstractSensor implements PullS
 					e.printStackTrace();
 				}
 			}
-
 			// stop sensing
 			stopSensing();
 			isSensing = false;
-			Log.d(getLogTag(), "Sensing stopped.");
-			
+			if (GlobalConfig.shouldLog())
+			{
+				Log.d(getLogTag(), "Sensing stopped.");
+			}
 			processSensorData();
-
 			sensorData = getMostRecentRawData();
 			sensorData.setPrevSensorData(prevSensorData);
 			prevSensorData = sensorData;
 		}
 		else
 		{
-			Log.d(getLogTag(), "Sensing not started.");
+			if (GlobalConfig.shouldLog())
+			{
+				Log.d(getLogTag(), "Sensing not started.");
+			}
 			isSensing = false;
 		}
 

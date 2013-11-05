@@ -25,6 +25,7 @@ package com.ubhave.sensormanager.tasks;
 import android.util.Log;
 
 import com.ubhave.sensormanager.ESException;
+import com.ubhave.sensormanager.config.GlobalConfig;
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.config.sensors.pull.PullSensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
@@ -34,7 +35,6 @@ import com.ubhave.sensormanager.sensors.pull.PullSensor;
 
 public class PullSensorTask extends AbstractSensorTask
 {
-//	private final static String TAG = "PullSensorTask";
 
 	public PullSensorTask(SensorInterface sensor)
 	{
@@ -87,7 +87,11 @@ public class PullSensorTask extends AbstractSensorTask
 						// sense() is a blocking call and returns when
 						// the sensing is complete, the sensorConfig object
 						// will have the sampling window, cycle information
-						Log.d(getLogTag(), "Pulling from: " + SensorUtils.getSensorName(sensor.getSensorType()));
+						if (GlobalConfig.shouldLog())
+						{
+							Log.d(getLogTag(), "Pulling from: " + SensorUtils.getSensorName(sensor.getSensorType()));	
+						}
+						
 						SensorData sensorData = getCurrentSensorData(false);
 						// publish sensed data
 						publishData(sensorData);

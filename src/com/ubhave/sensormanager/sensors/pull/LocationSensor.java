@@ -31,6 +31,7 @@ import android.os.Looper;
 import android.util.Log;
 
 import com.ubhave.sensormanager.ESException;
+import com.ubhave.sensormanager.config.GlobalConfig;
 import com.ubhave.sensormanager.config.sensors.pull.LocationConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.data.pullsensor.LocationData;
@@ -126,7 +127,7 @@ public class LocationSensor extends AbstractPullSensor
 					locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 0, locListener,
 							Looper.getMainLooper());
 				}
-				else
+				else if (GlobalConfig.shouldLog())
 				{
 					Log.d(TAG, "requestLocationUpdates(), Not registering with NETWORK_PROVIDER as it is unavailable");
 				}
@@ -136,7 +137,7 @@ public class LocationSensor extends AbstractPullSensor
 					locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 0, locListener,
 							Looper.getMainLooper());
 				}
-				else
+				else if (GlobalConfig.shouldLog())
 				{
 					Log.d(TAG, "requestLocationUpdates(), Not registering with GPS_PROVIDER as it is unavailable");
 				}
@@ -148,7 +149,7 @@ public class LocationSensor extends AbstractPullSensor
 					locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 0, locListener,
 							Looper.getMainLooper());
 				}
-				else
+				else if (GlobalConfig.shouldLog())
 				{
 					Log.d(TAG, "requestLocationUpdates(), Not registering with NETWORK_PROVIDER as it is unavailable");
 				}
