@@ -121,6 +121,11 @@ public class SensorUtils
 			return false;
 		}
 	}
+	
+	public static boolean isPushSensor(int sensorType)
+	{
+		return !isPullSensor(sensorType);
+	}
 
 	public static ArrayList<SensorInterface> getAllSensors(Context applicationContext)
 	{

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import android.content.Context;
+import android.provider.CallLog;
 
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.config.sensors.pull.ContentReaderConfig;
@@ -13,6 +14,10 @@ import com.ubhave.sensormanager.data.pullsensor.ContentReaderResult;
 
 public class CallContentReaderProcessor extends ContentReaderProcessor
 {
+	private final static String OUTGOING = "outgoing"; // CallLog.Calls.OUTGOING_TYPE
+	private final static String INCOMING = "incoming"; // CallLog.Calls.INCOMING_TYPE
+	private final static String MISSED = "missed"; // CallLog.Calls.MISSED_TYPE
+	
 	public CallContentReaderProcessor(final Context c, boolean rw, boolean sp)
 	{
 		super(c, rw, sp);
@@ -44,6 +49,10 @@ public class CallContentReaderProcessor extends ContentReaderProcessor
 				{
 					value = hashPhoneNumber(value);
 				}
+				else if (key.equals(CallLog.Calls.TYPE))
+				{
+					value = getType(value);
+				}
 				entry.set(key, value);
 				iterator.remove();
 			}
@@ -53,6 +62,30 @@ public class CallContentReaderProcessor extends ContentReaderProcessor
 		{
 			e.printStackTrace();
 			return null;
+		}
+	}
+	
+	private String getType(String stringValue)
+	{
+		try
+		{
+			int type = Integer.valueOf(stringValue);
+			switch(type)
+			{
+			case CallLog.Calls.OUTGOING_TYPE:
+				return OUTGOING;
+			case CallLog.Calls.INCOMING_TYPE:
+				return INCOMING;
+			case CallLog.Calls.MISSED_TYPE:
+				return MISSED;
+			default:
+				return stringValue;
+			}
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return stringValue;
 		}
 	}
 }

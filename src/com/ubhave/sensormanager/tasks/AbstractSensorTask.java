@@ -41,14 +41,12 @@ public abstract class AbstractSensorTask extends Thread
 {
 	private class StopTask extends AsyncTask<Void, Void, Void>
 	{
-
 		@Override
 		protected Void doInBackground(Void... arg0)
 		{
 			stopTask();
 			return null;
 		}
-
 	}
 
 	private class NotificationTask extends Thread
@@ -65,10 +63,7 @@ public abstract class AbstractSensorTask extends Thread
 		{
 			notifications(sensorData);
 		}
-
 	}
-
-	// private static String TAG = "AbstractSensorTask";
 
 	protected SensorInterface sensor;
 	protected Object syncObject = new Object();
@@ -104,17 +99,16 @@ public abstract class AbstractSensorTask extends Thread
 
 	protected String getLogTag()
 	{
-		String sensorName = "";
-
 		try
 		{
-			sensorName = SensorUtils.getSensorName(sensor.getSensorType());
+			String sensorName = SensorUtils.getSensorName(sensor.getSensorType());
+			return "SensorTask:" + sensorName;
 		}
 		catch (ESException exp)
 		{
 			exp.printStackTrace();
+			return null;
 		}
-		return "SensorTask:" + sensorName;
 	}
 
 	public int getSensorType()
