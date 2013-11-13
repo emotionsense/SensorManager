@@ -125,7 +125,7 @@ public class AdaptiveSensing implements SensorDataListener
 		}
 	}
 
-	private void updateSamplingInterval(SensorData data)
+	private void updateSamplingInterval(SensorData data) throws ESException
 	{
 		int sensorType = data.getSensorType();
 		PullSensorDetails sensorDetails = sensorMap.get(sensorType);
@@ -175,9 +175,7 @@ public class AdaptiveSensing implements SensorDataListener
 		}
 		else
 		{
-			// TODO
-			// throw exception
-			return;
+			throw new ESException(ESException.INVALID_STATE, "Config does not contain adaptive sensing parameter.");
 		}
 
 		while (true)

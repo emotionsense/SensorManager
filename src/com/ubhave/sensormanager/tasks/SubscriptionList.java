@@ -107,7 +107,7 @@ public class SubscriptionList
 		ArrayList<Subscription> list = new ArrayList<Subscription>();
 		if (GlobalConfig.shouldLog())
 		{
-			Log.d("LOG", "List size is: " + subscriptionMap.size());
+			Log.d(TAG, "List size is: " + subscriptionMap.size());
 		}
 		
 		for (int i = 0; i < subscriptionMap.size(); i++)

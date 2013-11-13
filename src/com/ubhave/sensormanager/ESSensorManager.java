@@ -173,7 +173,8 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 		AbstractSensorTask sensorTask = getSensorTask(sensorId);
 		if (!SensorUtils.isPullSensor(sensorTask.getSensorType()))
 		{
-			throw new ESException(ESException.OPERATION_NOT_SUPPORTED, "This method is supported only for pull sensors.");
+			throw new ESException(ESException.OPERATION_NOT_SUPPORTED, "This method is supported only for pull sensors "
+					+" (your request: "+SensorUtils.getSensorName(sensorId)+")");
 		}
 		else if (sensorTask.isRunning())
 		{
