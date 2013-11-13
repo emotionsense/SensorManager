@@ -6,8 +6,8 @@ import java.util.HashMap;
 import android.content.Context;
 
 import com.ubhave.sensormanager.config.SensorConfig;
-import com.ubhave.sensormanager.data.pullsensor.ContentReaderData;
-import com.ubhave.sensormanager.data.pullsensor.ContentReaderResult;
+import com.ubhave.sensormanager.data.pullsensor.AbstractContentReaderListData;
+import com.ubhave.sensormanager.data.pullsensor.AbstractContentReaderEntry;
 import com.ubhave.sensormanager.process.CommunicationProcessor;
 
 public abstract class ContentReaderProcessor extends CommunicationProcessor
@@ -17,14 +17,14 @@ public abstract class ContentReaderProcessor extends CommunicationProcessor
 		super(c, rw, sp);
 	}
 
-	public ContentReaderData process(long pullSenseStartTimestamp, int sensorType, ArrayList<HashMap<String, String>> contentList, SensorConfig sensorConfig)
+	public AbstractContentReaderListData process(long pullSenseStartTimestamp, int sensorType, ArrayList<HashMap<String, String>> contentList, SensorConfig sensorConfig)
 	{
-		ContentReaderData contentData = getData(pullSenseStartTimestamp, sensorConfig);
+		AbstractContentReaderListData contentData = getData(pullSenseStartTimestamp, sensorConfig);
 		if (setRawData)
 		{
 			for (HashMap<String, String> map : contentList)
 			{
-				ContentReaderResult entry = getEntry(map);
+				AbstractContentReaderEntry entry = getEntry(map);
 				if (entry != null)
 				{
 					contentData.addContent(entry);
@@ -34,7 +34,7 @@ public abstract class ContentReaderProcessor extends CommunicationProcessor
 		return contentData;
 	}
 	
-	protected abstract ContentReaderData getData(long senseStartTime, SensorConfig config);
+	protected abstract AbstractContentReaderListData getData(long senseStartTime, SensorConfig config);
 	
-	protected abstract ContentReaderResult getEntry(final HashMap<String, String> map);
+	protected abstract AbstractContentReaderEntry getEntry(final HashMap<String, String> map);
 }

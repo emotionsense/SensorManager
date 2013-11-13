@@ -22,36 +22,12 @@ IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 package com.ubhave.sensormanager.data.pullsensor;
 
-import java.util.HashMap;
-import java.util.Set;
+import com.ubhave.sensormanager.config.sensors.pull.ContentReaderConfig;
 
-public class ContentReaderResult
+public class SMSContentReaderEntry extends AbstractContentReaderEntry
 {
-	private HashMap<String, String> contentMap;
-	
-	public ContentReaderResult()
+	public long getTimestamp() throws Exception
 	{
-		contentMap = new HashMap<String, String>();
+		return Long.valueOf(contentMap.get(ContentReaderConfig.SMS_CONTENT_DATE_KEY));
 	}
-	
-	public void set(final String key, final String value)
-	{
-		contentMap.put(key, value);
-	}
-	
-	public String get(final String key)
-	{
-		return contentMap.get(key);
-	}
-	
-	public Set<String> getKeys()
-	{
-		return contentMap.keySet();
-	}
-	
-	public void setContentMap(final HashMap<String, String> map)
-	{
-		this.contentMap = map;
-	}
-
 }

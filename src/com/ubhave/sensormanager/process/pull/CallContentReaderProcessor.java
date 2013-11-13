@@ -8,9 +8,10 @@ import android.provider.CallLog;
 
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.config.sensors.pull.ContentReaderConfig;
-import com.ubhave.sensormanager.data.pullsensor.CallContentData;
-import com.ubhave.sensormanager.data.pullsensor.ContentReaderData;
-import com.ubhave.sensormanager.data.pullsensor.ContentReaderResult;
+import com.ubhave.sensormanager.data.pullsensor.AbstractContentReaderEntry;
+import com.ubhave.sensormanager.data.pullsensor.AbstractContentReaderListData;
+import com.ubhave.sensormanager.data.pullsensor.CallContentListData;
+import com.ubhave.sensormanager.data.pullsensor.CallContentReaderEntry;
 
 public class CallContentReaderProcessor extends ContentReaderProcessor
 {
@@ -24,17 +25,17 @@ public class CallContentReaderProcessor extends ContentReaderProcessor
 	}
 	
 	@Override
-	protected ContentReaderData getData(long senseStartTime, SensorConfig config)
+	protected AbstractContentReaderListData getData(long senseStartTime, SensorConfig config)
 	{
-		return new CallContentData(senseStartTime, config);
+		return new CallContentListData(senseStartTime, config);
 	}
 	
 	@Override
-	protected ContentReaderResult getEntry(final HashMap<String, String> map)
+	protected AbstractContentReaderEntry getEntry(final HashMap<String, String> map)
 	{
 		try
 		{
-			ContentReaderResult entry = new ContentReaderResult();
+			AbstractContentReaderEntry entry = new CallContentReaderEntry();
 			Iterator<String> iterator = map.keySet().iterator();
 			while (iterator.hasNext())
 			{

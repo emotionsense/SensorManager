@@ -22,20 +22,37 @@ IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 package com.ubhave.sensormanager.data.pullsensor;
 
-import com.ubhave.sensormanager.config.SensorConfig;
-import com.ubhave.sensormanager.sensors.SensorUtils;
+import java.util.HashMap;
+import java.util.Set;
 
-public class SMSContentData extends ContentReaderData
+public abstract class AbstractContentReaderEntry
 {
-
-	public SMSContentData(long sensorTimestamp, SensorConfig config)
+	protected HashMap<String, String> contentMap;
+	
+	public AbstractContentReaderEntry()
 	{
-		super(sensorTimestamp, config);
+		contentMap = new HashMap<String, String>();
+	}
+	
+	public void set(final String key, final String value)
+	{
+		contentMap.put(key, value);
+	}
+	
+	public String get(final String key)
+	{
+		return contentMap.get(key);
+	}
+	
+	public Set<String> getKeys()
+	{
+		return contentMap.keySet();
+	}
+	
+	public void setContentMap(final HashMap<String, String> map)
+	{
+		this.contentMap = map;
 	}
 
-	@Override
-	public int getSensorType()
-	{
-		return SensorUtils.SENSOR_TYPE_SMS_CONTENT_READER;
-	}
+	public abstract long getTimestamp() throws Exception;
 }

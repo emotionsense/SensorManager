@@ -44,6 +44,10 @@ public abstract class AbstractSensorTask extends Thread
 		@Override
 		protected Void doInBackground(Void... arg0)
 		{
+			if (GlobalConfig.shouldLog())
+			{
+				Log.d("StopTask", "Stopping sensor task...");
+			}
 			stopTask();
 			return null;
 		}
@@ -157,7 +161,6 @@ public abstract class AbstractSensorTask extends Thread
 		// check for any triggers/notifications to be sent
 		// based on the received sensorData
 		new NotificationTask(sensorData).start();
-
 	}
 
 	protected void publishBatteryNotification(boolean isBelowThreshold)

@@ -22,33 +22,15 @@ IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 package com.ubhave.sensormanager.data.pullsensor;
 
-import java.util.ArrayList;
+import android.provider.CallLog;
 
-import com.ubhave.sensormanager.config.SensorConfig;
-import com.ubhave.sensormanager.data.SensorData;
 
-public abstract class ContentReaderData extends SensorData
+public class CallContentReaderEntry extends AbstractContentReaderEntry
 {
-	private final ArrayList<ContentReaderResult> contentList;
-
-	public ContentReaderData(long sensorTimestamp, SensorConfig config)
-	{
-		super(sensorTimestamp, config);
-		contentList = new ArrayList<ContentReaderResult>();
-	}
 	
-	public void addContent(final ContentReaderResult entry)
+	public long getTimestamp() throws Exception
 	{
-		contentList.add(entry);
-	}
-	
-	public int size()
-	{
-		return contentList.size();
+		return Long.valueOf(contentMap.get(CallLog.Calls.DATE));
 	}
 
-	public ArrayList<ContentReaderResult> getContentList()
-	{
-		return contentList;
-	}
 }

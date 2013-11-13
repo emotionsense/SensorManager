@@ -24,11 +24,8 @@ package com.ubhave.sensormanager.tasks;
 
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.SensorDataListener;
-import com.ubhave.sensormanager.config.SensorConfig;
-import com.ubhave.sensormanager.config.sensors.pull.PullSensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.sensors.SensorInterface;
-import com.ubhave.sensormanager.sensors.pull.PullSensor;
 import com.ubhave.sensormanager.sensors.push.PushSensor;
 
 public class PushSensorTask extends AbstractSensorTask implements SensorDataListener

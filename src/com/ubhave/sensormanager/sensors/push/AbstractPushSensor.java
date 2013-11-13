@@ -86,7 +86,6 @@ public abstract class AbstractPushSensor extends AbstractSensor implements PushS
 				applicationContext.registerReceiver(broadcastReceiver, aFilter);
 			}
 		}
-
 		isSensing = true;
 		if (GlobalConfig.shouldLog())
 		{
@@ -112,7 +111,6 @@ public abstract class AbstractPushSensor extends AbstractSensor implements PushS
 		{
 			applicationContext.unregisterReceiver(broadcastReceiver);
 		}
-
 		isSensing = false;
 		if (GlobalConfig.shouldLog())
 		{

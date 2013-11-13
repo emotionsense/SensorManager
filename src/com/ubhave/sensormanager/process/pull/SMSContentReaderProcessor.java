@@ -7,9 +7,10 @@ import android.content.Context;
 
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.config.sensors.pull.ContentReaderConfig;
-import com.ubhave.sensormanager.data.pullsensor.ContentReaderData;
-import com.ubhave.sensormanager.data.pullsensor.ContentReaderResult;
-import com.ubhave.sensormanager.data.pullsensor.SMSContentData;
+import com.ubhave.sensormanager.data.pullsensor.AbstractContentReaderEntry;
+import com.ubhave.sensormanager.data.pullsensor.AbstractContentReaderListData;
+import com.ubhave.sensormanager.data.pullsensor.SMSContentListData;
+import com.ubhave.sensormanager.data.pullsensor.SMSContentReaderEntry;
 
 public class SMSContentReaderProcessor extends ContentReaderProcessor
 {
@@ -27,17 +28,17 @@ public class SMSContentReaderProcessor extends ContentReaderProcessor
 	}
 	
 	@Override
-	protected ContentReaderData getData(long senseStartTime, SensorConfig config)
+	protected AbstractContentReaderListData getData(long senseStartTime, SensorConfig config)
 	{
-		return new SMSContentData(senseStartTime, config);
+		return new SMSContentListData(senseStartTime, config);
 	}
 	
 	@Override
-	protected ContentReaderResult getEntry(final HashMap<String, String> map)
+	protected AbstractContentReaderEntry getEntry(final HashMap<String, String> map)
 	{
 		try
 		{			
-			ContentReaderResult entry = new ContentReaderResult();
+			AbstractContentReaderEntry entry = new SMSContentReaderEntry();
 			Iterator<String> iterator = map.keySet().iterator();
 			while (iterator.hasNext())
 			{
