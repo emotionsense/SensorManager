@@ -155,7 +155,7 @@ public class BluetoothSensor extends AbstractPullSensor
 	protected void processSensorData()
 	{
 		BluetoothProcessor processor = (BluetoothProcessor) getProcessor();
-		bluetoothData = processor.process(cyclesRemaining, btDevices, sensorConfig.clone());
+		bluetoothData = processor.process(pullSenseStartTimestamp, btDevices, sensorConfig.clone());
 	}
 
 	protected boolean startSensing()

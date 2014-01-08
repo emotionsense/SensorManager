@@ -50,9 +50,6 @@ IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
     
     <uses-feature android:name="android.hardware.camera" android:required="false" />
     
-    <application android:label="@string/app_name"
-        android:theme="@style/AppTheme">
-
-    </application>
+    <application />
 
 </manifest>

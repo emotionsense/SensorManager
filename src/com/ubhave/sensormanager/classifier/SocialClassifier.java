@@ -22,6 +22,7 @@ IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 package com.ubhave.sensormanager.classifier;
 
+import android.annotation.SuppressLint;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -83,6 +84,7 @@ public abstract class SocialClassifier
 		}
 	}
 
+	@SuppressLint("DefaultLocale")
 	private static boolean areSameMacAddresses(String mac1, String mac2)
 	{
 		boolean sameMacs = false;

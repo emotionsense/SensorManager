@@ -100,17 +100,25 @@ public abstract class AbstractPushSensor extends AbstractSensor implements PushS
 			// sensing already started
 			if (GlobalConfig.shouldLog())
 			{
-				Log.d(getLogTag(), "sensing not sensing");
+				Log.d(getLogTag(), "sensor not sensing");
 			}
 			throw new ESException(ESException.SENSOR_NOT_SENSING, "sensor not sensing");
 		}
 
 		stopSensing();
-		IntentFilter[] filters = getIntentFilters();
-		if ((filters != null) && (filters.length > 0))
+		try
 		{
-			applicationContext.unregisterReceiver(broadcastReceiver);
+			IntentFilter[] filters = getIntentFilters();
+			if ((filters != null) && (filters.length > 0))
+			{
+				applicationContext.unregisterReceiver(broadcastReceiver);
+			}
 		}
+		catch (IllegalArgumentException e)
+		{
+			// Receiver not registered
+		}
+		
 		isSensing = false;
 		if (GlobalConfig.shouldLog())
 		{

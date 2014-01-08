@@ -123,7 +123,7 @@ public class WifiSensor extends AbstractPullSensor
 	protected void processSensorData()
 	{
 		WifiProcessor processor = (WifiProcessor) getProcessor();
-		wifiData = processor.process(cyclesRemaining, wifiScanResults, sensorConfig.clone());
+		wifiData = processor.process(pullSenseStartTimestamp, wifiScanResults, sensorConfig.clone());
 	}
 
 	protected boolean startSensing()
