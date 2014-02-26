@@ -27,7 +27,6 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class SMSContentListData extends AbstractContentReaderListData
 {
-
 	public SMSContentListData(long sensorTimestamp, SensorConfig config)
 	{
 		super(sensorTimestamp, config);

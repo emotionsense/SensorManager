@@ -22,11 +22,13 @@ IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 package com.ubhave.sensormanager.data.pullsensor;
 
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Set;
 
 public abstract class AbstractContentReaderEntry
 {
+	private final static String LOCAL_TIME = "local_time_when_sensed";
 	protected HashMap<String, String> contentMap;
 	
 	public AbstractContentReaderEntry()
@@ -37,6 +39,19 @@ public abstract class AbstractContentReaderEntry
 	public void set(final String key, final String value)
 	{
 		contentMap.put(key, value);
+		if (key == getTimestampKey())
+		{
+			try
+			{
+				Calendar calendar = Calendar.getInstance();
+				calendar.setTimeInMillis(getTimestamp());
+				contentMap.put(LOCAL_TIME, calendar.getTime().toString());
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public String get(final String key)
@@ -54,5 +69,10 @@ public abstract class AbstractContentReaderEntry
 		this.contentMap = map;
 	}
 
-	public abstract long getTimestamp() throws Exception;
+	public long getTimestamp() throws Exception
+	{
+		return Long.valueOf(contentMap.get(getTimestampKey()));
+	}
+	
+	protected abstract String getTimestampKey();
 }

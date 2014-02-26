@@ -24,13 +24,11 @@ package com.ubhave.sensormanager.data.pullsensor;
 
 import android.provider.CallLog;
 
-
 public class CallContentReaderEntry extends AbstractContentReaderEntry
 {
-	
-	public long getTimestamp() throws Exception
+	@Override
+	protected String getTimestampKey()
 	{
-		return Long.valueOf(contentMap.get(CallLog.Calls.DATE));
+		return CallLog.Calls.DATE;
 	}
-
 }

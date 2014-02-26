@@ -25,9 +25,9 @@ package com.ubhave.sensormanager.data.pullsensor;
 import com.ubhave.sensormanager.config.sensors.pull.ContentReaderConfig;
 
 public class SMSContentReaderEntry extends AbstractContentReaderEntry
-{
-	public long getTimestamp() throws Exception
+{	
+	protected String getTimestampKey()
 	{
-		return Long.valueOf(contentMap.get(ContentReaderConfig.SMS_CONTENT_DATE_KEY));
+		return ContentReaderConfig.SMS_CONTENT_DATE_KEY;
 	}
 }
