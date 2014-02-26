@@ -231,12 +231,12 @@ public class SensorUtils
 			sensorConfig.setParameter(PullSensorConfig.NUMBER_OF_SENSE_CYCLES, ApplicationConfig.APPLICATION_SAMPLING_CYCLES);
 			break;
 		case SensorUtils.SENSOR_TYPE_SMS_CONTENT_READER:
-			sensorConfig.setParameter(PullSensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, ContentReaderConfig.CONTENT_READER_SLEEP_INTERVAL);
-			sensorConfig.setParameter(PullSensorConfig.NUMBER_OF_SENSE_CYCLES, ContentReaderConfig.CONTENT_READER_SAMPLING_CYCLES);
+			sensorConfig.setParameter(PullSensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, ContentReaderConfig.DEFAULT_CONTENT_READER_SLEEP_INTERVAL);
+			sensorConfig.setParameter(PullSensorConfig.NUMBER_OF_SENSE_CYCLES, ContentReaderConfig.DEFAULT_CONTENT_READER_SAMPLING_CYCLES);
 			break;
 		case SensorUtils.SENSOR_TYPE_CALL_CONTENT_READER:
-			sensorConfig.setParameter(PullSensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, ContentReaderConfig.CONTENT_READER_SLEEP_INTERVAL);
-			sensorConfig.setParameter(PullSensorConfig.NUMBER_OF_SENSE_CYCLES, ContentReaderConfig.CONTENT_READER_SAMPLING_CYCLES);
+			sensorConfig.setParameter(PullSensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, ContentReaderConfig.DEFAULT_CONTENT_READER_SLEEP_INTERVAL);
+			sensorConfig.setParameter(PullSensorConfig.NUMBER_OF_SENSE_CYCLES, ContentReaderConfig.DEFAULT_CONTENT_READER_SAMPLING_CYCLES);
 			break;
 			
 		case SensorUtils.SENSOR_TYPE_CAMERA:
