@@ -3,4 +3,6 @@ bin/
 gen/
 assets/*
 .idea/*
+.settings/
+libs/
 SensorManager.iml
