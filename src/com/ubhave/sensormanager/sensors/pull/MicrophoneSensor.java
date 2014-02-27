@@ -29,6 +29,7 @@ import android.content.Context;
 import android.media.MediaRecorder;
 
 import com.ubhave.sensormanager.ESException;
+import com.ubhave.sensormanager.config.sensors.pull.MicrophoneConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.data.pullsensor.MicrophoneData;
 import com.ubhave.sensormanager.process.pull.AudioProcessor;
@@ -38,7 +39,7 @@ public class MicrophoneSensor extends AbstractPullSensor
 {
 	private final static String LOG_TAG = "MicrophoneSensor";
 	private MediaRecorder recorder;
-	private String fileName;
+	private File mediaFile;
 
 	private ArrayList<Integer> maxAmplitudeList;
 	private ArrayList<Long> timestampList;
@@ -80,6 +81,27 @@ public class MicrophoneSensor extends AbstractPullSensor
 		return LOG_TAG;
 	}
 	
+	private File getMediaFile() {
+		String fileName = "audio";
+		Object keepFilesParam = sensorConfig.getParameter(MicrophoneConfig.KEEP_AUDIO_FILES);
+		if (keepFilesParam != null && keepFilesParam instanceof Boolean && (Boolean) keepFilesParam) {
+			fileName += System.currentTimeMillis();
+		}
+		fileName += ".3gpp";
+		
+		return new File(applicationContext.getFilesDir(), fileName);
+	}
+	
+	private int getSamplingRate() {
+		int sampleRate = MicrophoneConfig.DEFAULT_SAMPLING_RATE;
+		Object sampleRateParam = sensorConfig.getParameter(MicrophoneConfig.SAMPLING_RATE);
+		if (sampleRateParam != null && sampleRateParam instanceof Integer) {
+			sampleRate = (Integer) sampleRateParam;
+		}
+		
+		return sampleRate;
+	}
+	
 	private boolean prepareToSense()
 	{
 		try
@@ -87,18 +109,18 @@ public class MicrophoneSensor extends AbstractPullSensor
 			maxAmplitudeList = new ArrayList<Integer>();
 			timestampList = new ArrayList<Long>();
 			
-			fileName = applicationContext.getFilesDir().getAbsolutePath() + "/test.3gpp";
-			File file = new File(fileName);
-			if (file.exists())
+			mediaFile = getMediaFile();
+			if (mediaFile.exists())
 			{
-				file.delete();
+				mediaFile.delete();
 			}
 
 			recorder = new MediaRecorder();
 			recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+			recorder.setAudioSamplingRate(getSamplingRate());
 			recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
 			recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-			recorder.setOutputFile(fileName);
+			recorder.setOutputFile(mediaFile.getAbsolutePath());
 			recorder.prepare();
 			recorder.start();
 			return true;
@@ -201,6 +223,6 @@ public class MicrophoneSensor extends AbstractPullSensor
 		}
 		
 		AudioProcessor processor = (AudioProcessor)getProcessor();
-		micData = processor.process(pullSenseStartTimestamp, maxAmpArray, timestampArray, sensorConfig.clone());
+		micData = processor.process(pullSenseStartTimestamp, maxAmpArray, timestampArray, mediaFile.getAbsolutePath(), sensorConfig.clone());
 	}
 }

@@ -13,7 +13,7 @@ public class AudioProcessor extends AbstractProcessor
 		super(c, rw, sp);
 	}
 
-	public MicrophoneData process(long pullSenseStartTimestamp, int[] maxAmpArray, long[] timestampArray, SensorConfig sensorConfig)
+	public MicrophoneData process(long pullSenseStartTimestamp, int[] maxAmpArray, long[] timestampArray, String mediaFilePath, SensorConfig sensorConfig)
 	{
 		MicrophoneData micData = new MicrophoneData(pullSenseStartTimestamp, sensorConfig);
 		if (setRawData)
@@ -21,6 +21,7 @@ public class AudioProcessor extends AbstractProcessor
 			micData.setMaxAmplitudeArray(maxAmpArray);
 			micData.setTimestampArray(timestampArray);
 		}
+		micData.setMediaFilePath(mediaFilePath);
 		return micData;
 
 	}
