@@ -20,8 +20,11 @@ public class AudioProcessor extends AbstractProcessor
 		{
 			micData.setMaxAmplitudeArray(maxAmpArray);
 			micData.setTimestampArray(timestampArray);
+			if (mediaFilePath != null)
+			{
+				micData.setMediaFilePath(mediaFilePath);
+			}
 		}
-		micData.setMediaFilePath(mediaFilePath);
 		return micData;
 
 	}

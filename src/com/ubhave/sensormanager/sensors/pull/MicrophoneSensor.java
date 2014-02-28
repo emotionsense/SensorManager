@@ -46,7 +46,7 @@ public class MicrophoneSensor extends AbstractPullSensor
 
 	private static MicrophoneSensor microphoneSensor;
 	private static Object lock = new Object();
-	
+
 	private MicrophoneData micData;
 	private boolean isRecording;
 
@@ -81,39 +81,60 @@ public class MicrophoneSensor extends AbstractPullSensor
 		return LOG_TAG;
 	}
 	
-	private File getMediaFile() {
-		String fileName = "audio";
-		Object keepFilesParam = sensorConfig.getParameter(MicrophoneConfig.KEEP_AUDIO_FILES);
-		if (keepFilesParam != null && keepFilesParam instanceof Boolean && (Boolean) keepFilesParam) {
-			fileName += System.currentTimeMillis();
+	private File createFile(String mediaFileName, boolean shouldDelete)
+	{
+		 // TODO file path should be configurable too
+		File file = new File(applicationContext.getFilesDir(), mediaFileName);
+		if (file.exists())
+		{
+			if (shouldDelete)
+			{
+				file.delete();
+			}
+			else
+			{
+				// TODO handle error
+			}
 		}
-		fileName += ".3gpp";
-		
-		return new File(applicationContext.getFilesDir(), fileName);
+		return file;
 	}
-	
-	private int getSamplingRate() {
-		int sampleRate = MicrophoneConfig.DEFAULT_SAMPLING_RATE;
-		Object sampleRateParam = sensorConfig.getParameter(MicrophoneConfig.SAMPLING_RATE);
-		if (sampleRateParam != null && sampleRateParam instanceof Integer) {
-			sampleRate = (Integer) sampleRateParam;
+
+	private File getMediaFile()
+	{
+		try
+		{
+			if ((Boolean) sensorConfig.getParameter(MicrophoneConfig.KEEP_AUDIO_FILES))
+			{
+				return createFile("audio_"+System.currentTimeMillis()+".3gpp", true);
+			}
 		}
-		
-		return sampleRate;
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		return createFile("audio.3gpp", false);
 	}
-	
+
+	private int getSamplingRate()
+	{
+		try
+		{
+			return (Integer) sensorConfig.getParameter(MicrophoneConfig.SAMPLING_RATE);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return MicrophoneConfig.DEFAULT_SAMPLING_RATE;
+		}
+	}
+
 	private boolean prepareToSense()
 	{
 		try
 		{
 			maxAmplitudeList = new ArrayList<Integer>();
 			timestampList = new ArrayList<Long>();
-			
 			mediaFile = getMediaFile();
-			if (mediaFile.exists())
-			{
-				mediaFile.delete();
-			}
 
 			recorder = new MediaRecorder();
 			recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
@@ -211,7 +232,7 @@ public class MicrophoneSensor extends AbstractPullSensor
 	{
 		return micData;
 	}
-	
+
 	protected void processSensorData()
 	{
 		int[] maxAmpArray = new int[maxAmplitudeList.size()];
@@ -221,8 +242,8 @@ public class MicrophoneSensor extends AbstractPullSensor
 			maxAmpArray[i] = maxAmplitudeList.get(i);
 			timestampArray[i] = timestampList.get(i);
 		}
-		
-		AudioProcessor processor = (AudioProcessor)getProcessor();
+
+		AudioProcessor processor = (AudioProcessor) getProcessor();
 		micData = processor.process(pullSenseStartTimestamp, maxAmpArray, timestampArray, mediaFile.getAbsolutePath(), sensorConfig.clone());
 	}
 }

@@ -36,7 +36,7 @@ public class MicrophoneData extends SensorData
 	{
 		super(senseStartTimestamp, sensorConfig);
 	}
-	
+
 	public void setMaxAmplitudeArray(int[] maxAmplitudeArray)
 	{
 		this.maxAmplitudeArray = maxAmplitudeArray;
@@ -46,25 +46,27 @@ public class MicrophoneData extends SensorData
 	{
 		return maxAmplitudeArray;
 	}
-	
+
 	public void setTimestampArray(long[] timestampArray)
 	{
 		this.timestampArray = timestampArray;
 	}
-	
+
 	public long[] getTimestampArray()
 	{
 		return timestampArray;
 	}
 
-	public void setMediaFilePath(String mediaFilePath) {
+	public void setMediaFilePath(String mediaFilePath)
+	{
 		this.mediaFilePath = mediaFilePath;
 	}
 
-	public String getMediaFilePath() {
+	public String getMediaFilePath()
+	{
 		return mediaFilePath;
 	}
-	
+
 	public int getSensorType()
 	{
 		return SensorUtils.SENSOR_TYPE_MICROPHONE;
