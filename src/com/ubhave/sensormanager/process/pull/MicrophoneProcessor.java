@@ -6,9 +6,9 @@ import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.pullsensor.MicrophoneData;
 import com.ubhave.sensormanager.process.AbstractProcessor;
 
-public class AudioProcessor extends AbstractProcessor
+public class MicrophoneProcessor extends AbstractProcessor
 {
-	public AudioProcessor(final Context c, boolean rw, boolean sp)
+	public MicrophoneProcessor(final Context c, boolean rw, boolean sp)
 	{
 		super(c, rw, sp);
 	}

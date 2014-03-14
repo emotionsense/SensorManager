@@ -27,12 +27,13 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.media.MediaRecorder;
+import android.util.Log;
 
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.config.sensors.pull.MicrophoneConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.data.pullsensor.MicrophoneData;
-import com.ubhave.sensormanager.process.pull.AudioProcessor;
+import com.ubhave.sensormanager.process.pull.MicrophoneProcessor;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class MicrophoneSensor extends AbstractPullSensor
@@ -81,38 +82,41 @@ public class MicrophoneSensor extends AbstractPullSensor
 		return LOG_TAG;
 	}
 	
-	private File createFile(String mediaFileName, boolean shouldDelete)
+	private File createFile(File path, String mediaFileName, boolean shouldDelete)
 	{
-		 // TODO file path should be configurable too
-		File file = new File(applicationContext.getFilesDir(), mediaFileName);
-		if (file.exists())
+		File file = new File(path, mediaFileName);
+		Log.d("SensorManager", "Creating file: "+file.getAbsolutePath());
+		if (file.exists() && shouldDelete)
 		{
-			if (shouldDelete)
-			{
-				file.delete();
-			}
-			else
-			{
-				// TODO handle error
-			}
+			file.delete();
 		}
 		return file;
 	}
 
 	private File getMediaFile()
 	{
-		try
+		File path = null;
+		if ((Boolean) sensorConfig.getParameter(MicrophoneConfig.KEEP_AUDIO_FILES))
 		{
-			if ((Boolean) sensorConfig.getParameter(MicrophoneConfig.KEEP_AUDIO_FILES))
+			if (sensorConfig.containsParameter(MicrophoneConfig.AUDIO_FILES_DIRECTORY))
 			{
-				return createFile("audio_"+System.currentTimeMillis()+".3gpp", true);
+				path = new File((String) sensorConfig.getParameter(MicrophoneConfig.AUDIO_FILES_DIRECTORY));
+				if (!path.exists())
+				{
+					path.mkdirs();
+				}
 			}
+			else
+			{
+				// TODO: handle error
+			}	
+			return createFile(path, "audio_"+System.currentTimeMillis()+".3gpp", false);
 		}
-		catch (Exception e)
+		else
 		{
-			e.printStackTrace();
+			path = applicationContext.getFilesDir();
+			return createFile(path, "audio.3gpp", true);
 		}
-		return createFile("audio.3gpp", false);
 	}
 
 	private int getSamplingRate()
@@ -213,6 +217,7 @@ public class MicrophoneSensor extends AbstractPullSensor
 			try
 			{
 				recorder.stop();
+				recorder.reset(); 
 				recorder.release();
 				isRecording = false;
 			}
@@ -243,7 +248,7 @@ public class MicrophoneSensor extends AbstractPullSensor
 			timestampArray[i] = timestampList.get(i);
 		}
 
-		AudioProcessor processor = (AudioProcessor) getProcessor();
+		MicrophoneProcessor processor = (MicrophoneProcessor) getProcessor();
 		micData = processor.process(pullSenseStartTimestamp, maxAmpArray, timestampArray, mediaFile.getAbsolutePath(), sensorConfig.clone());
 	}
 }

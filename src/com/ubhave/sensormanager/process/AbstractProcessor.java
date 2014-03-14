@@ -5,11 +5,11 @@ import android.content.Context;
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.process.pull.AccelerometerProcessor;
 import com.ubhave.sensormanager.process.pull.ApplicationProcessor;
-import com.ubhave.sensormanager.process.pull.AudioProcessor;
 import com.ubhave.sensormanager.process.pull.BluetoothProcessor;
 import com.ubhave.sensormanager.process.pull.CallContentReaderProcessor;
 import com.ubhave.sensormanager.process.pull.CameraProcessor;
 import com.ubhave.sensormanager.process.pull.LocationProcessor;
+import com.ubhave.sensormanager.process.pull.MicrophoneProcessor;
 import com.ubhave.sensormanager.process.pull.SMSContentReaderProcessor;
 import com.ubhave.sensormanager.process.pull.WifiProcessor;
 import com.ubhave.sensormanager.process.push.BatteryProcessor;
@@ -40,7 +40,7 @@ public abstract class AbstractProcessor
 		case SensorUtils.SENSOR_TYPE_LOCATION:
 			return new LocationProcessor(c, setRawData, setProcessedData);
 		case SensorUtils.SENSOR_TYPE_MICROPHONE:
-			return new AudioProcessor(c, setRawData, setProcessedData);
+			return new MicrophoneProcessor(c, setRawData, setProcessedData);
 		case SensorUtils.SENSOR_TYPE_WIFI:
 			return new WifiProcessor(c, setRawData, setProcessedData);
 		case SensorUtils.SENSOR_TYPE_BATTERY:
