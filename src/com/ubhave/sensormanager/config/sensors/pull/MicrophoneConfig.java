@@ -3,6 +3,8 @@ package com.ubhave.sensormanager.config.sensors.pull;
 public class MicrophoneConfig
 {
 	public static final String KEEP_AUDIO_FILES = "KEEP_AUDIO_FILES";
+	public static final String AUDIO_FILES_DIRECTORY = "AUDIO_FILES_DIRECTORY";
+	
 	public static final String SAMPLING_RATE = "SAMPLING_RATE";
 	/*
 	 * Default values for microphone sensing

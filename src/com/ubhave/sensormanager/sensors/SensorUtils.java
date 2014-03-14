@@ -220,6 +220,7 @@ public class SensorUtils
 			sensorConfig.setParameter(PullSensorConfig.SENSE_WINDOW_LENGTH_MILLIS,
 					MicrophoneConfig.DEFAULT_SAMPLING_WINDOW_SIZE_MILLIS);
 			sensorConfig.setParameter(MicrophoneConfig.KEEP_AUDIO_FILES, MicrophoneConfig.DEFAULT_KEEP_AUDIO_FILES);
+			sensorConfig.setParameter(MicrophoneConfig.AUDIO_FILES_DIRECTORY, null);
 			sensorConfig.setParameter(MicrophoneConfig.SAMPLING_RATE, MicrophoneConfig.DEFAULT_SAMPLING_RATE);
 			break;
 		case SensorUtils.SENSOR_TYPE_WIFI:
