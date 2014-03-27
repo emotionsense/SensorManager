@@ -25,7 +25,6 @@ package com.ubhave.sensormanager.sensors;
 import java.util.ArrayList;
 
 import android.content.Context;
-import android.hardware.SensorManager;
 import android.util.Log;
 
 import com.ubhave.sensormanager.ESException;
@@ -198,56 +197,31 @@ public class SensorUtils
 		switch (sensorType)
 		{
 		case SensorUtils.SENSOR_TYPE_ACCELEROMETER:
-			sensorConfig.setParameter(PullSensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, AccelerometerConfig.DEFAULT_SLEEP_INTERVAL);
-			sensorConfig.setParameter(AccelerometerConfig.SAMPLING_DELAY, SensorManager.SENSOR_DELAY_GAME);
-			sensorConfig.setParameter(PullSensorConfig.SENSE_WINDOW_LENGTH_MILLIS,
-					AccelerometerConfig.DEFAULT_SAMPLING_WINDOW_SIZE_MILLIS);
+			sensorConfig = AccelerometerConfig.getDefault();
 			break;
 		case SensorUtils.SENSOR_TYPE_BLUETOOTH:
-			sensorConfig.setParameter(PullSensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, BluetoothConfig.DEFAULT_SLEEP_INTERVAL);
-			sensorConfig.setParameter(PullSensorConfig.NUMBER_OF_SENSE_CYCLES, BluetoothConfig.DEFAULT_SAMPLING_CYCLES);
-			sensorConfig.setParameter(PullSensorConfig.SENSE_WINDOW_LENGTH_PER_CYCLE_MILLIS,
-					BluetoothConfig.DEFAULT_SAMPLING_WINDOW_SIZE_PER_CYCLE_MILLIS);
+			sensorConfig =  BluetoothConfig.getDefault();
 			break;
 		case SensorUtils.SENSOR_TYPE_LOCATION:
-			sensorConfig.setParameter(PullSensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, LocationConfig.DEFAULT_SLEEP_INTERVAL);
-			sensorConfig.setParameter(PullSensorConfig.SENSE_WINDOW_LENGTH_MILLIS,
-					LocationConfig.DEFAULT_SAMPLING_WINDOW_SIZE_MILLIS);
-			sensorConfig.setParameter(LocationConfig.ACCURACY_TYPE, LocationConfig.LOCATION_ACCURACY_COARSE);
+			sensorConfig = LocationConfig.getDefault();
 			break;
 		case SensorUtils.SENSOR_TYPE_MICROPHONE:
-			sensorConfig.setParameter(PullSensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, MicrophoneConfig.DEFAULT_SLEEP_INTERVAL);
-			sensorConfig.setParameter(PullSensorConfig.SENSE_WINDOW_LENGTH_MILLIS,
-					MicrophoneConfig.DEFAULT_SAMPLING_WINDOW_SIZE_MILLIS);
-			sensorConfig.setParameter(MicrophoneConfig.KEEP_AUDIO_FILES, MicrophoneConfig.DEFAULT_KEEP_AUDIO_FILES);
-			sensorConfig.setParameter(MicrophoneConfig.AUDIO_FILES_DIRECTORY, null);
-			sensorConfig.setParameter(MicrophoneConfig.SAMPLING_RATE, MicrophoneConfig.DEFAULT_SAMPLING_RATE);
+			sensorConfig = MicrophoneConfig.getDefault();
 			break;
 		case SensorUtils.SENSOR_TYPE_WIFI:
-			sensorConfig.setParameter(PullSensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, WifiConfig.DEFAULT_SLEEP_INTERVAL);
-			sensorConfig.setParameter(PullSensorConfig.NUMBER_OF_SENSE_CYCLES, WifiConfig.DEFAULT_SAMPLING_CYCLES);
-			sensorConfig.setParameter(PullSensorConfig.SENSE_WINDOW_LENGTH_PER_CYCLE_MILLIS,
-					WifiConfig.DEFAULT_SAMPLING_WINDOW_SIZE_PER_CYCLE_MILLIS);
+			sensorConfig = WifiConfig.getDefault();
 			break;
 		case SensorUtils.SENSOR_TYPE_APPLICATION:
-			sensorConfig.setParameter(PullSensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, ApplicationConfig.DEFAULT_SLEEP_INTERVAL);
-			sensorConfig.setParameter(PullSensorConfig.NUMBER_OF_SENSE_CYCLES, ApplicationConfig.APPLICATION_SAMPLING_CYCLES);
+			sensorConfig = ApplicationConfig.getDefault();
 			break;
 		case SensorUtils.SENSOR_TYPE_SMS_CONTENT_READER:
-			sensorConfig.setParameter(PullSensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, ContentReaderConfig.DEFAULT_CONTENT_READER_SLEEP_INTERVAL);
-			sensorConfig.setParameter(PullSensorConfig.NUMBER_OF_SENSE_CYCLES, ContentReaderConfig.DEFAULT_CONTENT_READER_SAMPLING_CYCLES);
-			break;
 		case SensorUtils.SENSOR_TYPE_CALL_CONTENT_READER:
-			sensorConfig.setParameter(PullSensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, ContentReaderConfig.DEFAULT_CONTENT_READER_SLEEP_INTERVAL);
-			sensorConfig.setParameter(PullSensorConfig.NUMBER_OF_SENSE_CYCLES, ContentReaderConfig.DEFAULT_CONTENT_READER_SAMPLING_CYCLES);
+			sensorConfig = ContentReaderConfig.getDefault();
 			break;
-			
 		case SensorUtils.SENSOR_TYPE_CAMERA:
-			sensorConfig.setParameter(PullSensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, CameraConfig.DEFAULT_SLEEP_INTERVAL);
-			sensorConfig.setParameter(PullSensorConfig.NUMBER_OF_SENSE_CYCLES, CameraConfig.CAMERA_SAMPLING_CYCLES);
+			sensorConfig = CameraConfig.getDefault();
 			break;
 		}
-
 		sensorConfig.setParameter(PullSensorConfig.ADAPTIVE_SENSING_ENABLED, false);
 		return sensorConfig;
 	}

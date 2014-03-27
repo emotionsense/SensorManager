@@ -1,5 +1,7 @@
 package com.ubhave.sensormanager.config.sensors.pull;
 
+import com.ubhave.sensormanager.config.SensorConfig;
+
 public class CameraConfig
 {
 	/*
@@ -20,4 +22,14 @@ public class CameraConfig
 	 */
 	public static final long DEFAULT_SLEEP_INTERVAL = 15 * 60 * 1000;
 	public static final int CAMERA_SAMPLING_CYCLES = 1; // camera sensor sensing cycles  should not be changed from 1
+	public static final int DEFAULT_CAMERA_TYPE = CAMERA_TYPE_BACK;
+	
+	public static SensorConfig getDefault()
+	{
+		SensorConfig sensorConfig = new SensorConfig();
+		sensorConfig.setParameter(PullSensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, CameraConfig.DEFAULT_SLEEP_INTERVAL);
+		sensorConfig.setParameter(PullSensorConfig.NUMBER_OF_SENSE_CYCLES, CameraConfig.CAMERA_SAMPLING_CYCLES);
+		sensorConfig.setParameter(CameraConfig.CAMERA_TYPE, CameraConfig.DEFAULT_CAMERA_TYPE);
+		return sensorConfig;
+	}
 }

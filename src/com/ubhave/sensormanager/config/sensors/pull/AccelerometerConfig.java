@@ -1,5 +1,9 @@
 package com.ubhave.sensormanager.config.sensors.pull;
 
+import android.hardware.SensorManager;
+
+import com.ubhave.sensormanager.config.SensorConfig;
+
 public class AccelerometerConfig
 {
 	/*
@@ -17,4 +21,14 @@ public class AccelerometerConfig
 	 * Classifier thresholds
 	 */
 	public final static int ACCELEROMETER_MOVEMENT_THRESHOLD = 25;
+	
+	
+	public static SensorConfig getDefault()
+	{
+		SensorConfig sensorConfig = new SensorConfig();
+		sensorConfig.setParameter(PullSensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, AccelerometerConfig.DEFAULT_SLEEP_INTERVAL);
+		sensorConfig.setParameter(AccelerometerConfig.SAMPLING_DELAY, SensorManager.SENSOR_DELAY_GAME);
+		sensorConfig.setParameter(PullSensorConfig.SENSE_WINDOW_LENGTH_MILLIS, AccelerometerConfig.DEFAULT_SAMPLING_WINDOW_SIZE_MILLIS);
+		return sensorConfig;
+	}
 }
