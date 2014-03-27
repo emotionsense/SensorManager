@@ -27,7 +27,6 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.media.MediaRecorder;
-import android.util.Log;
 
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.config.sensors.pull.MicrophoneConfig;
@@ -36,9 +35,12 @@ import com.ubhave.sensormanager.data.pullsensor.MicrophoneData;
 import com.ubhave.sensormanager.process.pull.MicrophoneProcessor;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
-public class MicrophoneSensor extends AbstractPullSensor
+public class MicrophoneSensor extends AbstractMediaSensor
 {
 	private final static String LOG_TAG = "MicrophoneSensor";
+	private final static String AUDIO_FILE_PREFIX = "audio";
+	private final static String AUDIO_FILE_SUFFIX = ".3gpp";
+	
 	private MediaRecorder recorder;
 	private File mediaFile;
 
@@ -82,41 +84,20 @@ public class MicrophoneSensor extends AbstractPullSensor
 		return LOG_TAG;
 	}
 	
-	private File createFile(File path, String mediaFileName, boolean shouldDelete)
+	@Override
+	protected String getFileDirectory()
 	{
-		File file = new File(path, mediaFileName);
-		Log.d("SensorManager", "Creating file: "+file.getAbsolutePath());
-		if (file.exists() && shouldDelete)
-		{
-			file.delete();
-		}
-		return file;
+		return (String) sensorConfig.getParameter(MicrophoneConfig.AUDIO_FILES_DIRECTORY);
 	}
-
-	private File getMediaFile()
+	
+	protected String getFilePrefix()
 	{
-		File path = null;
-		if ((Boolean) sensorConfig.getParameter(MicrophoneConfig.KEEP_AUDIO_FILES))
-		{
-			if (sensorConfig.containsParameter(MicrophoneConfig.AUDIO_FILES_DIRECTORY))
-			{
-				path = new File((String) sensorConfig.getParameter(MicrophoneConfig.AUDIO_FILES_DIRECTORY));
-				if (!path.exists())
-				{
-					path.mkdirs();
-				}
-			}
-			else
-			{
-				// TODO: handle error
-			}	
-			return createFile(path, "audio_"+System.currentTimeMillis()+".3gpp", false);
-		}
-		else
-		{
-			path = applicationContext.getFilesDir();
-			return createFile(path, "audio.3gpp", true);
-		}
+		return AUDIO_FILE_PREFIX;
+	}
+	
+	protected String getFileSuffix()
+	{
+		return AUDIO_FILE_SUFFIX;
 	}
 
 	private int getSamplingRate()

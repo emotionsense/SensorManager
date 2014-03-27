@@ -32,22 +32,24 @@ import android.util.Log;
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.config.GlobalConfig;
 import com.ubhave.sensormanager.config.sensors.pull.CameraConfig;
+import com.ubhave.sensormanager.config.sensors.pull.MicrophoneConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.data.pullsensor.CameraData;
 import com.ubhave.sensormanager.process.pull.CameraProcessor;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
-public class CameraSensor extends AbstractPullSensor
+public class CameraSensor extends AbstractMediaSensor
 {
 	private final static String LOG_TAG = "CameraSensor";
-	private String imageFileFullPath;
+	private final static String IMAGE_FILE_PREFIX = "image";
+	private final static String IMAGE_FILE_SUFFIX = ".jpg";
 
 	private static CameraSensor cameraSensor;
 	private static Object lock = new Object();
 
 	private CameraData cameraData;
-
 	private Camera camera;
+	private File imageFile;
 
 	public static CameraSensor getCameraSensor(Context context) throws ESException
 	{
@@ -78,20 +80,28 @@ public class CameraSensor extends AbstractPullSensor
 	{
 		return LOG_TAG;
 	}
+	
+	@Override
+	protected String getFileDirectory()
+	{
+		return (String) sensorConfig.getParameter(MicrophoneConfig.AUDIO_FILES_DIRECTORY);
+	}
+	
+	protected String getFilePrefix()
+	{
+		return IMAGE_FILE_PREFIX;
+	}
+	
+	protected String getFileSuffix()
+	{
+		return IMAGE_FILE_SUFFIX;
+	}
 
 	protected boolean startSensing()
 	{
 		try
 		{
-
-			imageFileFullPath = applicationContext.getFilesDir().getAbsolutePath() + "/ESImage_"
-					+ System.currentTimeMillis() + ".jpg";
-			File file = new File(imageFileFullPath);
-			if (file.exists())
-			{
-				file.delete();
-			}
-
+			imageFile = getMediaFile();
 			int cameraType = android.hardware.Camera.CameraInfo.CAMERA_FACING_FRONT;
 
 			if (sensorConfig.getParameter(CameraConfig.CAMERA_TYPE) != null)
@@ -109,7 +119,6 @@ public class CameraSensor extends AbstractPullSensor
 
 			camera = Camera.open(cameraType);
 			camera.takePicture(null, null, callBack);
-
 			return true;
 		}
 		catch (Exception e)
@@ -127,7 +136,7 @@ public class CameraSensor extends AbstractPullSensor
 			FileOutputStream outStream = null;
 			try
 			{
-				outStream = new FileOutputStream(imageFileFullPath);
+				outStream = new FileOutputStream(imageFile);
 				outStream.write(data);
 				outStream.close();
 
@@ -137,7 +146,7 @@ public class CameraSensor extends AbstractPullSensor
 			{
 				if (GlobalConfig.shouldLog())
 				{
-					Log.d("CAMERA", e.getMessage());
+					Log.d(LOG_TAG, e.getMessage());
 				}	
 			}
 		}
@@ -146,7 +155,7 @@ public class CameraSensor extends AbstractPullSensor
 	protected void processSensorData()
 	{
 		CameraProcessor processor = (CameraProcessor) getProcessor();
-		cameraData = processor.process(pullSenseStartTimestamp, imageFileFullPath, sensorConfig.clone());
+		cameraData = processor.process(pullSenseStartTimestamp, imageFile.getAbsolutePath(), sensorConfig.clone());
 	}
 
 	protected void stopSensing()
