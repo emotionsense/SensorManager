@@ -3,15 +3,21 @@ package com.ubhave.sensormanager.config.sensors.pull;
 public class CameraConfig
 {
 	/*
+	 * Config Keys
+	 */
+	public static final String IMAGE_FILES_DIRECTORY = "IMAGE_FILES_DIRECTORY";
+	public static final String CAMERA_TYPE = "CAMERA_TYPE";
+	
+	/*
+	 * Config Values
+	 */
+	
+	public static final int CAMERA_TYPE_FRONT = android.hardware.Camera.CameraInfo.CAMERA_FACING_FRONT;
+	public static final int CAMERA_TYPE_BACK = android.hardware.Camera.CameraInfo.CAMERA_FACING_BACK;
+	
+	/*
 	 * Default values
 	 */
 	public static final long DEFAULT_SLEEP_INTERVAL = 15 * 60 * 1000;
-	// camera sensor sensing cycles // this should always be 1
-	public static final int CAMERA_SAMPLING_CYCLES = 1;
-	
-	public static final String CAMERA_TYPE = "CAMERA_TYPE";
-	
-	public static final int CAMERA_TYPE_FRONT = 1001;
-	public static final int CAMERA_TYPE_BACK = 1002;
-	
+	public static final int CAMERA_SAMPLING_CYCLES = 1; // camera sensor sensing cycles  should not be changed from 1
 }

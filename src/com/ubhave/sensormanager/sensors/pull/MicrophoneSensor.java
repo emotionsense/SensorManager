@@ -79,6 +79,7 @@ public class MicrophoneSensor extends AbstractMediaSensor
 		isRecording = false;
 	}
 
+	@Override
 	protected String getLogTag()
 	{
 		return LOG_TAG;
@@ -90,11 +91,13 @@ public class MicrophoneSensor extends AbstractMediaSensor
 		return (String) sensorConfig.getParameter(MicrophoneConfig.AUDIO_FILES_DIRECTORY);
 	}
 	
+	@Override
 	protected String getFilePrefix()
 	{
 		return AUDIO_FILE_PREFIX;
 	}
 	
+	@Override
 	protected String getFileSuffix()
 	{
 		return AUDIO_FILE_SUFFIX;
@@ -149,7 +152,6 @@ public class MicrophoneSensor extends AbstractMediaSensor
 				{
 					public void run()
 					{
-						// capture max amplitude @20Hz ignore fist call
 						recorder.getMaxAmplitude();
 						while (isSensing())
 						{
@@ -209,11 +211,13 @@ public class MicrophoneSensor extends AbstractMediaSensor
 		}
 	}
 
+	@Override
 	public int getSensorType()
 	{
 		return SensorUtils.SENSOR_TYPE_MICROPHONE;
 	}
 
+	@Override
 	protected SensorData getMostRecentRawData()
 	{
 		return micData;

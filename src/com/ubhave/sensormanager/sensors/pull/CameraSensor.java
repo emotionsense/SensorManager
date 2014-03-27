@@ -76,6 +76,7 @@ public class CameraSensor extends AbstractMediaSensor
 		super(context);
 	}
 
+	@Override
 	protected String getLogTag()
 	{
 		return LOG_TAG;
@@ -87,11 +88,13 @@ public class CameraSensor extends AbstractMediaSensor
 		return (String) sensorConfig.getParameter(MicrophoneConfig.AUDIO_FILES_DIRECTORY);
 	}
 	
+	@Override
 	protected String getFilePrefix()
 	{
 		return IMAGE_FILE_PREFIX;
 	}
 	
+	@Override
 	protected String getFileSuffix()
 	{
 		return IMAGE_FILE_SUFFIX;
@@ -103,20 +106,10 @@ public class CameraSensor extends AbstractMediaSensor
 		{
 			imageFile = getMediaFile();
 			int cameraType = android.hardware.Camera.CameraInfo.CAMERA_FACING_FRONT;
-
-			if (sensorConfig.getParameter(CameraConfig.CAMERA_TYPE) != null)
+			if (sensorConfig.containsParameter(CameraConfig.CAMERA_TYPE))
 			{
-				int cameraTypeConfig = (Integer) sensorConfig.getParameter(CameraConfig.CAMERA_TYPE);
-				if (cameraTypeConfig == CameraConfig.CAMERA_TYPE_FRONT)
-				{
-					cameraType = android.hardware.Camera.CameraInfo.CAMERA_FACING_FRONT;
-				}
-				else if (cameraTypeConfig == CameraConfig.CAMERA_TYPE_BACK)
-				{
-					cameraType = android.hardware.Camera.CameraInfo.CAMERA_FACING_BACK;
-				}
+				cameraType = (Integer) sensorConfig.getParameter(CameraConfig.CAMERA_TYPE);
 			}
-
 			camera = Camera.open(cameraType);
 			camera.takePicture(null, null, callBack);
 			return true;
@@ -128,7 +121,7 @@ public class CameraSensor extends AbstractMediaSensor
 		}
 	}
 
-	Camera.PictureCallback callBack = new Camera.PictureCallback()
+	private Camera.PictureCallback callBack = new Camera.PictureCallback()
 	{
 
 		public void onPictureTaken(byte[] data, Camera camera)
@@ -139,7 +132,6 @@ public class CameraSensor extends AbstractMediaSensor
 				outStream = new FileOutputStream(imageFile);
 				outStream.write(data);
 				outStream.close();
-
 				notifySenseCyclesComplete();
 			}
 			catch (Exception e)
