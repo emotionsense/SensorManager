@@ -16,6 +16,7 @@ public class AccelerometerConfig
 	 */
 	public static final long DEFAULT_SAMPLING_WINDOW_SIZE_MILLIS = 8000;
 	public static final long DEFAULT_SLEEP_INTERVAL = 2 * 60 * 1000;
+	public static final long DEFAULT_SAMPLING_DELAY = SensorManager.SENSOR_DELAY_GAME;
 	
 	/*
 	 * Classifier thresholds
@@ -26,9 +27,9 @@ public class AccelerometerConfig
 	public static SensorConfig getDefault()
 	{
 		SensorConfig sensorConfig = new SensorConfig();
-		sensorConfig.setParameter(PullSensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, AccelerometerConfig.DEFAULT_SLEEP_INTERVAL);
-		sensorConfig.setParameter(AccelerometerConfig.SAMPLING_DELAY, SensorManager.SENSOR_DELAY_GAME);
-		sensorConfig.setParameter(PullSensorConfig.SENSE_WINDOW_LENGTH_MILLIS, AccelerometerConfig.DEFAULT_SAMPLING_WINDOW_SIZE_MILLIS);
+		sensorConfig.setParameter(PullSensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, DEFAULT_SLEEP_INTERVAL);
+		sensorConfig.setParameter(AccelerometerConfig.SAMPLING_DELAY, DEFAULT_SAMPLING_DELAY);
+		sensorConfig.setParameter(PullSensorConfig.SENSE_WINDOW_LENGTH_MILLIS, DEFAULT_SAMPLING_WINDOW_SIZE_MILLIS);
 		return sensorConfig;
 	}
 }

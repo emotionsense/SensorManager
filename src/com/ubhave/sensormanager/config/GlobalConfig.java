@@ -22,7 +22,6 @@ IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 package com.ubhave.sensormanager.config;
 
-import com.ubhave.sensormanager.config.sensors.push.BatteryConfig;
 
 public class GlobalConfig extends AbstractConfig
 {
@@ -32,6 +31,7 @@ public class GlobalConfig extends AbstractConfig
 	public final static String PRINT_LOG_D_MESSAGES = "PRINT_LOG_D_MESSAGES";
 
 	private final static boolean DEFAULT_PRINT_LOG_D_MESSAGES = true;
+	public static final int DEFAULT_LOW_BATTERY_THRESHOLD_LEVEL = 20;
 	
 	// acquire wake lock
 	public final static String ACQUIRE_WAKE_LOCK = "ACQUIRE_WAKE_LOCK";
@@ -57,7 +57,7 @@ public class GlobalConfig extends AbstractConfig
 	private static GlobalConfig getDefaultGlobalConfig()
 	{
 		GlobalConfig config = new GlobalConfig();
-		config.setParameter(LOW_BATTERY_THRESHOLD, (Integer) BatteryConfig.LOW_BATTERY_THRESHOLD_LEVEL);
+		config.setParameter(LOW_BATTERY_THRESHOLD, DEFAULT_LOW_BATTERY_THRESHOLD_LEVEL);
 		config.setParameter(PRINT_LOG_D_MESSAGES, DEFAULT_PRINT_LOG_D_MESSAGES);
 		return config;
 	}

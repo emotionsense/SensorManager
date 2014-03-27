@@ -20,8 +20,8 @@ public class ContentReaderConfig
 	public static SensorConfig getDefault()
 	{
 		SensorConfig sensorConfig = new SensorConfig();
-		sensorConfig.setParameter(PullSensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, ContentReaderConfig.DEFAULT_CONTENT_READER_SLEEP_INTERVAL);
-		sensorConfig.setParameter(PullSensorConfig.NUMBER_OF_SENSE_CYCLES, ContentReaderConfig.DEFAULT_CONTENT_READER_SAMPLING_CYCLES);
+		sensorConfig.setParameter(PullSensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, DEFAULT_CONTENT_READER_SLEEP_INTERVAL);
+		sensorConfig.setParameter(PullSensorConfig.NUMBER_OF_SENSE_CYCLES, DEFAULT_CONTENT_READER_SAMPLING_CYCLES);
 		return sensorConfig;
 	}
 }
