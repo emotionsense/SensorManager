@@ -144,15 +144,8 @@ public class AccelerometerSensor extends AbstractPullSensor
 		sensorReadings = new ArrayList<float[]>();
 		sensorReadingTimestamps = new ArrayList<Long>();
 
-		int sensorDelay = SensorManager.SENSOR_DELAY_GAME;
-
-		if (sensorConfig.containsParameter(AccelerometerConfig.SAMPLING_DELAY))
-		{
-			sensorDelay = (Integer) sensorConfig.getParameter(AccelerometerConfig.SAMPLING_DELAY);
-		}
-
-		boolean registrationSuccess = sensorManager.registerListener(listener,
-				sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), sensorDelay);
+		int sensorDelay = (Integer) sensorConfig.getParameter(AccelerometerConfig.SAMPLING_DELAY);
+		boolean registrationSuccess = sensorManager.registerListener(listener, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), sensorDelay);
 		return registrationSuccess;
 	}
 

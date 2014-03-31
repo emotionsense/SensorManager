@@ -14,9 +14,9 @@ public class AccelerometerConfig
 	/*
 	 * Default values
 	 */
-	public static final long DEFAULT_SAMPLING_WINDOW_SIZE_MILLIS = 8000;
-	public static final long DEFAULT_SLEEP_INTERVAL = 2 * 60 * 1000;
-	public static final long DEFAULT_SAMPLING_DELAY = SensorManager.SENSOR_DELAY_GAME;
+	public static final long DEFAULT_SAMPLING_WINDOW_SIZE_MILLIS = 8000L;
+	public static final long DEFAULT_SLEEP_INTERVAL = 2 * 60 * 1000L;
+	public static final int DEFAULT_SAMPLING_DELAY = SensorManager.SENSOR_DELAY_GAME;
 	
 	/*
 	 * Classifier thresholds
