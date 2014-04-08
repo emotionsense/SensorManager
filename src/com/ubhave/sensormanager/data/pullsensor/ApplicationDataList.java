@@ -28,21 +28,21 @@ import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
-public class ApplicationData extends SensorData
+public class ApplicationDataList extends SensorData
 {
-	private ArrayList<String> applications;
+	private ArrayList<ApplicationData> applications;
 
-	public ApplicationData(long senseStartTimestamp, SensorConfig sensorConfig)
+	public ApplicationDataList(long senseStartTimestamp, SensorConfig sensorConfig)
 	{
 		super(senseStartTimestamp, sensorConfig);
 	}
 	
-	public void setApplications(ArrayList<String> applications)
+	public void setApplications(ArrayList<ApplicationData> applications)
 	{
 		this.applications = applications;
 	}
 
-	public ArrayList<String> getApplications()
+	public ArrayList<ApplicationData> getApplications()
 	{
 		return applications;
 	}

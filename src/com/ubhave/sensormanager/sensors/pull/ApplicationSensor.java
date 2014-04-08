@@ -27,13 +27,16 @@ import java.util.List;
 
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningTaskInfo;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.util.Log;
 
 import com.ubhave.sensormanager.ESException;
+import com.ubhave.sensormanager.config.sensors.pull.ApplicationConfig;
 import com.ubhave.sensormanager.data.pullsensor.ApplicationData;
+import com.ubhave.sensormanager.data.pullsensor.ApplicationDataList;
 import com.ubhave.sensormanager.process.pull.ApplicationProcessor;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
@@ -42,8 +45,8 @@ public class ApplicationSensor extends AbstractPullSensor
 	private static final String TAG = "ApplicationSensor";
 
 	private static ApplicationSensor applicationSensor;
-	private ArrayList<String> runningApplications;
-	private ApplicationData applicationData;
+	private ArrayList<ApplicationData> runningApplications;
+	private ApplicationDataList applicationData;
 	private static Object lock = new Object();
 
 	public static ApplicationSensor getApplicationSensor(Context context) throws ESException
@@ -59,7 +62,9 @@ public class ApplicationSensor extends AbstractPullSensor
 						applicationSensor = new ApplicationSensor(context);
 					}
 					else
+					{
 						throw new ESException(ESException.PERMISSION_DENIED, "Application Sensor : Permission not Granted");
+					}
 				}
 			}
 		}
@@ -81,7 +86,7 @@ public class ApplicationSensor extends AbstractPullSensor
 		return SensorUtils.SENSOR_TYPE_APPLICATION;
 	}
 
-	protected ApplicationData getMostRecentRawData()
+	protected ApplicationDataList getMostRecentRawData()
 	{
 		return applicationData;
 	}
@@ -90,7 +95,11 @@ public class ApplicationSensor extends AbstractPullSensor
 	{
 		ApplicationProcessor processor = (ApplicationProcessor) getProcessor();
 		applicationData = processor.process(pullSenseStartTimestamp, runningApplications, sensorConfig.clone());
-
+	}
+	
+	private int numRecentApps()
+	{
+		return (Integer) sensorConfig.getParameter(ApplicationConfig.NUM_RECENT_APPS);
 	}
 
 	protected boolean startSensing()
@@ -101,21 +110,22 @@ public class ApplicationSensor extends AbstractPullSensor
 			{
 				try
 				{
-					runningApplications = new ArrayList<String>();
-
-					ActivityManager activityManager = (ActivityManager) applicationContext
-							.getSystemService(Context.ACTIVITY_SERVICE);
-
-					List<RunningTaskInfo> taskInfos = activityManager.getRunningTasks(50);
+					runningApplications = new ArrayList<ApplicationData>();
+					ActivityManager activityManager = (ActivityManager) applicationContext.getSystemService(Context.ACTIVITY_SERVICE);
+					List<RunningTaskInfo> taskInfos = activityManager.getRunningTasks(numRecentApps());
 					PackageManager pm = applicationContext.getPackageManager();
 					for (RunningTaskInfo ti : taskInfos)
 					{
 						try
 						{
-							CharSequence c = pm.getApplicationLabel(pm.getApplicationInfo(ti.baseActivity.getPackageName(),
-									PackageManager.GET_META_DATA));
-							String appDetails = "(" + c.toString() + ") " + ti.baseActivity.flattenToShortString();
-							runningApplications.add(appDetails);
+							ComponentName baseActivity = ti.baseActivity;
+							CharSequence c = pm.getApplicationLabel(pm.getApplicationInfo(baseActivity.getPackageName(), PackageManager.GET_META_DATA));
+							if (c != null)
+							{
+								String label = c.toString();
+								String base = baseActivity.flattenToShortString();
+								runningApplications.add(new ApplicationData(label, base, ti.numActivities, ti.numRunning));
+							}
 						}
 						catch (NameNotFoundException e)
 						{

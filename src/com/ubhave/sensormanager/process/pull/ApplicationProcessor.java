@@ -6,6 +6,7 @@ import android.content.Context;
 
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.pullsensor.ApplicationData;
+import com.ubhave.sensormanager.data.pullsensor.ApplicationDataList;
 import com.ubhave.sensormanager.process.AbstractProcessor;
 
 public class ApplicationProcessor extends AbstractProcessor
@@ -15,9 +16,9 @@ public class ApplicationProcessor extends AbstractProcessor
 		super(c, rw, sp);
 	}
 
-	public ApplicationData process(long pullSenseStartTimestamp, ArrayList<String> runningApps, SensorConfig sensorConfig)
+	public ApplicationDataList process(long pullSenseStartTimestamp, ArrayList<ApplicationData> runningApps, SensorConfig sensorConfig)
 	{
-		ApplicationData appData = new ApplicationData(pullSenseStartTimestamp, sensorConfig);
+		ApplicationDataList appData = new ApplicationDataList(pullSenseStartTimestamp, sensorConfig);
 		if (setRawData)
 		{
 			appData.setApplications(runningApps);
