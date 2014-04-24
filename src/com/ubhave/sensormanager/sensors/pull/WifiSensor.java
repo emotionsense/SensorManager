@@ -88,8 +88,7 @@ public class WifiSensor extends AbstractPullSensor
 				List<ScanResult> wifiList = wifiManager.getScanResults();
 				for (ScanResult result : wifiList)
 				{
-					WifiScanResult wifiScanResult = new WifiScanResult(result.SSID, result.BSSID, result.capabilities,
-							result.level, result.frequency);
+					WifiScanResult wifiScanResult = new WifiScanResult(result.SSID, result.BSSID, result.capabilities, result.level, result.frequency);
 					wifiScanResults.add(wifiScanResult);
 				}
 
@@ -137,8 +136,7 @@ public class WifiSensor extends AbstractPullSensor
 			{
 				wifiScanResults = new ArrayList<WifiScanResult>();
 				cyclesRemaining = (Integer) sensorConfig.getParameter(PullSensorConfig.NUMBER_OF_SENSE_CYCLES);
-				applicationContext.registerReceiver(wifiReceiver,
-						new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
+				applicationContext.registerReceiver(wifiReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
 				wifiManager.startScan();
 				return true;
 			}
