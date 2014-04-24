@@ -164,13 +164,13 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 			try
 			{
 				String sensorName = SensorUtils.getSensorName(sensorId);
-				throw new ESException(ESException.UNKNOWN_SENSOR_TYPE, "Unknown sensor type: " + sensorName
-						+ ". Have you put the required permissions into your manifest?");
+				throw new ESException(ESException.UNKNOWN_SENSOR_TYPE, sensorName
+						+ "sensor unavailable. Have you put the required permissions into your manifest?");
 			}
 			catch (ESException e)
 			{
-				throw new ESException(ESException.UNKNOWN_SENSOR_TYPE, "Unknown sensor type: " + sensorId
-						+ ". There is no sensor with of that type.");
+				e.printStackTrace();
+				throw new ESException(ESException.UNKNOWN_SENSOR_TYPE, "Unknown sensor type: " + sensorId);
 			}
 		}
 		return sensorTask;

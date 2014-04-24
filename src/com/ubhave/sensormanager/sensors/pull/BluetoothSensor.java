@@ -42,18 +42,19 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class BluetoothSensor extends AbstractPullSensor
 {
-
 	private static final String TAG = "BluetoothSensor";
+	private static final String PERMISSION_BLUETOOTH = "android.permission.BLUETOOTH";
+	private static final String PERMISSION_BT_ADMIN = "android.permission.BLUETOOTH_ADMIN";
+	
+	private static BluetoothSensor bluetoothSensor;
+	private static Object lock = new Object();
 
 	private ArrayList<ESBluetoothDevice> btDevices;
 	private BluetoothAdapter bluetooth = null;
 	private int cyclesRemaining;
-
-	private static BluetoothSensor bluetoothSensor;
-	private static Object lock = new Object();
 	private BluetoothData bluetoothData;
 
-	public static BluetoothSensor getBluetoothSensor(Context context) throws ESException
+	public static BluetoothSensor getBluetoothSensor(final Context context) throws ESException
 	{
 		if (bluetoothSensor == null)
 		{
@@ -61,13 +62,14 @@ public class BluetoothSensor extends AbstractPullSensor
 			{
 				if (bluetoothSensor == null)
 				{
-					if (permissionGranted(context, "android.permission.BLUETOOTH")
-							&& permissionGranted(context, "android.permission.BLUETOOTH_ADMIN"))
+					if (allPermissionsGranted(context, new String[]{PERMISSION_BLUETOOTH, PERMISSION_BT_ADMIN}))
 					{
 						bluetoothSensor = new BluetoothSensor(context);
 					}
 					else
-						throw new ESException(ESException.PERMISSION_DENIED, "Bluetooth Sensor : Permission not Granted");
+					{
+						throw new ESException(ESException.PERMISSION_DENIED, SensorUtils.SENSOR_NAME_BLUETOOTH);
+					}
 				}
 			}
 		}

@@ -40,10 +40,13 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 public class ConnectionStateSensor extends AbstractPushSensor
 {
 	private static final String TAG = "ConnectionStateSensor";
+	private static final String PERMISSION_ACCESS_WIFI = "android.permission.ACCESS_WIFI_STATE";
+	private static final String PERMISSION_ACCESS_NET = "android.permission.ACCESS_NETWORK_STATE";
+	
 	private static ConnectionStateSensor connectionSensor;
 	private static final Object lock = new Object();
 
-	public static ConnectionStateSensor getConnectionStateSensor(Context context) throws ESException
+	public static ConnectionStateSensor getConnectionStateSensor(final Context context) throws ESException
 	{
 		if (connectionSensor == null)
 		{
@@ -51,26 +54,26 @@ public class ConnectionStateSensor extends AbstractPushSensor
 			{
 				if (connectionSensor == null)
 				{
-					if (permissionGranted(context, "android.permission.ACCESS_WIFI_STATE")
-							&& permissionGranted(context, "android.permission.ACCESS_NETWORK_STATE"))
+					if (allPermissionsGranted(context, new String[]{PERMISSION_ACCESS_WIFI, PERMISSION_ACCESS_NET}))
 					{
 						connectionSensor = new ConnectionStateSensor(context);
 					}
 					else
-						throw new ESException(ESException.PERMISSION_DENIED,
-								"Connection Sensor Sensor : Permission not Granted");
+					{
+						throw new ESException(ESException.PERMISSION_DENIED, SensorUtils.SENSOR_NAME_CONNECTION_STATE);
+					}
 				}
 			}
 		}
 		return connectionSensor;
 	}
 
-	private ConnectionStateSensor(Context context)
+	private ConnectionStateSensor(final Context context)
 	{
 		super(context);
 	}
 
-	protected void onBroadcastReceived(Context context, Intent intent)
+	protected void onBroadcastReceived(final Context context, final Intent intent)
 	{
 		if (isSensing)
 		{

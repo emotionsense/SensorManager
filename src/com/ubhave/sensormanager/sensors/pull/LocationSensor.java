@@ -40,18 +40,19 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class LocationSensor extends AbstractPullSensor
 {
-
 	private static final String TAG = "LocationSensor";
+	private static final String PERMISSION_COARSE = "android.permission.ACCESS_COARSE_LOCATION";
+	private static final String PERMISSION_FINE = "android.permission.ACCESS_FINE_LOCATION";
 
-	private LocationManager locationManager;
-
-	private Location lastLocation;
-	private LocationListener locListener;
 	private static LocationSensor locationSensor;
 	private static Object lock = new Object();
+	
+	private LocationManager locationManager;
+	private Location lastLocation;
+	private LocationListener locListener;
 	private LocationData locationData;
 
-	public static LocationSensor getLocationSensor(Context context) throws ESException
+	public static LocationSensor getLocationSensor(final Context context) throws ESException
 	{
 		if (locationSensor == null)
 		{
@@ -59,13 +60,14 @@ public class LocationSensor extends AbstractPullSensor
 			{
 				if (locationSensor == null)
 				{
-					if ((permissionGranted(context, "android.permission.ACCESS_COARSE_LOCATION"))
-							|| (permissionGranted(context, "android.permission.ACCESS_FINE_LOCATION")))
+					if (anyPermissionGranted(context, new String[]{PERMISSION_COARSE, PERMISSION_FINE}))
 					{
 						locationSensor = new LocationSensor(context);
 					}
 					else
-						throw new ESException(ESException.PERMISSION_DENIED, "Location Sensor: Permission Not Granted!");
+					{
+						throw new ESException(ESException.PERMISSION_DENIED, SensorUtils.SENSOR_NAME_LOCATION);
+					}
 				}
 			}
 		}

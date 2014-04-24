@@ -43,13 +43,15 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 public class ApplicationSensor extends AbstractPullSensor
 {
 	private static final String TAG = "ApplicationSensor";
-
+	private static final String PERMISSION_TASKS = "android.permission.GET_TASKS";
+	
 	private static ApplicationSensor applicationSensor;
+	private static Object lock = new Object();
+	
 	private ArrayList<ApplicationData> runningApplications;
 	private ApplicationDataList applicationData;
-	private static Object lock = new Object();
 
-	public static ApplicationSensor getApplicationSensor(Context context) throws ESException
+	public static ApplicationSensor getApplicationSensor(final Context context) throws ESException
 	{
 		if (applicationSensor == null)
 		{
@@ -57,13 +59,13 @@ public class ApplicationSensor extends AbstractPullSensor
 			{
 				if (applicationSensor == null)
 				{
-					if (permissionGranted(context, "android.permission.GET_TASKS"))
+					if (permissionGranted(context, PERMISSION_TASKS))
 					{
 						applicationSensor = new ApplicationSensor(context);
 					}
 					else
 					{
-						throw new ESException(ESException.PERMISSION_DENIED, "Application Sensor : Permission not Granted");
+						throw new ESException(ESException.PERMISSION_DENIED, SensorUtils.SENSOR_NAME_APPLICATION);
 					}
 				}
 			}

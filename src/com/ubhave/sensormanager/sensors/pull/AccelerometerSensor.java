@@ -37,18 +37,15 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class AccelerometerSensor extends AbstractPullSensor
 {
-
 	private static final String TAG = "AccelerometerSensor";
-
-	private SensorEventListener listener; // accelerometer data listener
-	private SensorManager sensorManager; // Controls the hardware sensor
-
-	private ArrayList<float[]> sensorReadings;
-	private ArrayList<Long> sensorReadingTimestamps;
 
 	private static AccelerometerSensor accelerometerSensor;
 	private static Object lock = new Object();
 	
+	private SensorEventListener listener; // accelerometer data listener
+	private SensorManager sensorManager; // Controls the hardware sensor
+	private ArrayList<float[]> sensorReadings;
+	private ArrayList<Long> sensorReadingTimestamps;
 	private AccelerometerData accelerometerData;
 
 	public static AccelerometerSensor getAccelerometerSensor(Context context)

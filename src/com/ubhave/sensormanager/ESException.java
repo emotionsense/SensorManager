@@ -25,6 +25,7 @@ package com.ubhave.sensormanager;
 public class ESException extends Exception
 {
 	private static final long serialVersionUID = -6952859423645368705L;
+	private static final String NOT_GRANTED = " Permission not granted.";
 
 	// error codes
 	public static final int PERMISSION_DENIED = 8000;
@@ -49,7 +50,14 @@ public class ESException extends Exception
 	{
 		super(message);
 		this.errorCode = errorCode;
-		this.message = message;
+		if (errorCode == PERMISSION_DENIED)
+		{
+			this.message = message + NOT_GRANTED;
+		}
+		else
+		{
+			this.message = message;
+		}
 	}
 
 	public int getErrorCode()
@@ -61,5 +69,4 @@ public class ESException extends Exception
 	{
 		return message;
 	}
-
 }

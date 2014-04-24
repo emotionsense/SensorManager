@@ -42,15 +42,17 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 public class SmsSensor extends AbstractPushSensor
 {
 	private static final String TAG = "SmsSensor";
-
-	private ContentObserver observer;
-	private String prevMessageId;
+	private static final String PERMISSION_RECEIVE = "android.permission.RECEIVE_SMS";
+	private static final String PERMISSION_READ = "android.permission.READ_SMS";
 	private static final String SMS_RECEIVED = "android.provider.Telephony.SMS_RECEIVED";
 
 	private static SmsSensor smsSensor;
 	private static Object lock = new Object();
+	
+	private ContentObserver observer;
+	private String prevMessageId;
 
-	public static SmsSensor getSmsSensor(Context context) throws ESException
+	public static SmsSensor getSmsSensor(final Context context) throws ESException
 	{
 		if (smsSensor == null)
 		{
@@ -58,13 +60,14 @@ public class SmsSensor extends AbstractPushSensor
 			{
 				if (smsSensor == null)
 				{
-					if (permissionGranted(context, "android.permission.RECEIVE_SMS")
-							&& permissionGranted(context, "android.permission.READ_SMS"))
+					if (allPermissionsGranted(context, new String[]{PERMISSION_RECEIVE, PERMISSION_READ}))
 					{
 						smsSensor = new SmsSensor(context);
 					}
 					else
-						throw new ESException(ESException.PERMISSION_DENIED, "SMS Sensor : Permission not Granted");
+					{
+						throw new ESException(ESException.PERMISSION_DENIED, SensorUtils.SENSOR_NAME_SMS);
+					}
 				}
 			}
 		}

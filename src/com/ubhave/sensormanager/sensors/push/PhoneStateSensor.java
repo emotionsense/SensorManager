@@ -37,8 +37,9 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class PhoneStateSensor extends AbstractPushSensor
 {
-
 	private static final String TAG = "PhoneStateSensor";
+	private static final String PERMISSION_OUTGOING = "android.permission.PROCESS_OUTGOING_CALLS";
+	private static final String PERMISSION_READ_STATE = "android.permission.READ_PHONE_STATE";
 
 	private TelephonyManager telephonyManager;
 	private PhoneStateListener phoneStateListener;
@@ -46,7 +47,7 @@ public class PhoneStateSensor extends AbstractPushSensor
 	private static PhoneStateSensor phoneStateSensor;
 	private static Object lock = new Object();
 
-	public static PhoneStateSensor getPhoneStateSensor(Context context) throws ESException
+	public static PhoneStateSensor getPhoneStateSensor(final Context context) throws ESException
 	{
 		if (phoneStateSensor == null)
 		{
@@ -54,19 +55,18 @@ public class PhoneStateSensor extends AbstractPushSensor
 			{
 				if (phoneStateSensor == null)
 				{
-					if (permissionGranted(context, "android.permission.PROCESS_OUTGOING_CALLS")
-							&& permissionGranted(context, "android.permission.READ_PHONE_STATE"))
+					if (allPermissionsGranted(context, new String[]{PERMISSION_OUTGOING, PERMISSION_READ_STATE}))
 					{
 						phoneStateSensor = new PhoneStateSensor(context);
 					}
-					else throw new ESException(ESException. PERMISSION_DENIED, "Phone State Sensor : Permission not Granted");
+					else throw new ESException(ESException. PERMISSION_DENIED, SensorUtils.SENSOR_NAME_PHONE_STATE);
 				}
 			}
 		}
 		return phoneStateSensor;
 	}
 
-	private PhoneStateSensor(Context context)
+	private PhoneStateSensor(final Context context)
 	{
 		super(context);
 		telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);

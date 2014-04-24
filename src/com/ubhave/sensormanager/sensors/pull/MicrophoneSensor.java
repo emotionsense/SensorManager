@@ -38,18 +38,17 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 public class MicrophoneSensor extends AbstractMediaSensor
 {
 	private final static String LOG_TAG = "MicrophoneSensor";
+	private final static String PERMISSION_RECORD_AUDIO = "android.permission.RECORD_AUDIO";
 	private final static String AUDIO_FILE_PREFIX = "audio";
 	private final static String AUDIO_FILE_SUFFIX = ".3gpp";
 	
-	private MediaRecorder recorder;
-	private File mediaFile;
-
-	private ArrayList<Integer> maxAmplitudeList;
-	private ArrayList<Long> timestampList;
-
 	private static MicrophoneSensor microphoneSensor;
 	private static Object lock = new Object();
-
+	
+	private MediaRecorder recorder;
+	private File mediaFile;
+	private ArrayList<Integer> maxAmplitudeList;
+	private ArrayList<Long> timestampList;
 	private MicrophoneData micData;
 	private boolean isRecording;
 
@@ -61,12 +60,14 @@ public class MicrophoneSensor extends AbstractMediaSensor
 			{
 				if (microphoneSensor == null)
 				{
-					if (permissionGranted(context, "android.permission.RECORD_AUDIO"))
+					if (permissionGranted(context, PERMISSION_RECORD_AUDIO))
 					{
 						microphoneSensor = new MicrophoneSensor(context);
 					}
 					else
-						throw new ESException(ESException.PERMISSION_DENIED, "Microphone : Permission not Granted");
+					{
+						throw new ESException(ESException.PERMISSION_DENIED, SensorUtils.SENSOR_NAME_MICROPHONE);
+					}
 				}
 			}
 		}

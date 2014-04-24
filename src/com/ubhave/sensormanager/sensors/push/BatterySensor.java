@@ -34,11 +34,12 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 public class BatterySensor extends AbstractPushSensor
 {
 	private static final String TAG = "BatterySensor";
+	private static final String PERMISSION_BATTERY = "android.permission.BATTERY_STATS";
 
 	private static BatterySensor batterySensor;
 	private static Object lock = new Object();
 
-	public static BatterySensor getBatterySensor(Context context) throws ESException
+	public static BatterySensor getBatterySensor(final Context context) throws ESException
 	{
 		if (batterySensor == null)
 		{
@@ -46,11 +47,14 @@ public class BatterySensor extends AbstractPushSensor
 			{
 				if (batterySensor == null)
 				{
-					if (permissionGranted(context, "android.permission.BATTERY_STATS"))
+					if (permissionGranted(context, PERMISSION_BATTERY))
 					{
 						batterySensor = new BatterySensor(context);
 					}
-					else throw new ESException(ESException. PERMISSION_DENIED, "Battery : Permission not Granted");
+					else
+					{
+						throw new ESException(ESException. PERMISSION_DENIED, SensorUtils.SENSOR_NAME_BATTERY);
+					}
 				}
 			}
 		}

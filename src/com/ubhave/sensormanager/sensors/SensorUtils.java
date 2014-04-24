@@ -187,7 +187,7 @@ public class SensorUtils
 		case SENSOR_TYPE_CAMERA:
 			return CameraSensor.getCameraSensor(context);
 		default:
-			throw new ESException(ESException.UNKNOWN_SENSOR_TYPE, "Unknown sensor id");
+			throw new ESException(ESException.UNKNOWN_SENSOR_TYPE, "Unknown sensor id: "+id);
 		}
 	}
 
@@ -226,7 +226,7 @@ public class SensorUtils
 		return sensorConfig;
 	}
 
-	public static int getSensorType(String sensorName) throws ESException
+	public static int getSensorType(final String sensorName) throws ESException
 	{
 		if (sensorName.equals(SENSOR_NAME_ACCELEROMETER))
 		{

@@ -40,6 +40,7 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 public class CameraSensor extends AbstractMediaSensor
 {
 	private final static String LOG_TAG = "CameraSensor";
+	private final static String PERMISSION_CAMERA = "android.permission.CAMERA";
 	private final static String IMAGE_FILE_PREFIX = "image";
 	private final static String IMAGE_FILE_SUFFIX = ".jpg";
 
@@ -50,7 +51,7 @@ public class CameraSensor extends AbstractMediaSensor
 	private Camera camera;
 	private File imageFile;
 
-	public static CameraSensor getCameraSensor(Context context) throws ESException
+	public static CameraSensor getCameraSensor(final Context context) throws ESException
 	{
 		if (cameraSensor == null)
 		{
@@ -58,12 +59,14 @@ public class CameraSensor extends AbstractMediaSensor
 			{
 				if (cameraSensor == null)
 				{
-					if (permissionGranted(context, "android.permission.CAMERA"))
+					if (permissionGranted(context, PERMISSION_CAMERA))
 					{
 						cameraSensor = new CameraSensor(context);
 					}
 					else
-						throw new ESException(ESException.PERMISSION_DENIED, "Camera : Permission not Granted");
+					{
+						throw new ESException(ESException.PERMISSION_DENIED, SensorUtils.SENSOR_NAME_CAMERA);
+					}
 				}
 			}
 		}

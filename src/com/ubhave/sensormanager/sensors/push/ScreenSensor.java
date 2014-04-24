@@ -34,22 +34,22 @@ public class ScreenSensor extends AbstractPushSensor
 {
 	private static final String TAG = "ScreenSensor";
 
-	private static ScreenSensor ScreenSensor;
+	private static ScreenSensor screenSensor;
 	private static Object lock = new Object();
 
-	public static ScreenSensor getScreenSensor(Context context)
+	public static ScreenSensor getScreenSensor(final Context context)
 	{
-		if (ScreenSensor == null)
+		if (screenSensor == null)
 		{
 			synchronized (lock)
 			{
-				if (ScreenSensor == null)
+				if (screenSensor == null)
 				{
-					ScreenSensor = new ScreenSensor(context);
+					screenSensor = new ScreenSensor(context);
 				}
 			}
 		}
-		return ScreenSensor;
+		return screenSensor;
 	}
 
 	private ScreenSensor(Context context)

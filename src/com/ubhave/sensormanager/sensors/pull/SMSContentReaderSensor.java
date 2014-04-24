@@ -31,6 +31,8 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 public class SMSContentReaderSensor extends AbstractContentReaderSensor
 {
 	private static final String LOG_TAG = "SMSContentReaderSensor";
+	private static final String PERMISSION_READ_SMS = "android.permission.READ_SMS";
+	
 	private static SMSContentReaderSensor smsContentReaderSensor;
 
 	public static SMSContentReaderSensor getSMSContentReaderSensor(Context context) throws ESException
@@ -41,13 +43,14 @@ public class SMSContentReaderSensor extends AbstractContentReaderSensor
 			{
 				if (smsContentReaderSensor == null)
 				{
-					if (permissionGranted(context, "android.permission.READ_SMS"))
+					if (permissionGranted(context, PERMISSION_READ_SMS))
 					{
 						smsContentReaderSensor = new SMSContentReaderSensor(context);
 					}
 					else
-						throw new ESException(ESException.PERMISSION_DENIED,
-								"SMSContentReaderSensor : Permission not Granted");
+					{
+						throw new ESException(ESException.PERMISSION_DENIED, SensorUtils.SENSOR_NAME_SMS_CONTENT_READER);
+					}
 				}
 			}
 		}

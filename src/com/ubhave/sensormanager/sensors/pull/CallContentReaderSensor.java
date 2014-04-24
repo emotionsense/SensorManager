@@ -31,9 +31,11 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 public class CallContentReaderSensor extends AbstractContentReaderSensor
 {
 	private static final String LOG_TAG = "CallContentReaderSensor";
+	private static final String PERMISSION_READ_CALLS = "android.permission.READ_CALL_LOG";
+	
 	private static CallContentReaderSensor callContentReaderSensor;
 
-	public static CallContentReaderSensor getCallContentReaderSensor(Context context) throws ESException
+	public static CallContentReaderSensor getCallContentReaderSensor(final Context context) throws ESException
 	{
 		if (callContentReaderSensor == null)
 		{
@@ -41,13 +43,14 @@ public class CallContentReaderSensor extends AbstractContentReaderSensor
 			{
 				if (callContentReaderSensor == null)
 				{
-					if (permissionGranted(context, "android.permission.READ_CALL_LOG"))
+					if (permissionGranted(context, PERMISSION_READ_CALLS))
 					{
 						callContentReaderSensor = new CallContentReaderSensor(context);
 					}
 					else
-						throw new ESException(ESException.PERMISSION_DENIED,
-								"CallContentReaderSensor : Permission not Granted");
+					{
+						throw new ESException(ESException.PERMISSION_DENIED, SensorUtils.SENSOR_NAME_CALL_CONTENT_READER);
+					}	
 				}
 			}
 		}

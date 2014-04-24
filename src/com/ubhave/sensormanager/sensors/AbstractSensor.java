@@ -31,23 +31,46 @@ import com.ubhave.sensormanager.config.sensors.pull.LocationConfig;
 import com.ubhave.sensormanager.process.AbstractProcessor;
 
 public abstract class AbstractSensor implements SensorInterface
-{
-
+{	
 	protected boolean isSensing;
 	protected final Context applicationContext;
 	protected final Object senseCompleteNotify;
 	protected final SensorConfig sensorConfig;
 
-	public AbstractSensor(Context context)
+	public AbstractSensor(final Context context)
 	{
 		applicationContext = context;
 		senseCompleteNotify = new Object();
 		sensorConfig = SensorUtils.getDefaultSensorConfig(getSensorType());
 	}
 
-	protected static boolean permissionGranted(Context context, String permission)
+	protected static boolean permissionGranted(final Context context, final String permission)
 	{
 		return context.checkCallingOrSelfPermission(permission) == PackageManager.PERMISSION_GRANTED;
+	}
+	
+	protected static boolean allPermissionsGranted(final Context context, final String[] permissions)
+	{
+		for (String permission : permissions)
+		{
+			if (!permissionGranted(context, permission))
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	protected static boolean anyPermissionGranted(final Context context, final String[] permissions)
+	{
+		for (String permission : permissions)
+		{
+			if (permissionGranted(context, permission))
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
 	protected abstract boolean startSensing();
@@ -61,7 +84,7 @@ public abstract class AbstractSensor implements SensorInterface
 		return isSensing;
 	}
 
-	public void setSensorConfig(String configKey, Object configValue) throws ESException
+	public void setSensorConfig(final String configKey, final Object configValue) throws ESException
 	{
 		// default parameters can be overridden through this method
 		if (!sensorConfig.containsParameter(configKey))
@@ -81,7 +104,7 @@ public abstract class AbstractSensor implements SensorInterface
 		sensorConfig.setParameter(configKey, configValue);
 	}
 
-	public Object getSensorConfig(String configKey) throws ESException
+	public Object getSensorConfig(final String configKey) throws ESException
 	{
 		if (sensorConfig.containsParameter(configKey))
 		{
@@ -129,5 +152,4 @@ public abstract class AbstractSensor implements SensorInterface
 			return null;
 		}
 	}
-
 }
