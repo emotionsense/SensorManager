@@ -24,7 +24,6 @@ package com.ubhave.sensormanager.tasks;
 
 import java.util.ArrayList;
 
-import android.os.AsyncTask;
 import android.util.Log;
 
 import com.ubhave.sensormanager.ESException;
@@ -39,17 +38,16 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public abstract class AbstractSensorTask extends Thread
 {
-	private class StopTask extends AsyncTask<Void, Void, Void>
+	private class StopTask extends Thread
 	{
 		@Override
-		protected Void doInBackground(Void... arg0)
+		public void run()
 		{
 			if (GlobalConfig.shouldLog())
 			{
 				Log.d("StopTask", "Stopping sensor task...");
 			}
 			stopTask();
-			return null;
 		}
 	}
 
@@ -221,7 +219,7 @@ public abstract class AbstractSensorTask extends Thread
 			listenerList.remove(listener);
 			if (listenerList.isEmpty())
 			{
-				new StopTask().execute();
+				new StopTask().start();
 			}
 			else if (listenerList.size() == 1)
 			{
@@ -231,7 +229,7 @@ public abstract class AbstractSensorTask extends Thread
 				if (AdaptiveSensing.getAdaptiveSensing().isSensorRegistered(this.getSensor())
 						&& listenerList.contains(AdaptiveSensing.getAdaptiveSensing()))
 				{
-					new StopTask().execute();
+					new StopTask().start();
 				}
 
 			}

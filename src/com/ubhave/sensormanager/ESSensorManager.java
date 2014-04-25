@@ -118,7 +118,10 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 		{
 			if (!isSubscribedToBattery)
 			{
-				// register with battery sensor
+				if (GlobalConfig.shouldLog())
+				{
+					Log.d(TAG, "Registering battery subscription.");
+				}
 				isSubscribedToBattery = true;
 				batterySubscriptionId = subscribeToSensorData(SensorUtils.SENSOR_TYPE_BATTERY, this);
 			}
@@ -146,6 +149,10 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 			subscription.unregister();
 			if (subscriptionList.getAllSubscriptions().size() == 1)
 			{
+				if (GlobalConfig.shouldLog())
+				{
+					Log.d(TAG, "Removing battery subscription.");
+				}
 				unsubscribeFromSensorData(batterySubscriptionId);
 				isSubscribedToBattery = false;
 			}

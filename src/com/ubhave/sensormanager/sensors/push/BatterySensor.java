@@ -47,7 +47,7 @@ public class BatterySensor extends AbstractPushSensor
 			{
 				if (batterySensor == null)
 				{
-					if (permissionGranted(context, PERMISSION_BATTERY))
+					if (android.os.Build.VERSION.SDK_INT >= 19 || permissionGranted(context, PERMISSION_BATTERY))
 					{
 						batterySensor = new BatterySensor(context);
 					}
