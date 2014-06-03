@@ -25,6 +25,7 @@ package com.ubhave.sensormanager.sensors.pull;
 import java.io.File;
 import java.io.FileOutputStream;
 
+import android.Manifest;
 import android.content.Context;
 import android.hardware.Camera;
 import android.util.Log;
@@ -40,7 +41,6 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 public class CameraSensor extends AbstractMediaSensor
 {
 	private final static String LOG_TAG = "CameraSensor";
-	private final static String PERMISSION_CAMERA = "android.permission.CAMERA";
 	private final static String IMAGE_FILE_PREFIX = "image";
 	private final static String IMAGE_FILE_SUFFIX = ".jpg";
 
@@ -59,7 +59,7 @@ public class CameraSensor extends AbstractMediaSensor
 			{
 				if (cameraSensor == null)
 				{
-					if (permissionGranted(context, PERMISSION_CAMERA))
+					if (permissionGranted(context, Manifest.permission.CAMERA))
 					{
 						cameraSensor = new CameraSensor(context);
 					}

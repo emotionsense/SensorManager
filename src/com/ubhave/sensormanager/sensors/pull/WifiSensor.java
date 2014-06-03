@@ -25,6 +25,7 @@ package com.ubhave.sensormanager.sensors.pull;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -42,9 +43,11 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 public class WifiSensor extends AbstractPullSensor
 {
 	private static final String TAG = "WifiSensor";
-	private static final String PERMISSION_ACCESS_WIFI = "android.permission.ACCESS_WIFI_STATE";
-	private static final String PERMISSION_ACCESS_NET = "android.permission.ACCESS_NETWORK_STATE";
-	private static final String PERMISSION_CHANGE_WIFI = "android.permission.CHANGE_WIFI_STATE";
+	private static final String[] REQUIRED_PERMISSIONS = new String[]{
+		Manifest.permission.ACCESS_WIFI_STATE,
+		Manifest.permission.ACCESS_NETWORK_STATE,
+		Manifest.permission.CHANGE_WIFI_STATE
+	};
 
 	private static WifiSensor wifiSensor;
 	private static Object lock = new Object();
@@ -63,7 +66,7 @@ public class WifiSensor extends AbstractPullSensor
 			{
 				if (wifiSensor == null)
 				{
-					if (allPermissionsGranted(context, new String[]{PERMISSION_ACCESS_WIFI, PERMISSION_ACCESS_NET, PERMISSION_CHANGE_WIFI}))
+					if (allPermissionsGranted(context, REQUIRED_PERMISSIONS))
 					{
 						wifiSensor = new WifiSensor(context);
 					}

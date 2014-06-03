@@ -38,7 +38,6 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 public class AccelerometerSensor extends AbstractPullSensor
 {
 	private static final String TAG = "AccelerometerSensor";
-
 	private static AccelerometerSensor accelerometerSensor;
 	private static Object lock = new Object();
 	

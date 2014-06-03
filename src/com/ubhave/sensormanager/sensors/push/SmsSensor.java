@@ -22,6 +22,7 @@ IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 package com.ubhave.sensormanager.sensors.push;
 
+import android.Manifest;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -42,8 +43,7 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 public class SmsSensor extends AbstractPushSensor
 {
 	private static final String TAG = "SmsSensor";
-	private static final String PERMISSION_RECEIVE = "android.permission.RECEIVE_SMS";
-	private static final String PERMISSION_READ = "android.permission.READ_SMS";
+	private static final String[] REQUIRED_PERMISSIONS = new String[]{Manifest.permission.RECEIVE_SMS, Manifest.permission.READ_SMS};
 	private static final String SMS_RECEIVED = "android.provider.Telephony.SMS_RECEIVED";
 
 	private static SmsSensor smsSensor;
@@ -60,7 +60,7 @@ public class SmsSensor extends AbstractPushSensor
 			{
 				if (smsSensor == null)
 				{
-					if (allPermissionsGranted(context, new String[]{PERMISSION_RECEIVE, PERMISSION_READ}))
+					if (allPermissionsGranted(context, REQUIRED_PERMISSIONS))
 					{
 						smsSensor = new SmsSensor(context);
 					}

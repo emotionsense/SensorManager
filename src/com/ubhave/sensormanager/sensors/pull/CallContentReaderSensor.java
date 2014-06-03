@@ -22,6 +22,7 @@ IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 package com.ubhave.sensormanager.sensors.pull;
 
+import android.Manifest;
 import android.content.Context;
 import android.provider.CallLog;
 
@@ -31,8 +32,6 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 public class CallContentReaderSensor extends AbstractContentReaderSensor
 {
 	private static final String LOG_TAG = "CallContentReaderSensor";
-	private static final String PERMISSION_READ_CALLS = "android.permission.READ_CALL_LOG";
-	
 	private static CallContentReaderSensor callContentReaderSensor;
 
 	public static CallContentReaderSensor getCallContentReaderSensor(final Context context) throws ESException
@@ -43,7 +42,8 @@ public class CallContentReaderSensor extends AbstractContentReaderSensor
 			{
 				if (callContentReaderSensor == null)
 				{
-					if (permissionGranted(context, PERMISSION_READ_CALLS))
+					if ((android.os.Build.VERSION.SDK_INT <= 15 && permissionGranted(context, Manifest.permission.READ_CONTACTS))
+							|| permissionGranted(context, Manifest.permission.READ_CALL_LOG))
 					{
 						callContentReaderSensor = new CallContentReaderSensor(context);
 					}

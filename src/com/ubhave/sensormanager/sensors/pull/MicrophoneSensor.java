@@ -25,6 +25,7 @@ package com.ubhave.sensormanager.sensors.pull;
 import java.io.File;
 import java.util.ArrayList;
 
+import android.Manifest;
 import android.content.Context;
 import android.media.MediaRecorder;
 
@@ -38,7 +39,6 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 public class MicrophoneSensor extends AbstractMediaSensor
 {
 	private final static String LOG_TAG = "MicrophoneSensor";
-	private final static String PERMISSION_RECORD_AUDIO = "android.permission.RECORD_AUDIO";
 	private final static String AUDIO_FILE_PREFIX = "audio";
 	private final static String AUDIO_FILE_SUFFIX = ".3gpp";
 	
@@ -60,7 +60,7 @@ public class MicrophoneSensor extends AbstractMediaSensor
 			{
 				if (microphoneSensor == null)
 				{
-					if (permissionGranted(context, PERMISSION_RECORD_AUDIO))
+					if (permissionGranted(context, Manifest.permission.RECORD_AUDIO))
 					{
 						microphoneSensor = new MicrophoneSensor(context);
 					}

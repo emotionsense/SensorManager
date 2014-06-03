@@ -22,6 +22,7 @@ IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 package com.ubhave.sensormanager.sensors.pull;
 
+import android.Manifest;
 import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
@@ -41,8 +42,10 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 public class LocationSensor extends AbstractPullSensor
 {
 	private static final String TAG = "LocationSensor";
-	private static final String PERMISSION_COARSE = "android.permission.ACCESS_COARSE_LOCATION";
-	private static final String PERMISSION_FINE = "android.permission.ACCESS_FINE_LOCATION";
+	private static final String[] LOCATION_PERMISSIONS = new String[]{
+		Manifest.permission.ACCESS_COARSE_LOCATION,
+		Manifest.permission.ACCESS_FINE_LOCATION
+	};
 
 	private static LocationSensor locationSensor;
 	private static Object lock = new Object();
@@ -60,7 +63,7 @@ public class LocationSensor extends AbstractPullSensor
 			{
 				if (locationSensor == null)
 				{
-					if (anyPermissionGranted(context, new String[]{PERMISSION_COARSE, PERMISSION_FINE}))
+					if (anyPermissionGranted(context, LOCATION_PERMISSIONS))
 					{
 						locationSensor = new LocationSensor(context);
 					}

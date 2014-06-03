@@ -22,6 +22,7 @@ IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 package com.ubhave.sensormanager.sensors.push;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -40,8 +41,7 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 public class ConnectionStateSensor extends AbstractPushSensor
 {
 	private static final String TAG = "ConnectionStateSensor";
-	private static final String PERMISSION_ACCESS_WIFI = "android.permission.ACCESS_WIFI_STATE";
-	private static final String PERMISSION_ACCESS_NET = "android.permission.ACCESS_NETWORK_STATE";
+	private static final String[] REQUIRED_PERMISSIONS = new String[]{Manifest.permission.ACCESS_WIFI_STATE, Manifest.permission.ACCESS_NETWORK_STATE};
 	
 	private static ConnectionStateSensor connectionSensor;
 	private static final Object lock = new Object();
@@ -54,7 +54,7 @@ public class ConnectionStateSensor extends AbstractPushSensor
 			{
 				if (connectionSensor == null)
 				{
-					if (allPermissionsGranted(context, new String[]{PERMISSION_ACCESS_WIFI, PERMISSION_ACCESS_NET}))
+					if (allPermissionsGranted(context, REQUIRED_PERMISSIONS))
 					{
 						connectionSensor = new ConnectionStateSensor(context);
 					}

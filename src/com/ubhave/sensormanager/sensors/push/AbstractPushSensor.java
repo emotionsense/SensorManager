@@ -36,13 +36,8 @@ import com.ubhave.sensormanager.sensors.AbstractSensor;
 
 public abstract class AbstractPushSensor extends AbstractSensor implements PushSensor
 {
-
 	protected SensorDataListener sensorDataListener;
 	protected BroadcastReceiver broadcastReceiver;
-
-	protected abstract void onBroadcastReceived(Context context, Intent intent);
-
-	protected abstract IntentFilter[] getIntentFilters();
 
 	public AbstractPushSensor(Context context)
 	{
@@ -62,6 +57,10 @@ public abstract class AbstractPushSensor extends AbstractSensor implements PushS
 			}
 		};
 	}
+	
+	protected abstract void onBroadcastReceived(Context context, Intent intent);
+
+	protected abstract IntentFilter[] getIntentFilters();
 
 	public void startSensing(SensorDataListener listener) throws ESException
 	{
@@ -133,5 +132,4 @@ public abstract class AbstractPushSensor extends AbstractSensor implements PushS
 			sensorDataListener.onDataSensed(sensorData);
 		}
 	}
-
 }

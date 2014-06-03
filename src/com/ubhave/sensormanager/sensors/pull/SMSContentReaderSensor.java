@@ -22,6 +22,7 @@ IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 package com.ubhave.sensormanager.sensors.pull;
 
+import android.Manifest;
 import android.content.Context;
 
 import com.ubhave.sensormanager.ESException;
@@ -31,8 +32,6 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 public class SMSContentReaderSensor extends AbstractContentReaderSensor
 {
 	private static final String LOG_TAG = "SMSContentReaderSensor";
-	private static final String PERMISSION_READ_SMS = "android.permission.READ_SMS";
-	
 	private static SMSContentReaderSensor smsContentReaderSensor;
 
 	public static SMSContentReaderSensor getSMSContentReaderSensor(Context context) throws ESException
@@ -43,7 +42,7 @@ public class SMSContentReaderSensor extends AbstractContentReaderSensor
 			{
 				if (smsContentReaderSensor == null)
 				{
-					if (permissionGranted(context, PERMISSION_READ_SMS))
+					if (permissionGranted(context, Manifest.permission.READ_SMS))
 					{
 						smsContentReaderSensor = new SMSContentReaderSensor(context);
 					}

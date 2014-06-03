@@ -25,6 +25,7 @@ package com.ubhave.sensormanager.sensors.pull;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.Manifest;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningTaskInfo;
 import android.content.ComponentName;
@@ -43,8 +44,6 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 public class ApplicationSensor extends AbstractPullSensor
 {
 	private static final String TAG = "ApplicationSensor";
-	private static final String PERMISSION_TASKS = "android.permission.GET_TASKS";
-	
 	private static ApplicationSensor applicationSensor;
 	private static Object lock = new Object();
 	
@@ -59,7 +58,7 @@ public class ApplicationSensor extends AbstractPullSensor
 			{
 				if (applicationSensor == null)
 				{
-					if (permissionGranted(context, PERMISSION_TASKS))
+					if (permissionGranted(context, Manifest.permission.GET_TASKS))
 					{
 						applicationSensor = new ApplicationSensor(context);
 					}

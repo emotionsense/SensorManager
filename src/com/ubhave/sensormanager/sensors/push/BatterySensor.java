@@ -22,6 +22,7 @@ IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 package com.ubhave.sensormanager.sensors.push;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -34,8 +35,6 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 public class BatterySensor extends AbstractPushSensor
 {
 	private static final String TAG = "BatterySensor";
-	private static final String PERMISSION_BATTERY = "android.permission.BATTERY_STATS";
-
 	private static BatterySensor batterySensor;
 	private static Object lock = new Object();
 
@@ -47,7 +46,7 @@ public class BatterySensor extends AbstractPushSensor
 			{
 				if (batterySensor == null)
 				{
-					if (android.os.Build.VERSION.SDK_INT >= 19 || permissionGranted(context, PERMISSION_BATTERY))
+					if (android.os.Build.VERSION.SDK_INT >= 19 || permissionGranted(context, Manifest.permission.BATTERY_STATS))
 					{
 						batterySensor = new BatterySensor(context);
 					}

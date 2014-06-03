@@ -24,6 +24,7 @@ package com.ubhave.sensormanager.sensors.pull;
 
 import java.util.ArrayList;
 
+import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
@@ -43,8 +44,10 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 public class BluetoothSensor extends AbstractPullSensor
 {
 	private static final String TAG = "BluetoothSensor";
-	private static final String PERMISSION_BLUETOOTH = "android.permission.BLUETOOTH";
-	private static final String PERMISSION_BT_ADMIN = "android.permission.BLUETOOTH_ADMIN";
+	private static final String[] REQUIRED_PERMISSIONS = new String[]{
+		Manifest.permission.BLUETOOTH,
+		Manifest.permission.BLUETOOTH_ADMIN
+	};
 	
 	private static BluetoothSensor bluetoothSensor;
 	private static Object lock = new Object();
@@ -62,7 +65,7 @@ public class BluetoothSensor extends AbstractPullSensor
 			{
 				if (bluetoothSensor == null)
 				{
-					if (allPermissionsGranted(context, new String[]{PERMISSION_BLUETOOTH, PERMISSION_BT_ADMIN}))
+					if (allPermissionsGranted(context, REQUIRED_PERMISSIONS))
 					{
 						bluetoothSensor = new BluetoothSensor(context);
 					}

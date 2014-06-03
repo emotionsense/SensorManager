@@ -22,6 +22,7 @@ IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 package com.ubhave.sensormanager.sensors.push;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -38,8 +39,7 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 public class PhoneStateSensor extends AbstractPushSensor
 {
 	private static final String TAG = "PhoneStateSensor";
-	private static final String PERMISSION_OUTGOING = "android.permission.PROCESS_OUTGOING_CALLS";
-	private static final String PERMISSION_READ_STATE = "android.permission.READ_PHONE_STATE";
+	private static final String[] REQUIRED_PERMISSIONS = new String[]{Manifest.permission.PROCESS_OUTGOING_CALLS, Manifest.permission.READ_PHONE_STATE};
 
 	private TelephonyManager telephonyManager;
 	private PhoneStateListener phoneStateListener;
@@ -55,7 +55,7 @@ public class PhoneStateSensor extends AbstractPushSensor
 			{
 				if (phoneStateSensor == null)
 				{
-					if (allPermissionsGranted(context, new String[]{PERMISSION_OUTGOING, PERMISSION_READ_STATE}))
+					if (allPermissionsGranted(context, REQUIRED_PERMISSIONS))
 					{
 						phoneStateSensor = new PhoneStateSensor(context);
 					}
