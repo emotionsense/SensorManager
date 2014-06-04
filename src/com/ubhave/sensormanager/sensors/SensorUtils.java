@@ -58,6 +58,7 @@ import com.ubhave.sensormanager.sensors.pull.SMSContentReaderSensor;
 import com.ubhave.sensormanager.sensors.pull.WifiSensor;
 import com.ubhave.sensormanager.sensors.push.BatterySensor;
 import com.ubhave.sensormanager.sensors.push.ConnectionStateSensor;
+import com.ubhave.sensormanager.sensors.push.ConnectionStrengthSensor;
 import com.ubhave.sensormanager.sensors.push.PhoneStateSensor;
 import com.ubhave.sensormanager.sensors.push.ProximitySensor;
 import com.ubhave.sensormanager.sensors.push.ScreenSensor;
@@ -83,6 +84,7 @@ public class SensorUtils
 	public final static int SENSOR_TYPE_CALL_CONTENT_READER = 5014;
 	public final static int SENSOR_TYPE_CAMERA = 5015;
 	public final static int SENSOR_TYPE_PHONE_RADIO = 5016;
+	public final static int SENSOR_TYPE_CONNECTION_STRENGTH = 5017;
 
 	public final static String SENSOR_NAME_ACCELEROMETER = "Accelerometer";
 	public final static String SENSOR_NAME_BATTERY = "Battery";
@@ -100,12 +102,17 @@ public class SensorUtils
 	public final static String SENSOR_NAME_CALL_CONTENT_READER = "CallContentReader";
 	public final static String SENSOR_NAME_CAMERA = "Camera";
 	public final static String SENSOR_NAME_PHONE_RADIO = "PhoneRadio";
+	public final static String SENSOR_NAME_CONNECTION_STRENGTH = "ConnectionStrength";
 
-	public final static int[] ALL_SENSORS = new int[] { SENSOR_TYPE_ACCELEROMETER, SENSOR_TYPE_BLUETOOTH,
-			SENSOR_TYPE_LOCATION, SENSOR_TYPE_MICROPHONE, SENSOR_TYPE_WIFI, SENSOR_TYPE_BATTERY, SENSOR_TYPE_PHONE_STATE,
-			SENSOR_TYPE_PROXIMITY, SENSOR_TYPE_SCREEN, SENSOR_TYPE_SMS, SENSOR_TYPE_CONNECTION_STATE,
-			SENSOR_TYPE_APPLICATION, SENSOR_TYPE_SMS_CONTENT_READER, SENSOR_TYPE_CALL_CONTENT_READER,  SENSOR_TYPE_CAMERA,
-			SENSOR_TYPE_PHONE_RADIO};
+	public final static int[] ALL_SENSORS = new int[] {
+			SENSOR_TYPE_ACCELEROMETER, SENSOR_TYPE_BLUETOOTH,
+			SENSOR_TYPE_LOCATION, SENSOR_TYPE_MICROPHONE, SENSOR_TYPE_WIFI,
+			SENSOR_TYPE_BATTERY, SENSOR_TYPE_PHONE_STATE,
+			SENSOR_TYPE_PROXIMITY, SENSOR_TYPE_SCREEN, SENSOR_TYPE_SMS,
+			SENSOR_TYPE_CONNECTION_STATE,
+			SENSOR_TYPE_APPLICATION, SENSOR_TYPE_SMS_CONTENT_READER,
+			SENSOR_TYPE_CALL_CONTENT_READER, SENSOR_TYPE_CAMERA,
+			SENSOR_TYPE_PHONE_RADIO, SENSOR_TYPE_CONNECTION_STRENGTH };
 
 	public static boolean isPullSensor(int sensorType)
 	{
@@ -126,18 +133,20 @@ public class SensorUtils
 			return false;
 		}
 	}
-	
+
 	public static boolean isPushSensor(int sensorType)
 	{
 		return !isPullSensor(sensorType);
 	}
 
-	public static ArrayList<SensorInterface> getAllSensors(Context applicationContext)
+	public static ArrayList<SensorInterface> getAllSensors(
+			Context applicationContext)
 	{
 		return getSensorList(ALL_SENSORS, applicationContext);
 	}
 
-	private static ArrayList<SensorInterface> getSensorList(int[] list, Context applicationContext)
+	private static ArrayList<SensorInterface> getSensorList(int[] list,
+			Context applicationContext)
 	{
 		ArrayList<SensorInterface> sensors = new ArrayList<SensorInterface>();
 		for (int sensorId : list)
@@ -146,8 +155,7 @@ public class SensorUtils
 			{
 				SensorInterface sensor = getSensor(sensorId, applicationContext);
 				sensors.add(sensor);
-			}
-			catch (ESException e)
+			} catch (ESException e)
 			{
 				if (GlobalConfig.shouldLog())
 				{
@@ -158,7 +166,8 @@ public class SensorUtils
 		return sensors;
 	}
 
-	private static SensorInterface getSensor(int id, Context context) throws ESException
+	private static SensorInterface getSensor(int id, Context context)
+			throws ESException
 	{
 		switch (id)
 		{
@@ -194,8 +203,12 @@ public class SensorUtils
 			return CameraSensor.getCameraSensor(context);
 		case SENSOR_TYPE_PHONE_RADIO:
 			return PhoneRadioSensor.getPhoneRadioSensor(context);
+		case SENSOR_TYPE_CONNECTION_STRENGTH:
+			return ConnectionStrengthSensor
+					.getConnectionStrengthSensor(context);
 		default:
-			throw new ESException(ESException.UNKNOWN_SENSOR_TYPE, "Unknown sensor id: "+id);
+			throw new ESException(ESException.UNKNOWN_SENSOR_TYPE,
+					"Unknown sensor id: " + id);
 		}
 	}
 
@@ -208,7 +221,7 @@ public class SensorUtils
 			sensorConfig = AccelerometerConfig.getDefault();
 			break;
 		case SensorUtils.SENSOR_TYPE_BLUETOOTH:
-			sensorConfig =  BluetoothConfig.getDefault();
+			sensorConfig = BluetoothConfig.getDefault();
 			break;
 		case SensorUtils.SENSOR_TYPE_LOCATION:
 			sensorConfig = LocationConfig.getDefault();
@@ -233,7 +246,8 @@ public class SensorUtils
 			sensorConfig = PhoneRadioConfig.getDefault();
 			break;
 		}
-		sensorConfig.setParameter(PullSensorConfig.ADAPTIVE_SENSING_ENABLED, false);
+		sensorConfig.setParameter(PullSensorConfig.ADAPTIVE_SENSING_ENABLED,
+				false);
 		return sensorConfig;
 	}
 
@@ -299,9 +313,14 @@ public class SensorUtils
 		{
 			return SENSOR_TYPE_PHONE_RADIO;
 		}
+		else if (sensorName.equals(SENSOR_NAME_CONNECTION_STRENGTH))
+		{
+			return SENSOR_TYPE_CONNECTION_STRENGTH;
+		}
 		else
 		{
-			throw new ESException(ESException.UNKNOWN_SENSOR_NAME, "unknown sensor name " + sensorName);
+			throw new ESException(ESException.UNKNOWN_SENSOR_NAME,
+					"unknown sensor name " + sensorName);
 		}
 	}
 
@@ -341,12 +360,16 @@ public class SensorUtils
 			return SENSOR_NAME_CAMERA;
 		case SensorUtils.SENSOR_TYPE_PHONE_RADIO:
 			return SENSOR_NAME_PHONE_RADIO;
+		case SensorUtils.SENSOR_TYPE_CONNECTION_STRENGTH:
+			return SENSOR_NAME_CONNECTION_STRENGTH;
 		default:
-			throw new ESException(ESException.UNKNOWN_SENSOR_NAME, "unknown sensor type " + sensorType);
+			throw new ESException(ESException.UNKNOWN_SENSOR_NAME,
+					"unknown sensor type " + sensorType);
 		}
 	}
 
-	public static SensorDataClassifier getSensorDataClassifier(int sensorType) throws ESException
+	public static SensorDataClassifier getSensorDataClassifier(int sensorType)
+			throws ESException
 	{
 		switch (sensorType)
 		{
@@ -361,8 +384,9 @@ public class SensorUtils
 		case SensorUtils.SENSOR_TYPE_WIFI:
 			return new WifiDataClassifier();
 		default:
-			throw new ESException(ESException.UNKNOWN_SENSOR_TYPE, "sensor data classifier not support for the sensor type "
-					+ sensorType);
+			throw new ESException(ESException.UNKNOWN_SENSOR_TYPE,
+					"sensor data classifier not support for the sensor type "
+							+ sensorType);
 		}
 	}
 

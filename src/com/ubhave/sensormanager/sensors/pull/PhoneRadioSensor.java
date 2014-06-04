@@ -27,19 +27,13 @@ package com.ubhave.sensormanager.sensors.pull;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.ActivityManager;
-import android.app.ActivityManager.RunningTaskInfo;
-import android.content.ComponentName;
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.telephony.CellInfo;
 import android.telephony.TelephonyManager;
 import android.telephony.gsm.GsmCellLocation;
-import android.util.Log;
 
 import com.ubhave.sensormanager.ESException;
-import com.ubhave.sensormanager.config.sensors.pull.PhoneRadioConfig;
 import com.ubhave.sensormanager.data.pullsensor.PhoneRadioData;
 import com.ubhave.sensormanager.data.pullsensor.PhoneRadioDataList;
 import com.ubhave.sensormanager.process.pull.PhoneRadioProcessor;
@@ -49,14 +43,15 @@ public class PhoneRadioSensor extends AbstractPullSensor
 {
 	private static final String TAG = "PhoneRadioSensor";
 	private static final String PERMISSION_ACCESS_CELL_INFO = "android.permission.ACCESS_COARSE_LOCATION";
-	
+
 	private static PhoneRadioSensor phoneRadioSensor;
 	private static Object lock = new Object();
-	
-	private ArrayList<PhoneRadioData> visibleCells;
-	private PhoneRadioDataList phoneRadioDataList;
 
-	public static PhoneRadioSensor getPhoneRadioSensor(final Context context) throws ESException
+	private ArrayList<PhoneRadioData> visibleCells;
+	private volatile PhoneRadioDataList phoneRadioDataList;
+
+	public static PhoneRadioSensor getPhoneRadioSensor(final Context context)
+			throws ESException
 	{
 		if (phoneRadioSensor == null)
 		{
@@ -70,7 +65,8 @@ public class PhoneRadioSensor extends AbstractPullSensor
 					}
 					else
 					{
-						throw new ESException(ESException.PERMISSION_DENIED, SensorUtils.SENSOR_NAME_PHONE_RADIO);
+						throw new ESException(ESException.PERMISSION_DENIED,
+								SensorUtils.SENSOR_NAME_PHONE_RADIO);
 					}
 				}
 			}
@@ -101,45 +97,51 @@ public class PhoneRadioSensor extends AbstractPullSensor
 	protected void processSensorData()
 	{
 		PhoneRadioProcessor processor = (PhoneRadioProcessor) getProcessor();
-		phoneRadioDataList = processor.process(pullSenseStartTimestamp, visibleCells, sensorConfig.clone());
+		phoneRadioDataList = processor.process(pullSenseStartTimestamp,
+				visibleCells, sensorConfig.clone());
 	}
-	
+
 	protected boolean startSensing()
 	{
 		new Thread()
 		{
+			@SuppressLint("NewApi")
 			public void run()
 			{
 				try
 				{
 					visibleCells = new ArrayList<PhoneRadioData>();
-					TelephonyManager telephonyManager = (TelephonyManager) applicationContext.getSystemService(Context.TELEPHONY_SERVICE);
-					List<CellInfo> cellInfos = telephonyManager.getAllCellInfo();
+					TelephonyManager telephonyManager = (TelephonyManager) applicationContext
+							.getSystemService(Context.TELEPHONY_SERVICE);
+					List<CellInfo> cellInfos = telephonyManager
+							.getAllCellInfo();
 					if (cellInfos == null)
 					{
 						// getAllCellInfo() not supported, try old methods
 						switch (telephonyManager.getPhoneType())
 						{
-							case TelephonyManager.PHONE_TYPE_GSM:
-								GsmCellLocation cellLocation = (GsmCellLocation)telephonyManager.getCellLocation();
-								String networkOperator = telephonyManager.getNetworkOperator();
-								String mcc = networkOperator.substring(0, 3);
-								String mnc = networkOperator.substring(3);
-								visibleCells.add(new PhoneRadioData(mcc, mnc, cellLocation.getLac(), cellLocation.getCid()));
-								break;
-							default:
-								//TODO: handle unsupported phone type...
-								break;
+						case TelephonyManager.PHONE_TYPE_GSM:
+							GsmCellLocation cellLocation = (GsmCellLocation) telephonyManager
+									.getCellLocation();
+							String networkOperator = telephonyManager
+									.getNetworkOperator();
+							String mcc = networkOperator.substring(0, 3);
+							String mnc = networkOperator.substring(3);
+							visibleCells.add(new PhoneRadioData(mcc, mnc,
+									cellLocation.getLac(), cellLocation
+											.getCid()));
+							break;
+						default:
+							// TODO: handle unsupported phone type...
+							break;
 						}
 					} else {
-						//TODO: handle getAllCellInfo() values...
+						// TODO: handle getAllCellInfo() values...
 					}
-				}
-				catch (Exception e)
+				} catch (Exception e)
 				{
 					e.printStackTrace();
-				}
-				finally
+				} finally
 				{
 					// sensing complete
 					notifySenseCyclesComplete();
