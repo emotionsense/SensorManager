@@ -80,6 +80,13 @@ public class ConnectionStrengthSensor extends AbstractPushSensor
 		return result;
 	}
 
+	private ConnectionStrengthSensor(Context context)
+	{
+		super(context);
+		sensorEventListener = new StrengthListener(this);
+
+	}
+
 	private class StrengthListener extends PhoneStateListener implements
 			SensorDataListener {
 		/*
@@ -122,13 +129,6 @@ public class ConnectionStrengthSensor extends AbstractPushSensor
 
 		}
 	};
-
-	private ConnectionStrengthSensor(Context context)
-	{
-		super(context);
-		sensorEventListener = new StrengthListener(this);
-
-	}
 
 	protected IntentFilter[] getIntentFilters()
 	{

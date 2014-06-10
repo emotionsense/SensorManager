@@ -44,11 +44,11 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 public class BluetoothSensor extends AbstractPullSensor
 {
 	private static final String TAG = "BluetoothSensor";
-	private static final String[] REQUIRED_PERMISSIONS = new String[]{
-		Manifest.permission.BLUETOOTH,
-		Manifest.permission.BLUETOOTH_ADMIN
+	private static final String[] REQUIRED_PERMISSIONS = new String[] {
+			Manifest.permission.BLUETOOTH,
+			Manifest.permission.BLUETOOTH_ADMIN
 	};
-	
+
 	private static BluetoothSensor bluetoothSensor;
 	private static Object lock = new Object();
 
@@ -56,8 +56,10 @@ public class BluetoothSensor extends AbstractPullSensor
 	private BluetoothAdapter bluetooth = null;
 	private int cyclesRemaining;
 	private BluetoothData bluetoothData;
+	private BroadcastReceiver receiver;
 
-	public static BluetoothSensor getBluetoothSensor(final Context context) throws ESException
+	public static BluetoothSensor getBluetoothSensor(final Context context)
+			throws ESException
 	{
 		if (bluetoothSensor == null)
 		{
@@ -71,7 +73,8 @@ public class BluetoothSensor extends AbstractPullSensor
 					}
 					else
 					{
-						throw new ESException(ESException.PERMISSION_DENIED, SensorUtils.SENSOR_NAME_BLUETOOTH);
+						throw new ESException(ESException.PERMISSION_DENIED,
+								SensorUtils.SENSOR_NAME_BLUETOOTH);
 					}
 				}
 			}
@@ -95,7 +98,7 @@ public class BluetoothSensor extends AbstractPullSensor
 
 		// Create a BroadcastReceiver for ACTION_FOUND, sent when a device is
 		// discovered
-		BroadcastReceiver receiver = new BroadcastReceiver()
+		receiver = new BroadcastReceiver()
 		{
 
 			public void onReceive(Context context, Intent intent)
@@ -105,13 +108,17 @@ public class BluetoothSensor extends AbstractPullSensor
 				if (BluetoothDevice.ACTION_FOUND.equals(action))
 				{
 					// Get the BluetoothDevice object from the Intent
-					String deviceAddr = ((BluetoothDevice) intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE))
+					String deviceAddr = ((BluetoothDevice) intent
+							.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE))
 							.getAddress();
-					String deviceName = ((BluetoothDevice) intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE))
+					String deviceName = ((BluetoothDevice) intent
+							.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE))
 							.getName();
-					int rssi = (int) intent.getShortExtra(BluetoothDevice.EXTRA_RSSI, Short.MIN_VALUE);
+					int rssi = (int) intent.getShortExtra(
+							BluetoothDevice.EXTRA_RSSI, Short.MIN_VALUE);
 
-					ESBluetoothDevice esBluetoothDevice = new ESBluetoothDevice(System.currentTimeMillis(), deviceAddr,
+					ESBluetoothDevice esBluetoothDevice = new ESBluetoothDevice(
+							System.currentTimeMillis(), deviceAddr,
 							deviceName, rssi);
 
 					if (!(btDevices.contains(esBluetoothDevice)))
@@ -119,7 +126,8 @@ public class BluetoothSensor extends AbstractPullSensor
 						btDevices.add(esBluetoothDevice);
 					}
 				}
-				else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action))
+				else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED
+						.equals(action))
 				{
 					cyclesRemaining -= 1;
 					if (cyclesRemaining > 0)
@@ -137,7 +145,8 @@ public class BluetoothSensor extends AbstractPullSensor
 		// Register the BroadcastReceiver: note that this does NOT start a scan
 		// or anything
 		IntentFilter found = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-		IntentFilter finished = new IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
+		IntentFilter finished = new IntentFilter(
+				BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
 		applicationContext.registerReceiver(receiver, found);
 		applicationContext.registerReceiver(receiver, finished);
 	}
@@ -160,7 +169,8 @@ public class BluetoothSensor extends AbstractPullSensor
 	protected void processSensorData()
 	{
 		BluetoothProcessor processor = (BluetoothProcessor) getProcessor();
-		bluetoothData = processor.process(pullSenseStartTimestamp, btDevices, sensorConfig.clone());
+		bluetoothData = processor.process(pullSenseStartTimestamp, btDevices,
+				sensorConfig.clone());
 	}
 
 	protected boolean startSensing()
@@ -169,20 +179,21 @@ public class BluetoothSensor extends AbstractPullSensor
 
 		if (!bluetooth.isEnabled())
 		{
+			// TODO: We should not do that ...
 			bluetooth.enable();
 			while (!bluetooth.isEnabled())
 			{
 				try
 				{
 					Thread.sleep(100);
-				}
-				catch (Exception exp)
+				} catch (Exception exp)
 				{
 					exp.printStackTrace();
 				}
 			}
 		}
-		cyclesRemaining = (Integer) sensorConfig.getParameter(PullSensorConfig.NUMBER_OF_SENSE_CYCLES);
+		cyclesRemaining = (Integer) sensorConfig
+				.getParameter(PullSensorConfig.NUMBER_OF_SENSE_CYCLES);
 		bluetooth.startDiscovery();
 		return true;
 	}
@@ -193,8 +204,11 @@ public class BluetoothSensor extends AbstractPullSensor
 		if (bluetooth != null)
 		{
 			bluetooth.cancelDiscovery();
+			// TODO: This disable bluetooth. This is goes against the doc.
 			bluetooth.disable();
 		}
+		applicationContext.unregisterReceiver(receiver);
+
 	}
 
 }

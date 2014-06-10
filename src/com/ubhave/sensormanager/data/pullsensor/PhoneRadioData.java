@@ -1,7 +1,5 @@
 package com.ubhave.sensormanager.data.pullsensor;
 
-import java.util.HashMap;
-
 public class PhoneRadioData
 {
 	private String mcc;
@@ -16,22 +14,22 @@ public class PhoneRadioData
 		this.lac = lac;
 		this.cid = cid;
 	}
-	
+
 	public String getMcc()
 	{
 		return mcc;
 	}
-	
+
 	public String getMnc()
 	{
 		return mnc;
 	}
-	
+
 	public int getLac()
 	{
 		return lac;
 	}
-	
+
 	public int getCid()
 	{
 		return cid;
