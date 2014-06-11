@@ -8,6 +8,7 @@ import com.ubhave.sensormanager.process.pull.ApplicationProcessor;
 import com.ubhave.sensormanager.process.pull.BluetoothProcessor;
 import com.ubhave.sensormanager.process.pull.CallContentReaderProcessor;
 import com.ubhave.sensormanager.process.pull.CameraProcessor;
+import com.ubhave.sensormanager.process.pull.GyroscopeProcessor;
 import com.ubhave.sensormanager.process.pull.LocationProcessor;
 import com.ubhave.sensormanager.process.pull.MicrophoneProcessor;
 import com.ubhave.sensormanager.process.pull.SMSContentReaderProcessor;
@@ -61,6 +62,8 @@ public abstract class AbstractProcessor
 			return new SMSContentReaderProcessor(c, setRawData, setProcessedData);
 		case SensorUtils.SENSOR_TYPE_CAMERA:
 			return new CameraProcessor(c, setRawData, setProcessedData);
+		case SensorUtils.SENSOR_TYPE_GYROSCOPE:
+            return new GyroscopeProcessor(c, setRawData, setProcessedData);
 		default:
 			throw new ESException(ESException.UNKNOWN_SENSOR_TYPE, "No processor defined for this sensor.");
 		}

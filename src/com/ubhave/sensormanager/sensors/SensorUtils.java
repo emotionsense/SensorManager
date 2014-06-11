@@ -41,6 +41,7 @@ import com.ubhave.sensormanager.config.sensors.pull.ApplicationConfig;
 import com.ubhave.sensormanager.config.sensors.pull.BluetoothConfig;
 import com.ubhave.sensormanager.config.sensors.pull.CameraConfig;
 import com.ubhave.sensormanager.config.sensors.pull.ContentReaderConfig;
+import com.ubhave.sensormanager.config.sensors.pull.GyroscopeConfig;
 import com.ubhave.sensormanager.config.sensors.pull.LocationConfig;
 import com.ubhave.sensormanager.config.sensors.pull.MicrophoneConfig;
 import com.ubhave.sensormanager.config.sensors.pull.PullSensorConfig;
@@ -50,6 +51,7 @@ import com.ubhave.sensormanager.sensors.pull.ApplicationSensor;
 import com.ubhave.sensormanager.sensors.pull.BluetoothSensor;
 import com.ubhave.sensormanager.sensors.pull.CallContentReaderSensor;
 import com.ubhave.sensormanager.sensors.pull.CameraSensor;
+import com.ubhave.sensormanager.sensors.pull.GyroscopeSensor;
 import com.ubhave.sensormanager.sensors.pull.LocationSensor;
 import com.ubhave.sensormanager.sensors.pull.MicrophoneSensor;
 import com.ubhave.sensormanager.sensors.pull.SMSContentReaderSensor;
@@ -80,6 +82,7 @@ public class SensorUtils
 	public final static int SENSOR_TYPE_SMS_CONTENT_READER = 5013;
 	public final static int SENSOR_TYPE_CALL_CONTENT_READER = 5014;
 	public final static int SENSOR_TYPE_CAMERA = 5015;
+	public final static int SENSOR_TYPE_GYROSCOPE = 5016;
 
 	public final static String SENSOR_NAME_ACCELEROMETER = "Accelerometer";
 	public final static String SENSOR_NAME_BATTERY = "Battery";
@@ -96,11 +99,13 @@ public class SensorUtils
 	public final static String SENSOR_NAME_SMS_CONTENT_READER = "SMSContentReader";
 	public final static String SENSOR_NAME_CALL_CONTENT_READER = "CallContentReader";
 	public final static String SENSOR_NAME_CAMERA = "Camera";
+	public final static String SENSOR_NAME_GYROSCOPE = "Gyroscope";
 
 	public final static int[] ALL_SENSORS = new int[] { SENSOR_TYPE_ACCELEROMETER, SENSOR_TYPE_BLUETOOTH,
 			SENSOR_TYPE_LOCATION, SENSOR_TYPE_MICROPHONE, SENSOR_TYPE_WIFI, SENSOR_TYPE_BATTERY, SENSOR_TYPE_PHONE_STATE,
 			SENSOR_TYPE_PROXIMITY, SENSOR_TYPE_SCREEN, SENSOR_TYPE_SMS, SENSOR_TYPE_CONNECTION_STATE,
-			SENSOR_TYPE_APPLICATION, SENSOR_TYPE_SMS_CONTENT_READER, SENSOR_TYPE_CALL_CONTENT_READER,  SENSOR_TYPE_CAMERA};
+			SENSOR_TYPE_APPLICATION, SENSOR_TYPE_SMS_CONTENT_READER, SENSOR_TYPE_CALL_CONTENT_READER,  SENSOR_TYPE_CAMERA,
+			SENSOR_TYPE_GYROSCOPE };
 
 	public static boolean isPullSensor(int sensorType)
 	{
@@ -115,6 +120,7 @@ public class SensorUtils
 		case SENSOR_TYPE_SMS_CONTENT_READER:
 		case SENSOR_TYPE_CALL_CONTENT_READER:
 		case SENSOR_TYPE_CAMERA:
+		case SENSOR_TYPE_GYROSCOPE:
 			return true;
 		default:
 			return false;
@@ -186,6 +192,8 @@ public class SensorUtils
 			return CallContentReaderSensor.getCallContentReaderSensor(context);
 		case SENSOR_TYPE_CAMERA:
 			return CameraSensor.getCameraSensor(context);
+		case SENSOR_TYPE_GYROSCOPE:
+            return GyroscopeSensor.getGyroscopeSensor(context);
 		default:
 			throw new ESException(ESException.UNKNOWN_SENSOR_TYPE, "Unknown sensor id: "+id);
 		}
@@ -221,6 +229,9 @@ public class SensorUtils
 		case SensorUtils.SENSOR_TYPE_CAMERA:
 			sensorConfig = CameraConfig.getDefault();
 			break;
+		case SensorUtils.SENSOR_TYPE_GYROSCOPE:
+            sensorConfig = GyroscopeConfig.getDefault();
+            break;
 		}
 		sensorConfig.setParameter(PullSensorConfig.ADAPTIVE_SENSING_ENABLED, false);
 		return sensorConfig;
@@ -284,6 +295,10 @@ public class SensorUtils
 		{
 			return SENSOR_TYPE_CAMERA;
 		}
+		else if (sensorName.equals(SENSOR_NAME_GYROSCOPE))
+		{
+			return SENSOR_TYPE_GYROSCOPE;
+		}
 		else
 		{
 			throw new ESException(ESException.UNKNOWN_SENSOR_NAME, "unknown sensor name " + sensorName);
@@ -324,6 +339,8 @@ public class SensorUtils
 			return SENSOR_NAME_CALL_CONTENT_READER;
 		case SensorUtils.SENSOR_TYPE_CAMERA:
 			return SENSOR_NAME_CAMERA;
+		case SensorUtils.SENSOR_TYPE_GYROSCOPE:
+            return SENSOR_NAME_GYROSCOPE;
 		default:
 			throw new ESException(ESException.UNKNOWN_SENSOR_NAME, "unknown sensor type " + sensorType);
 		}
