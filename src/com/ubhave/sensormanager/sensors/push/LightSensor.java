@@ -29,7 +29,6 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.util.Log;
 
 import com.ubhave.sensormanager.data.pushsensor.LightData;
 import com.ubhave.sensormanager.process.push.LightProcessor;
@@ -70,8 +69,6 @@ public class LightSensor extends AbstractPushSensor
 				{
 					float light = event.values[0];
 					float maxRange = event.sensor.getMaximumRange();
-
-					Log.d("LIGHTSENOR", String.valueOf(light));
 
 					LightProcessor processor = (LightProcessor) getProcessor();
 					LightData lightData = processor.process(System.currentTimeMillis(), sensorConfig.clone(), light, maxRange);

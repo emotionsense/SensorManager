@@ -303,6 +303,10 @@ public class SensorUtils
 		{
 			return SENSOR_TYPE_GYROSCOPE;
 		}
+		else if (sensorName.equals(SENSOR_NAME_LIGHT))
+		{
+			return SENSOR_TYPE_LIGHT;
+		}
 		else
 		{
 			throw new ESException(ESException.UNKNOWN_SENSOR_NAME, "unknown sensor name " + sensorName);
@@ -345,6 +349,8 @@ public class SensorUtils
 			return SENSOR_NAME_CAMERA;
 		case SensorUtils.SENSOR_TYPE_GYROSCOPE:
             return SENSOR_NAME_GYROSCOPE;
+		case SensorUtils.SENSOR_TYPE_LIGHT:
+			return SENSOR_NAME_LIGHT;
 		default:
 			throw new ESException(ESException.UNKNOWN_SENSOR_NAME, "unknown sensor type " + sensorType);
 		}
