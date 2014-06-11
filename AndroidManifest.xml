@@ -46,6 +46,9 @@ IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
     <uses-permission android:name="android.permission.READ_CALL_LOG" />
     <uses-permission android:name="android.permission.GET_TASKS" />
     
+    
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    
     <uses-feature android:name="android.hardware.sensor.accelerometer" android:required="false" />
     <uses-feature android:name="android.hardware.sensor.gyroscope" android:required="false" />
     <uses-feature android:name="android.hardware.camera" android:required="false" />
