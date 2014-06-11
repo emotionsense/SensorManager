@@ -30,7 +30,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
-import com.ubhave.sensormanager.config.sensors.pull.AccelerometerConfig;
+import com.ubhave.sensormanager.config.sensors.pull.MotionSensorConfig;
 
 public abstract class AbstractMotionSensor extends AbstractPullSensor
 {	
@@ -96,7 +96,7 @@ public abstract class AbstractMotionSensor extends AbstractPullSensor
 		sensorReadings = new ArrayList<float[]>();
 		sensorReadingTimestamps = new ArrayList<Long>();
 
-		int sensorDelay = (Integer) sensorConfig.getParameter(AccelerometerConfig.SAMPLING_DELAY);
+		int sensorDelay = (Integer) sensorConfig.getParameter(MotionSensorConfig.SAMPLING_DELAY);
 		boolean registrationSuccess = sensorManager.registerListener(listener, sensorManager.getDefaultSensor(motionSensorType), sensorDelay);
 		return registrationSuccess;
 	}

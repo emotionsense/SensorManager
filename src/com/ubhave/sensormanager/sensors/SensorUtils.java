@@ -36,14 +36,13 @@ import com.ubhave.sensormanager.classifier.SensorDataClassifier;
 import com.ubhave.sensormanager.classifier.WifiDataClassifier;
 import com.ubhave.sensormanager.config.GlobalConfig;
 import com.ubhave.sensormanager.config.SensorConfig;
-import com.ubhave.sensormanager.config.sensors.pull.AccelerometerConfig;
 import com.ubhave.sensormanager.config.sensors.pull.ApplicationConfig;
 import com.ubhave.sensormanager.config.sensors.pull.BluetoothConfig;
 import com.ubhave.sensormanager.config.sensors.pull.CameraConfig;
 import com.ubhave.sensormanager.config.sensors.pull.ContentReaderConfig;
-import com.ubhave.sensormanager.config.sensors.pull.GyroscopeConfig;
 import com.ubhave.sensormanager.config.sensors.pull.LocationConfig;
 import com.ubhave.sensormanager.config.sensors.pull.MicrophoneConfig;
+import com.ubhave.sensormanager.config.sensors.pull.MotionSensorConfig;
 import com.ubhave.sensormanager.config.sensors.pull.PullSensorConfig;
 import com.ubhave.sensormanager.config.sensors.pull.WifiConfig;
 import com.ubhave.sensormanager.sensors.pull.AccelerometerSensor;
@@ -205,7 +204,7 @@ public class SensorUtils
 		switch (sensorType)
 		{
 		case SensorUtils.SENSOR_TYPE_ACCELEROMETER:
-			sensorConfig = AccelerometerConfig.getDefault();
+			sensorConfig = MotionSensorConfig.getDefault();
 			break;
 		case SensorUtils.SENSOR_TYPE_BLUETOOTH:
 			sensorConfig =  BluetoothConfig.getDefault();
@@ -230,7 +229,7 @@ public class SensorUtils
 			sensorConfig = CameraConfig.getDefault();
 			break;
 		case SensorUtils.SENSOR_TYPE_GYROSCOPE:
-            sensorConfig = GyroscopeConfig.getDefault();
+            sensorConfig = MotionSensorConfig.getDefault();
             break;
 		}
 		sensorConfig.setParameter(PullSensorConfig.ADAPTIVE_SENSING_ENABLED, false);
