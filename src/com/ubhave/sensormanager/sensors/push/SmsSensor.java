@@ -74,7 +74,7 @@ public class SmsSensor extends AbstractPushSensor
 		return smsSensor;
 	}
 
-	private SmsSensor(Context context)
+	private SmsSensor(final Context context)
 	{
 		super(context);
 		// Create a content observer for sms
