@@ -1,5 +1,5 @@
 /* **************************************************
- Copyright (c) 2014, University of Cambridge
+ Copyright (c) 2014
 
 This library was developed as part of the EPSRC Ubhave (Ubiquitous and
 Social Computing for Positive Behaviour Change) Project. For more
