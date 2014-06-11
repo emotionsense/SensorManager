@@ -57,6 +57,7 @@ import com.ubhave.sensormanager.sensors.pull.SMSContentReaderSensor;
 import com.ubhave.sensormanager.sensors.pull.WifiSensor;
 import com.ubhave.sensormanager.sensors.push.BatterySensor;
 import com.ubhave.sensormanager.sensors.push.ConnectionStateSensor;
+import com.ubhave.sensormanager.sensors.push.LightSensor;
 import com.ubhave.sensormanager.sensors.push.PhoneStateSensor;
 import com.ubhave.sensormanager.sensors.push.ProximitySensor;
 import com.ubhave.sensormanager.sensors.push.ScreenSensor;
@@ -82,6 +83,7 @@ public class SensorUtils
 	public final static int SENSOR_TYPE_CALL_CONTENT_READER = 5014;
 	public final static int SENSOR_TYPE_CAMERA = 5015;
 	public final static int SENSOR_TYPE_GYROSCOPE = 5016;
+	public final static int SENSOR_TYPE_LIGHT = 5017;
 
 	public final static String SENSOR_NAME_ACCELEROMETER = "Accelerometer";
 	public final static String SENSOR_NAME_BATTERY = "Battery";
@@ -99,12 +101,13 @@ public class SensorUtils
 	public final static String SENSOR_NAME_CALL_CONTENT_READER = "CallContentReader";
 	public final static String SENSOR_NAME_CAMERA = "Camera";
 	public final static String SENSOR_NAME_GYROSCOPE = "Gyroscope";
+	public final static String SENSOR_NAME_LIGHT = "Light";
 
 	public final static int[] ALL_SENSORS = new int[] { SENSOR_TYPE_ACCELEROMETER, SENSOR_TYPE_BLUETOOTH,
 			SENSOR_TYPE_LOCATION, SENSOR_TYPE_MICROPHONE, SENSOR_TYPE_WIFI, SENSOR_TYPE_BATTERY, SENSOR_TYPE_PHONE_STATE,
 			SENSOR_TYPE_PROXIMITY, SENSOR_TYPE_SCREEN, SENSOR_TYPE_SMS, SENSOR_TYPE_CONNECTION_STATE,
 			SENSOR_TYPE_APPLICATION, SENSOR_TYPE_SMS_CONTENT_READER, SENSOR_TYPE_CALL_CONTENT_READER,  SENSOR_TYPE_CAMERA,
-			SENSOR_TYPE_GYROSCOPE };
+			SENSOR_TYPE_GYROSCOPE, SENSOR_TYPE_LIGHT };
 
 	public static boolean isPullSensor(int sensorType)
 	{
@@ -193,6 +196,8 @@ public class SensorUtils
 			return CameraSensor.getCameraSensor(context);
 		case SENSOR_TYPE_GYROSCOPE:
             return GyroscopeSensor.getGyroscopeSensor(context);
+		case SENSOR_TYPE_LIGHT:
+			return LightSensor.getLightSensor(context);
 		default:
 			throw new ESException(ESException.UNKNOWN_SENSOR_TYPE, "Unknown sensor id: "+id);
 		}
