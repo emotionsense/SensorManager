@@ -56,6 +56,7 @@ public class BluetoothSensor extends AbstractPullSensor
 	private BluetoothAdapter bluetooth = null;
 	private int cyclesRemaining;
 	private BluetoothData bluetoothData;
+    private BroadcastReceiver receiver;
 
 	public static BluetoothSensor getBluetoothSensor(final Context context) throws ESException
 	{
@@ -95,7 +96,7 @@ public class BluetoothSensor extends AbstractPullSensor
 
 		// Create a BroadcastReceiver for ACTION_FOUND, sent when a device is
 		// discovered
-		BroadcastReceiver receiver = new BroadcastReceiver()
+		receiver = new BroadcastReceiver()
 		{
 
 			public void onReceive(Context context, Intent intent)
@@ -195,6 +196,7 @@ public class BluetoothSensor extends AbstractPullSensor
 			bluetooth.cancelDiscovery();
 			bluetooth.disable();
 		}
+        applicationContext.unregisterReceiver(receiver);
 	}
 
 }
