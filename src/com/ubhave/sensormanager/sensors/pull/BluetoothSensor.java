@@ -56,6 +56,7 @@ public class BluetoothSensor extends AbstractPullSensor
 	private BluetoothAdapter bluetooth = null;
 	private int cyclesRemaining;
 	private BluetoothData bluetoothData;
+    private BroadcastReceiver receiver;
 
 	public static BluetoothSensor getBluetoothSensor(final Context context) throws ESException
 	{
@@ -95,7 +96,7 @@ public class BluetoothSensor extends AbstractPullSensor
 
 		// Create a BroadcastReceiver for ACTION_FOUND, sent when a device is
 		// discovered
-		BroadcastReceiver receiver = new BroadcastReceiver()
+		receiver = new BroadcastReceiver()
 		{
 
 			public void onReceive(Context context, Intent intent)
@@ -133,13 +134,6 @@ public class BluetoothSensor extends AbstractPullSensor
 				}
 			}
 		};
-
-		// Register the BroadcastReceiver: note that this does NOT start a scan
-		// or anything
-		IntentFilter found = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-		IntentFilter finished = new IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
-		applicationContext.registerReceiver(receiver, found);
-		applicationContext.registerReceiver(receiver, finished);
 	}
 
 	protected String getLogTag()
@@ -184,7 +178,15 @@ public class BluetoothSensor extends AbstractPullSensor
 		}
 		cyclesRemaining = (Integer) sensorConfig.getParameter(PullSensorConfig.NUMBER_OF_SENSE_CYCLES);
 		bluetooth.startDiscovery();
-		return true;
+
+        // Register the BroadcastReceiver: note that this does NOT start a scan
+        // or anything
+        IntentFilter found = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+        IntentFilter finished = new IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
+        applicationContext.registerReceiver(receiver, found);
+        applicationContext.registerReceiver(receiver, finished);
+
+        return true;
 	}
 
 	// Called when a scan is finished
@@ -195,6 +197,7 @@ public class BluetoothSensor extends AbstractPullSensor
 			bluetooth.cancelDiscovery();
 			bluetooth.disable();
 		}
+        applicationContext.unregisterReceiver(receiver);
 	}
 
 }
