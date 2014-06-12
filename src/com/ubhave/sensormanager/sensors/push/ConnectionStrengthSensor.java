@@ -34,8 +34,6 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import com.ubhave.sensormanager.ESException;
-import com.ubhave.sensormanager.SensorDataListener;
-import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.data.pushsensor.ConnectionStrengthData;
 import com.ubhave.sensormanager.process.push.ConnectionStrengthProcessor;
 import com.ubhave.sensormanager.sensors.SensorUtils;
@@ -87,17 +85,22 @@ public class ConnectionStrengthSensor extends AbstractPushSensor
 
 	}
 
-	private class StrengthListener extends PhoneStateListener implements
-			SensorDataListener {
+	private class StrengthListener extends PhoneStateListener {
 		/*
 		 * This Class listen and save change in the signal strength. Assume GSM
 		 * network.
+		 * 
+		 * See TS 27.007 11.8 for different value represented by signalStrength
+		 * 
+		 * We ignore signal strength 99 meaning unknown
 		 */
+		private int strength;
 		private ConnectionStrengthSensor parent;
 
 		public StrengthListener(ConnectionStrengthSensor p) {
 			super();
 			parent = p;
+			strength = 99;
 		}
 
 		@Override
@@ -105,29 +108,25 @@ public class ConnectionStrengthSensor extends AbstractPushSensor
 			super.onSignalStrengthsChanged(signalStrength);
 			try {
 				int data = signalStrength.getGsmSignalStrength();
+				if (data == 99) {
+					return;
+				}
+				data /= 4;
+				if (data == strength) {
+					return;
+				}
 				ConnectionStrengthProcessor processor = (ConnectionStrengthProcessor) getProcessor();
 				ConnectionStrengthData strengthData = processor.process(
 						System.currentTimeMillis(), sensorConfig.clone(),
 						data);
 				Log.d(TAG, "Phone Strength change");
-				onDataSensed(strengthData);
+				parent.onDataSensed(strengthData);
 			} catch (Exception e)
 			{
 				e.printStackTrace();
 			}
 		}
 
-		@Override
-		public void onDataSensed(SensorData data) {
-			parent.onDataSensed(data);
-
-		}
-
-		@Override
-		public void onCrossingLowBatteryThreshold(boolean isBelowThreshold) {
-			// TODO Auto-generated method stub
-
-		}
 	};
 
 	protected IntentFilter[] getIntentFilters()
