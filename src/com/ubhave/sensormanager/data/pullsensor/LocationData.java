@@ -22,6 +22,8 @@ IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 package com.ubhave.sensormanager.data.pullsensor;
 
+import java.util.List;
+
 import android.location.Location;
 
 import com.ubhave.sensormanager.config.SensorConfig;
@@ -30,21 +32,21 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class LocationData extends SensorData
 {
-	private Location location;
+	private List<Location> locations;
 
 	public LocationData(long senseStartTimestamp, SensorConfig sensorConfig)
 	{
 		super(senseStartTimestamp, sensorConfig);
 	}
-	
-	public void setLocation(Location location)
+
+	public void setLocation(List<Location> locations)
 	{
-		this.location = location;
+		this.locations = locations;
 	}
 
-	public Location getLocation()
+	public List<Location> getLocation()
 	{
-		return location;
+		return locations;
 	}
 
 	public int getSensorType()
