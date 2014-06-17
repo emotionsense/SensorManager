@@ -91,8 +91,9 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 		ArrayList<SensorInterface> sensors = SensorUtils.getAllSensors(appContext);
 		for (SensorInterface aSensor : sensors)
 		{
+			int sensorType = aSensor.getSensorType();
 			AbstractSensorTask sensorTask;
-			if (SensorUtils.isPullSensor(aSensor.getSensorType()))
+			if (SensorUtils.isPullSensor(sensorType))
 			{
 				sensorTask = new PullSensorTask(aSensor);
 			}
@@ -102,7 +103,7 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 			}
 
 			sensorTask.start();
-			sensorTaskMap.put(aSensor.getSensorType(), sensorTask);
+			sensorTaskMap.put(sensorType, sensorTask);
 		}
 	}
 	

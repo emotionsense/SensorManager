@@ -18,14 +18,44 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
 IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  ************************************************** */
 
-package com.ubhave.sensormanager.config.sensors.pull;
+package com.ubhave.sensormanager.data.pushsensor;
 
+import com.ubhave.sensormanager.config.SensorConfig;
+import com.ubhave.sensormanager.data.SensorData;
+import com.ubhave.sensormanager.sensors.SensorUtils;
 
-public class AccelerometerConfig
+public class LightData extends SensorData
 {
-	/*
-	 * Classifier thresholds
-	 */
-	public final static int ACCELEROMETER_MOVEMENT_THRESHOLD = 25;
-	
+	private float light;
+	private float maxRange;
+
+	public LightData(long recvTimestamp, SensorConfig sensorConfig)
+	{
+		super(recvTimestamp, sensorConfig);
+	}
+
+	public void setLight(float l)
+	{
+		light = l;
+	}
+
+	public float getLight()
+	{
+		return light;
+	}
+
+	public void setMaxRange(float f)
+	{
+		maxRange = f;
+	}
+
+	public float getMaxRange()
+	{
+		return maxRange;
+	}
+
+	public int getSensorType()
+	{
+		return SensorUtils.SENSOR_TYPE_LIGHT;
+	}
 }

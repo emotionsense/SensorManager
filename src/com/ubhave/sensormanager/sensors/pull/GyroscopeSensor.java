@@ -1,7 +1,5 @@
 /* **************************************************
- Copyright (c) 2012, University of Cambridge
- Neal Lathia, neal.lathia@cl.cam.ac.uk
- Kiran Rachuri, kiran.rachuri@cl.cam.ac.uk
+ Copyright (c) 2014
 
 This library was developed as part of the EPSRC Ubhave (Ubiquitous and
 Social Computing for Positive Behaviour Change) Project. For more
@@ -25,35 +23,36 @@ package com.ubhave.sensormanager.sensors.pull;
 import android.content.Context;
 import android.hardware.Sensor;
 
-import com.ubhave.sensormanager.data.pullsensor.AccelerometerData;
-import com.ubhave.sensormanager.process.pull.AccelerometerProcessor;
+import com.ubhave.sensormanager.data.pullsensor.GyroscopeData;
+import com.ubhave.sensormanager.process.pull.GyroscopeProcessor;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
-public class AccelerometerSensor extends AbstractMotionSensor
+public class GyroscopeSensor extends AbstractMotionSensor
 {
-	private static final String TAG = "AccelerometerSensor";
-	private static AccelerometerSensor accelerometerSensor;
+	private static final String TAG = "GyroscopeSensor";
+	private static GyroscopeSensor gyroscopeSensor;
 	private static Object lock = new Object();
-	private AccelerometerData accelerometerData;
 
-	public static AccelerometerSensor getAccelerometerSensor(Context context)
+    private GyroscopeData gyroscopeData;
+
+	public static GyroscopeSensor getGyroscopeSensor(final Context context)
 	{
-		if (accelerometerSensor == null)
+		if (gyroscopeSensor == null)
 		{
 			synchronized (lock)
 			{
-				if (accelerometerSensor == null)
+				if (gyroscopeSensor == null)
 				{
-					accelerometerSensor = new AccelerometerSensor(context);
+					gyroscopeSensor = new GyroscopeSensor(context);
 				}
 			}
 		}
-		return accelerometerSensor;
+		return gyroscopeSensor;
 	}
 
-	private AccelerometerSensor(final Context context)
+	private GyroscopeSensor(final Context context)
 	{
-		super(context, Sensor.TYPE_ACCELEROMETER);
+		super(context, Sensor.TYPE_GYROSCOPE);
 	}
 
 	protected String getLogTag()
@@ -63,20 +62,20 @@ public class AccelerometerSensor extends AbstractMotionSensor
 
 	public int getSensorType()
 	{
-		return SensorUtils.SENSOR_TYPE_ACCELEROMETER;
+		return SensorUtils.SENSOR_TYPE_GYROSCOPE;
 	}
 
-	protected AccelerometerData getMostRecentRawData()
+	protected GyroscopeData getMostRecentRawData()
 	{
-		return accelerometerData;
+		return gyroscopeData;
 	}
 	
 	protected void processSensorData()
 	{
 		synchronized (sensorReadings)
 		{
-			AccelerometerProcessor processor = (AccelerometerProcessor)getProcessor();
-			accelerometerData = processor.process(pullSenseStartTimestamp, sensorReadings, sensorReadingTimestamps, sensorConfig.clone());
+            GyroscopeProcessor processor = (GyroscopeProcessor) getProcessor();
+            gyroscopeData = processor.process(pullSenseStartTimestamp, sensorReadings, sensorReadingTimestamps, sensorConfig.clone());
 		}
 	}
 }

@@ -1,12 +1,16 @@
- Copyright (c) 2012, University of Cambridge
- Neal Lathia, neal.lathia@cl.cam.ac.uk
- Kiran Rachuri, kiran.rachuri@cl.cam.ac.uk
+ Copyright (c) 2014
+ Neal Lathia (nlathia), University of Cambridge
+ Kiran Rachuri (krachuri), University of Cambridge
 
  Contributors:
- Petko Georgiev, University of Cambridge
+ Petko Georgiev (petkoig), University of Cambridge
+ Sibelius Seraphini (sibeliusseraphini), University of São Paulo
 
-Full documentation/tutorial available here:
-https://docs.google.com/document/d/1TqThJULb-4e6TGb1gdkAaPCfyuXStjJpbnt7a0OZ9OE/edit
+ Documentation:
+ https://docs.google.com/document/d/1TqThJULb-4e6TGb1gdkAaPCfyuXStjJpbnt7a0OZ9OE/edit
+
+ Questions/Discussion:
+ https://groups.google.com/forum/#!forum/es-library-developers
 
 This library was developed as part of the EPSRC Ubhave (Ubiquitous and
 Social Computing for Positive Behaviour Change) Project. For more

@@ -151,14 +151,6 @@ public class BluetoothSensor extends AbstractPullSensor
 				}
 			}
 		};
-
-		// Register the BroadcastReceiver: note that this does NOT start a scan
-		// or anything
-		IntentFilter found = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-		IntentFilter finished = new IntentFilter(
-				BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
-		applicationContext.registerReceiver(receiver, found);
-		applicationContext.registerReceiver(receiver, finished);
 	}
 
 	protected String getLogTag()
@@ -205,7 +197,15 @@ public class BluetoothSensor extends AbstractPullSensor
 		cyclesRemaining = (Integer) sensorConfig
 				.getParameter(PullSensorConfig.NUMBER_OF_SENSE_CYCLES);
 		bluetooth.startDiscovery();
-		return true;
+
+        // Register the BroadcastReceiver: note that this does NOT start a scan
+        // or anything
+        IntentFilter found = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+        IntentFilter finished = new IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
+        applicationContext.registerReceiver(receiver, found);
+        applicationContext.registerReceiver(receiver, finished);
+
+        return true;
 	}
 
 	// Called when a scan is finished
@@ -217,8 +217,8 @@ public class BluetoothSensor extends AbstractPullSensor
 			// TODO: This disable bluetooth. This is goes against the doc.
 			bluetooth.disable();
 		}
-		applicationContext.unregisterReceiver(receiver);
 
+        applicationContext.unregisterReceiver(receiver);
 	}
 
 }

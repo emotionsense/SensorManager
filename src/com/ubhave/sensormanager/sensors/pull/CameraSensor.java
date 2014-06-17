@@ -113,6 +113,7 @@ public class CameraSensor extends AbstractMediaSensor
 				cameraType = (Integer) sensorConfig.getParameter(CameraConfig.CAMERA_TYPE);
 			}
 			camera = Camera.open(cameraType);
+			camera.startPreview();
 			camera.takePicture(null, null, callBack);
 			return true;
 		}
@@ -125,7 +126,6 @@ public class CameraSensor extends AbstractMediaSensor
 
 	private Camera.PictureCallback callBack = new Camera.PictureCallback()
 	{
-
 		public void onPictureTaken(byte[] data, Camera camera)
 		{
 			FileOutputStream outStream = null;
@@ -134,10 +134,12 @@ public class CameraSensor extends AbstractMediaSensor
 				outStream = new FileOutputStream(imageFile);
 				outStream.write(data);
 				outStream.close();
+				camera.release();
 				notifySenseCyclesComplete();
 			}
 			catch (Exception e)
 			{
+				e.printStackTrace();
 				if (GlobalConfig.shouldLog())
 				{
 					Log.d(LOG_TAG, e.getMessage());
