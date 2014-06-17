@@ -54,7 +54,6 @@ public class LocationSensor extends AbstractPullSensor
 	private static Object lock = new Object();
 
 	private LocationManager locationManager;
-	private Location lastLocation;
 	private List<Location> locationList;
 	private LocationListener locListener;
 	private LocationData locationData;
@@ -92,7 +91,6 @@ public class LocationSensor extends AbstractPullSensor
 			{
 				if (isSensing)
 				{
-					lastLocation = loc;
 					locationList.add(loc);
 				}
 			}
@@ -126,7 +124,6 @@ public class LocationSensor extends AbstractPullSensor
 
 	protected boolean startSensing()
 	{
-		lastLocation = null;
 		locationList = new ArrayList<Location>();
 		try
 		{
