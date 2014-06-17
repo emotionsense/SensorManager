@@ -115,6 +115,7 @@ public class ConnectionStrengthSensor extends AbstractPushSensor
 				if (data == strength) {
 					return;
 				}
+				strength = data;
 				ConnectionStrengthProcessor processor = (ConnectionStrengthProcessor) getProcessor();
 				ConnectionStrengthData strengthData = processor.process(
 						System.currentTimeMillis(), sensorConfig.clone(),

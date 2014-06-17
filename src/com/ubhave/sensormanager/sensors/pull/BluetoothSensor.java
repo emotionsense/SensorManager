@@ -25,12 +25,15 @@ package com.ubhave.sensormanager.sensors.pull;
 import java.util.ArrayList;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build.VERSION;
 import android.util.Log;
 
 import com.ubhave.sensormanager.ESException;
@@ -82,11 +85,18 @@ public class BluetoothSensor extends AbstractPullSensor
 		return bluetoothSensor;
 	}
 
+	@SuppressLint({ "InlinedApi", "NewApi" })
 	private BluetoothSensor(Context context)
 	{
 		super(context);
 		btDevices = new ArrayList<ESBluetoothDevice>();
-		bluetooth = BluetoothAdapter.getDefaultAdapter();
+		if (VERSION.SDK_INT >= 18) {
+			BluetoothManager bluetoothMan = (BluetoothManager) context
+					.getSystemService(Context.BLUETOOTH_SERVICE);
+			bluetooth = bluetoothMan.getAdapter();
+		} else {
+			bluetooth = BluetoothAdapter.getDefaultAdapter();
+		}
 		if (bluetooth == null)
 		{
 			if (GlobalConfig.shouldLog())
