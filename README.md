@@ -13,7 +13,7 @@ Email [this google group](https://groups.google.com/forum/#!forum/es-library-dev
 
 Research
 -------------------------------
-[pdf](http://www.cl.cam.ac.uk/~nkl25/publications/papers/lathia_mcss2013.pdf)i N. Lathia, K. Rachuri, C. Mascolo, G. Roussos. Open Source Smartphone Libraries for Computational Social Science
+[pdf](http://www.cl.cam.ac.uk/~nkl25/publications/papers/lathia_mcss2013.pdf) N. Lathia, K. Rachuri, C. Mascolo, G. Roussos. Open Source Smartphone Libraries for Computational Social Science
 In 2nd ACM Workshop on Mobile Systems for Computational Social Science. Zurich, Switzerland. September 8, 2013. 
 
 [pdf](http://www.cl.cam.ac.uk/~nkl25/publications/papers/lathia_ubicomp13.pdf) N. Lathia, K. Rachuri, C. Mascolo, P. Rentfrow. Contextual Dissonance: Design Bias in Sensor-Based Experience Sampling Methods
@@ -24,9 +24,11 @@ If you have a research paper that uses the library that you would like added to 
 Authors & Contributors
 -------------------------------
 Neal Lathia (nlathia), University of Cambridge
+
 Kiran Rachuri (krachuri), University of Cambridge
 
 Petko Georgiev (petkoig), University of Cambridge
+
 Sibelius Seraphini (sibeliusseraphini), University of São Paulo
 
 License
