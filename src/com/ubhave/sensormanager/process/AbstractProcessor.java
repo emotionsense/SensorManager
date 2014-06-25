@@ -18,6 +18,7 @@ import com.ubhave.sensormanager.process.push.BatteryProcessor;
 import com.ubhave.sensormanager.process.push.ConnectionStateProcessor;
 import com.ubhave.sensormanager.process.push.ConnectionStrengthProcessor;
 import com.ubhave.sensormanager.process.push.LightProcessor;
+import com.ubhave.sensormanager.process.push.PassiveLocationProcessor;
 import com.ubhave.sensormanager.process.push.PhoneStateProcessor;
 import com.ubhave.sensormanager.process.push.ProximityProcessor;
 import com.ubhave.sensormanager.process.push.SMSProcessor;
@@ -75,9 +76,11 @@ public abstract class AbstractProcessor
 			return new ConnectionStrengthProcessor(c, setRawData,
 					setProcessedData);
 		case SensorUtils.SENSOR_TYPE_GYROSCOPE:
-            return new GyroscopeProcessor(c, setRawData, setProcessedData);
+			return new GyroscopeProcessor(c, setRawData, setProcessedData);
 		case SensorUtils.SENSOR_TYPE_LIGHT:
 			return new LightProcessor(c, setRawData, setProcessedData);
+		case SensorUtils.SENSOR_TYPE_PASSIVE_LOCATION:
+			return new PassiveLocationProcessor(c, setRawData, setProcessedData);
 		default:
 			throw new ESException(ESException.UNKNOWN_SENSOR_TYPE,
 					"No processor defined for this sensor.");

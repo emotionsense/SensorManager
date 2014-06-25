@@ -59,6 +59,8 @@ public class PassiveLocationSensor extends AbstractPushSensor {
 		super(context);
 		locationListener = new LocationListener() {
 			public void onLocationChanged(Location loc) {
+				Log.d(TAG, "Location Changed");
+
 				try
 				{
 					PassiveLocationProcessor processor = (PassiveLocationProcessor) getProcessor();
@@ -105,7 +107,7 @@ public class PassiveLocationSensor extends AbstractPushSensor {
 
 	@Override
 	protected IntentFilter[] getIntentFilters() {
-		return new IntentFilter[0];
+		return null;
 	}
 
 	@Override
@@ -114,6 +116,7 @@ public class PassiveLocationSensor extends AbstractPushSensor {
 				.getSystemService(Context.LOCATION_SERVICE);
 		locationManager.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER,
 				2000, 5, locationListener, Looper.getMainLooper());
+		Log.d(TAG, "Start sensing passive location");
 		return true;
 	}
 

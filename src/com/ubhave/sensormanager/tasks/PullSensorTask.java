@@ -103,6 +103,7 @@ public class PullSensorTask extends AbstractSensorTask
 					catch (InterruptedException exp)
 					{
 						// ignore
+
 					}
 				}
 				catch (ESException e)
