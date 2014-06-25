@@ -61,6 +61,7 @@ import com.ubhave.sensormanager.sensors.push.BatterySensor;
 import com.ubhave.sensormanager.sensors.push.ConnectionStateSensor;
 import com.ubhave.sensormanager.sensors.push.ConnectionStrengthSensor;
 import com.ubhave.sensormanager.sensors.push.LightSensor;
+import com.ubhave.sensormanager.sensors.push.PassiveLocationSensor;
 import com.ubhave.sensormanager.sensors.push.PhoneStateSensor;
 import com.ubhave.sensormanager.sensors.push.ProximitySensor;
 import com.ubhave.sensormanager.sensors.push.ScreenSensor;
@@ -89,6 +90,7 @@ public class SensorUtils
 	public final static int SENSOR_TYPE_LIGHT = 5017;
 	public final static int SENSOR_TYPE_PHONE_RADIO = 5018;
 	public final static int SENSOR_TYPE_CONNECTION_STRENGTH = 5019;
+	public final static int SENSOR_TYPE_PASSIVE_LOCATION = 5020;
 
 	public final static String SENSOR_NAME_ACCELEROMETER = "Accelerometer";
 	public final static String SENSOR_NAME_BATTERY = "Battery";
@@ -109,6 +111,7 @@ public class SensorUtils
 	public final static String SENSOR_NAME_LIGHT = "Light";
 	public final static String SENSOR_NAME_PHONE_RADIO = "PhoneRadio";
 	public final static String SENSOR_NAME_CONNECTION_STRENGTH = "ConnectionStrength";
+	public final static String SENSOR_NAME_PASSIVE_LOCATION = "PassiveLocation";
 
 	public final static int[] ALL_SENSORS = new int[] {
 			SENSOR_TYPE_ACCELEROMETER, SENSOR_TYPE_BLUETOOTH,
@@ -119,7 +122,8 @@ public class SensorUtils
 			SENSOR_TYPE_APPLICATION, SENSOR_TYPE_SMS_CONTENT_READER,
 			SENSOR_TYPE_CALL_CONTENT_READER, SENSOR_TYPE_CAMERA,
 			SENSOR_TYPE_GYROSCOPE, SENSOR_TYPE_LIGHT,
-			SENSOR_TYPE_PHONE_RADIO, SENSOR_TYPE_CONNECTION_STRENGTH };
+			SENSOR_TYPE_PHONE_RADIO, SENSOR_TYPE_CONNECTION_STRENGTH,
+			SENSOR_TYPE_PASSIVE_LOCATION };
 
 	public static boolean isPullSensor(int sensorType)
 	{
@@ -218,6 +222,8 @@ public class SensorUtils
 		case SENSOR_TYPE_CONNECTION_STRENGTH:
 			return ConnectionStrengthSensor
 					.getConnectionStrengthSensor(context);
+		case SENSOR_TYPE_PASSIVE_LOCATION:
+			return PassiveLocationSensor.getPassiveLocationSensor(context);
 		default:
 			throw new ESException(ESException.UNKNOWN_SENSOR_TYPE,
 					"Unknown sensor id: " + id);
@@ -340,6 +346,10 @@ public class SensorUtils
 		{
 			return SENSOR_TYPE_CONNECTION_STRENGTH;
 		}
+		else if (sensorName.equals(SENSOR_NAME_PASSIVE_LOCATION))
+		{
+			return SENSOR_TYPE_PASSIVE_LOCATION;
+		}
 		else
 		{
 			throw new ESException(ESException.UNKNOWN_SENSOR_NAME,
@@ -387,8 +397,10 @@ public class SensorUtils
 			return SENSOR_NAME_LIGHT;
 		case SensorUtils.SENSOR_TYPE_PHONE_RADIO:
 			return SENSOR_NAME_PHONE_RADIO;
-		case SensorUtils.SENSOR_TYPE_CONNECTION_STRENGTH:
+		case SENSOR_TYPE_CONNECTION_STRENGTH:
 			return SENSOR_NAME_CONNECTION_STRENGTH;
+		case SENSOR_TYPE_PASSIVE_LOCATION:
+			return SENSOR_NAME_PASSIVE_LOCATION;
 		default:
 			throw new ESException(ESException.UNKNOWN_SENSOR_NAME,
 					"unknown sensor type " + sensorType);
