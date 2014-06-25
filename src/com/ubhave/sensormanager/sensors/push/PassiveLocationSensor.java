@@ -8,6 +8,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Looper;
 import android.util.Log;
 
 import com.ubhave.sensormanager.ESException;
@@ -112,7 +113,7 @@ public class PassiveLocationSensor extends AbstractPushSensor {
 		LocationManager locationManager = (LocationManager) applicationContext
 				.getSystemService(Context.LOCATION_SERVICE);
 		locationManager.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER,
-				2000, 5, locationListener);
+				2000, 5, locationListener, Looper.getMainLooper());
 		return true;
 	}
 
