@@ -23,13 +23,13 @@ If you have a research paper that uses the library that you would like added to 
 
 Authors & Contributors
 -------------------------------
-Neal Lathia (nlathia), University of Cambridge
+Neal Lathia ([nlathia](https://github.com/nlathia)), University of Cambridge
 
-Kiran Rachuri (krachuri), University of Cambridge
+Kiran Rachuri ([krachuri](https://github.com/krachuri)), University of Cambridge
 
-Petko Georgiev (petkoig), University of Cambridge
+Petko Georgiev ([petkoig](https://github.com/petkoig)), University of Cambridge
 
-Sibelius Seraphini (sibeliusseraphini), University of São Paulo
+Sibelius Seraphini ([sibeliusseraphini](https://github.com/sibeliusseraphini)), University of São Paulo
 
 License
 -------------------------------
