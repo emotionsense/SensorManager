@@ -12,6 +12,8 @@ import android.os.Looper;
 import android.util.Log;
 
 import com.ubhave.sensormanager.ESException;
+import com.ubhave.sensormanager.config.GlobalConfig;
+import com.ubhave.sensormanager.config.push.PassiveLocationConfig;
 import com.ubhave.sensormanager.data.pushsensor.PassiveLocationData;
 import com.ubhave.sensormanager.process.push.PassiveLocationProcessor;
 import com.ubhave.sensormanager.sensors.SensorUtils;
@@ -42,7 +44,6 @@ public class PassiveLocationSensor extends AbstractPushSensor {
 					{
 						passiveLocationSensor = result = new PassiveLocationSensor(
 								context);
-						Log.d(TAG, "Passive location sensor created ");
 					}
 					else
 					{
@@ -59,8 +60,6 @@ public class PassiveLocationSensor extends AbstractPushSensor {
 		super(context);
 		locationListener = new LocationListener() {
 			public void onLocationChanged(Location loc) {
-				Log.d(TAG, "Location Changed");
-
 				try
 				{
 					PassiveLocationProcessor processor = (PassiveLocationProcessor) getProcessor();
@@ -114,9 +113,17 @@ public class PassiveLocationSensor extends AbstractPushSensor {
 	protected boolean startSensing() {
 		LocationManager locationManager = (LocationManager) applicationContext
 				.getSystemService(Context.LOCATION_SERVICE);
-		locationManager.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER,
-				2000, 5, locationListener, Looper.getMainLooper());
-		Log.d(TAG, "Start sensing passive location");
+		try {
+			locationManager.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER,
+					(Long) getSensorConfig(PassiveLocationConfig.MIN_TIME),
+					(Long) getSensorConfig(PassiveLocationConfig.MIN_DISTANCE),
+					locationListener, Looper.getMainLooper());
+		} catch (ESException e) {
+			if (GlobalConfig.shouldLog()) {
+				Log.e(TAG, "Error getting parameter value for sensor");
+			}
+			e.printStackTrace();
+		}
 		return true;
 	}
 

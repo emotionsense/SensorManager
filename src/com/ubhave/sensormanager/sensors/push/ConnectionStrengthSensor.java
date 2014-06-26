@@ -31,7 +31,6 @@ import android.content.IntentFilter;
 import android.telephony.PhoneStateListener;
 import android.telephony.SignalStrength;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.data.pushsensor.ConnectionStrengthData;
@@ -65,7 +64,6 @@ public class ConnectionStrengthSensor extends AbstractPushSensor
 					{
 						connectionSensor = result = new ConnectionStrengthSensor(
 								context);
-						Log.d(TAG, "Connection Strenght sensor created ");
 					}
 					else
 					{
@@ -120,7 +118,6 @@ public class ConnectionStrengthSensor extends AbstractPushSensor
 				ConnectionStrengthData strengthData = processor.process(
 						System.currentTimeMillis(), sensorConfig.clone(),
 						data);
-				Log.d(TAG, "Phone Strength change");
 				parent.onDataSensed(strengthData);
 			} catch (Exception e)
 			{
@@ -156,7 +153,6 @@ public class ConnectionStrengthSensor extends AbstractPushSensor
 				.getSystemService(Context.TELEPHONY_SERVICE);
 		telephonyManager.listen(sensorEventListener,
 				PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
-		Log.d(TAG, "Strart listening Phone Strength change");
 		return true;
 	}
 
