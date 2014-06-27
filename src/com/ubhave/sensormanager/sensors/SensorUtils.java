@@ -36,6 +36,7 @@ import com.ubhave.sensormanager.classifier.SensorDataClassifier;
 import com.ubhave.sensormanager.classifier.WifiDataClassifier;
 import com.ubhave.sensormanager.config.GlobalConfig;
 import com.ubhave.sensormanager.config.SensorConfig;
+import com.ubhave.sensormanager.config.sensor.push.PassiveLocationConfig;
 import com.ubhave.sensormanager.config.sensors.pull.ApplicationConfig;
 import com.ubhave.sensormanager.config.sensors.pull.BluetoothConfig;
 import com.ubhave.sensormanager.config.sensors.pull.CameraConfig;
@@ -265,6 +266,9 @@ public class SensorUtils
 			break;
 		case SensorUtils.SENSOR_TYPE_PHONE_RADIO:
 			sensorConfig = PhoneRadioConfig.getDefault();
+			break;
+		case SENSOR_TYPE_PASSIVE_LOCATION:
+			sensorConfig = PassiveLocationConfig.getDefault();
 			break;
 		}
 		sensorConfig.setParameter(PullSensorConfig.ADAPTIVE_SENSING_ENABLED,

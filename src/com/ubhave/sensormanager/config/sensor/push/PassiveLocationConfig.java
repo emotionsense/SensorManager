@@ -1,4 +1,4 @@
-package com.ubhave.sensormanager.config.push;
+package com.ubhave.sensormanager.config.sensor.push;
 
 import com.ubhave.sensormanager.config.SensorConfig;
 
@@ -10,8 +10,8 @@ public class PassiveLocationConfig {
 	/*
 	 * Default values
 	 */
-	public static final int DEFAULT_MIN_TIME = 10 * 1000;
-	public static final int DEFAULT_MIN_DISTANCE = 10;
+	public static final long DEFAULT_MIN_TIME = 10 * 1000;
+	public static final float DEFAULT_MIN_DISTANCE = 10.0f;
 
 	public static SensorConfig getDefault()
 	{

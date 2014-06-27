@@ -13,7 +13,7 @@ import android.util.Log;
 
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.config.GlobalConfig;
-import com.ubhave.sensormanager.config.push.PassiveLocationConfig;
+import com.ubhave.sensormanager.config.sensor.push.PassiveLocationConfig;
 import com.ubhave.sensormanager.data.pushsensor.PassiveLocationData;
 import com.ubhave.sensormanager.process.push.PassiveLocationProcessor;
 import com.ubhave.sensormanager.sensors.SensorUtils;
@@ -56,7 +56,7 @@ public class PassiveLocationSensor extends AbstractPushSensor {
 		return result;
 	}
 
-	public PassiveLocationSensor(Context context) {
+	private PassiveLocationSensor(Context context) {
 		super(context);
 		locationListener = new LocationListener() {
 			public void onLocationChanged(Location loc) {
@@ -116,7 +116,7 @@ public class PassiveLocationSensor extends AbstractPushSensor {
 		try {
 			locationManager.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER,
 					(Long) getSensorConfig(PassiveLocationConfig.MIN_TIME),
-					(Long) getSensorConfig(PassiveLocationConfig.MIN_DISTANCE),
+					(Float) getSensorConfig(PassiveLocationConfig.MIN_DISTANCE),
 					locationListener, Looper.getMainLooper());
 		} catch (ESException e) {
 			if (GlobalConfig.shouldLog()) {
