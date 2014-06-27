@@ -89,31 +89,28 @@ public class PullSensorTask extends AbstractSensorTask
 						// will have the sampling window, cycle information
 						if (GlobalConfig.shouldLog())
 						{
-							Log.d(getLogTag(), "Pulling from: " + SensorUtils.getSensorName(sensor.getSensorType()));	
+							Log.d(getLogTag(), "Pulling from: " + SensorUtils.getSensorName(sensor.getSensorType()));
 						}
-						
+
 						SensorData sensorData = getCurrentSensorData(false);
 						// publish sensed data
 						publishData(sensorData);
 
 						// SLEEP
-						long samplingInterval = (Long) sensor.getSensorConfig(PullSensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS);
+						long samplingInterval = (Long) sensor
+								.getSensorConfig(PullSensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS);
 						syncObject.wait(samplingInterval);
-					}
-					catch (InterruptedException exp)
+					} catch (InterruptedException exp)
 					{
 						// ignore
-
 					}
-				}
-				catch (ESException e)
+				} catch (ESException e)
 				{
 					e.printStackTrace();
 					try
 					{
 						Thread.sleep(30000);
-					}
-					catch (Exception exp)
+					} catch (Exception exp)
 					{
 						exp.printStackTrace();
 					}

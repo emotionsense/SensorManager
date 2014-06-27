@@ -2,12 +2,8 @@
  Copyright (c) 2014, Idiap
 Hugues Salamin, hugues.salamin@idiap.ch
 
-This file was developed to add phone radio sensor to the SensorManager library
+This file was developed to add connection strength sensor to the SensorManager library
 from https://github.com/nlathia/SensorManager.
-
-The SensorManager library was developed as part of the EPSRC Ubhave (Ubiquitous
-and Social Computing for Positive Behaviour Change) Project. For more
-information, please visit http://www.emotionsense.org
 
 Permission to use, copy, modify, and/or distribute this software for any
 purpose with or without fee is hereby granted, provided that the above
