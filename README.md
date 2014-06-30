@@ -1,42 +1,47 @@
 ES Sensor Manager
 ================================
 
-The ES2 (from “Emotion Sense Sensor Manager”) Library is a library project for Android application developers. The main goal of the project is to make accessing and polling for Android smartphone sensor data easy, highly configurable, and battery-friendly.
-
-Questions & Docs
--------------------------------
-Read the documentation [here](https://docs.google.com/document/d/1TqThJULb-4e6TGb1gdkAaPCfyuXStjJpbnt7a0OZ9OE/edit)
-
-Looks at example projects that use this library [here](https://github.com/nlathia/ESLibrary-Examples)
-
-Email [this google group](https://groups.google.com/forum/#!forum/es-library-developers)
-
-Research
--------------------------------
-[pdf](http://www.cl.cam.ac.uk/~nkl25/publications/papers/lathia_mcss2013.pdf) N. Lathia, K. Rachuri, C. Mascolo, G. Roussos. Open Source Smartphone Libraries for Computational Social Science
-In 2nd ACM Workshop on Mobile Systems for Computational Social Science. Zurich, Switzerland. September 8, 2013. 
-
-[pdf](http://www.cl.cam.ac.uk/~nkl25/publications/papers/lathia_ubicomp13.pdf) N. Lathia, K. Rachuri, C. Mascolo, P. Rentfrow. Contextual Dissonance: Design Bias in Sensor-Based Experience Sampling Methods
-In ACM International Joint Conference on Pervasive and Ubiquitous Computing. Zurich, Switzerland. September 8-12, 2013. 
-
-If you have a research paper that uses the library that you would like added to this list, let Neal Lathia know.
+The ES Sensor Manager Library is a library project for Android application developers. The main goal of the project is to make accessing and polling for Android smartphone sensor data easy, highly configurable, and battery-friendly.
 
 Authors & Contributors
 -------------------------------
-Neal Lathia ([nlathia](https://github.com/nlathia)), University of Cambridge
+Neal Lathia ([nlathia](https://github.com/nlathia)), University of Cambridge, UK
 
-Kiran Rachuri ([krachuri](https://github.com/krachuri)), University of Cambridge
+Kiran Rachuri ([krachuri](https://github.com/krachuri)), University of Cambridge, UK
 
-Petko Georgiev ([petkoig](https://github.com/petkoig)), University of Cambridge
+Petko Georgiev ([petkoig](https://github.com/petkoig)), University of Cambridge, UK
 
 Sibelius Seraphini ([sibeliusseraphini](https://github.com/sibeliusseraphini)), University of São Paulo
 
+Hugues Salamin, ([hsalamin](http://github.com/hsalamin)) Idiap Research Institute, Switzerland
+
+Olivier Bornet ([puckch](http://github.com/puckch)), Idiap Research Institute, Switzerland
+
+Documentation
+-------------------------------
+
+1. Introduction
+
+* What is the Sensor Manager library?
+* Questions and Contact
+* Types of Sensors
+
+2. Usage
+
+* Setup
+* Accessing Sensor Data
+* Example Projects [here](https://github.com/nlathia/ESLibrary-Examples)
+* Configuring the Sensor Manager
+* Extracting and Formatting the Data
+
+3. Research
+
+4. Discuss: email [this google group](https://groups.google.com/forum/#!forum/es-library-developers) 
+
+
 License
 -------------------------------
-Copyright (c) 2014
-Neal Lathia, University of Cambridge
-
-For more information, please visit http://www.emotionsense.org
+Copyright (c), University of Cambridge 
 
 Permission to use, copy, modify, and/or distribute this software for any
 purpose with or without fee is hereby granted, provided that the above
@@ -49,3 +54,5 @@ SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
 WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
 ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
 IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+More information available [here](http://en.wikipedia.org/wiki/BSD_licenses).
