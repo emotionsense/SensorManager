@@ -1,46 +1,19 @@
-ES Sensor Manager
-================================
+# ES Sensor Manager
 
 The ES Sensor Manager Library is a library project for Android application developers. The main goal of the project is to make accessing and polling for Android smartphone sensor data easy, highly configurable, and battery-friendly.
 
-Authors & Contributors
--------------------------------
-Neal Lathia ([nlathia](https://github.com/nlathia)), University of Cambridge, UK
+## Authors & Contributors
+* Neal Lathia ([nlathia](https://github.com/nlathia)), University of Cambridge, UK
+* Kiran Rachuri ([krachuri](https://github.com/krachuri)), University of Cambridge, UK
+* Petko Georgiev ([petkoig](https://github.com/petkoig)), University of Cambridge, UK
+* Sibelius Seraphini ([sibeliusseraphini](https://github.com/sibeliusseraphini)), University of São Paulo
+* Hugues Salamin, ([hsalamin](http://github.com/hsalamin)) Idiap Research Institute, Switzerland
+* Olivier Bornet ([puckch](http://github.com/puckch)), Idiap Research Institute, Switzerland
 
-Kiran Rachuri ([krachuri](https://github.com/krachuri)), University of Cambridge, UK
+## Documentation
+Check the [docs/](https://github.com/nlathia/SensorManager/tree/master/docs) directory of this project.
 
-Petko Georgiev ([petkoig](https://github.com/petkoig)), University of Cambridge, UK
-
-Sibelius Seraphini ([sibeliusseraphini](https://github.com/sibeliusseraphini)), University of São Paulo
-
-Hugues Salamin, ([hsalamin](http://github.com/hsalamin)) Idiap Research Institute, Switzerland
-
-Olivier Bornet ([puckch](http://github.com/puckch)), Idiap Research Institute, Switzerland
-
-Documentation
--------------------------------
-
-1. Introduction
-
-* What is the Sensor Manager library?
-* Questions and Contact
-* Types of Sensors
-
-2. Usage
-
-* Setup
-* Accessing Sensor Data
-* Example Projects [here](https://github.com/nlathia/ESLibrary-Examples)
-* Configuring the Sensor Manager
-* Extracting and Formatting the Data
-
-3. Research
-
-4. Discuss: email [this google group](https://groups.google.com/forum/#!forum/es-library-developers) 
-
-
-License
--------------------------------
+## License
 Copyright (c), University of Cambridge 
 
 Permission to use, copy, modify, and/or distribute this software for any
