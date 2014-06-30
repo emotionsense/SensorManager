@@ -1,11 +1,6 @@
 /* **************************************************
- Copyright (c) 2012, University of Cambridge
- Neal Lathia, neal.lathia@cl.cam.ac.uk
- Kiran Rachuri, kiran.rachuri@cl.cam.ac.uk
-
-This library was developed as part of the EPSRC Ubhave (Ubiquitous and
-Social Computing for Positive Behaviour Change) Project. For more
-information, please visit http://www.emotionsense.org
+ Copyright (c) 2014, Idiap
+ Hugues Salamin, hugues.salamin@idiap.ch
 
 Permission to use, copy, modify, and/or distribute this software for any
 purpose with or without fee is hereby granted, provided that the above
@@ -20,37 +15,34 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
 IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  ************************************************** */
 
-package com.ubhave.sensormanager.data.pullsensor;
-
-import java.util.List;
-
-import android.location.Location;
+package com.ubhave.sensormanager.data.pushsensor;
 
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
-public class LocationData extends SensorData
+public class ConnectionStrengthData extends SensorData
 {
-	private List<Location> locations;
 
-	public LocationData(long senseStartTimestamp, SensorConfig sensorConfig)
+	private int strength;
+
+	public ConnectionStrengthData(long recvTimestamp, SensorConfig sensorConfig)
 	{
-		super(senseStartTimestamp, sensorConfig);
+		super(recvTimestamp, sensorConfig);
 	}
 
-	public void setLocation(List<Location> locations)
+	public void setStrength(int i)
 	{
-		this.locations = locations;
+		strength = i;
 	}
 
-	public List<Location> getLocation()
+	public float getStrength()
 	{
-		return locations;
+		return strength;
 	}
 
 	public int getSensorType()
 	{
-		return SensorUtils.SENSOR_TYPE_LOCATION;
+		return SensorUtils.SENSOR_TYPE_CONNECTION_STRENGTH;
 	}
 }

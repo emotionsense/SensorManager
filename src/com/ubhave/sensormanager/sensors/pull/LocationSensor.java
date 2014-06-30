@@ -22,6 +22,9 @@ IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 package com.ubhave.sensormanager.sensors.pull;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.Manifest;
 import android.content.Context;
 import android.location.Location;
@@ -42,16 +45,16 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 public class LocationSensor extends AbstractPullSensor
 {
 	private static final String TAG = "LocationSensor";
-	private static final String[] LOCATION_PERMISSIONS = new String[]{
-		Manifest.permission.ACCESS_COARSE_LOCATION,
-		Manifest.permission.ACCESS_FINE_LOCATION
+	private static final String[] LOCATION_PERMISSIONS = new String[] {
+			Manifest.permission.ACCESS_COARSE_LOCATION,
+			Manifest.permission.ACCESS_FINE_LOCATION
 	};
 
 	private static LocationSensor locationSensor;
 	private static Object lock = new Object();
-	
+
 	private LocationManager locationManager;
-	private Location lastLocation;
+	private List<Location> locationList;
 	private LocationListener locListener;
 	private LocationData locationData;
 
@@ -88,7 +91,7 @@ public class LocationSensor extends AbstractPullSensor
 			{
 				if (isSensing)
 				{
-					lastLocation = loc;
+					locationList.add(loc);
 				}
 			}
 
@@ -121,7 +124,7 @@ public class LocationSensor extends AbstractPullSensor
 
 	protected boolean startSensing()
 	{
-		lastLocation = null;
+		locationList = new ArrayList<Location>();
 		try
 		{
 			String accuracyConfig = (String) sensorConfig.getParameter(LocationConfig.ACCURACY_TYPE);
@@ -160,8 +163,7 @@ public class LocationSensor extends AbstractPullSensor
 				}
 			}
 			return true;
-		}
-		catch (Exception e)
+		} catch (Exception e)
 		{
 			e.printStackTrace();
 			return false;
@@ -177,10 +179,10 @@ public class LocationSensor extends AbstractPullSensor
 	{
 		return locationData;
 	}
-	
+
 	protected void processSensorData()
 	{
-		LocationProcessor processor = (LocationProcessor)getProcessor();
-		locationData = processor.process(pullSenseStartTimestamp, lastLocation, sensorConfig.clone());
+		LocationProcessor processor = (LocationProcessor) getProcessor();
+		locationData = processor.process(pullSenseStartTimestamp, locationList, sensorConfig.clone());
 	}
 }

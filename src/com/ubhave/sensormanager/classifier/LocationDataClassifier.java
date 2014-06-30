@@ -22,6 +22,8 @@ IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 package com.ubhave.sensormanager.classifier;
 
+import java.util.List;
+
 import android.location.Location;
 
 import com.ubhave.sensormanager.config.sensors.pull.LocationConfig;
@@ -41,12 +43,14 @@ public class LocationDataClassifier implements SensorDataClassifier
 
 		if (data != null)
 		{
-			currLoc = data.getLocation();
+			List<Location> locations = data.getLocation();
+			currLoc = locations.get(locations.size() - 1);
 		}
 
 		if (prevData != null)
 		{
-			prevLoc = prevData.getLocation();
+			List<Location> locations = data.getLocation();
+			prevLoc = locations.get(locations.size() - 1);
 		}
 
 		if (areSameLocations(currLoc, prevLoc))
