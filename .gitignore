@@ -8,3 +8,5 @@ bin/classes
 SensorManager.iml
 
 *.class
+
+*.cache
