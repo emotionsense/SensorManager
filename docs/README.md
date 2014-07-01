@@ -17,6 +17,9 @@ The ES2 library is available for all Android applications that are running versi
 
 Please note that this library has been built and tested using Android phones, and not the Android Emulator. We currently do not support development via the emulator.
 
+#### Using the Library
+
+See the library [usage](https://github.com/nlathia/SensorManager/blob/master/docs/usage.md) description, and the [ES-Library Examples](https://github.com/nlathia/ESLibrary-Examples) repository.
 
 #### Questions and Contact
 
@@ -27,6 +30,8 @@ If you have any questions, please email [this google group](https://groups.googl
 See [here](https://github.com/nlathia/SensorManager/blob/master/docs/research.md) for research papers and [here](https://github.com/nlathia/SensorManager/blob/master/docs/apps.md) for apps that use the Sensor Manager.
 
 #### Types of Sensors
+
+The library defines two broad types of sensors: push sensors and pull sensors. 
 
 ##### Push Sensors
 [Push sensors](https://github.com/nlathia/SensorManager/tree/master/src/com/ubhave/sensormanager/sensors/push) are the sensors that broadcast notifications about their events to the Android operating system. The library can seamlessly capture a range of these events while it is active. These include:
