@@ -110,3 +110,42 @@ There are some sensors that are not listed in the table (e.g. Accelerometer). Th
 
 </tbody>
 </table>
+
+### Collecting Sensor Data
+
+Depending on the application that you are implementing, there are two different ways that the library allows you to access sensor data. Broadly speaking, these are (a) one-off access, and (b) continuous sampling.
+
+1. **One-Off Access**. When your application needs some sensor data (for example, 8 seconds from the accelerometer), you can call the sensor manager library and ask for the sensor to be sampled.
+2. **Continuous Sampling**. When your application, instead, needs to collect sensor data more than just once, we have implemented a means for your Activity or Service to register that it is interested in receiving a particular sensor’s data: data will then be pushed to your Activity or Service after it has been sensed.
+
+The Sensor Manager library has an interface that you can use to access everything that you need. This interface is found in the file: ```com.ubhave.sensormanager.ESSensorManagerInterface.java```.
+
+In short, this interface allows you to:
+* Get one sample of data from a sensor:
+```
+public SensorData getDataFromSensor(int sensorId) throws ESException;
+```
+* Subscribe and unsubscribe from receiving sensor data:
+```
+public int subscribeToSensorData(int sensorId, SensorDataListener listener) throws ESException;
+public void unsubscribeFromSensorData(int subscriptionId) throws ESException;
+```
+* Pause and unpause a subscription:
+```
+public void pauseSubscription(int subscriptionId) throws ESException;
+public void unPauseSubscription(int subscriptionId) throws ESException;
+```
+* Get and set sensor-specific configuration parameters
+```
+public void setSensorConfig(int sensorId, String configKey, Object configValue) throws ESException;
+public Object getSensorConfigValue(int sensorId, String configKey) throws ESException;
+```
+* Get and set sensor-manager (global) configuration parameters  
+```
+public void setGlobalConfig(String configKey, Object configValue) throws ESException;
+public Object getGlobalConfig(String configKey) throws ESException;
+```
+
+The sensor manager allows you to differentiate between different sensors via their id. These have all been defined as static integer identifiers in the ```SensorUtils.java``` class.
+
+#### 
