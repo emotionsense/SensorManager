@@ -39,14 +39,26 @@ public class LocationData extends SensorData
 		super(senseStartTimestamp, sensorConfig);
 	}
 
-	public void setLocation(List<Location> locations)
+	public void setLocations(List<Location> locations)
 	{
 		this.locations = locations;
 	}
 
-	public List<Location> getLocation()
+	public List<Location> getLocations()
 	{
 		return locations;
+	}
+	
+	public Location getLastLocation()
+	{
+		if (locations != null && !locations.isEmpty())
+		{
+			return locations.get(locations.size() - 1);
+		}
+		else
+		{
+			return null;
+		}
 	}
 
 	public int getSensorType()

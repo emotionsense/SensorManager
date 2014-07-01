@@ -16,12 +16,12 @@ public class LocationProcessor extends AbstractProcessor
 		super(c, rw, sp);
 	}
 
-	public LocationData process(long pullSenseStartTimestamp, List<Location> lastLocation, SensorConfig sensorConfig)
+	public LocationData process(long pullSenseStartTimestamp, final List<Location> lastLocation, final SensorConfig sensorConfig)
 	{
 		LocationData locationData = new LocationData(pullSenseStartTimestamp, sensorConfig);
 		if (setRawData)
 		{
-			locationData.setLocation(lastLocation);
+			locationData.setLocations(lastLocation);
 		}
 		return locationData;
 	}
