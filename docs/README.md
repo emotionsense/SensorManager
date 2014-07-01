@@ -2,7 +2,7 @@
 
 #### What is the Sensor Manager library?
 
-The ES2 (from “Emotion Sense Sensor Manager”) Library is a library project for Android application developers and researchers. The main goal of the project is to make accessing and polling for Android smartphone sensor data easy, highly configurable, and battery-friendly.
+The ES Sensor Manager Library is a library project for Android application developers and researchers. The main goal of the project is to make accessing and polling for Android smartphone sensor data easy, highly configurable, and battery-friendly.
 
 We take a very broad definition of the term “sensor:” we mean all of the different components of Android phones that can capture data about:
 
@@ -29,14 +29,17 @@ See [here](https://github.com/nlathia/SensorManager/blob/master/docs/research.md
 #### Types of Sensors
 
 ##### Push Sensors
-These are the sensors that broadcast notifications about their events to the Android operating system. The library can seamlessly capture a range of these events while it is active. These include:
+[Push sensors](https://github.com/nlathia/SensorManager/tree/master/src/com/ubhave/sensormanager/sensors/push) are the sensors that broadcast notifications about their events to the Android operating system. The library can seamlessly capture a range of these events while it is active. These include:
 
-* Battery. This sensor can reveal the current battery level and if the phone’s battery is being charged.
-* Phone State. While this sensor is active, it gives you access to the device’s call records. From this, you can know when the phone is ringing or off hook (i.e., in a call). The sensor also gives you access to a hashcode of the telephone number that the device is interacting with. In addition, it also gives information on the cell tower that the phone is connected to.
-* Connection State. Use this sensor to detect events related to the phone connecting or disconnecting from the network.
-* SMS. Capture events relating to SMSs being sent and received. This includes the length of the SMS, the number of words, whether it was sent or received, and the hashcode of the other device the phone is interacting with.
-* Proximity. This sensor lets you know when there is something close to the phone’s screen. In general, the proximity sensor is used by the phone to know when to ignore screen events (so that, for example, you don’t click screen buttons while speaking on the phone).
-* Screen. This captures when the phone’s screen is turned on or off.
+* **Battery**. This sensor can reveal the current battery level and if the phone’s battery is being charged.
+* **Phone State**. While this sensor is active, it gives you access to the device’s call state. From this, you can know when the phone is ringing or off hook (i.e., in a call). The sensor also gives you access to a hashcode of the telephone number that the device is interacting with. In addition, it also gives information on the cell tower that the phone is connected to.
+* **Connection State**. Use this sensor to detect events related to the phone connecting or disconnecting from the network.
+* **Connection Strength**. Use this sensor to monitor the strength of the device's GSM signal.
+* **SMS**. Capture events relating to SMSs being sent and received. This includes the length of the SMS, the number of words, whether it was sent or received, and the hashcode of the other device the phone is interacting with. To query for historical data, see the SMSContentReader sensor (below).
+* **Proximity**. This sensor lets you know when there is something close to the phone’s screen. In general, the proximity sensor is used by the phone to know when to ignore screen events (so that, for example, you don’t click screen buttons while speaking on the phone).
+* **Screen**. This captures when the phone’s screen is turned on or off.
+* **Light**. This captures data from the device's light sensor (see [Android Environment Sensors](http://developer.android.com/guide/topics/sensors/sensors_environment.html)).
+* **Passive Location**. This sensor registers a listener to passively receive location updates.
 
 ##### Pull Sensors
 These sensors need to be actively polled in order to get data from them. There are two sub-categories here: fixed-window sensors that capture data for a predetermined amount of time, and variable-window sensors, that respond with a fixed amount of data, but the time it takes them to do so may vary the sampling window is defined in terms of number of sampling cyclesv
