@@ -25,6 +25,8 @@ The ES Sensor Manager will only be able to access sensor data if your applicatio
 
 The easiest way to see what permissions a sensor requires is to look at the code: each sensor checks that its required permissions are granted at run time in their factory method. In particular, some sensors require more than one permission, while others (e.g., Location) require at least one permission.
 
+There are some sensors that are not listed in the table (e.g. Accelerometer). These sensors do not need any additional permissions in order to be used.
+
 
 <table>
 <tbody>
