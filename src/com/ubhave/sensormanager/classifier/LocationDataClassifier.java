@@ -49,14 +49,8 @@ public class LocationDataClassifier implements SensorDataClassifier
 			prevLoc = prevData.getLastLocation();
 		}
 
-		if (areSameLocations(currLoc, prevLoc))
-		{
-			return false;
-		}
-		else
-		{
-			return true;
-		}
+		// Interesting = different locations
+		return !areSameLocations(currLoc, prevLoc);
 	}
 
 	private boolean areSameLocations(Location loc1, Location loc2)
