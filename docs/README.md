@@ -29,6 +29,8 @@ If you have any questions, please email [this google group](https://groups.googl
 
 See [here](https://github.com/nlathia/SensorManager/blob/master/docs/research.md) for research papers and [here](https://github.com/nlathia/SensorManager/blob/master/docs/apps.md) for apps that use the Sensor Manager.
 
+This library was initially developed as part of the [EPSRC Ubhave](http://ubhave.org/) (Ubiquitous and Social Computing for Positive Behaviour Change) Project, and was first used in the [Emotion Sense](http://emotionsense.org/) application.
+
 #### Types of Sensors
 
 The library defines two broad types of sensors: push sensors and pull sensors. 
