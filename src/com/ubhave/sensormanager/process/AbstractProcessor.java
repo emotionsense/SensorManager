@@ -27,13 +27,11 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public abstract class AbstractProcessor
 {
-	public static AbstractProcessor getProcessor(Context c, int sensorType,
-			boolean setRawData, boolean setProcessedData) throws ESException
+	public static AbstractProcessor getProcessor(Context c, int sensorType, boolean setRawData, boolean setProcessedData) throws ESException
 	{
 		if (!setRawData && !setProcessedData)
 		{
-			throw new ESException(ESException.INVALID_STATE,
-					"No data (raw/processed) requested from the processor");
+			throw new ESException(ESException.INVALID_STATE, "No data (raw/processed) requested from the processor");
 		}
 
 		switch (sensorType)
@@ -63,18 +61,15 @@ public abstract class AbstractProcessor
 		case SensorUtils.SENSOR_TYPE_PROXIMITY:
 			return new ProximityProcessor(c, setRawData, setProcessedData);
 		case SensorUtils.SENSOR_TYPE_CALL_CONTENT_READER:
-			return new CallContentReaderProcessor(c, setRawData,
-					setProcessedData);
+			return new CallContentReaderProcessor(c, setRawData, setProcessedData);
 		case SensorUtils.SENSOR_TYPE_SMS_CONTENT_READER:
-			return new SMSContentReaderProcessor(c, setRawData,
-					setProcessedData);
+			return new SMSContentReaderProcessor(c, setRawData, setProcessedData);
 		case SensorUtils.SENSOR_TYPE_CAMERA:
 			return new CameraProcessor(c, setRawData, setProcessedData);
 		case SensorUtils.SENSOR_TYPE_PHONE_RADIO:
 			return new PhoneRadioProcessor(c, setRawData, setProcessedData);
 		case SensorUtils.SENSOR_TYPE_CONNECTION_STRENGTH:
-			return new ConnectionStrengthProcessor(c, setRawData,
-					setProcessedData);
+			return new ConnectionStrengthProcessor(c, setRawData, setProcessedData);
 		case SensorUtils.SENSOR_TYPE_GYROSCOPE:
 			return new GyroscopeProcessor(c, setRawData, setProcessedData);
 		case SensorUtils.SENSOR_TYPE_LIGHT:
@@ -82,16 +77,14 @@ public abstract class AbstractProcessor
 		case SensorUtils.SENSOR_TYPE_PASSIVE_LOCATION:
 			return new PassiveLocationProcessor(c, setRawData, setProcessedData);
 		default:
-			throw new ESException(ESException.UNKNOWN_SENSOR_TYPE,
-					"No processor defined for this sensor.");
+			throw new ESException(ESException.UNKNOWN_SENSOR_TYPE, "No processor defined for this sensor.");
 		}
 	}
 
 	protected final boolean setRawData, setProcessedData;
 	protected final Context appContext;
 
-	public AbstractProcessor(final Context context, final boolean rw,
-			final boolean sp)
+	public AbstractProcessor(final Context context, final boolean rw, final boolean sp)
 	{
 		this.appContext = context;
 		this.setRawData = rw;

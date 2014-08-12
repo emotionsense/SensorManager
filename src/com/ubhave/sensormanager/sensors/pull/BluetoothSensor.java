@@ -38,6 +38,7 @@ import android.util.Log;
 
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.config.GlobalConfig;
+import com.ubhave.sensormanager.config.sensors.pull.BluetoothConfig;
 import com.ubhave.sensormanager.config.sensors.pull.PullSensorConfig;
 import com.ubhave.sensormanager.data.pullsensor.BluetoothData;
 import com.ubhave.sensormanager.data.pullsensor.ESBluetoothDevice;
@@ -47,22 +48,19 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 public class BluetoothSensor extends AbstractPullSensor
 {
 	private static final String TAG = "BluetoothSensor";
-	private static final String[] REQUIRED_PERMISSIONS = new String[] {
-			Manifest.permission.BLUETOOTH,
-			Manifest.permission.BLUETOOTH_ADMIN
-	};
+	private static final String[] REQUIRED_PERMISSIONS = new String[] { Manifest.permission.BLUETOOTH, Manifest.permission.BLUETOOTH_ADMIN };
 
 	private static BluetoothSensor bluetoothSensor;
 	private static Object lock = new Object();
 
 	private ArrayList<ESBluetoothDevice> btDevices;
 	private BluetoothAdapter bluetooth = null;
-	private int cyclesRemaining;
+	
+	private int cyclesRemaining, sensorStartState;
 	private BluetoothData bluetoothData;
 	private BroadcastReceiver receiver;
 
-	public static BluetoothSensor getBluetoothSensor(final Context context)
-			throws ESException
+	public static BluetoothSensor getBluetoothSensor(final Context context) throws ESException
 	{
 		if (bluetoothSensor == null)
 		{
@@ -76,8 +74,7 @@ public class BluetoothSensor extends AbstractPullSensor
 					}
 					else
 					{
-						throw new ESException(ESException.PERMISSION_DENIED,
-								SensorUtils.SENSOR_NAME_BLUETOOTH);
+						throw new ESException(ESException.PERMISSION_DENIED, SensorUtils.SENSOR_NAME_BLUETOOTH);
 					}
 				}
 			}
@@ -86,15 +83,17 @@ public class BluetoothSensor extends AbstractPullSensor
 	}
 
 	@SuppressLint({ "InlinedApi", "NewApi" })
-	private BluetoothSensor(Context context)
+	private BluetoothSensor(final Context context)
 	{
 		super(context);
 		btDevices = new ArrayList<ESBluetoothDevice>();
-		if (VERSION.SDK_INT >= 18) {
-			BluetoothManager bluetoothMan = (BluetoothManager) context
-					.getSystemService(Context.BLUETOOTH_SERVICE);
+		if (VERSION.SDK_INT >= 18)
+		{
+			BluetoothManager bluetoothMan = (BluetoothManager) context.getSystemService(Context.BLUETOOTH_SERVICE);
 			bluetooth = bluetoothMan.getAdapter();
-		} else {
+		}
+		else
+		{
 			bluetooth = BluetoothAdapter.getDefaultAdapter();
 		}
 		if (bluetooth == null)
@@ -118,26 +117,17 @@ public class BluetoothSensor extends AbstractPullSensor
 				if (BluetoothDevice.ACTION_FOUND.equals(action))
 				{
 					// Get the BluetoothDevice object from the Intent
-					String deviceAddr = ((BluetoothDevice) intent
-							.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE))
-							.getAddress();
-					String deviceName = ((BluetoothDevice) intent
-							.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE))
-							.getName();
-					int rssi = (int) intent.getShortExtra(
-							BluetoothDevice.EXTRA_RSSI, Short.MIN_VALUE);
+					String deviceAddr = ((BluetoothDevice) intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)).getAddress();
+					String deviceName = ((BluetoothDevice) intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE)).getName();
+					int rssi = (int) intent.getShortExtra(BluetoothDevice.EXTRA_RSSI, Short.MIN_VALUE);
 
-					ESBluetoothDevice esBluetoothDevice = new ESBluetoothDevice(
-							System.currentTimeMillis(), deviceAddr,
-							deviceName, rssi);
-
+					ESBluetoothDevice esBluetoothDevice = new ESBluetoothDevice(System.currentTimeMillis(), deviceAddr, deviceName, rssi);
 					if (!(btDevices.contains(esBluetoothDevice)))
 					{
 						btDevices.add(esBluetoothDevice);
 					}
 				}
-				else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED
-						.equals(action))
+				else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action))
 				{
 					cyclesRemaining -= 1;
 					if (cyclesRemaining > 0)
@@ -167,45 +157,67 @@ public class BluetoothSensor extends AbstractPullSensor
 	{
 		return bluetoothData;
 	}
+	
+	private boolean shouldForceEnable()
+	{
+		try
+		{
+			return (Boolean) sensorConfig.getParameter(BluetoothConfig.FORCE_ENABLE_SENSOR);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return BluetoothConfig.DEFAULT_FORCE_ENABLE;
+		}
+	}
 
 	protected void processSensorData()
 	{
 		BluetoothProcessor processor = (BluetoothProcessor) getProcessor();
-		bluetoothData = processor.process(pullSenseStartTimestamp, btDevices,
-				sensorConfig.clone());
+		bluetoothData = processor.process(pullSenseStartTimestamp, btDevices, sensorConfig.clone());
 	}
 
 	protected boolean startSensing()
 	{
 		btDevices.clear();
-
-		if (!bluetooth.isEnabled())
+		sensorStartState = bluetooth.getState();
+		if (!bluetooth.isEnabled() && shouldForceEnable())
 		{
-			// TODO: We should not do that ...
 			bluetooth.enable();
 			while (!bluetooth.isEnabled())
 			{
 				try
 				{
 					Thread.sleep(100);
-				} catch (Exception exp)
+				}
+				catch (Exception exp)
 				{
 					exp.printStackTrace();
 				}
 			}
 		}
-		cyclesRemaining = (Integer) sensorConfig
-				.getParameter(PullSensorConfig.NUMBER_OF_SENSE_CYCLES);
-		bluetooth.startDiscovery();
-
-        // Register the BroadcastReceiver: note that this does NOT start a scan
-        // or anything
-        IntentFilter found = new IntentFilter(BluetoothDevice.ACTION_FOUND);
-        IntentFilter finished = new IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
-        applicationContext.registerReceiver(receiver, found);
-        applicationContext.registerReceiver(receiver, finished);
-
-        return true;
+		
+		if (bluetooth.isEnabled())
+		{
+			cyclesRemaining = (Integer) sensorConfig.getParameter(PullSensorConfig.NUMBER_OF_SENSE_CYCLES);
+			
+			// Register the BroadcastReceiver: note that this does NOT start a scan
+			IntentFilter found = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+			IntentFilter finished = new IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_FINISHED);
+			applicationContext.registerReceiver(receiver, found);
+			applicationContext.registerReceiver(receiver, finished);
+			
+			bluetooth.startDiscovery();
+			return true;
+		}
+		else
+		{
+			if (GlobalConfig.shouldLog())
+			{
+				Log.d(TAG, "Bluetooth is not enabled.");
+			}
+			return false;
+		}
 	}
 
 	// Called when a scan is finished
@@ -214,11 +226,13 @@ public class BluetoothSensor extends AbstractPullSensor
 		if (bluetooth != null)
 		{
 			bluetooth.cancelDiscovery();
-			// TODO: This disable bluetooth. This is goes against the doc.
-			bluetooth.disable();
+			if (sensorStartState == BluetoothAdapter.STATE_OFF && bluetooth.isEnabled())
+			{
+				bluetooth.disable();
+			}
 		}
 
-        applicationContext.unregisterReceiver(receiver);
+		applicationContext.unregisterReceiver(receiver);
 	}
 
 }

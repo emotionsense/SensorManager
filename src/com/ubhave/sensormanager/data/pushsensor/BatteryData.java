@@ -35,12 +35,41 @@ public class BatteryData extends SensorData
 	private int temperature;
 	private int voltage;
 	private int plugged;
+	private int plug_type;
 	private int status;
 	private int health;
 	
 	public BatteryData(long timestamp, SensorConfig config)
 	{
 		super(timestamp, config);
+	}
+	
+	public void setPlugType(int type)
+	{
+		plug_type = type;
+	}
+	
+	public String getPlugType()
+	{
+		switch (plug_type)
+		{
+		case BatteryManager.BATTERY_PLUGGED_USB:
+			return "USB";
+		case BatteryManager.BATTERY_PLUGGED_AC:
+			return "AC";
+		default:
+			return "unknown";
+		}
+	}
+	
+	public boolean plugSourceUSB()
+	{
+		return plug_type == BatteryManager.BATTERY_PLUGGED_USB;
+	}
+	
+	public boolean plugSourceAC()
+	{
+		return plug_type == BatteryManager.BATTERY_PLUGGED_AC;
 	}
 	
 	public void setBatteryLevel(int l)
