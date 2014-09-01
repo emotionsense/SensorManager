@@ -22,7 +22,7 @@ IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 package com.ubhave.sensormanager.data.pullsensor;
 
-import com.ubhave.sensormanager.config.sensors.pull.ContentReaderConfig;
+import com.ubhave.sensormanager.config.pull.ContentReaderConfig;
 
 public class SMSContentReaderEntry extends AbstractContentReaderEntry
 {	

@@ -1,4 +1,4 @@
-package com.ubhave.sensormanager.config.sensors.pull;
+package com.ubhave.sensormanager.config.pull;
 
 import com.ubhave.sensormanager.config.SensorConfig;
 

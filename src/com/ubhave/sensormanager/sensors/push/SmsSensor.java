@@ -35,7 +35,7 @@ import android.os.Handler;
 import android.telephony.SmsMessage;
 
 import com.ubhave.sensormanager.ESException;
-import com.ubhave.sensormanager.config.sensors.pull.ContentReaderConfig;
+import com.ubhave.sensormanager.config.pull.ContentReaderConfig;
 import com.ubhave.sensormanager.data.pushsensor.SmsData;
 import com.ubhave.sensormanager.process.push.SMSProcessor;
 import com.ubhave.sensormanager.sensors.SensorUtils;

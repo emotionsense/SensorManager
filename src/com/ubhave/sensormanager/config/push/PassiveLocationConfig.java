@@ -15,7 +15,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
 IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  ************************************************** */
 
-package com.ubhave.sensormanager.config.sensor.push;
+package com.ubhave.sensormanager.config.push;
 
 import com.ubhave.sensormanager.config.SensorConfig;
 

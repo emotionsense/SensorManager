@@ -32,7 +32,7 @@ import android.util.Log;
 
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.config.GlobalConfig;
-import com.ubhave.sensormanager.config.sensors.pull.CameraConfig;
+import com.ubhave.sensormanager.config.pull.CameraConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.data.pullsensor.CameraData;
 import com.ubhave.sensormanager.process.pull.CameraProcessor;

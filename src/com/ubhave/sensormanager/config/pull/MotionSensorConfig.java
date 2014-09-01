@@ -1,6 +1,9 @@
 /* **************************************************
- Copyright (c) 2014, Idiap
- Olivier Bornet, olivier.bornet@idiap.ch
+ Copyright (c) 2014
+
+This library was developed as part of the EPSRC Ubhave (Ubiquitous and
+Social Computing for Positive Behaviour Change) Project. For more
+information, please visit http://www.emotionsense.org
 
 Permission to use, copy, modify, and/or distribute this software for any
 purpose with or without fee is hereby granted, provided that the above
@@ -15,27 +18,33 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
 IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  ************************************************** */
 
-package com.ubhave.sensormanager.config.sensors.pull;
+package com.ubhave.sensormanager.config.pull;
+
+import android.hardware.SensorManager;
 
 import com.ubhave.sensormanager.config.SensorConfig;
 
-public class PhoneRadioConfig
+public class MotionSensorConfig
 {
+	/*
+	 * Config keys
+	 */
+	public final static String SAMPLING_DELAY = "MOTION_SAMPLING_DELAY";
+	
 	/*
 	 * Default values
 	 */
-	public static final long DEFAULT_SLEEP_INTERVAL = 1 * 60 * 1000;
-	public static final int PHONE_RADIO_SAMPLING_CYCLES = 1; // phone radio
-																// sensor
-																// sensing
-																// cycles should
-																// always be 1
-
+	public static final long DEFAULT_SAMPLING_WINDOW_SIZE_MILLIS = 8000L;
+	public static final long DEFAULT_SLEEP_INTERVAL = 2 * 60 * 1000L;
+	public static final int DEFAULT_SAMPLING_DELAY = SensorManager.SENSOR_DELAY_GAME;
+	
+	
 	public static SensorConfig getDefault()
 	{
 		SensorConfig sensorConfig = new SensorConfig();
 		sensorConfig.setParameter(PullSensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, DEFAULT_SLEEP_INTERVAL);
-		sensorConfig.setParameter(PullSensorConfig.NUMBER_OF_SENSE_CYCLES, PHONE_RADIO_SAMPLING_CYCLES);
+		sensorConfig.setParameter(MotionSensorConfig.SAMPLING_DELAY, DEFAULT_SAMPLING_DELAY);
+		sensorConfig.setParameter(PullSensorConfig.SENSE_WINDOW_LENGTH_MILLIS, DEFAULT_SAMPLING_WINDOW_SIZE_MILLIS);
 		return sensorConfig;
 	}
 }

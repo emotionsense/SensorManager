@@ -24,7 +24,7 @@ package com.ubhave.sensormanager.classifier;
 
 import java.util.ArrayList;
 
-import com.ubhave.sensormanager.config.sensors.pull.AccelerometerConfig;
+import com.ubhave.sensormanager.config.pull.AccelerometerConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.data.pullsensor.AccelerometerData;
 

@@ -26,7 +26,7 @@ import android.Manifest;
 import android.content.Context;
 
 import com.ubhave.sensormanager.ESException;
-import com.ubhave.sensormanager.config.sensors.pull.ContentReaderConfig;
+import com.ubhave.sensormanager.config.pull.ContentReaderConfig;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class SMSContentReaderSensor extends AbstractContentReaderSensor

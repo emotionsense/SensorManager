@@ -24,7 +24,7 @@ package com.ubhave.sensormanager.classifier;
 
 import android.location.Location;
 
-import com.ubhave.sensormanager.config.sensors.pull.LocationConfig;
+import com.ubhave.sensormanager.config.pull.LocationConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.data.pullsensor.LocationData;
 

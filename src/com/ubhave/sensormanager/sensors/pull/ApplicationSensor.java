@@ -35,7 +35,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.util.Log;
 
 import com.ubhave.sensormanager.ESException;
-import com.ubhave.sensormanager.config.sensors.pull.ApplicationConfig;
+import com.ubhave.sensormanager.config.pull.ApplicationConfig;
 import com.ubhave.sensormanager.data.pullsensor.ApplicationData;
 import com.ubhave.sensormanager.data.pullsensor.ApplicationDataList;
 import com.ubhave.sensormanager.process.pull.ApplicationProcessor;
