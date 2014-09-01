@@ -7,6 +7,10 @@ Research
 
 * V. Pejovic, M. Musolesi. **[InterruptMe: Designing Intelligent Prompting Mechanisms for Pervasive Applications](http://www.cs.bham.ac.uk/~musolesm/papers/ubicomp14.pdf).** In ACM International Joint Conference on Pervasive and Ubiquitous Computing. Seattle, WA, USA. September 2014.
 
+* A. Mehrota, V. Pejovic, M. Musolesi. **[SenSocial: A Middleware for Integrating Online Social Networks and Mobile Sensing Data Streams](http://www.cs.bham.ac.uk/~musolesm/papers/middleware14.pdf).** In Proceedings of the 15th ACM/IFIP/USENIX International Middleware Conference. Bordeaux, France. December 2014.
+
+
+
 Add Your Paper
 -------------------------------
 Add your paper with a pull request or let Neal Lathia know
