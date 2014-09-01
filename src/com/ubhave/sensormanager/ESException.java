@@ -34,13 +34,9 @@ public class ESException extends Exception
 	public static final int SENSOR_ALREADY_SENSING = 8003;
 	public static final int SENSOR_NOT_SENSING = 8004;
 	public static final int INVALID_SENSOR_CONFIG = 8005;
-	public static final int CONFIG_NOT_SUPPORTED = 8006;
 	public static final int INVALID_STATE = 8007;
-	public static final int SENSOR_MANAGER_NOT_STARTED = 8008;
-	public static final int CONFIG_SERVICE_NOT_STARTED = 8010;
 	public static final int OPERATION_NOT_SUPPORTED = 8011;
 	public static final int INVALID_PARAMETER = 8012;
-	public static final int DATA_NOT_PROCESSED = 8013;
 	public static final int SENSOR_UNAVAILABLE = 8014;
 
 	private int errorCode;
