@@ -26,7 +26,9 @@ import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 
+import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.data.SensorData;
+import com.ubhave.sensormanager.process.env.AmbientTemperatureProcessor;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class AmbientTemperatureSensor extends AbstractEnvironmentSensor
@@ -34,7 +36,7 @@ public class AmbientTemperatureSensor extends AbstractEnvironmentSensor
 	private static final String TAG = "TemperatureSensor";
 	private static AmbientTemperatureSensor temperatureSensor;
 
-	public static AmbientTemperatureSensor getSensor(final Context context)
+	public static AmbientTemperatureSensor getSensor(final Context context) throws ESException
 	{
 		if (temperatureSensor == null)
 		{
@@ -49,7 +51,7 @@ public class AmbientTemperatureSensor extends AbstractEnvironmentSensor
 		return temperatureSensor;
 	}
 
-	private AmbientTemperatureSensor(final Context context)
+	private AmbientTemperatureSensor(final Context context) throws ESException
 	{
 		super(context);
 	}
@@ -73,8 +75,7 @@ public class AmbientTemperatureSensor extends AbstractEnvironmentSensor
 	@Override
 	protected SensorData processEvent(SensorEvent event)
 	{
-		float temperature = event.values[0];
-		// TODO process temperature data
-		return null;
+		AmbientTemperatureProcessor processor = (AmbientTemperatureProcessor) getProcessor();
+		return processor.process(System.currentTimeMillis(), sensorConfig.clone(), event.values[0]);
 	}
 }

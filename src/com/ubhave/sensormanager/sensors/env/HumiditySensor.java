@@ -26,7 +26,9 @@ import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 
+import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.data.SensorData;
+import com.ubhave.sensormanager.process.env.HumidityProcessor;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class HumiditySensor extends AbstractEnvironmentSensor
@@ -34,7 +36,7 @@ public class HumiditySensor extends AbstractEnvironmentSensor
 	private static final String TAG = "HumiditySensor";
 	private static HumiditySensor sensor;
 
-	public static HumiditySensor getSensor(final Context context)
+	public static HumiditySensor getSensor(final Context context) throws ESException
 	{
 		if (sensor == null)
 		{
@@ -49,7 +51,7 @@ public class HumiditySensor extends AbstractEnvironmentSensor
 		return sensor;
 	}
 
-	private HumiditySensor(final Context context)
+	private HumiditySensor(final Context context) throws ESException
 	{
 		super(context);
 	}
@@ -73,8 +75,7 @@ public class HumiditySensor extends AbstractEnvironmentSensor
 	@Override
 	protected SensorData processEvent(SensorEvent event)
 	{
-		float humidity = event.values[0];
-		// TODO process temperature data
-		return null;
+		HumidityProcessor processor = (HumidityProcessor) getProcessor();
+		return processor.process(System.currentTimeMillis(), sensorConfig.clone(), event.values[0]);
 	}
 }

@@ -3,6 +3,10 @@ package com.ubhave.sensormanager.process;
 import android.content.Context;
 
 import com.ubhave.sensormanager.ESException;
+import com.ubhave.sensormanager.process.env.AmbientTemperatureProcessor;
+import com.ubhave.sensormanager.process.env.HumidityProcessor;
+import com.ubhave.sensormanager.process.env.LightProcessor;
+import com.ubhave.sensormanager.process.env.PressureProcessor;
 import com.ubhave.sensormanager.process.pull.AccelerometerProcessor;
 import com.ubhave.sensormanager.process.pull.ApplicationProcessor;
 import com.ubhave.sensormanager.process.pull.BluetoothProcessor;
@@ -17,7 +21,6 @@ import com.ubhave.sensormanager.process.pull.WifiProcessor;
 import com.ubhave.sensormanager.process.push.BatteryProcessor;
 import com.ubhave.sensormanager.process.push.ConnectionStateProcessor;
 import com.ubhave.sensormanager.process.push.ConnectionStrengthProcessor;
-import com.ubhave.sensormanager.process.push.LightProcessor;
 import com.ubhave.sensormanager.process.push.PassiveLocationProcessor;
 import com.ubhave.sensormanager.process.push.PhoneStateProcessor;
 import com.ubhave.sensormanager.process.push.ProximityProcessor;
@@ -74,6 +77,12 @@ public abstract class AbstractProcessor
 			return new GyroscopeProcessor(c, setRawData, setProcessedData);
 		case SensorUtils.SENSOR_TYPE_LIGHT:
 			return new LightProcessor(c, setRawData, setProcessedData);
+		case SensorUtils.SENSOR_TYPE_AMBIENT_TEMPERATURE:
+			return new AmbientTemperatureProcessor(c, setRawData, setProcessedData);
+		case SensorUtils.SENSOR_TYPE_HUMIDITY:
+			return new HumidityProcessor(c, setRawData, setProcessedData);
+		case SensorUtils.SENSOR_TYPE_PRESSURE:
+			return new PressureProcessor(c, setRawData, setProcessedData);
 		case SensorUtils.SENSOR_TYPE_PASSIVE_LOCATION:
 			return new PassiveLocationProcessor(c, setRawData, setProcessedData);
 		default:
@@ -90,5 +99,4 @@ public abstract class AbstractProcessor
 		this.setRawData = rw;
 		this.setProcessedData = sp;
 	}
-
 }

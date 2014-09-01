@@ -26,7 +26,9 @@ import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 
+import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.data.SensorData;
+import com.ubhave.sensormanager.process.env.PressureProcessor;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class PressureSensor extends AbstractEnvironmentSensor
@@ -34,7 +36,7 @@ public class PressureSensor extends AbstractEnvironmentSensor
 	private static final String TAG = "PressureSensor";
 	private static PressureSensor sensor;
 
-	public static PressureSensor getSensor(final Context context)
+	public static PressureSensor getSensor(final Context context) throws ESException
 	{
 		if (sensor == null)
 		{
@@ -49,7 +51,7 @@ public class PressureSensor extends AbstractEnvironmentSensor
 		return sensor;
 	}
 
-	private PressureSensor(final Context context)
+	private PressureSensor(final Context context) throws ESException
 	{
 		super(context);
 	}
@@ -73,8 +75,7 @@ public class PressureSensor extends AbstractEnvironmentSensor
 	@Override
 	protected SensorData processEvent(SensorEvent event)
 	{
-		float pressure = event.values[0];
-		// TODO process data
-		return null;
+		PressureProcessor processor = (PressureProcessor) getProcessor();
+		return processor.process(System.currentTimeMillis(), sensorConfig.clone(), event.values[0]);
 	}
 }

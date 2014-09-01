@@ -18,44 +18,22 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
 IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  ************************************************** */
 
-package com.ubhave.sensormanager.data.push;
+package com.ubhave.sensormanager.data.env;
 
 import com.ubhave.sensormanager.config.SensorConfig;
-import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
-public class LightData extends SensorData
+public class AmbientTemperatureData extends AbstractEnvironmentData
 {
-	private float light;
-	private float maxRange;
 
-	public LightData(long recvTimestamp, SensorConfig sensorConfig)
+	public AmbientTemperatureData(long recvTimestamp, SensorConfig sensorConfig, float temperature)
 	{
-		super(recvTimestamp, sensorConfig);
+		super(recvTimestamp, sensorConfig, temperature);
 	}
 
-	public void setLight(float l)
-	{
-		light = l;
-	}
-
-	public float getLight()
-	{
-		return light;
-	}
-
-	public void setMaxRange(float f)
-	{
-		maxRange = f;
-	}
-
-	public float getMaxRange()
-	{
-		return maxRange;
-	}
-
+	@Override
 	public int getSensorType()
 	{
-		return SensorUtils.SENSOR_TYPE_LIGHT;
+		return SensorUtils.SENSOR_TYPE_AMBIENT_TEMPERATURE;
 	}
 }

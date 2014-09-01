@@ -26,8 +26,9 @@ import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 
+import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.data.SensorData;
-import com.ubhave.sensormanager.process.push.LightProcessor;
+import com.ubhave.sensormanager.process.env.LightProcessor;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class LightSensor extends AbstractEnvironmentSensor
@@ -35,7 +36,7 @@ public class LightSensor extends AbstractEnvironmentSensor
 	private static final String TAG = "LightSensor";
 	private static LightSensor sensor;
 
-	public static LightSensor getSensor(final Context context)
+	public static LightSensor getSensor(final Context context) throws ESException
 	{
 		if (sensor == null)
 		{
@@ -50,7 +51,7 @@ public class LightSensor extends AbstractEnvironmentSensor
 		return sensor;
 	}
 
-	private LightSensor(final Context context)
+	private LightSensor(final Context context) throws ESException
 	{
 		super(context);
 	}

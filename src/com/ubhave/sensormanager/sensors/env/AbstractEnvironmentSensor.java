@@ -28,23 +28,28 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
+import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.sensors.AbstractSensor;
-import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public abstract class AbstractEnvironmentSensor extends AbstractSensor
 {
 	protected static Object lock = new Object();
 	protected SensorManager sensorManager;
 	
-	private SensorEventListener sensorEventListener;
+	private final Sensor environmentSensor;
+	private final SensorEventListener sensorEventListener;
 
-	protected AbstractEnvironmentSensor(Context context)
+	protected AbstractEnvironmentSensor(final Context context)  throws ESException
 	{
 		super(context);
 		sensorManager = (SensorManager) applicationContext.getSystemService(Context.SENSOR_SERVICE);
 		sensorEventListener = getEventListener();
-		// TODO check that the sensor exists
+		environmentSensor = getSensor();
+		if (environmentSensor == null)
+		{
+			throw new ESException(ESException.SENSOR_UNAVAILABLE, getLogTag()+ " is null.");
+		}
 	}
 	
 	protected final SensorEventListener getEventListener()

@@ -1,9 +1,9 @@
-package com.ubhave.sensormanager.process.push;
+package com.ubhave.sensormanager.process.env;
 
 import android.content.Context;
 
 import com.ubhave.sensormanager.config.SensorConfig;
-import com.ubhave.sensormanager.data.push.LightData;
+import com.ubhave.sensormanager.data.env.LightData;
 import com.ubhave.sensormanager.process.AbstractProcessor;
 
 public class LightProcessor extends AbstractProcessor
@@ -15,10 +15,9 @@ public class LightProcessor extends AbstractProcessor
 
 	public LightData process(long recvTime, SensorConfig config, float light, float maxRange)
 	{
-        LightData data = new LightData(recvTime, config);
+        LightData data = new LightData(recvTime, config, light);
 		if (setRawData)
 		{
-            data.setLight(light);
 			data.setMaxRange(maxRange);
 		}
 		return data;
