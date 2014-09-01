@@ -64,6 +64,16 @@ public enum SensorEnum
 		return group == SensorUtils.SENSOR_GROUP_PULL;
 	}
 	
+	public boolean isPush()
+	{
+		return group == SensorUtils.SENSOR_GROUP_PUSH;
+	}
+	
+	public boolean isEnvironment()
+	{
+		return group == SensorUtils.SENSOR_GROUP_ENVIRONMENT;
+	}
+	
 	public String getName()
 	{
 		return name;
