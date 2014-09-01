@@ -30,7 +30,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
-import com.ubhave.sensormanager.config.sensors.pull.MotionSensorConfig;
+import com.ubhave.sensormanager.config.pull.MotionSensorConfig;
 
 public abstract class AbstractMotionSensor extends AbstractPullSensor
 {	
