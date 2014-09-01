@@ -59,3 +59,12 @@ These sensors need to be actively polled in order to get data from them. There a
 * **Application**, **Call Content** and **SMS Content**. These sensors allow you to query for the device’s recent running applications, call logs, and SMS logs.
 * **Phone Radio**. Allows you to query for the nearby cell tower IDs.
 * **Camera**. This sensor allows you to capture an image from the device's camera (note: currently not working).
+
+##### Environment Sensors
+These sensors collect environment data from the device. See [Android Environment Sensors](http://developer.android.com/guide/topics/sensors/sensors_environment.html).
+
+* **Light**
+* **Ambient Temperature**
+* **Pressure**
+* **Humidity**
+
