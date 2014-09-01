@@ -23,7 +23,7 @@ IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 package com.ubhave.sensormanager.classifier;
 
 import com.ubhave.sensormanager.data.SensorData;
-import com.ubhave.sensormanager.data.pushsensor.ScreenData;
+import com.ubhave.sensormanager.data.push.ScreenData;
 
 public class ScreenDataClassifier implements SensorDataClassifier
 {

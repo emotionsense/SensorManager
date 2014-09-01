@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import android.content.Context;
 
 import com.ubhave.sensormanager.config.SensorConfig;
-import com.ubhave.sensormanager.data.pullsensor.BluetoothData;
-import com.ubhave.sensormanager.data.pullsensor.ESBluetoothDevice;
+import com.ubhave.sensormanager.data.pull.BluetoothData;
+import com.ubhave.sensormanager.data.pull.ESBluetoothDevice;
 import com.ubhave.sensormanager.process.AbstractProcessor;
 
 public class BluetoothProcessor extends AbstractProcessor

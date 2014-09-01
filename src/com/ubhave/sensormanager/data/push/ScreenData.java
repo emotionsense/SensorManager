@@ -20,14 +20,42 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
 IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  ************************************************** */
 
-package com.ubhave.sensormanager.data.pullsensor;
+package com.ubhave.sensormanager.data.push;
 
-import com.ubhave.sensormanager.config.pull.ContentReaderConfig;
+import com.ubhave.sensormanager.config.SensorConfig;
+import com.ubhave.sensormanager.data.SensorData;
+import com.ubhave.sensormanager.sensors.SensorUtils;
 
-public class SMSContentReaderEntry extends AbstractContentReaderEntry
-{	
-	protected String getTimestampKey()
+public class ScreenData extends SensorData
+{
+	private int screenStatus;
+
+	public static final int SCREEN_OFF = 0;
+	public static final int SCREEN_ON = 1;
+	public static final int SCREEN_UNKNOWN = 2;
+
+	public ScreenData(long recvTimestamp, SensorConfig sensorConfig)
 	{
-		return ContentReaderConfig.SMS_CONTENT_DATE_KEY;
+		super(recvTimestamp, sensorConfig);
+	}
+	
+	public void setStatus(int s)
+	{
+		screenStatus = s;
+	}
+	
+	public boolean isOff()
+	{
+		return screenStatus == SCREEN_OFF;
+	}
+
+	public boolean isOn()
+	{
+		return screenStatus == SCREEN_ON;
+	}
+
+	public int getSensorType()
+	{
+		return SensorUtils.SENSOR_TYPE_SCREEN;
 	}
 }

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.ubhave.sensormanager.config.SensorConfig;
-import com.ubhave.sensormanager.data.pushsensor.ScreenData;
+import com.ubhave.sensormanager.data.push.ScreenData;
 import com.ubhave.sensormanager.process.AbstractProcessor;
 
 public class ScreenProcessor extends AbstractProcessor

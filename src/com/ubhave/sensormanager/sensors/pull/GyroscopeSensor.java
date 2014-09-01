@@ -23,7 +23,7 @@ package com.ubhave.sensormanager.sensors.pull;
 import android.content.Context;
 import android.hardware.Sensor;
 
-import com.ubhave.sensormanager.data.pullsensor.GyroscopeData;
+import com.ubhave.sensormanager.data.pull.GyroscopeData;
 import com.ubhave.sensormanager.process.pull.GyroscopeProcessor;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
@@ -33,7 +33,7 @@ public class GyroscopeSensor extends AbstractMotionSensor
 	private static GyroscopeSensor gyroscopeSensor;
 	private static Object lock = new Object();
 
-    private GyroscopeData gyroscopeData;
+	private GyroscopeData gyroscopeData;
 
 	public static GyroscopeSensor getGyroscopeSensor(final Context context)
 	{
@@ -69,13 +69,13 @@ public class GyroscopeSensor extends AbstractMotionSensor
 	{
 		return gyroscopeData;
 	}
-	
+
 	protected void processSensorData()
 	{
 		synchronized (sensorReadings)
 		{
-            GyroscopeProcessor processor = (GyroscopeProcessor) getProcessor();
-            gyroscopeData = processor.process(pullSenseStartTimestamp, sensorReadings, sensorReadingTimestamps, sensorConfig.clone());
+			GyroscopeProcessor processor = (GyroscopeProcessor) getProcessor();
+			gyroscopeData = processor.process(pullSenseStartTimestamp, sensorReadings, sensorReadingTimestamps, sensorConfig.clone());
 		}
 	}
 }

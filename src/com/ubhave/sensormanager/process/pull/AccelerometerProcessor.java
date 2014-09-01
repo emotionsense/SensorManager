@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import android.content.Context;
 
 import com.ubhave.sensormanager.config.SensorConfig;
-import com.ubhave.sensormanager.data.pullsensor.AccelerometerData;
+import com.ubhave.sensormanager.data.pull.AccelerometerData;
 import com.ubhave.sensormanager.process.AbstractProcessor;
 
 public class AccelerometerProcessor extends AbstractProcessor

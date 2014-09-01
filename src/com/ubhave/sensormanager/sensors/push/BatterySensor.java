@@ -28,7 +28,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 
 import com.ubhave.sensormanager.ESException;
-import com.ubhave.sensormanager.data.pushsensor.BatteryData;
+import com.ubhave.sensormanager.data.push.BatteryData;
 import com.ubhave.sensormanager.process.push.BatteryProcessor;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 

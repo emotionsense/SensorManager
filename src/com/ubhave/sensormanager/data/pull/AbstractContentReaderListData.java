@@ -20,55 +20,55 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
 IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  ************************************************** */
 
-package com.ubhave.sensormanager.data.pushsensor;
+package com.ubhave.sensormanager.data.pull;
+
+import java.util.ArrayList;
 
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
-import com.ubhave.sensormanager.sensors.SensorUtils;
 
-public class ProximityData extends SensorData
+public abstract class AbstractContentReaderListData extends SensorData
 {
-	private static final float NEAR_DISTANCE = (float) 0.0;
+	private final ArrayList<AbstractContentReaderEntry> contentList;
 
-	private float distance;
-	private float maxRange;
-
-	public ProximityData(long recvTimestamp, SensorConfig sensorConfig)
+	public AbstractContentReaderListData(long sensorTimestamp, SensorConfig config)
 	{
-		super(recvTimestamp, sensorConfig);
+		super(sensorTimestamp, config);
+		contentList = new ArrayList<AbstractContentReaderEntry>();
+	}
+	
+	public void addContent(final AbstractContentReaderEntry entry)
+	{
+		contentList.add(entry);
+	}
+	
+	public int size()
+	{
+		return contentList.size();
 	}
 
-	public boolean isNear()
+	public ArrayList<AbstractContentReaderEntry> getContentList()
 	{
-		if (distance == NEAR_DISTANCE)
+		return contentList;
+	}
+	
+	public int getNumberOfEntriesSince(final long timeLimit)
+	{
+		int count = 0;
+		for (AbstractContentReaderEntry entry : contentList)
 		{
-			return true;
+			try
+			{
+				if (entry.getTimestamp() > timeLimit)
+				{
+					count++;
+				}
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
 		}
-		return false;
-	}
-	
-	public void setDistance(float f)
-	{
-		distance = f;
-	}
-	
-	public float getDistance()
-	{
-		return distance;
-	}
-	
-	public void setMaxRange(float f)
-	{
-		maxRange = f;
-	}
-	
-	public float getMaxRange()
-	{
-		return maxRange;
-	}
-
-	public int getSensorType()
-	{
-		return SensorUtils.SENSOR_TYPE_PROXIMITY;
+		return count;
 	}
 }

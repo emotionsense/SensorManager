@@ -1,6 +1,11 @@
 /* **************************************************
- Copyright (c) 2014, Idiap
- Hugues Salamin, hugues.salamin@idiap.ch
+ Copyright (c) 2012, University of Cambridge
+ Neal Lathia, neal.lathia@cl.cam.ac.uk
+ Kiran Rachuri, kiran.rachuri@cl.cam.ac.uk
+
+This library was developed as part of the EPSRC Ubhave (Ubiquitous and
+Social Computing for Positive Behaviour Change) Project. For more
+information, please visit http://www.emotionsense.org
 
 Permission to use, copy, modify, and/or distribute this software for any
 purpose with or without fee is hereby granted, provided that the above
@@ -15,34 +20,22 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
 IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  ************************************************** */
 
-package com.ubhave.sensormanager.data.pushsensor;
+package com.ubhave.sensormanager.data.pull;
 
 import com.ubhave.sensormanager.config.SensorConfig;
-import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
-public class ConnectionStrengthData extends SensorData
+public class CallContentListData extends AbstractContentReaderListData
 {
 
-	private int strength;
-
-	public ConnectionStrengthData(long recvTimestamp, SensorConfig sensorConfig)
+	public CallContentListData(long sensorTimestamp, SensorConfig config)
 	{
-		super(recvTimestamp, sensorConfig);
+		super(sensorTimestamp, config);
 	}
 
-	public void setStrength(int i)
-	{
-		strength = i;
-	}
-
-	public float getStrength()
-	{
-		return strength;
-	}
-
+	@Override
 	public int getSensorType()
 	{
-		return SensorUtils.SENSOR_TYPE_CONNECTION_STRENGTH;
+		return SensorUtils.SENSOR_TYPE_CALL_CONTENT_READER;
 	}
 }

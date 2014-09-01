@@ -1,7 +1,5 @@
 /* **************************************************
- Copyright (c) 2012, University of Cambridge
- Neal Lathia, neal.lathia@cl.cam.ac.uk
- Kiran Rachuri, kiran.rachuri@cl.cam.ac.uk
+ Copyright (c) 2014
 
 This library was developed as part of the EPSRC Ubhave (Ubiquitous and
 Social Computing for Positive Behaviour Change) Project. For more
@@ -20,37 +18,44 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
 IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  ************************************************** */
 
-package com.ubhave.sensormanager.data.pullsensor;
-
-import java.util.ArrayList;
+package com.ubhave.sensormanager.data.push;
 
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
-public class WifiData extends SensorData
+public class LightData extends SensorData
 {
+	private float light;
+	private float maxRange;
 
-	private ArrayList<WifiScanResult> wifiScanData;
-
-	public WifiData(long senseStartTimestamp, SensorConfig sensorConfig)
+	public LightData(long recvTimestamp, SensorConfig sensorConfig)
 	{
-		super(senseStartTimestamp, sensorConfig);
+		super(recvTimestamp, sensorConfig);
 	}
 
-	public void setWifiScanData(ArrayList<WifiScanResult> wifiScanData)
+	public void setLight(float l)
 	{
-		this.wifiScanData = wifiScanData;
+		light = l;
 	}
 
-	public ArrayList<WifiScanResult> getWifiScanData()
+	public float getLight()
 	{
-		return wifiScanData;
+		return light;
+	}
+
+	public void setMaxRange(float f)
+	{
+		maxRange = f;
+	}
+
+	public float getMaxRange()
+	{
+		return maxRange;
 	}
 
 	public int getSensorType()
 	{
-		return SensorUtils.SENSOR_TYPE_WIFI;
+		return SensorUtils.SENSOR_TYPE_LIGHT;
 	}
-
 }

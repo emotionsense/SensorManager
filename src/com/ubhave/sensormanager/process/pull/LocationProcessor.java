@@ -6,7 +6,7 @@ import android.content.Context;
 import android.location.Location;
 
 import com.ubhave.sensormanager.config.SensorConfig;
-import com.ubhave.sensormanager.data.pullsensor.LocationData;
+import com.ubhave.sensormanager.data.pull.LocationData;
 import com.ubhave.sensormanager.process.AbstractProcessor;
 
 public class LocationProcessor extends AbstractProcessor

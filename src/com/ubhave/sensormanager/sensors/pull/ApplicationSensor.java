@@ -36,8 +36,8 @@ import android.util.Log;
 
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.config.pull.ApplicationConfig;
-import com.ubhave.sensormanager.data.pullsensor.ApplicationData;
-import com.ubhave.sensormanager.data.pullsensor.ApplicationDataList;
+import com.ubhave.sensormanager.data.pull.ApplicationData;
+import com.ubhave.sensormanager.data.pull.ApplicationDataList;
 import com.ubhave.sensormanager.process.pull.ApplicationProcessor;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 

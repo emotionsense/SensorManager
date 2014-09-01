@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.BatteryManager;
 
 import com.ubhave.sensormanager.config.SensorConfig;
-import com.ubhave.sensormanager.data.pushsensor.BatteryData;
+import com.ubhave.sensormanager.data.push.BatteryData;
 import com.ubhave.sensormanager.process.AbstractProcessor;
 
 public class BatteryProcessor extends AbstractProcessor

@@ -31,7 +31,7 @@ import com.ubhave.sensormanager.ESSensorManager;
 import com.ubhave.sensormanager.SensorDataListener;
 import com.ubhave.sensormanager.config.GlobalConfig;
 import com.ubhave.sensormanager.data.SensorData;
-import com.ubhave.sensormanager.data.pushsensor.BatteryData;
+import com.ubhave.sensormanager.data.push.BatteryData;
 import com.ubhave.sensormanager.dutycyling.AdaptiveSensing;
 import com.ubhave.sensormanager.sensors.SensorInterface;
 import com.ubhave.sensormanager.sensors.SensorUtils;

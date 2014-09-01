@@ -21,12 +21,14 @@ import android.content.Context;
 import android.location.Location;
 
 import com.ubhave.sensormanager.config.SensorConfig;
-import com.ubhave.sensormanager.data.pushsensor.PassiveLocationData;
+import com.ubhave.sensormanager.data.push.PassiveLocationData;
 import com.ubhave.sensormanager.process.AbstractProcessor;
 
-public class PassiveLocationProcessor extends AbstractProcessor {
+public class PassiveLocationProcessor extends AbstractProcessor
+{
 
-	public PassiveLocationProcessor(Context context, boolean rw, boolean sp) {
+	public PassiveLocationProcessor(Context context, boolean rw, boolean sp)
+	{
 		super(context, rw, sp);
 	}
 

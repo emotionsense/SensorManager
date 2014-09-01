@@ -20,36 +20,53 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
 IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  ************************************************** */
 
-package com.ubhave.sensormanager.data.pullsensor;
+package com.ubhave.sensormanager.data.pull;
 
-import java.util.ArrayList;
-
-import com.ubhave.sensormanager.config.SensorConfig;
-import com.ubhave.sensormanager.data.SensorData;
-import com.ubhave.sensormanager.sensors.SensorUtils;
-
-public class BluetoothData extends SensorData
+public class ESBluetoothDevice
 {
-	private ArrayList<ESBluetoothDevice> bluetoothDevices;
 
-	public BluetoothData(long senseStartTimestamp, SensorConfig sensorConfig)
-	{
-		super(senseStartTimestamp, sensorConfig);
-	}
-	
-	public void setBluetoothDevices(ArrayList<ESBluetoothDevice> btDevices)
-	{
-		this.bluetoothDevices = btDevices;
-	}
+	private final long timestamp;
+	private final String bluetoothDeviceAddress;
+	private final String bluetoothDeviceName;
+	private final float rssi;
 
-	public ArrayList<ESBluetoothDevice> getBluetoothDevices()
+	public ESBluetoothDevice(long ts, String btAddr, String btName, float btRssi)
 	{
-		return bluetoothDevices;
+		this.timestamp = ts;
+		this.bluetoothDeviceAddress = btAddr;
+		this.bluetoothDeviceName = btName;
+		this.rssi = btRssi;
 	}
 
-	public int getSensorType()
+	public String getBluetoothDeviceAddress()
 	{
-		return SensorUtils.SENSOR_TYPE_BLUETOOTH;
+		return bluetoothDeviceAddress;
 	}
 
+	public String getBluetoothDeviceName()
+	{
+		return bluetoothDeviceName;
+	}
+
+	public float getRssi()
+	{
+		return rssi;
+	}
+
+	public long getTimestamp()
+	{
+		return timestamp;
+	}
+
+	public boolean equals(ESBluetoothDevice btDevice)
+	{
+		if (bluetoothDeviceAddress.equals(btDevice.getBluetoothDeviceAddress()))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 }

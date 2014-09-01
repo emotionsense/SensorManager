@@ -6,8 +6,8 @@ import java.util.HashMap;
 import android.content.Context;
 
 import com.ubhave.sensormanager.config.SensorConfig;
-import com.ubhave.sensormanager.data.pullsensor.AbstractContentReaderListData;
-import com.ubhave.sensormanager.data.pullsensor.AbstractContentReaderEntry;
+import com.ubhave.sensormanager.data.pull.AbstractContentReaderEntry;
+import com.ubhave.sensormanager.data.pull.AbstractContentReaderListData;
 import com.ubhave.sensormanager.process.CommunicationProcessor;
 
 public abstract class ContentReaderProcessor extends CommunicationProcessor

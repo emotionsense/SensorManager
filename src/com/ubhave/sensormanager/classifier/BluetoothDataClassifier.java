@@ -25,8 +25,8 @@ package com.ubhave.sensormanager.classifier;
 import java.util.ArrayList;
 
 import com.ubhave.sensormanager.data.SensorData;
-import com.ubhave.sensormanager.data.pullsensor.BluetoothData;
-import com.ubhave.sensormanager.data.pullsensor.ESBluetoothDevice;
+import com.ubhave.sensormanager.data.pull.BluetoothData;
+import com.ubhave.sensormanager.data.pull.ESBluetoothDevice;
 
 public class BluetoothDataClassifier extends SocialClassifier implements SensorDataClassifier
 {

@@ -3,7 +3,7 @@ package com.ubhave.sensormanager.process.pull;
 import android.content.Context;
 
 import com.ubhave.sensormanager.config.SensorConfig;
-import com.ubhave.sensormanager.data.pullsensor.MicrophoneData;
+import com.ubhave.sensormanager.data.pull.MicrophoneData;
 import com.ubhave.sensormanager.process.AbstractProcessor;
 
 public class MicrophoneProcessor extends AbstractProcessor

@@ -1,12 +1,10 @@
 /* **************************************************
- Copyright (c) 2014, Idiap
- Olivier Bornet, olivier.bornet@idiap.ch
+ Copyright (c) 2012, University of Cambridge
+ Neal Lathia, neal.lathia@cl.cam.ac.uk
+ Kiran Rachuri, kiran.rachuri@cl.cam.ac.uk
 
-This file was developed to add phone radio sensor to the SensorManager library
-from https://github.com/nlathia/SensorManager.
-
-The SensorManager library was developed as part of the EPSRC Ubhave (Ubiquitous
-and Social Computing for Positive Behaviour Change) Project. For more
+This library was developed as part of the EPSRC Ubhave (Ubiquitous and
+Social Computing for Positive Behaviour Change) Project. For more
 information, please visit http://www.emotionsense.org
 
 Permission to use, copy, modify, and/or distribute this software for any
@@ -22,7 +20,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
 IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  ************************************************** */
 
-package com.ubhave.sensormanager.data.pullsensor;
+package com.ubhave.sensormanager.data.pull;
 
 import java.util.ArrayList;
 
@@ -30,28 +28,39 @@ import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
-public class PhoneRadioDataList extends SensorData
+public class AccelerometerData extends SensorData
 {
-	private ArrayList<PhoneRadioData> phoneRadios;
+	private ArrayList<float[]> sensorReadings;
+	private ArrayList<Long> sensorReadingTimestamps;
 
-	public PhoneRadioDataList(long senseStartTimestamp, SensorConfig sensorConfig)
+	public AccelerometerData(long senseStartTimestamp, SensorConfig sensorConfig)
 	{
 		super(senseStartTimestamp, sensorConfig);
 	}
 	
-	public void setPhoneRadios(ArrayList<PhoneRadioData> phoneRadios)
+	public void setSensorReadings(ArrayList<float[]> sensorReadings)
 	{
-		this.phoneRadios = phoneRadios;
+		this.sensorReadings = sensorReadings;
 	}
 
-	public ArrayList<PhoneRadioData> getPhoneRadios()
+	public ArrayList<float[]> getSensorReadings()
 	{
-		return phoneRadios;
+		return sensorReadings;
+	}
+	
+	public void setSensorReadingTimestamps(ArrayList<Long> sensorReadingTimestamps)
+	{
+		this.sensorReadingTimestamps = sensorReadingTimestamps;
+	}
+	
+	public ArrayList<Long> getSensorReadingTimestamps()
+	{
+		return sensorReadingTimestamps;
 	}
 
 	public int getSensorType()
 	{
-		return SensorUtils.SENSOR_TYPE_PHONE_RADIO;
+		return SensorUtils.SENSOR_TYPE_ACCELEROMETER;
 	}
 
 }

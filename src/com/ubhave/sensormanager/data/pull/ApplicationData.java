@@ -1,4 +1,4 @@
-package com.ubhave.sensormanager.data.pullsensor;
+package com.ubhave.sensormanager.data.pull;
 
 import java.util.HashMap;
 

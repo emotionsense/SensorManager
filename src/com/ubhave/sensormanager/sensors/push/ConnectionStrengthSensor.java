@@ -29,7 +29,7 @@ import android.telephony.SignalStrength;
 import android.telephony.TelephonyManager;
 
 import com.ubhave.sensormanager.ESException;
-import com.ubhave.sensormanager.data.pushsensor.ConnectionStrengthData;
+import com.ubhave.sensormanager.data.push.ConnectionStrengthData;
 import com.ubhave.sensormanager.process.push.ConnectionStrengthProcessor;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
@@ -41,8 +41,7 @@ public class ConnectionStrengthSensor extends AbstractPushSensor
 	private volatile static ConnectionStrengthSensor connectionSensor;
 	StrengthListener sensorEventListener;
 
-	public static ConnectionStrengthSensor getConnectionStrengthSensor(
-			final Context context) throws ESException
+	public static ConnectionStrengthSensor getConnectionStrengthSensor(final Context context) throws ESException
 	{
 		/*
 		 * Implement a double checked lock, using volatile. The result variable
@@ -58,13 +57,11 @@ public class ConnectionStrengthSensor extends AbstractPushSensor
 				{
 					if (allPermissionsGranted(context, REQUIRED_PERMISSIONS))
 					{
-						connectionSensor = result = new ConnectionStrengthSensor(
-								context);
+						connectionSensor = result = new ConnectionStrengthSensor(context);
 					}
 					else
 					{
-						throw new ESException(ESException.PERMISSION_DENIED,
-								SensorUtils.SENSOR_NAME_CONNECTION_STRENGTH);
+						throw new ESException(ESException.PERMISSION_DENIED, SensorUtils.SENSOR_NAME_CONNECTION_STRENGTH);
 					}
 				}
 			}
@@ -79,7 +76,8 @@ public class ConnectionStrengthSensor extends AbstractPushSensor
 
 	}
 
-	private class StrengthListener extends PhoneStateListener {
+	private class StrengthListener extends PhoneStateListener
+	{
 		/*
 		 * This Class listen and save change in the signal strength. Assume GSM
 		 * network.
@@ -91,31 +89,35 @@ public class ConnectionStrengthSensor extends AbstractPushSensor
 		private int strength;
 		private ConnectionStrengthSensor parent;
 
-		public StrengthListener(ConnectionStrengthSensor p) {
+		public StrengthListener(ConnectionStrengthSensor p)
+		{
 			super();
 			parent = p;
 			strength = 99;
 		}
 
 		@Override
-		public void onSignalStrengthsChanged(SignalStrength signalStrength) {
+		public void onSignalStrengthsChanged(SignalStrength signalStrength)
+		{
 			super.onSignalStrengthsChanged(signalStrength);
-			try {
+			try
+			{
 				int data = signalStrength.getGsmSignalStrength();
-				if (data == 99) {
+				if (data == 99)
+				{
 					return;
 				}
 				data /= 4;
-				if (data == strength) {
+				if (data == strength)
+				{
 					return;
 				}
 				strength = data;
 				ConnectionStrengthProcessor processor = (ConnectionStrengthProcessor) getProcessor();
-				ConnectionStrengthData strengthData = processor.process(
-						System.currentTimeMillis(), sensorConfig.clone(),
-						data);
+				ConnectionStrengthData strengthData = processor.process(System.currentTimeMillis(), sensorConfig.clone(), data);
 				parent.onDataSensed(strengthData);
-			} catch (Exception e)
+			}
+			catch (Exception e)
 			{
 				e.printStackTrace();
 			}
@@ -145,20 +147,16 @@ public class ConnectionStrengthSensor extends AbstractPushSensor
 
 	protected boolean startSensing()
 	{
-		TelephonyManager telephonyManager = (TelephonyManager) applicationContext
-				.getSystemService(Context.TELEPHONY_SERVICE);
-		telephonyManager.listen(sensorEventListener,
-				PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
+		TelephonyManager telephonyManager = (TelephonyManager) applicationContext.getSystemService(Context.TELEPHONY_SERVICE);
+		telephonyManager.listen(sensorEventListener, PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
 		return true;
 	}
 
 	protected void stopSensing()
 	{
-		TelephonyManager telephonyManager = (TelephonyManager) applicationContext
-				.getSystemService(Context.TELEPHONY_SERVICE);
+		TelephonyManager telephonyManager = (TelephonyManager) applicationContext.getSystemService(Context.TELEPHONY_SERVICE);
 
-		telephonyManager.listen(sensorEventListener,
-				PhoneStateListener.LISTEN_NONE);
+		telephonyManager.listen(sensorEventListener, PhoneStateListener.LISTEN_NONE);
 	}
 
 }

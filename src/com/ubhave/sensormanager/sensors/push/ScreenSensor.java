@@ -26,7 +26,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 
-import com.ubhave.sensormanager.data.pushsensor.ScreenData;
+import com.ubhave.sensormanager.data.push.ScreenData;
 import com.ubhave.sensormanager.process.push.ScreenProcessor;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 

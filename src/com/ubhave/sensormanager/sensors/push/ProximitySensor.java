@@ -30,7 +30,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
-import com.ubhave.sensormanager.data.pushsensor.ProximityData;
+import com.ubhave.sensormanager.data.push.ProximityData;
 import com.ubhave.sensormanager.process.push.ProximityProcessor;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 

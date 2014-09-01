@@ -34,7 +34,7 @@ import android.util.Log;
 
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.config.GlobalConfig;
-import com.ubhave.sensormanager.data.pushsensor.ConnectionStateData;
+import com.ubhave.sensormanager.data.push.ConnectionStateData;
 import com.ubhave.sensormanager.process.push.ConnectionStateProcessor;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 

@@ -20,7 +20,7 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
 IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  ************************************************** */
 
-package com.ubhave.sensormanager.data.pushsensor;
+package com.ubhave.sensormanager.data.push;
 
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;

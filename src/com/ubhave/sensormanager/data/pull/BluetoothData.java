@@ -1,5 +1,7 @@
 /* **************************************************
- Copyright (c) 2014
+ Copyright (c) 2012, University of Cambridge
+ Neal Lathia, neal.lathia@cl.cam.ac.uk
+ Kiran Rachuri, kiran.rachuri@cl.cam.ac.uk
 
 This library was developed as part of the EPSRC Ubhave (Ubiquitous and
 Social Computing for Positive Behaviour Change) Project. For more
@@ -18,44 +20,36 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
 IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  ************************************************** */
 
-package com.ubhave.sensormanager.data.pushsensor;
+package com.ubhave.sensormanager.data.pull;
+
+import java.util.ArrayList;
 
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
-public class LightData extends SensorData
+public class BluetoothData extends SensorData
 {
-	private float light;
-	private float maxRange;
+	private ArrayList<ESBluetoothDevice> bluetoothDevices;
 
-	public LightData(long recvTimestamp, SensorConfig sensorConfig)
+	public BluetoothData(long senseStartTimestamp, SensorConfig sensorConfig)
 	{
-		super(recvTimestamp, sensorConfig);
+		super(senseStartTimestamp, sensorConfig);
+	}
+	
+	public void setBluetoothDevices(ArrayList<ESBluetoothDevice> btDevices)
+	{
+		this.bluetoothDevices = btDevices;
 	}
 
-	public void setLight(float l)
+	public ArrayList<ESBluetoothDevice> getBluetoothDevices()
 	{
-		light = l;
-	}
-
-	public float getLight()
-	{
-		return light;
-	}
-
-	public void setMaxRange(float f)
-	{
-		maxRange = f;
-	}
-
-	public float getMaxRange()
-	{
-		return maxRange;
+		return bluetoothDevices;
 	}
 
 	public int getSensorType()
 	{
-		return SensorUtils.SENSOR_TYPE_LIGHT;
+		return SensorUtils.SENSOR_TYPE_BLUETOOTH;
 	}
+
 }

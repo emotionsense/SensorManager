@@ -3,7 +3,7 @@ package com.ubhave.sensormanager.process.push;
 import android.content.Context;
 
 import com.ubhave.sensormanager.config.SensorConfig;
-import com.ubhave.sensormanager.data.pushsensor.LightData;
+import com.ubhave.sensormanager.data.push.LightData;
 import com.ubhave.sensormanager.process.AbstractProcessor;
 
 public class LightProcessor extends AbstractProcessor

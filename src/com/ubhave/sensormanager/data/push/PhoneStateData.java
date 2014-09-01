@@ -20,49 +20,79 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
 IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  ************************************************** */
 
-package com.ubhave.sensormanager.data.pullsensor;
-
-import java.util.List;
-
-import android.location.Location;
+package com.ubhave.sensormanager.data.push;
 
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
-public class LocationData extends SensorData
+public class PhoneStateData extends SensorData
 {
-	private List<Location> locations;
 
-	public LocationData(long senseStartTimestamp, SensorConfig sensorConfig)
-	{
-		super(senseStartTimestamp, sensorConfig);
-	}
+	public static final int CALL_STATE_IDLE = 54401;
+	public static final int CALL_STATE_OFFHOOK = 54402;
+	public static final int CALL_STATE_RINGING = 54403;
+	public static final int CALL_STATE_OUTGOING = 54404;
+	public static final int ON_CELL_LOCATION_CHANGED = 5441;
+	public static final int ON_DATA_ACTIVITY = 5442;
+	public static final int ON_DATA_CONNECTION_STATE_CHANGED = 5443;
+	public static final int ON_SERVICE_STATE_CHANGED = 5444;
 
-	public void setLocations(List<Location> locations)
-	{
-		this.locations = locations;
-	}
+	private int eventType;
+	private String data, number;
 
-	public List<Location> getLocations()
+	public PhoneStateData(long dataReceivedTimestamp, SensorConfig sensorConfig)
 	{
-		return locations;
+		super(dataReceivedTimestamp, sensorConfig);
 	}
 	
-	public Location getLastLocation()
+	public void setNumber(String n)
 	{
-		if (locations != null && !locations.isEmpty())
-		{
-			return locations.get(locations.size() - 1);
-		}
-		else
-		{
-			return null;
-		}
+		number = n;
+	}
+	
+	public String getNumber()
+	{
+		return number;
+	}
+	
+	public void setEventType(int e)
+	{
+		eventType = e;
+	}
+
+	public int getEventType()
+	{
+		return eventType;
+	}
+	
+	public void setData(String d)
+	{
+		data = d;
+	}
+
+	public String getData()
+	{
+		return data;
+	}
+
+	public boolean isRinging()
+	{
+		return eventType == CALL_STATE_RINGING;
+	}
+
+	public boolean isOffHook()
+	{
+		return eventType == CALL_STATE_OFFHOOK;
+	}
+
+	public boolean isIdle()
+	{
+		return eventType == CALL_STATE_IDLE;
 	}
 
 	public int getSensorType()
 	{
-		return SensorUtils.SENSOR_TYPE_LOCATION;
+		return SensorUtils.SENSOR_TYPE_PHONE_STATE;
 	}
 }

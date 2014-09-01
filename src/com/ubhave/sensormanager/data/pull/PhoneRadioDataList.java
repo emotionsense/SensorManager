@@ -1,10 +1,12 @@
 /* **************************************************
- Copyright (c) 2012, University of Cambridge
- Neal Lathia, neal.lathia@cl.cam.ac.uk
- Kiran Rachuri, kiran.rachuri@cl.cam.ac.uk
+ Copyright (c) 2014, Idiap
+ Olivier Bornet, olivier.bornet@idiap.ch
 
-This library was developed as part of the EPSRC Ubhave (Ubiquitous and
-Social Computing for Positive Behaviour Change) Project. For more
+This file was developed to add phone radio sensor to the SensorManager library
+from https://github.com/nlathia/SensorManager.
+
+The SensorManager library was developed as part of the EPSRC Ubhave (Ubiquitous
+and Social Computing for Positive Behaviour Change) Project. For more
 information, please visit http://www.emotionsense.org
 
 Permission to use, copy, modify, and/or distribute this software for any
@@ -20,33 +22,36 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
 IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  ************************************************** */
 
-package com.ubhave.sensormanager.data.pullsensor;
+package com.ubhave.sensormanager.data.pull;
+
+import java.util.ArrayList;
 
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
-public class CameraData extends SensorData
+public class PhoneRadioDataList extends SensorData
 {
-	private String imageFullPath;
+	private ArrayList<PhoneRadioData> phoneRadios;
 
-	public CameraData(long senseStartTimestamp, SensorConfig sensorConfig)
+	public PhoneRadioDataList(long senseStartTimestamp, SensorConfig sensorConfig)
 	{
 		super(senseStartTimestamp, sensorConfig);
 	}
 	
-	public void setImageFullPath(String imageFullPath)
+	public void setPhoneRadios(ArrayList<PhoneRadioData> phoneRadios)
 	{
-		this.imageFullPath = imageFullPath;
+		this.phoneRadios = phoneRadios;
 	}
-	
-	public String getImageFullPath()
+
+	public ArrayList<PhoneRadioData> getPhoneRadios()
 	{
-		return imageFullPath;
+		return phoneRadios;
 	}
 
 	public int getSensorType()
 	{
-		return SensorUtils.SENSOR_TYPE_CAMERA;
+		return SensorUtils.SENSOR_TYPE_PHONE_RADIO;
 	}
+
 }

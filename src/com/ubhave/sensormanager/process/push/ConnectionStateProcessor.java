@@ -5,7 +5,7 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 
 import com.ubhave.sensormanager.config.SensorConfig;
-import com.ubhave.sensormanager.data.pushsensor.ConnectionStateData;
+import com.ubhave.sensormanager.data.push.ConnectionStateData;
 import com.ubhave.sensormanager.process.AbstractProcessor;
 
 public class ConnectionStateProcessor extends AbstractProcessor

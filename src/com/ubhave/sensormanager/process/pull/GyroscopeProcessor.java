@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import android.content.Context;
 
 import com.ubhave.sensormanager.config.SensorConfig;
-import com.ubhave.sensormanager.data.pullsensor.GyroscopeData;
+import com.ubhave.sensormanager.data.pull.GyroscopeData;
 import com.ubhave.sensormanager.process.AbstractProcessor;
 
 public class GyroscopeProcessor extends AbstractProcessor
@@ -15,15 +15,14 @@ public class GyroscopeProcessor extends AbstractProcessor
 		super(c, rw, sp);
 	}
 
-	public GyroscopeData process(long pullSenseStartTimestamp, ArrayList<float[]> sensorReadings,
-			ArrayList<Long> sensorReadingTimestamps, SensorConfig sensorConfig)
+	public GyroscopeData process(long pullSenseStartTimestamp, ArrayList<float[]> sensorReadings, ArrayList<Long> sensorReadingTimestamps, SensorConfig sensorConfig)
 	{
 		GyroscopeData gyroscopeData = new GyroscopeData(pullSenseStartTimestamp, sensorConfig);
 		if (setRawData)
 		{
-            gyroscopeData.setSensorReadings(sensorReadings);
-            gyroscopeData.setSensorReadingTimestamps(sensorReadingTimestamps);
+			gyroscopeData.setSensorReadings(sensorReadings);
+			gyroscopeData.setSensorReadingTimestamps(sensorReadingTimestamps);
 		}
-        return gyroscopeData;
+		return gyroscopeData;
 	}
 }

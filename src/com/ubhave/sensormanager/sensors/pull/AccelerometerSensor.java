@@ -25,7 +25,7 @@ package com.ubhave.sensormanager.sensors.pull;
 import android.content.Context;
 import android.hardware.Sensor;
 
-import com.ubhave.sensormanager.data.pullsensor.AccelerometerData;
+import com.ubhave.sensormanager.data.pull.AccelerometerData;
 import com.ubhave.sensormanager.process.pull.AccelerometerProcessor;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 

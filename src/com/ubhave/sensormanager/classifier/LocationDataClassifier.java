@@ -26,7 +26,7 @@ import android.location.Location;
 
 import com.ubhave.sensormanager.config.pull.LocationConfig;
 import com.ubhave.sensormanager.data.SensorData;
-import com.ubhave.sensormanager.data.pullsensor.LocationData;
+import com.ubhave.sensormanager.data.pull.LocationData;
 
 public class LocationDataClassifier implements SensorDataClassifier
 {

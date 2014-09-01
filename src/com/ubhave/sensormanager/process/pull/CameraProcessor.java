@@ -3,7 +3,7 @@ package com.ubhave.sensormanager.process.pull;
 import android.content.Context;
 
 import com.ubhave.sensormanager.config.SensorConfig;
-import com.ubhave.sensormanager.data.pullsensor.CameraData;
+import com.ubhave.sensormanager.data.pull.CameraData;
 import com.ubhave.sensormanager.process.AbstractProcessor;
 
 public class CameraProcessor extends AbstractProcessor

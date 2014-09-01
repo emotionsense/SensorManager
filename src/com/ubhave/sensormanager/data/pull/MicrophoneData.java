@@ -20,47 +20,55 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
 IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  ************************************************** */
 
-package com.ubhave.sensormanager.data.pullsensor;
-
-import java.util.ArrayList;
+package com.ubhave.sensormanager.data.pull;
 
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
-public class AccelerometerData extends SensorData
+public class MicrophoneData extends SensorData
 {
-	private ArrayList<float[]> sensorReadings;
-	private ArrayList<Long> sensorReadingTimestamps;
+	private int[] maxAmplitudeArray;
+	private long[] timestampArray;
+	private String mediaFilePath;
 
-	public AccelerometerData(long senseStartTimestamp, SensorConfig sensorConfig)
+	public MicrophoneData(long senseStartTimestamp, SensorConfig sensorConfig)
 	{
 		super(senseStartTimestamp, sensorConfig);
 	}
-	
-	public void setSensorReadings(ArrayList<float[]> sensorReadings)
+
+	public void setMaxAmplitudeArray(int[] maxAmplitudeArray)
 	{
-		this.sensorReadings = sensorReadings;
+		this.maxAmplitudeArray = maxAmplitudeArray;
 	}
 
-	public ArrayList<float[]> getSensorReadings()
+	public int[] getAmplitudeArray()
 	{
-		return sensorReadings;
+		return maxAmplitudeArray;
 	}
-	
-	public void setSensorReadingTimestamps(ArrayList<Long> sensorReadingTimestamps)
+
+	public void setTimestampArray(long[] timestampArray)
 	{
-		this.sensorReadingTimestamps = sensorReadingTimestamps;
+		this.timestampArray = timestampArray;
 	}
-	
-	public ArrayList<Long> getSensorReadingTimestamps()
+
+	public long[] getTimestampArray()
 	{
-		return sensorReadingTimestamps;
+		return timestampArray;
+	}
+
+	public void setMediaFilePath(String mediaFilePath)
+	{
+		this.mediaFilePath = mediaFilePath;
+	}
+
+	public String getMediaFilePath()
+	{
+		return mediaFilePath;
 	}
 
 	public int getSensorType()
 	{
-		return SensorUtils.SENSOR_TYPE_ACCELEROMETER;
+		return SensorUtils.SENSOR_TYPE_MICROPHONE;
 	}
-
 }

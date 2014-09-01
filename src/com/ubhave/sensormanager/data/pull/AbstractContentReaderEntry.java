@@ -20,53 +20,59 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
 IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  ************************************************** */
 
-package com.ubhave.sensormanager.data.pullsensor;
+package com.ubhave.sensormanager.data.pull;
 
-public class ESBluetoothDevice
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Set;
+
+public abstract class AbstractContentReaderEntry
 {
-
-	private final long timestamp;
-	private final String bluetoothDeviceAddress;
-	private final String bluetoothDeviceName;
-	private final float rssi;
-
-	public ESBluetoothDevice(long ts, String btAddr, String btName, float btRssi)
+	private final static String LOCAL_TIME = "local_time_when_sensed";
+	protected HashMap<String, String> contentMap;
+	
+	public AbstractContentReaderEntry()
 	{
-		this.timestamp = ts;
-		this.bluetoothDeviceAddress = btAddr;
-		this.bluetoothDeviceName = btName;
-		this.rssi = btRssi;
+		contentMap = new HashMap<String, String>();
 	}
-
-	public String getBluetoothDeviceAddress()
+	
+	public void set(final String key, final String value)
 	{
-		return bluetoothDeviceAddress;
-	}
-
-	public String getBluetoothDeviceName()
-	{
-		return bluetoothDeviceName;
-	}
-
-	public float getRssi()
-	{
-		return rssi;
-	}
-
-	public long getTimestamp()
-	{
-		return timestamp;
-	}
-
-	public boolean equals(ESBluetoothDevice btDevice)
-	{
-		if (bluetoothDeviceAddress.equals(btDevice.getBluetoothDeviceAddress()))
+		contentMap.put(key, value);
+		if (key == getTimestampKey())
 		{
-			return true;
-		}
-		else
-		{
-			return false;
+			try
+			{
+				Calendar calendar = Calendar.getInstance();
+				calendar.setTimeInMillis(getTimestamp());
+				contentMap.put(LOCAL_TIME, calendar.getTime().toString());
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
 		}
 	}
+	
+	public String get(final String key)
+	{
+		return contentMap.get(key);
+	}
+	
+	public Set<String> getKeys()
+	{
+		return contentMap.keySet();
+	}
+	
+	public void setContentMap(final HashMap<String, String> map)
+	{
+		this.contentMap = map;
+	}
+
+	public long getTimestamp() throws Exception
+	{
+		return Long.valueOf(contentMap.get(getTimestampKey()));
+	}
+	
+	protected abstract String getTimestampKey();
 }

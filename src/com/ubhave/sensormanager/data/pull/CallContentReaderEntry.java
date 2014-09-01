@@ -20,36 +20,15 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
 IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  ************************************************** */
 
-package com.ubhave.sensormanager.data.pullsensor;
+package com.ubhave.sensormanager.data.pull;
 
-import java.util.ArrayList;
+import android.provider.CallLog;
 
-import com.ubhave.sensormanager.config.SensorConfig;
-import com.ubhave.sensormanager.data.SensorData;
-import com.ubhave.sensormanager.sensors.SensorUtils;
-
-public class ApplicationDataList extends SensorData
+public class CallContentReaderEntry extends AbstractContentReaderEntry
 {
-	private ArrayList<ApplicationData> applications;
-
-	public ApplicationDataList(long senseStartTimestamp, SensorConfig sensorConfig)
+	@Override
+	protected String getTimestampKey()
 	{
-		super(senseStartTimestamp, sensorConfig);
+		return CallLog.Calls.DATE;
 	}
-	
-	public void setApplications(ArrayList<ApplicationData> applications)
-	{
-		this.applications = applications;
-	}
-
-	public ArrayList<ApplicationData> getApplications()
-	{
-		return applications;
-	}
-
-	public int getSensorType()
-	{
-		return SensorUtils.SENSOR_TYPE_APPLICATION;
-	}
-
 }

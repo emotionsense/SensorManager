@@ -25,8 +25,8 @@ package com.ubhave.sensormanager.classifier;
 import java.util.ArrayList;
 
 import com.ubhave.sensormanager.data.SensorData;
-import com.ubhave.sensormanager.data.pullsensor.WifiData;
-import com.ubhave.sensormanager.data.pullsensor.WifiScanResult;
+import com.ubhave.sensormanager.data.pull.WifiData;
+import com.ubhave.sensormanager.data.pull.WifiScanResult;
 
 public class WifiDataClassifier extends SocialClassifier implements SensorDataClassifier
 {

@@ -1,11 +1,6 @@
 /* **************************************************
- Copyright (c) 2012, University of Cambridge
- Neal Lathia, neal.lathia@cl.cam.ac.uk
- Kiran Rachuri, kiran.rachuri@cl.cam.ac.uk
-
-This library was developed as part of the EPSRC Ubhave (Ubiquitous and
-Social Computing for Positive Behaviour Change) Project. For more
-information, please visit http://www.emotionsense.org
+ Copyright (c) 2014, Idiap
+ Hugues Salamin, hugues.salamin@idiap.ch
 
 Permission to use, copy, modify, and/or distribute this software for any
 purpose with or without fee is hereby granted, provided that the above
@@ -20,42 +15,35 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
 IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  ************************************************** */
 
-package com.ubhave.sensormanager.data.pushsensor;
+package com.ubhave.sensormanager.data.push;
+
+import android.location.Location;
 
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
-public class ScreenData extends SensorData
-{
-	private int screenStatus;
+public class PassiveLocationData extends SensorData {
+	private Location location;
 
-	public static final int SCREEN_OFF = 0;
-	public static final int SCREEN_ON = 1;
-	public static final int SCREEN_UNKNOWN = 2;
-
-	public ScreenData(long recvTimestamp, SensorConfig sensorConfig)
+	public PassiveLocationData(long senseStartTimestamp, SensorConfig sensorConfig)
 	{
-		super(recvTimestamp, sensorConfig);
-	}
-	
-	public void setStatus(int s)
-	{
-		screenStatus = s;
-	}
-	
-	public boolean isOff()
-	{
-		return screenStatus == SCREEN_OFF;
+		super(senseStartTimestamp, sensorConfig);
 	}
 
-	public boolean isOn()
+	public void setLocation(Location location)
 	{
-		return screenStatus == SCREEN_ON;
+		this.location = location;
 	}
 
-	public int getSensorType()
+	public Location getLocation()
 	{
-		return SensorUtils.SENSOR_TYPE_SCREEN;
+		return location;
 	}
+
+	@Override
+	public int getSensorType() {
+		return SensorUtils.SENSOR_TYPE_PASSIVE_LOCATION;
+	}
+
 }

@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import android.content.Context;
 
 import com.ubhave.sensormanager.config.SensorConfig;
-import com.ubhave.sensormanager.data.pullsensor.ApplicationData;
-import com.ubhave.sensormanager.data.pullsensor.ApplicationDataList;
+import com.ubhave.sensormanager.data.pull.ApplicationData;
+import com.ubhave.sensormanager.data.pull.ApplicationDataList;
 import com.ubhave.sensormanager.process.AbstractProcessor;
 
 public class ApplicationProcessor extends AbstractProcessor

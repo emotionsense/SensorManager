@@ -20,7 +20,7 @@ package com.ubhave.sensormanager.process.push;
 import android.content.Context;
 
 import com.ubhave.sensormanager.config.SensorConfig;
-import com.ubhave.sensormanager.data.pushsensor.ConnectionStrengthData;
+import com.ubhave.sensormanager.data.push.ConnectionStrengthData;
 import com.ubhave.sensormanager.process.AbstractProcessor;
 
 public class ConnectionStrengthProcessor extends AbstractProcessor
@@ -30,10 +30,9 @@ public class ConnectionStrengthProcessor extends AbstractProcessor
 		super(c, rw, sp);
 	}
 
-	public ConnectionStrengthData process(long recvTime, SensorConfig config,
-			int strength) {
-		ConnectionStrengthData data = new ConnectionStrengthData(recvTime,
-				config);
+	public ConnectionStrengthData process(long recvTime, SensorConfig config, int strength)
+	{
+		ConnectionStrengthData data = new ConnectionStrengthData(recvTime, config);
 		if (setRawData)
 		{
 			data.setStrength(strength);

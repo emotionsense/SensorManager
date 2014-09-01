@@ -20,15 +20,14 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
 IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  ************************************************** */
 
-package com.ubhave.sensormanager.data.pullsensor;
+package com.ubhave.sensormanager.data.pull;
 
-import android.provider.CallLog;
+import com.ubhave.sensormanager.config.pull.ContentReaderConfig;
 
-public class CallContentReaderEntry extends AbstractContentReaderEntry
-{
-	@Override
+public class SMSContentReaderEntry extends AbstractContentReaderEntry
+{	
 	protected String getTimestampKey()
 	{
-		return CallLog.Calls.DATE;
+		return ContentReaderConfig.SMS_CONTENT_DATE_KEY;
 	}
 }

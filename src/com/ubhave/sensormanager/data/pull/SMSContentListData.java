@@ -20,55 +20,21 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
 IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  ************************************************** */
 
-package com.ubhave.sensormanager.data.pullsensor;
-
-import java.util.ArrayList;
+package com.ubhave.sensormanager.data.pull;
 
 import com.ubhave.sensormanager.config.SensorConfig;
-import com.ubhave.sensormanager.data.SensorData;
+import com.ubhave.sensormanager.sensors.SensorUtils;
 
-public abstract class AbstractContentReaderListData extends SensorData
+public class SMSContentListData extends AbstractContentReaderListData
 {
-	private final ArrayList<AbstractContentReaderEntry> contentList;
-
-	public AbstractContentReaderListData(long sensorTimestamp, SensorConfig config)
+	public SMSContentListData(long sensorTimestamp, SensorConfig config)
 	{
 		super(sensorTimestamp, config);
-		contentList = new ArrayList<AbstractContentReaderEntry>();
-	}
-	
-	public void addContent(final AbstractContentReaderEntry entry)
-	{
-		contentList.add(entry);
-	}
-	
-	public int size()
-	{
-		return contentList.size();
 	}
 
-	public ArrayList<AbstractContentReaderEntry> getContentList()
+	@Override
+	public int getSensorType()
 	{
-		return contentList;
-	}
-	
-	public int getNumberOfEntriesSince(final long timeLimit)
-	{
-		int count = 0;
-		for (AbstractContentReaderEntry entry : contentList)
-		{
-			try
-			{
-				if (entry.getTimestamp() > timeLimit)
-				{
-					count++;
-				}
-			}
-			catch (Exception e)
-			{
-				e.printStackTrace();
-			}
-		}
-		return count;
+		return SensorUtils.SENSOR_TYPE_SMS_CONTENT_READER;
 	}
 }

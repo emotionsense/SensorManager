@@ -34,8 +34,8 @@ import android.telephony.TelephonyManager;
 import android.telephony.gsm.GsmCellLocation;
 
 import com.ubhave.sensormanager.ESException;
-import com.ubhave.sensormanager.data.pullsensor.PhoneRadioData;
-import com.ubhave.sensormanager.data.pullsensor.PhoneRadioDataList;
+import com.ubhave.sensormanager.data.pull.PhoneRadioData;
+import com.ubhave.sensormanager.data.pull.PhoneRadioDataList;
 import com.ubhave.sensormanager.process.pull.PhoneRadioProcessor;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 

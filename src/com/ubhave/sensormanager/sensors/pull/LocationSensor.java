@@ -38,7 +38,7 @@ import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.config.GlobalConfig;
 import com.ubhave.sensormanager.config.pull.LocationConfig;
 import com.ubhave.sensormanager.data.SensorData;
-import com.ubhave.sensormanager.data.pullsensor.LocationData;
+import com.ubhave.sensormanager.data.pull.LocationData;
 import com.ubhave.sensormanager.process.pull.LocationProcessor;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 

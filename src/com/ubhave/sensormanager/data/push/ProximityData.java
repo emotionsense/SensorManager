@@ -20,79 +20,55 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
 IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  ************************************************** */
 
-package com.ubhave.sensormanager.data.pushsensor;
+package com.ubhave.sensormanager.data.push;
 
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
-public class PhoneStateData extends SensorData
+public class ProximityData extends SensorData
 {
+	private static final float NEAR_DISTANCE = (float) 0.0;
 
-	public static final int CALL_STATE_IDLE = 54401;
-	public static final int CALL_STATE_OFFHOOK = 54402;
-	public static final int CALL_STATE_RINGING = 54403;
-	public static final int CALL_STATE_OUTGOING = 54404;
-	public static final int ON_CELL_LOCATION_CHANGED = 5441;
-	public static final int ON_DATA_ACTIVITY = 5442;
-	public static final int ON_DATA_CONNECTION_STATE_CHANGED = 5443;
-	public static final int ON_SERVICE_STATE_CHANGED = 5444;
+	private float distance;
+	private float maxRange;
 
-	private int eventType;
-	private String data, number;
-
-	public PhoneStateData(long dataReceivedTimestamp, SensorConfig sensorConfig)
+	public ProximityData(long recvTimestamp, SensorConfig sensorConfig)
 	{
-		super(dataReceivedTimestamp, sensorConfig);
+		super(recvTimestamp, sensorConfig);
+	}
+
+	public boolean isNear()
+	{
+		if (distance == NEAR_DISTANCE)
+		{
+			return true;
+		}
+		return false;
 	}
 	
-	public void setNumber(String n)
+	public void setDistance(float f)
 	{
-		number = n;
+		distance = f;
 	}
 	
-	public String getNumber()
+	public float getDistance()
 	{
-		return number;
+		return distance;
 	}
 	
-	public void setEventType(int e)
+	public void setMaxRange(float f)
 	{
-		eventType = e;
-	}
-
-	public int getEventType()
-	{
-		return eventType;
+		maxRange = f;
 	}
 	
-	public void setData(String d)
+	public float getMaxRange()
 	{
-		data = d;
-	}
-
-	public String getData()
-	{
-		return data;
-	}
-
-	public boolean isRinging()
-	{
-		return eventType == CALL_STATE_RINGING;
-	}
-
-	public boolean isOffHook()
-	{
-		return eventType == CALL_STATE_OFFHOOK;
-	}
-
-	public boolean isIdle()
-	{
-		return eventType == CALL_STATE_IDLE;
+		return maxRange;
 	}
 
 	public int getSensorType()
 	{
-		return SensorUtils.SENSOR_TYPE_PHONE_STATE;
+		return SensorUtils.SENSOR_TYPE_PROXIMITY;
 	}
 }

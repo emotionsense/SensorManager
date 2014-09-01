@@ -20,55 +20,33 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
 IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  ************************************************** */
 
-package com.ubhave.sensormanager.data.pullsensor;
+package com.ubhave.sensormanager.data.pull;
 
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
-public class MicrophoneData extends SensorData
+public class CameraData extends SensorData
 {
-	private int[] maxAmplitudeArray;
-	private long[] timestampArray;
-	private String mediaFilePath;
+	private String imageFullPath;
 
-	public MicrophoneData(long senseStartTimestamp, SensorConfig sensorConfig)
+	public CameraData(long senseStartTimestamp, SensorConfig sensorConfig)
 	{
 		super(senseStartTimestamp, sensorConfig);
 	}
-
-	public void setMaxAmplitudeArray(int[] maxAmplitudeArray)
+	
+	public void setImageFullPath(String imageFullPath)
 	{
-		this.maxAmplitudeArray = maxAmplitudeArray;
+		this.imageFullPath = imageFullPath;
 	}
-
-	public int[] getAmplitudeArray()
+	
+	public String getImageFullPath()
 	{
-		return maxAmplitudeArray;
-	}
-
-	public void setTimestampArray(long[] timestampArray)
-	{
-		this.timestampArray = timestampArray;
-	}
-
-	public long[] getTimestampArray()
-	{
-		return timestampArray;
-	}
-
-	public void setMediaFilePath(String mediaFilePath)
-	{
-		this.mediaFilePath = mediaFilePath;
-	}
-
-	public String getMediaFilePath()
-	{
-		return mediaFilePath;
+		return imageFullPath;
 	}
 
 	public int getSensorType()
 	{
-		return SensorUtils.SENSOR_TYPE_MICROPHONE;
+		return SensorUtils.SENSOR_TYPE_CAMERA;
 	}
 }

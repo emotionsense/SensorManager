@@ -32,7 +32,7 @@ import android.telephony.ServiceState;
 import android.telephony.TelephonyManager;
 
 import com.ubhave.sensormanager.ESException;
-import com.ubhave.sensormanager.data.pushsensor.PhoneStateData;
+import com.ubhave.sensormanager.data.push.PhoneStateData;
 import com.ubhave.sensormanager.process.push.PhoneStateProcessor;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 

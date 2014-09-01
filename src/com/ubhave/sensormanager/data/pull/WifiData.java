@@ -20,59 +20,37 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
 IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  ************************************************** */
 
-package com.ubhave.sensormanager.data.pullsensor;
+package com.ubhave.sensormanager.data.pull;
 
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Set;
+import java.util.ArrayList;
 
-public abstract class AbstractContentReaderEntry
+import com.ubhave.sensormanager.config.SensorConfig;
+import com.ubhave.sensormanager.data.SensorData;
+import com.ubhave.sensormanager.sensors.SensorUtils;
+
+public class WifiData extends SensorData
 {
-	private final static String LOCAL_TIME = "local_time_when_sensed";
-	protected HashMap<String, String> contentMap;
-	
-	public AbstractContentReaderEntry()
+
+	private ArrayList<WifiScanResult> wifiScanData;
+
+	public WifiData(long senseStartTimestamp, SensorConfig sensorConfig)
 	{
-		contentMap = new HashMap<String, String>();
-	}
-	
-	public void set(final String key, final String value)
-	{
-		contentMap.put(key, value);
-		if (key == getTimestampKey())
-		{
-			try
-			{
-				Calendar calendar = Calendar.getInstance();
-				calendar.setTimeInMillis(getTimestamp());
-				contentMap.put(LOCAL_TIME, calendar.getTime().toString());
-			}
-			catch (Exception e)
-			{
-				e.printStackTrace();
-			}
-		}
-	}
-	
-	public String get(final String key)
-	{
-		return contentMap.get(key);
-	}
-	
-	public Set<String> getKeys()
-	{
-		return contentMap.keySet();
-	}
-	
-	public void setContentMap(final HashMap<String, String> map)
-	{
-		this.contentMap = map;
+		super(senseStartTimestamp, sensorConfig);
 	}
 
-	public long getTimestamp() throws Exception
+	public void setWifiScanData(ArrayList<WifiScanResult> wifiScanData)
 	{
-		return Long.valueOf(contentMap.get(getTimestampKey()));
+		this.wifiScanData = wifiScanData;
 	}
-	
-	protected abstract String getTimestampKey();
+
+	public ArrayList<WifiScanResult> getWifiScanData()
+	{
+		return wifiScanData;
+	}
+
+	public int getSensorType()
+	{
+		return SensorUtils.SENSOR_TYPE_WIFI;
+	}
+
 }

@@ -34,7 +34,7 @@ import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.config.GlobalConfig;
 import com.ubhave.sensormanager.config.pull.CameraConfig;
 import com.ubhave.sensormanager.data.SensorData;
-import com.ubhave.sensormanager.data.pullsensor.CameraData;
+import com.ubhave.sensormanager.data.pull.CameraData;
 import com.ubhave.sensormanager.process.pull.CameraProcessor;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 

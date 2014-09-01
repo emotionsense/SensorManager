@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import android.content.Context;
 
 import com.ubhave.sensormanager.config.SensorConfig;
-import com.ubhave.sensormanager.data.pullsensor.WifiData;
-import com.ubhave.sensormanager.data.pullsensor.WifiScanResult;
+import com.ubhave.sensormanager.data.pull.WifiData;
+import com.ubhave.sensormanager.data.pull.WifiScanResult;
 import com.ubhave.sensormanager.process.AbstractProcessor;
 
 public class WifiProcessor extends AbstractProcessor

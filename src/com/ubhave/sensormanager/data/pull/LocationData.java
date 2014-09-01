@@ -20,22 +20,49 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR
 IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  ************************************************** */
 
-package com.ubhave.sensormanager.data.pullsensor;
+package com.ubhave.sensormanager.data.pull;
+
+import java.util.List;
+
+import android.location.Location;
 
 import com.ubhave.sensormanager.config.SensorConfig;
+import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
-public class CallContentListData extends AbstractContentReaderListData
+public class LocationData extends SensorData
 {
+	private List<Location> locations;
 
-	public CallContentListData(long sensorTimestamp, SensorConfig config)
+	public LocationData(long senseStartTimestamp, SensorConfig sensorConfig)
 	{
-		super(sensorTimestamp, config);
+		super(senseStartTimestamp, sensorConfig);
 	}
 
-	@Override
+	public void setLocations(List<Location> locations)
+	{
+		this.locations = locations;
+	}
+
+	public List<Location> getLocations()
+	{
+		return locations;
+	}
+	
+	public Location getLastLocation()
+	{
+		if (locations != null && !locations.isEmpty())
+		{
+			return locations.get(locations.size() - 1);
+		}
+		else
+		{
+			return null;
+		}
+	}
+
 	public int getSensorType()
 	{
-		return SensorUtils.SENSOR_TYPE_CALL_CONTENT_READER;
+		return SensorUtils.SENSOR_TYPE_LOCATION;
 	}
 }
