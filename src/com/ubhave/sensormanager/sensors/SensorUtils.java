@@ -35,19 +35,10 @@ import com.ubhave.sensormanager.classifier.MicrophoneDataClassifier;
 import com.ubhave.sensormanager.classifier.SensorDataClassifier;
 import com.ubhave.sensormanager.classifier.WifiDataClassifier;
 import com.ubhave.sensormanager.config.GlobalConfig;
-import com.ubhave.sensormanager.config.SensorConfig;
-import com.ubhave.sensormanager.config.pull.ApplicationConfig;
-import com.ubhave.sensormanager.config.pull.BluetoothConfig;
-import com.ubhave.sensormanager.config.pull.CameraConfig;
-import com.ubhave.sensormanager.config.pull.ContentReaderConfig;
-import com.ubhave.sensormanager.config.pull.LocationConfig;
-import com.ubhave.sensormanager.config.pull.MicrophoneConfig;
-import com.ubhave.sensormanager.config.pull.MotionSensorConfig;
-import com.ubhave.sensormanager.config.pull.PhoneRadioConfig;
-import com.ubhave.sensormanager.config.pull.PullSensorConfig;
-import com.ubhave.sensormanager.config.pull.WifiConfig;
-import com.ubhave.sensormanager.config.push.PassiveLocationConfig;
+import com.ubhave.sensormanager.sensors.env.AmbientTemperatureSensor;
+import com.ubhave.sensormanager.sensors.env.HumiditySensor;
 import com.ubhave.sensormanager.sensors.env.LightSensor;
+import com.ubhave.sensormanager.sensors.env.PressureSensor;
 import com.ubhave.sensormanager.sensors.pull.AccelerometerSensor;
 import com.ubhave.sensormanager.sensors.pull.ApplicationSensor;
 import com.ubhave.sensormanager.sensors.pull.BluetoothSensor;
@@ -70,128 +61,112 @@ import com.ubhave.sensormanager.sensors.push.SmsSensor;
 
 public class SensorUtils
 {
-	private static String TAG = "SensorUtils";
-
-	public final static String SENSOR_NAME_ACCELEROMETER = "Accelerometer";
+	public final static int SENSOR_GROUP_PULL = 0;
+	public final static int SENSOR_GROUP_PUSH = 1;
+	public final static int SENSOR_GROUP_ENVIRONMENT = 2;
+	
 	public final static int SENSOR_TYPE_ACCELEROMETER = 5001;
-
-	public final static String SENSOR_NAME_BATTERY = "Battery";
 	public final static int SENSOR_TYPE_BATTERY = 5002;
-
-	public final static String SENSOR_NAME_BLUETOOTH = "Bluetooth";
 	public final static int SENSOR_TYPE_BLUETOOTH = 5003;
-
-	public final static String SENSOR_NAME_LOCATION = "Location";
 	public final static int SENSOR_TYPE_LOCATION = 5004;
-
-	public final static String SENSOR_NAME_MICROPHONE = "Microphone";
 	public final static int SENSOR_TYPE_MICROPHONE = 5005;
-
-	public final static String SENSOR_NAME_PHONE_STATE = "PhoneState";
 	public final static int SENSOR_TYPE_PHONE_STATE = 5006;
-
-	public final static String SENSOR_NAME_PROXIMITY = "Proximity";
 	public final static int SENSOR_TYPE_PROXIMITY = 5007;
-
-	public final static String SENSOR_NAME_SCREEN = "Screen";
 	public final static int SENSOR_TYPE_SCREEN = 5008;
-
-	public final static String SENSOR_NAME_SMS = "SMS";
 	public final static int SENSOR_TYPE_SMS = 5009;
-
-	public final static String SENSOR_NAME_WIFI = "WiFi";
 	public final static int SENSOR_TYPE_WIFI = 5010;
-
-	public final static String SENSOR_NAME_CONNECTION_STATE = "Connection";
 	public final static int SENSOR_TYPE_CONNECTION_STATE = 5011;
-
-	public final static String SENSOR_NAME_APPLICATION = "Application";
 	public final static int SENSOR_TYPE_APPLICATION = 5012;
-
-	public final static String SENSOR_NAME_SMS_CONTENT_READER = "SMSContentReader";
 	public final static int SENSOR_TYPE_SMS_CONTENT_READER = 5013;
-
-	public final static String SENSOR_NAME_CALL_CONTENT_READER = "CallContentReader";
 	public final static int SENSOR_TYPE_CALL_CONTENT_READER = 5014;
-
-	public final static String SENSOR_NAME_CAMERA = "Camera";
 	public final static int SENSOR_TYPE_CAMERA = 5015;
-
-	public final static String SENSOR_NAME_GYROSCOPE = "Gyroscope";
 	public final static int SENSOR_TYPE_GYROSCOPE = 5016;
-
-	public final static String SENSOR_NAME_LIGHT = "Light";
 	public final static int SENSOR_TYPE_LIGHT = 5017;
-
-	public final static String SENSOR_NAME_PHONE_RADIO = "PhoneRadio";
 	public final static int SENSOR_TYPE_PHONE_RADIO = 5018;
-
-	public final static String SENSOR_NAME_CONNECTION_STRENGTH = "ConnectionStrength";
 	public final static int SENSOR_TYPE_CONNECTION_STRENGTH = 5019;
-
-	public final static String SENSOR_NAME_PASSIVE_LOCATION = "PassiveLocation";
 	public final static int SENSOR_TYPE_PASSIVE_LOCATION = 5020;
-
-	public final static String SENSOR_NAME_AMBIENT_TEMPERATURE = "AmbientTemperature";
 	public final static int SENSOR_TYPE_AMBIENT_TEMPERATURE = 5021;
-
-	public final static String SENSOR_NAME_PRESSURE = "Pressure";
 	public final static int SENSOR_TYPE_PRESSURE = 5022;
-
-	public final static String SENSOR_NAME_HUMIDITY = "Humidity";
 	public final static int SENSOR_TYPE_HUMIDITY = 5023;
+	
+	public final static String SENSOR_NAME_ACCELEROMETER = "Accelerometer";
+	public final static String SENSOR_NAME_BATTERY = "Battery";
+	public final static String SENSOR_NAME_BLUETOOTH = "Bluetooth";
+	public final static String SENSOR_NAME_LOCATION = "Location";
+	public final static String SENSOR_NAME_MICROPHONE = "Microphone";
+	public final static String SENSOR_NAME_PHONE_STATE = "PhoneState";
+	public final static String SENSOR_NAME_PROXIMITY = "Proximity";
+	public final static String SENSOR_NAME_SCREEN = "Screen";
+	public final static String SENSOR_NAME_SMS = "SMS";
+	public final static String SENSOR_NAME_WIFI = "WiFi";
+	public final static String SENSOR_NAME_CONNECTION_STATE = "Connection";
+	public final static String SENSOR_NAME_APPLICATION = "Application";
+	public final static String SENSOR_NAME_SMS_CONTENT_READER = "SMSContentReader";
+	public final static String SENSOR_NAME_CALL_CONTENT_READER = "CallContentReader";
+	public final static String SENSOR_NAME_CAMERA = "Camera";
+	public final static String SENSOR_NAME_GYROSCOPE = "Gyroscope";
+	public final static String SENSOR_NAME_LIGHT = "Light";
+	public final static String SENSOR_NAME_PHONE_RADIO = "PhoneRadio";
+	public final static String SENSOR_NAME_CONNECTION_STRENGTH = "ConnectionStrength";
+	public final static String SENSOR_NAME_PASSIVE_LOCATION = "PassiveLocation";
+	public final static String SENSOR_NAME_AMBIENT_TEMPERATURE = "AmbientTemperature";
+	public final static String SENSOR_NAME_PRESSURE = "Pressure";
+	public final static String SENSOR_NAME_HUMIDITY = "Humidity";
 
-	public final static int[] ALL_SENSORS = new int[] { SENSOR_TYPE_ACCELEROMETER, SENSOR_TYPE_BLUETOOTH, SENSOR_TYPE_LOCATION, SENSOR_TYPE_MICROPHONE, SENSOR_TYPE_WIFI, SENSOR_TYPE_BATTERY,
-			SENSOR_TYPE_PHONE_STATE, SENSOR_TYPE_PROXIMITY, SENSOR_TYPE_SCREEN, SENSOR_TYPE_SMS, SENSOR_TYPE_CONNECTION_STATE, SENSOR_TYPE_APPLICATION, SENSOR_TYPE_SMS_CONTENT_READER,
-			SENSOR_TYPE_CALL_CONTENT_READER, SENSOR_TYPE_CAMERA, SENSOR_TYPE_GYROSCOPE, SENSOR_TYPE_LIGHT, SENSOR_TYPE_PHONE_RADIO, SENSOR_TYPE_CONNECTION_STRENGTH, SENSOR_TYPE_PASSIVE_LOCATION,
-			SENSOR_TYPE_AMBIENT_TEMPERATURE, SENSOR_TYPE_PRESSURE, SENSOR_TYPE_HUMIDITY };
-
-	public static boolean isPullSensor(int sensorType)
+	private static SensorEnum getSensor(int sensorType) throws ESException
 	{
-		switch (sensorType)
+		for (SensorEnum s : SensorEnum.values())
 		{
-		case SENSOR_TYPE_ACCELEROMETER:
-		case SENSOR_TYPE_BLUETOOTH:
-		case SENSOR_TYPE_LOCATION:
-		case SENSOR_TYPE_MICROPHONE:
-		case SENSOR_TYPE_WIFI:
-		case SENSOR_TYPE_APPLICATION:
-		case SENSOR_TYPE_SMS_CONTENT_READER:
-		case SENSOR_TYPE_CALL_CONTENT_READER:
-		case SENSOR_TYPE_CAMERA:
-		case SENSOR_TYPE_PHONE_RADIO:
-		case SENSOR_TYPE_GYROSCOPE:
-			return true;
-		default:
-			return false;
+			if (s.getType() == sensorType)
+			{
+				return s;
+			}
 		}
+		throw new ESException(ESException.UNKNOWN_SENSOR_TYPE, "Unknown sensor type " + sensorType);
 	}
 
-	public static boolean isPushSensor(int sensorType)
+	public static String getSensorName(int sensorType) throws ESException
 	{
-		return !isPullSensor(sensorType);
+		return getSensor(sensorType).getName();
+	}
+
+	public static boolean isPullSensor(final int sensorType) throws ESException
+	{
+		return getSensor(sensorType).isPull();
+	}
+
+	public static boolean isPushSensor(final int sensorType) throws ESException
+	{
+		return !getSensor(sensorType).isPull();
+	}
+
+	public static int getSensorType(final String sensorName) throws ESException
+	{
+		for (SensorEnum s : SensorEnum.values())
+		{
+			if (s.getName().equals(sensorName))
+			{
+				return s.getType();
+			}
+		}
+		throw new ESException(ESException.UNKNOWN_SENSOR_NAME, "Unknown sensor name " + sensorName);
 	}
 
 	public static ArrayList<SensorInterface> getAllSensors(final Context applicationContext)
 	{
-		return getSensorList(ALL_SENSORS, applicationContext);
-	}
-
-	private static ArrayList<SensorInterface> getSensorList(int[] list, final Context applicationContext)
-	{
 		ArrayList<SensorInterface> sensors = new ArrayList<SensorInterface>();
-		for (int sensorId : list)
+		for (SensorEnum s : SensorEnum.values())
 		{
 			try
 			{
-				SensorInterface sensor = getSensor(sensorId, applicationContext);
+				SensorInterface sensor = getSensor(s.getType(), applicationContext);
 				sensors.add(sensor);
 			}
 			catch (ESException e)
 			{
 				if (GlobalConfig.shouldLog())
 				{
-					Log.d(TAG, "Warning: " + e.getMessage());
+					Log.d("SensorUtils", "Warning: " + e.getMessage());
 				}
 			}
 		}
@@ -203,224 +178,53 @@ public class SensorUtils
 		switch (id)
 		{
 		case SENSOR_TYPE_ACCELEROMETER:
-			return AccelerometerSensor.getAccelerometerSensor(context);
-		case SENSOR_TYPE_BLUETOOTH:
-			return BluetoothSensor.getBluetoothSensor(context);
-		case SENSOR_TYPE_LOCATION:
-			return LocationSensor.getLocationSensor(context);
-		case SENSOR_TYPE_MICROPHONE:
-			return MicrophoneSensor.getMicrophoneSensor(context);
-		case SENSOR_TYPE_WIFI:
-			return WifiSensor.getWifiSensor(context);
+			return AccelerometerSensor.getSensor(context);
 		case SENSOR_TYPE_BATTERY:
-			return BatterySensor.getBatterySensor(context);
+			return BatterySensor.getSensor(context);
+		case SENSOR_TYPE_BLUETOOTH:
+			return BluetoothSensor.getSensor(context);
+		case SENSOR_TYPE_LOCATION:
+			return LocationSensor.getSensor(context);
+		case SENSOR_TYPE_MICROPHONE:
+			return MicrophoneSensor.getSensor(context);
 		case SENSOR_TYPE_PHONE_STATE:
-			return PhoneStateSensor.getPhoneStateSensor(context);
+			return PhoneStateSensor.getSensor(context);	
 		case SENSOR_TYPE_PROXIMITY:
-			return ProximitySensor.getProximitySensor(context);
+			return ProximitySensor.getSensor(context);
 		case SENSOR_TYPE_SCREEN:
-			return ScreenSensor.getScreenSensor(context);
+			return ScreenSensor.getSensor(context);
 		case SENSOR_TYPE_SMS:
-			return SmsSensor.getSmsSensor(context);
+			return SmsSensor.getSensor(context);
+		case SENSOR_TYPE_WIFI:
+			return WifiSensor.getSensor(context);
 		case SENSOR_TYPE_CONNECTION_STATE:
-			return ConnectionStateSensor.getConnectionStateSensor(context);
+			return ConnectionStateSensor.getSensor(context);
 		case SENSOR_TYPE_APPLICATION:
-			return ApplicationSensor.getApplicationSensor(context);
+			return ApplicationSensor.getSensor(context);
 		case SENSOR_TYPE_SMS_CONTENT_READER:
-			return SMSContentReaderSensor.getSMSContentReaderSensor(context);
+			return SMSContentReaderSensor.getSensor(context);
 		case SENSOR_TYPE_CALL_CONTENT_READER:
-			return CallContentReaderSensor.getCallContentReaderSensor(context);
+			return CallContentReaderSensor.getSensor(context);
 		case SENSOR_TYPE_CAMERA:
-			return CameraSensor.getCameraSensor(context);
+			return CameraSensor.getSensor(context);
 		case SENSOR_TYPE_GYROSCOPE:
-			return GyroscopeSensor.getGyroscopeSensor(context);
+			return GyroscopeSensor.getSensor(context);
 		case SENSOR_TYPE_LIGHT:
 			return LightSensor.getSensor(context);
 		case SENSOR_TYPE_PHONE_RADIO:
 			return PhoneRadioSensor.getPhoneRadioSensor(context);
 		case SENSOR_TYPE_CONNECTION_STRENGTH:
-			return ConnectionStrengthSensor.getConnectionStrengthSensor(context);
+			return ConnectionStrengthSensor.getSensor(context);
 		case SENSOR_TYPE_PASSIVE_LOCATION:
-			return PassiveLocationSensor.getPassiveLocationSensor(context);
+			return PassiveLocationSensor.getSensor(context);
+		case SENSOR_TYPE_AMBIENT_TEMPERATURE:
+			return AmbientTemperatureSensor.getSensor(context);
+		case SENSOR_TYPE_PRESSURE:
+			return PressureSensor.getSensor(context);
+		case SENSOR_TYPE_HUMIDITY:
+			return HumiditySensor.getSensor(context);
 		default:
 			throw new ESException(ESException.UNKNOWN_SENSOR_TYPE, "Unknown sensor id: " + id);
-		}
-	}
-
-	public static SensorConfig getDefaultSensorConfig(int sensorType)
-	{
-		SensorConfig sensorConfig = new SensorConfig();
-		switch (sensorType)
-		{
-		case SensorUtils.SENSOR_TYPE_ACCELEROMETER:
-			sensorConfig = MotionSensorConfig.getDefault();
-			break;
-		case SensorUtils.SENSOR_TYPE_BLUETOOTH:
-			sensorConfig = BluetoothConfig.getDefault();
-			break;
-		case SensorUtils.SENSOR_TYPE_LOCATION:
-			sensorConfig = LocationConfig.getDefault();
-			break;
-		case SensorUtils.SENSOR_TYPE_MICROPHONE:
-			sensorConfig = MicrophoneConfig.getDefault();
-			break;
-		case SensorUtils.SENSOR_TYPE_WIFI:
-			sensorConfig = WifiConfig.getDefault();
-			break;
-		case SensorUtils.SENSOR_TYPE_APPLICATION:
-			sensorConfig = ApplicationConfig.getDefault();
-			break;
-		case SensorUtils.SENSOR_TYPE_SMS_CONTENT_READER:
-		case SensorUtils.SENSOR_TYPE_CALL_CONTENT_READER:
-			sensorConfig = ContentReaderConfig.getDefault();
-			break;
-		case SensorUtils.SENSOR_TYPE_CAMERA:
-			sensorConfig = CameraConfig.getDefault();
-			break;
-		case SensorUtils.SENSOR_TYPE_GYROSCOPE:
-			sensorConfig = MotionSensorConfig.getDefault();
-			break;
-		case SensorUtils.SENSOR_TYPE_PHONE_RADIO:
-			sensorConfig = PhoneRadioConfig.getDefault();
-			break;
-		case SENSOR_TYPE_PASSIVE_LOCATION:
-			sensorConfig = PassiveLocationConfig.getDefault();
-			break;
-		}
-		sensorConfig.setParameter(PullSensorConfig.ADAPTIVE_SENSING_ENABLED, false);
-		return sensorConfig;
-	}
-
-	public static int getSensorType(final String sensorName) throws ESException
-	{
-		if (sensorName.equals(SENSOR_NAME_ACCELEROMETER))
-		{
-			return SENSOR_TYPE_ACCELEROMETER;
-		}
-		else if (sensorName.equals(SENSOR_NAME_BATTERY))
-		{
-			return SENSOR_TYPE_BATTERY;
-		}
-		else if (sensorName.equals(SENSOR_NAME_BLUETOOTH))
-		{
-			return SENSOR_TYPE_BLUETOOTH;
-		}
-		else if (sensorName.equals(SENSOR_NAME_LOCATION))
-		{
-			return SENSOR_TYPE_LOCATION;
-		}
-		else if (sensorName.equals(SENSOR_NAME_MICROPHONE))
-		{
-			return SENSOR_TYPE_MICROPHONE;
-		}
-		else if (sensorName.equals(SENSOR_NAME_PHONE_STATE))
-		{
-			return SENSOR_TYPE_PHONE_STATE;
-		}
-		else if (sensorName.equals(SENSOR_NAME_PROXIMITY))
-		{
-			return SENSOR_TYPE_PROXIMITY;
-		}
-		else if (sensorName.equals(SENSOR_NAME_SCREEN))
-		{
-			return SENSOR_TYPE_SCREEN;
-		}
-		else if (sensorName.equals(SENSOR_NAME_SMS))
-		{
-			return SENSOR_TYPE_SMS;
-		}
-		else if (sensorName.equals(SENSOR_NAME_WIFI))
-		{
-			return SENSOR_TYPE_WIFI;
-		}
-		else if (sensorName.equals(SENSOR_NAME_APPLICATION))
-		{
-			return SENSOR_TYPE_APPLICATION;
-		}
-		else if (sensorName.equals(SENSOR_NAME_SMS_CONTENT_READER))
-		{
-			return SENSOR_TYPE_SMS_CONTENT_READER;
-		}
-		else if (sensorName.equals(SENSOR_NAME_CALL_CONTENT_READER))
-		{
-			return SENSOR_TYPE_CALL_CONTENT_READER;
-		}
-		else if (sensorName.equals(SENSOR_NAME_CAMERA))
-		{
-			return SENSOR_TYPE_CAMERA;
-		}
-		else if (sensorName.equals(SENSOR_NAME_GYROSCOPE))
-		{
-			return SENSOR_TYPE_GYROSCOPE;
-		}
-		else if (sensorName.equals(SENSOR_NAME_LIGHT))
-		{
-			return SENSOR_TYPE_LIGHT;
-		}
-		else if (sensorName.equals(SENSOR_NAME_PHONE_RADIO))
-		{
-			return SENSOR_TYPE_PHONE_RADIO;
-		}
-		else if (sensorName.equals(SENSOR_NAME_CONNECTION_STRENGTH))
-		{
-			return SENSOR_TYPE_CONNECTION_STRENGTH;
-		}
-		else if (sensorName.equals(SENSOR_NAME_PASSIVE_LOCATION))
-		{
-			return SENSOR_TYPE_PASSIVE_LOCATION;
-		}
-		else
-		{
-			throw new ESException(ESException.UNKNOWN_SENSOR_NAME, "unknown sensor name " + sensorName);
-		}
-	}
-
-	public static String getSensorName(int sensorType) throws ESException
-	{
-		switch (sensorType)
-		{
-		case SensorUtils.SENSOR_TYPE_ACCELEROMETER:
-			return SENSOR_NAME_ACCELEROMETER;
-		case SensorUtils.SENSOR_TYPE_BATTERY:
-			return SENSOR_NAME_BATTERY;
-		case SensorUtils.SENSOR_TYPE_BLUETOOTH:
-			return SENSOR_NAME_BLUETOOTH;
-		case SensorUtils.SENSOR_TYPE_LOCATION:
-			return SENSOR_NAME_LOCATION;
-		case SensorUtils.SENSOR_TYPE_MICROPHONE:
-			return SENSOR_NAME_MICROPHONE;
-		case SensorUtils.SENSOR_TYPE_PHONE_STATE:
-			return SENSOR_NAME_PHONE_STATE;
-		case SensorUtils.SENSOR_TYPE_PROXIMITY:
-			return SENSOR_NAME_PROXIMITY;
-		case SensorUtils.SENSOR_TYPE_SCREEN:
-			return SENSOR_NAME_SCREEN;
-		case SensorUtils.SENSOR_TYPE_SMS:
-			return SENSOR_NAME_SMS;
-		case SensorUtils.SENSOR_TYPE_WIFI:
-			return SENSOR_NAME_WIFI;
-		case SensorUtils.SENSOR_TYPE_CONNECTION_STATE:
-			return SENSOR_NAME_CONNECTION_STATE;
-		case SensorUtils.SENSOR_TYPE_APPLICATION:
-			return SENSOR_NAME_APPLICATION;
-		case SensorUtils.SENSOR_TYPE_SMS_CONTENT_READER:
-			return SENSOR_NAME_SMS_CONTENT_READER;
-		case SensorUtils.SENSOR_TYPE_CALL_CONTENT_READER:
-			return SENSOR_NAME_CALL_CONTENT_READER;
-		case SensorUtils.SENSOR_TYPE_CAMERA:
-			return SENSOR_NAME_CAMERA;
-		case SensorUtils.SENSOR_TYPE_GYROSCOPE:
-			return SENSOR_NAME_GYROSCOPE;
-		case SensorUtils.SENSOR_TYPE_LIGHT:
-			return SENSOR_NAME_LIGHT;
-		case SensorUtils.SENSOR_TYPE_PHONE_RADIO:
-			return SENSOR_NAME_PHONE_RADIO;
-		case SENSOR_TYPE_CONNECTION_STRENGTH:
-			return SENSOR_NAME_CONNECTION_STRENGTH;
-		case SENSOR_TYPE_PASSIVE_LOCATION:
-			return SENSOR_NAME_PASSIVE_LOCATION;
-		default:
-			throw new ESException(ESException.UNKNOWN_SENSOR_NAME, "unknown sensor type " + sensorType);
 		}
 	}
 
@@ -439,8 +243,7 @@ public class SensorUtils
 		case SensorUtils.SENSOR_TYPE_WIFI:
 			return new WifiDataClassifier();
 		default:
-			throw new ESException(ESException.UNKNOWN_SENSOR_TYPE, "sensor data classifier not support for the sensor type " + sensorType);
+			throw new ESException(ESException.UNKNOWN_SENSOR_TYPE, "Sensor data classifier not support for the sensor type " + sensorType);
 		}
 	}
-
 }

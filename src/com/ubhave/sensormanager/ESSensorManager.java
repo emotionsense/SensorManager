@@ -91,22 +91,29 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 		ArrayList<SensorInterface> sensors = SensorUtils.getAllSensors(appContext);
 		for (SensorInterface aSensor : sensors)
 		{
-			int sensorType = aSensor.getSensorType();
-			AbstractSensorTask sensorTask;
-			if (SensorUtils.isPullSensor(sensorType))
+			try
 			{
-				sensorTask = new PullSensorTask(aSensor);
-			}
-			else
-			{
-				sensorTask = new PushSensorTask(aSensor);
-			}
+				int sensorType = aSensor.getSensorType();
+				AbstractSensorTask sensorTask;
+				if (SensorUtils.isPullSensor(sensorType))
+				{
+					sensorTask = new PullSensorTask(aSensor);
+				}
+				else
+				{
+					sensorTask = new PushSensorTask(aSensor);
+				}
 
-			sensorTask.start();
-			sensorTaskMap.put(sensorType, sensorTask);
+				sensorTask.start();
+				sensorTaskMap.put(sensorType, sensorTask);
+			}
+			catch (ESException e)
+			{
+				e.printStackTrace();
+			}
 		}
 	}
-	
+
 	public Context getApplicationContext()
 	{
 		return applicationContext;
@@ -131,14 +138,14 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 			{
 				Log.d(TAG, "subscribeToSensorData() subscribing listener to sensor: " + SensorUtils.getSensorName(sensorId));
 			}
-			
+
 			Subscription subscription = new Subscription(task, listener);
 			int subscriptionId = subscriptionList.registerSubscription(subscription);
 			return subscriptionId;
 		}
 		else
 		{
-			throw new ESException(ESException.UNKNOWN_SENSOR_TYPE, "Invalid sensor type: " + SensorUtils.getSensorName(sensorId)+" (Check permissions?)");
+			throw new ESException(ESException.UNKNOWN_SENSOR_TYPE, "Invalid sensor type: " + SensorUtils.getSensorName(sensorId) + " (Check permissions?)");
 		}
 	}
 
@@ -172,8 +179,7 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 			try
 			{
 				String sensorName = SensorUtils.getSensorName(sensorId);
-				throw new ESException(ESException.UNKNOWN_SENSOR_TYPE, sensorName
-						+ "sensor unavailable. Have you put the required permissions into your manifest?");
+				throw new ESException(ESException.UNKNOWN_SENSOR_TYPE, sensorName + "sensor unavailable. Have you put the required permissions into your manifest?");
 			}
 			catch (ESException e)
 			{
@@ -190,13 +196,11 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 		AbstractSensorTask sensorTask = getSensorTask(sensorId);
 		if (!SensorUtils.isPullSensor(sensorTask.getSensorType()))
 		{
-			throw new ESException(ESException.OPERATION_NOT_SUPPORTED, "This method is supported only for pull sensors "
-					+" (your request: "+SensorUtils.getSensorName(sensorId)+")");
+			throw new ESException(ESException.OPERATION_NOT_SUPPORTED, "This method is supported only for pull sensors " + " (your request: " + SensorUtils.getSensorName(sensorId) + ")");
 		}
 		else if (sensorTask.isRunning())
 		{
-			throw new ESException(
-					ESException.OPERATION_NOT_SUPPORTED,
+			throw new ESException(ESException.OPERATION_NOT_SUPPORTED,
 					"This method is supported only for sensors tasks that are not currently running. Please unregister all your listeners to the sensor to call this method.");
 		}
 		else
@@ -299,15 +303,12 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 		if (SensorUtils.isPullSensor(sensorId))
 		{
 			AbstractPullSensor pullSensor = (AbstractPullSensor) sensorTask.getSensor();
-			AdaptiveSensing.getAdaptiveSensing().registerSensor(sensorManager, sensorTask.getSensor(),
-					SensorUtils.getSensorDataClassifier(sensorId), pullSensor);
+			AdaptiveSensing.getAdaptiveSensing().registerSensor(sensorManager, sensorTask.getSensor(), SensorUtils.getSensorDataClassifier(sensorId), pullSensor);
 		}
 		else
 		{
-			throw new ESException(ESException.OPERATION_NOT_SUPPORTED,
-					" adaptive sensing is supported only for pull sensors");
+			throw new ESException(ESException.OPERATION_NOT_SUPPORTED, " adaptive sensing is supported only for pull sensors");
 		}
-
 	}
 
 	private void disableAdaptiveSensing(int sensorId) throws ESException
@@ -319,8 +320,7 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 		}
 		else
 		{
-			throw new ESException(ESException.OPERATION_NOT_SUPPORTED, " adaptive sensing not enabled for sensorId: "
-					+ sensorId);
+			throw new ESException(ESException.OPERATION_NOT_SUPPORTED, " adaptive sensing not enabled for sensorId: " + sensorId);
 		}
 	}
 

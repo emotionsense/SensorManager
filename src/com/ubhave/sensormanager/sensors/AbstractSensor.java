@@ -41,7 +41,7 @@ public abstract class AbstractSensor implements SensorInterface
 	{
 		applicationContext = context;
 		senseCompleteNotify = new Object();
-		sensorConfig = SensorUtils.getDefaultSensorConfig(getSensorType());
+		sensorConfig = SensorConfig.getDefaultConfig(getSensorType());
 	}
 
 	protected static boolean permissionGranted(final Context context, final String permission)
