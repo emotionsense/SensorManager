@@ -58,7 +58,7 @@ public class LocationSensor extends AbstractPullSensor
 	private LocationListener locListener;
 	private LocationData locationData;
 
-	public static LocationSensor getLocationSensor(final Context context) throws ESException
+	public static LocationSensor getSensor(final Context context) throws ESException
 	{
 		if (locationSensor == null)
 		{

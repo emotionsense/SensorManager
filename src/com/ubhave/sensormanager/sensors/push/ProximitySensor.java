@@ -43,7 +43,7 @@ public class ProximitySensor extends AbstractPushSensor
 
 	private SensorEventListener sensorEventListener;
 
-	public static ProximitySensor getProximitySensor(final Context context)
+	public static ProximitySensor getSensor(final Context context)
 	{
 		if (ProximitySensor == null)
 		{

@@ -52,7 +52,7 @@ public class MicrophoneSensor extends AbstractMediaSensor
 	private MicrophoneData micData;
 	private boolean isRecording;
 
-	public static MicrophoneSensor getMicrophoneSensor(Context context) throws ESException
+	public static MicrophoneSensor getSensor(Context context) throws ESException
 	{
 		if (microphoneSensor == null)
 		{

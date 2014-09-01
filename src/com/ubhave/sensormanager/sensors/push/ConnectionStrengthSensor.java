@@ -41,7 +41,7 @@ public class ConnectionStrengthSensor extends AbstractPushSensor
 	private volatile static ConnectionStrengthSensor connectionSensor;
 	StrengthListener sensorEventListener;
 
-	public static ConnectionStrengthSensor getConnectionStrengthSensor(final Context context) throws ESException
+	public static ConnectionStrengthSensor getSensor(final Context context) throws ESException
 	{
 		/*
 		 * Implement a double checked lock, using volatile. The result variable

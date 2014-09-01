@@ -60,7 +60,7 @@ public class BluetoothSensor extends AbstractPullSensor
 	private BluetoothData bluetoothData;
 	private BroadcastReceiver receiver;
 
-	public static BluetoothSensor getBluetoothSensor(final Context context) throws ESException
+	public static BluetoothSensor getSensor(final Context context) throws ESException
 	{
 		if (bluetoothSensor == null)
 		{

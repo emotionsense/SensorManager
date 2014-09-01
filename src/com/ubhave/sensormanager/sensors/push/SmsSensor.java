@@ -52,7 +52,7 @@ public class SmsSensor extends AbstractPushSensor
 	private ContentObserver observer;
 	private String prevMessageId;
 
-	public static SmsSensor getSmsSensor(final Context context) throws ESException
+	public static SmsSensor getSensor(final Context context) throws ESException
 	{
 		if (smsSensor == null)
 		{

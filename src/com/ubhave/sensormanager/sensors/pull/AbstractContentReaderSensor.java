@@ -44,7 +44,7 @@ public abstract class AbstractContentReaderSensor extends AbstractPullSensor
 
 	protected abstract String[] getContentKeysArray();
 
-	public AbstractContentReaderSensor(Context context)
+	protected AbstractContentReaderSensor(Context context)
 	{
 		super(context);
 	}

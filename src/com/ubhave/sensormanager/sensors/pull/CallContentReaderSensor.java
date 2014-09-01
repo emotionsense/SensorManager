@@ -34,7 +34,7 @@ public class CallContentReaderSensor extends AbstractContentReaderSensor
 	private static final String LOG_TAG = "CallContentReaderSensor";
 	private static CallContentReaderSensor callContentReaderSensor;
 
-	public static CallContentReaderSensor getCallContentReaderSensor(final Context context) throws ESException
+	public static CallContentReaderSensor getSensor(final Context context) throws ESException
 	{
 		if (callContentReaderSensor == null)
 		{

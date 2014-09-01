@@ -51,7 +51,7 @@ public class CameraSensor extends AbstractMediaSensor
 	private Camera camera;
 	private File imageFile;
 
-	public static CameraSensor getCameraSensor(final Context context) throws ESException
+	public static CameraSensor getSensor(final Context context) throws ESException
 	{
 		if (cameraSensor == null)
 		{

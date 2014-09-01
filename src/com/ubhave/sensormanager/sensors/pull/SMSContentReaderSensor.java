@@ -34,7 +34,7 @@ public class SMSContentReaderSensor extends AbstractContentReaderSensor
 	private static final String LOG_TAG = "SMSContentReaderSensor";
 	private static SMSContentReaderSensor smsContentReaderSensor;
 
-	public static SMSContentReaderSensor getSMSContentReaderSensor(Context context) throws ESException
+	public static SMSContentReaderSensor getSensor(final Context context) throws ESException
 	{
 		if (smsContentReaderSensor == null)
 		{

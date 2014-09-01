@@ -46,7 +46,7 @@ public class PassiveLocationSensor extends AbstractPushSensor
 
 	private LocationListener locationListener;
 
-	public static PassiveLocationSensor getPassiveLocationSensor(final Context context) throws ESException
+	public static PassiveLocationSensor getSensor(final Context context) throws ESException
 	{
 		/*
 		 * Implement a double checked lock, using volatile. The result variable

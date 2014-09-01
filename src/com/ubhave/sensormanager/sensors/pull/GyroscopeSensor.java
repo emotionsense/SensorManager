@@ -35,7 +35,7 @@ public class GyroscopeSensor extends AbstractMotionSensor
 
 	private GyroscopeData gyroscopeData;
 
-	public static GyroscopeSensor getGyroscopeSensor(final Context context)
+	public static GyroscopeSensor getSensor(final Context context)
 	{
 		if (gyroscopeSensor == null)
 		{

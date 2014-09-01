@@ -38,7 +38,7 @@ public class BatterySensor extends AbstractPushSensor
 	private static BatterySensor batterySensor;
 	private static Object lock = new Object();
 
-	public static BatterySensor getBatterySensor(final Context context) throws ESException
+	public static BatterySensor getSensor(final Context context) throws ESException
 	{
 		if (batterySensor == null)
 		{

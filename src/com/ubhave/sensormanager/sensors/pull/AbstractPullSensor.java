@@ -38,7 +38,7 @@ public abstract class AbstractPullSensor extends AbstractSensor implements PullS
 
 	protected SensorData prevSensorData;
 
-	public AbstractPullSensor(Context context)
+	protected AbstractPullSensor(Context context)
 	{
 		super(context);
 	}

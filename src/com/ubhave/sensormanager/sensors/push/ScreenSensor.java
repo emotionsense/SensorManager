@@ -37,7 +37,7 @@ public class ScreenSensor extends AbstractPushSensor
 	private static ScreenSensor screenSensor;
 	private static Object lock = new Object();
 
-	public static ScreenSensor getScreenSensor(final Context context)
+	public static ScreenSensor getSensor(final Context context)
 	{
 		if (screenSensor == null)
 		{

@@ -36,7 +36,7 @@ public class AccelerometerSensor extends AbstractMotionSensor
 	private static Object lock = new Object();
 	private AccelerometerData accelerometerData;
 
-	public static AccelerometerSensor getAccelerometerSensor(Context context)
+	public static AccelerometerSensor getSensor(Context context)
 	{
 		if (accelerometerSensor == null)
 		{

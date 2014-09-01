@@ -50,8 +50,7 @@ public class PhoneRadioSensor extends AbstractPullSensor
 	private ArrayList<PhoneRadioData> visibleCells;
 	private volatile PhoneRadioDataList phoneRadioDataList;
 
-	public static PhoneRadioSensor getPhoneRadioSensor(final Context context)
-			throws ESException
+	public static PhoneRadioSensor getPhoneRadioSensor(final Context context) throws ESException
 	{
 		if (phoneRadioSensor == null)
 		{
@@ -65,8 +64,7 @@ public class PhoneRadioSensor extends AbstractPullSensor
 					}
 					else
 					{
-						throw new ESException(ESException.PERMISSION_DENIED,
-								SensorUtils.SENSOR_NAME_PHONE_RADIO);
+						throw new ESException(ESException.PERMISSION_DENIED, SensorUtils.SENSOR_NAME_PHONE_RADIO);
 					}
 				}
 			}
@@ -97,8 +95,7 @@ public class PhoneRadioSensor extends AbstractPullSensor
 	protected void processSensorData()
 	{
 		PhoneRadioProcessor processor = (PhoneRadioProcessor) getProcessor();
-		phoneRadioDataList = processor.process(pullSenseStartTimestamp,
-				visibleCells, sensorConfig.clone());
+		phoneRadioDataList = processor.process(pullSenseStartTimestamp, visibleCells, sensorConfig.clone());
 	}
 
 	protected boolean startSensing()
@@ -111,37 +108,35 @@ public class PhoneRadioSensor extends AbstractPullSensor
 				try
 				{
 					visibleCells = new ArrayList<PhoneRadioData>();
-					TelephonyManager telephonyManager = (TelephonyManager) applicationContext
-							.getSystemService(Context.TELEPHONY_SERVICE);
-					List<CellInfo> cellInfos = telephonyManager
-							.getAllCellInfo();
+					TelephonyManager telephonyManager = (TelephonyManager) applicationContext.getSystemService(Context.TELEPHONY_SERVICE);
+					List<CellInfo> cellInfos = telephonyManager.getAllCellInfo();
 					if (cellInfos == null)
 					{
 						// getAllCellInfo() not supported, try old methods
 						switch (telephonyManager.getPhoneType())
 						{
 						case TelephonyManager.PHONE_TYPE_GSM:
-							GsmCellLocation cellLocation = (GsmCellLocation) telephonyManager
-									.getCellLocation();
-							String networkOperator = telephonyManager
-									.getNetworkOperator();
+							GsmCellLocation cellLocation = (GsmCellLocation) telephonyManager.getCellLocation();
+							String networkOperator = telephonyManager.getNetworkOperator();
 							String mcc = networkOperator.substring(0, 3);
 							String mnc = networkOperator.substring(3);
-							visibleCells.add(new PhoneRadioData(mcc, mnc,
-									cellLocation.getLac(), cellLocation
-											.getCid()));
+							visibleCells.add(new PhoneRadioData(mcc, mnc, cellLocation.getLac(), cellLocation.getCid()));
 							break;
 						default:
 							// TODO: handle unsupported phone type...
 							break;
 						}
-					} else {
+					}
+					else
+					{
 						// TODO: handle getAllCellInfo() values...
 					}
-				} catch (Exception e)
+				}
+				catch (Exception e)
 				{
 					e.printStackTrace();
-				} finally
+				}
+				finally
 				{
 					// sensing complete
 					notifySenseCyclesComplete();

@@ -50,7 +50,7 @@ public class ApplicationSensor extends AbstractPullSensor
 	private ArrayList<ApplicationData> runningApplications;
 	private ApplicationDataList applicationData;
 
-	public static ApplicationSensor getApplicationSensor(final Context context) throws ESException
+	public static ApplicationSensor getSensor(final Context context) throws ESException
 	{
 		if (applicationSensor == null)
 		{

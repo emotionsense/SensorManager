@@ -37,7 +37,7 @@ public abstract class AbstractSensor implements SensorInterface
 	protected final Object senseCompleteNotify;
 	protected final SensorConfig sensorConfig;
 
-	public AbstractSensor(final Context context)
+	protected AbstractSensor(final Context context)
 	{
 		applicationContext = context;
 		senseCompleteNotify = new Object();

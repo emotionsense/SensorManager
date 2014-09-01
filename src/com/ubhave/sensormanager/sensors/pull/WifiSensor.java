@@ -58,7 +58,7 @@ public class WifiSensor extends AbstractPullSensor
 	private int cyclesRemaining;
 	private WifiData wifiData;
 
-	public static WifiSensor getWifiSensor(Context context) throws ESException
+	public static WifiSensor getSensor(final Context context) throws ESException
 	{
 		if (wifiSensor == null)
 		{

@@ -47,7 +47,7 @@ public class PhoneStateSensor extends AbstractPushSensor
 	private static PhoneStateSensor phoneStateSensor;
 	private static Object lock = new Object();
 
-	public static PhoneStateSensor getPhoneStateSensor(final Context context) throws ESException
+	public static PhoneStateSensor getSensor(final Context context) throws ESException
 	{
 		if (phoneStateSensor == null)
 		{
