@@ -22,9 +22,11 @@ IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 package com.ubhave.sensormanager.sensors.env;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
+import android.os.Build;
 
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.data.SensorData;
@@ -66,10 +68,18 @@ public class AmbientTemperatureSensor extends AbstractEnvironmentSensor
 		return SensorUtils.SENSOR_TYPE_AMBIENT_TEMPERATURE;
 	}
 
+	@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 	@Override
 	protected Sensor getSensor()
 	{
-		return sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE);
+		if (android.os.Build.VERSION.SDK_INT >= 14)
+		{
+			return sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE);
+		}
+		else
+		{
+			return null;
+		}
 	}
 
 	@Override

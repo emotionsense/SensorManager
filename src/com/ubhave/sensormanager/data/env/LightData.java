@@ -27,9 +27,9 @@ public class LightData extends AbstractEnvironmentData
 {
 	private float maxRange;
 
-	public LightData(long recvTimestamp, SensorConfig sensorConfig, float light)
+	public LightData(long recvTimestamp, SensorConfig sensorConfig)
 	{
-		super(recvTimestamp, sensorConfig, light);
+		super(recvTimestamp, sensorConfig);
 	}
 
 	public void setMaxRange(float f)

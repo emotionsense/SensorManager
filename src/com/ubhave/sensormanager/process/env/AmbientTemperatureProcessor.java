@@ -15,6 +15,11 @@ public class AmbientTemperatureProcessor extends AbstractProcessor
 
 	public AmbientTemperatureData process(long recvTime, SensorConfig config, float temperature)
 	{
-		return new AmbientTemperatureData(recvTime, config, temperature);
+		AmbientTemperatureData data = new AmbientTemperatureData(recvTime, config);
+		if (setRawData)
+		{
+			data.setValue(temperature);
+		}
+		return data;
 	}
 }

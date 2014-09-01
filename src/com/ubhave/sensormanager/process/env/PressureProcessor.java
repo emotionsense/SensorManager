@@ -15,6 +15,11 @@ public class PressureProcessor extends AbstractProcessor
 
 	public PressureData process(long recvTime, SensorConfig config, float pressure)
 	{
-		return new PressureData(recvTime, config, pressure);
+		PressureData data = new PressureData(recvTime, config);
+		if (setRawData)
+		{
+			data.setValue(pressure);
+		}
+		return data;
 	}
 }

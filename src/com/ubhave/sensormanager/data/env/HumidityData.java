@@ -25,9 +25,9 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class HumidityData extends AbstractEnvironmentData
 {
-	public HumidityData(long recvTimestamp, SensorConfig sensorConfig, float humidity)
+	public HumidityData(long recvTimestamp, SensorConfig sensorConfig)
 	{
-		super(recvTimestamp, sensorConfig, humidity);
+		super(recvTimestamp, sensorConfig);
 	}
 
 	@Override

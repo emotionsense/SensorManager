@@ -15,9 +15,10 @@ public class LightProcessor extends AbstractProcessor
 
 	public LightData process(long recvTime, SensorConfig config, float light, float maxRange)
 	{
-        LightData data = new LightData(recvTime, config, light);
+        LightData data = new LightData(recvTime, config);
 		if (setRawData)
 		{
+			data.setValue(light);
 			data.setMaxRange(maxRange);
 		}
 		return data;

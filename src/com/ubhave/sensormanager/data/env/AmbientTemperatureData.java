@@ -26,9 +26,9 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 public class AmbientTemperatureData extends AbstractEnvironmentData
 {
 
-	public AmbientTemperatureData(long recvTimestamp, SensorConfig sensorConfig, float temperature)
+	public AmbientTemperatureData(long recvTimestamp, SensorConfig sensorConfig)
 	{
-		super(recvTimestamp, sensorConfig, temperature);
+		super(recvTimestamp, sensorConfig);
 	}
 
 	@Override

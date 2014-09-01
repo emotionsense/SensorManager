@@ -23,6 +23,8 @@ IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 package com.ubhave.sensormanager.sensors.env;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -30,28 +32,28 @@ import android.hardware.SensorManager;
 
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.data.SensorData;
-import com.ubhave.sensormanager.sensors.AbstractSensor;
+import com.ubhave.sensormanager.sensors.push.AbstractPushSensor;
 
-public abstract class AbstractEnvironmentSensor extends AbstractSensor
+public abstract class AbstractEnvironmentSensor extends AbstractPushSensor
 {
 	protected static Object lock = new Object();
 	protected SensorManager sensorManager;
-	
+
 	private final Sensor environmentSensor;
 	private final SensorEventListener sensorEventListener;
 
-	protected AbstractEnvironmentSensor(final Context context)  throws ESException
+	protected AbstractEnvironmentSensor(final Context context) throws ESException
 	{
 		super(context);
-		sensorManager = (SensorManager) applicationContext.getSystemService(Context.SENSOR_SERVICE);
+		sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
 		sensorEventListener = getEventListener();
 		environmentSensor = getSensor();
 		if (environmentSensor == null)
 		{
-			throw new ESException(ESException.SENSOR_UNAVAILABLE, getLogTag()+ " is null.");
+			throw new ESException(ESException.SENSOR_UNAVAILABLE, getLogTag() + " is null.");
 		}
 	}
-	
+
 	protected final SensorEventListener getEventListener()
 	{
 		return new SensorEventListener()
@@ -61,7 +63,7 @@ public abstract class AbstractEnvironmentSensor extends AbstractSensor
 				try
 				{
 					SensorData data = processEvent(event);
-					// onDataSensed(lightData); // TODO
+					onDataSensed(data);
 				}
 				catch (Exception e)
 				{
@@ -75,9 +77,9 @@ public abstract class AbstractEnvironmentSensor extends AbstractSensor
 			}
 		};
 	}
-	
+
 	protected abstract SensorData processEvent(final SensorEvent event);
-	
+
 	protected abstract Sensor getSensor();
 
 	@Override
@@ -92,12 +94,25 @@ public abstract class AbstractEnvironmentSensor extends AbstractSensor
 		{
 			return false;
 		}
-		
+
 	}
 
 	@Override
 	protected final void stopSensing()
 	{
 		sensorManager.unregisterListener(sensorEventListener);
+	}
+
+	@Override
+	protected void onBroadcastReceived(Context context, Intent intent)
+	{
+		// Unused
+	}
+
+	@Override
+	protected IntentFilter[] getIntentFilters()
+	{
+		// Unused
+		return null;
 	}
 }

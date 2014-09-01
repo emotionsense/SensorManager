@@ -25,12 +25,16 @@ import com.ubhave.sensormanager.data.SensorData;
 
 public abstract class AbstractEnvironmentData extends SensorData
 {
-	private final float value;
+	private float value;
 
-	public AbstractEnvironmentData(final long recvTimestamp, final SensorConfig sensorConfig, final float value)
+	public AbstractEnvironmentData(final long recvTimestamp, final SensorConfig sensorConfig)
 	{
 		super(recvTimestamp, sensorConfig);
-		this.value = value;
+	}
+	
+	public void setValue(float v)
+	{
+		this.value = v;
 	}
 
 	public float getValue()

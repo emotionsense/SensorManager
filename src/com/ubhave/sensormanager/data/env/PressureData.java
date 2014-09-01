@@ -26,9 +26,9 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 public class PressureData extends AbstractEnvironmentData
 {
 
-	public PressureData(long recvTimestamp, SensorConfig sensorConfig, float pressure)
+	public PressureData(long recvTimestamp, SensorConfig sensorConfig)
 	{
-		super(recvTimestamp, sensorConfig, pressure);
+		super(recvTimestamp, sensorConfig);
 	}
 
 	@Override

@@ -15,6 +15,11 @@ public class HumidityProcessor extends AbstractProcessor
 
 	public HumidityData process(long recvTime, SensorConfig config, float humidity)
 	{
-		return new HumidityData(recvTime, config, humidity);
+		HumidityData data = new HumidityData(recvTime, config);
+		if (setRawData)
+		{
+			data.setValue(humidity);
+		}
+		return data;
 	}
 }
