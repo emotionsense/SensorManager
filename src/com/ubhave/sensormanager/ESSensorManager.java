@@ -145,7 +145,7 @@ public class ESSensorManager implements ESSensorManagerInterface, SensorDataList
 		}
 		else
 		{
-			throw new ESException(ESException.UNKNOWN_SENSOR_TYPE, "Invalid sensor type: " + SensorUtils.getSensorName(sensorId) + " (Check permissions?)");
+			throw new ESException(ESException.UNKNOWN_SENSOR_TYPE, "Invalid sensor type: " + SensorUtils.getSensorName(sensorId) + " (Check permissions? Sensor missing from device?)");
 		}
 	}
 
