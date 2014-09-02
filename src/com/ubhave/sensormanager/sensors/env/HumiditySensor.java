@@ -22,9 +22,11 @@ IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 package com.ubhave.sensormanager.sensors.env;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
+import android.os.Build;
 
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.data.SensorData;
@@ -66,6 +68,7 @@ public class HumiditySensor extends AbstractEnvironmentSensor
 		return SensorUtils.SENSOR_TYPE_HUMIDITY;
 	}
 
+	@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 	@Override
 	protected Sensor getSensor()
 	{

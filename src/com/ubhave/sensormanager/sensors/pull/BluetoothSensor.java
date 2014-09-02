@@ -33,7 +33,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.Build.VERSION;
 import android.util.Log;
 
 import com.ubhave.sensormanager.ESException;
@@ -48,7 +47,10 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 public class BluetoothSensor extends AbstractPullSensor
 {
 	private static final String TAG = "BluetoothSensor";
-	private static final String[] REQUIRED_PERMISSIONS = new String[] { Manifest.permission.BLUETOOTH, Manifest.permission.BLUETOOTH_ADMIN };
+	private static final String[] REQUIRED_PERMISSIONS = new String[] {
+		Manifest.permission.BLUETOOTH,
+		Manifest.permission.BLUETOOTH_ADMIN
+	};
 
 	private static BluetoothSensor bluetoothSensor;
 	private static Object lock = new Object();
@@ -87,7 +89,7 @@ public class BluetoothSensor extends AbstractPullSensor
 	{
 		super(context);
 		btDevices = new ArrayList<ESBluetoothDevice>();
-		if (VERSION.SDK_INT >= 18)
+		if (android.os.Build.VERSION.SDK_INT >= 18)
 		{
 			BluetoothManager bluetoothMan = (BluetoothManager) context.getSystemService(Context.BLUETOOTH_SERVICE);
 			bluetooth = bluetoothMan.getAdapter();
