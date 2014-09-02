@@ -50,7 +50,7 @@ public abstract class AbstractEnvironmentSensor extends AbstractPushSensor
 		environmentSensor = getSensor();
 		if (environmentSensor == null)
 		{
-			throw new ESException(ESException.SENSOR_UNAVAILABLE, getLogTag() + " is null.");
+			throw new ESException(ESException.SENSOR_UNAVAILABLE, getLogTag() + " is null (missing from device).");
 		}
 	}
 
