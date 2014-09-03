@@ -74,7 +74,7 @@ public class PassiveLocationSensor extends AbstractPushSensor
 		return result;
 	}
 
-	private PassiveLocationSensor(Context context)
+	private PassiveLocationSensor(final Context context)
 	{
 		super(context);
 		locationListener = new LocationListener()
@@ -93,23 +93,22 @@ public class PassiveLocationSensor extends AbstractPushSensor
 				}
 			}
 
-			// We ignore those events.
 			@Override
 			public void onStatusChanged(String provider, int status, Bundle extras)
 			{
-				// TODO Auto-generated method stub
+				// Ignored
 			}
 
 			@Override
 			public void onProviderEnabled(String provider)
 			{
-				// TODO Auto-generated method stub
+				// Ignored
 			}
 
 			@Override
 			public void onProviderDisabled(String provider)
 			{
-				// TODO Auto-generated method stub
+				// Ignored
 			}
 		};
 	}
@@ -121,7 +120,7 @@ public class PassiveLocationSensor extends AbstractPushSensor
 	}
 
 	@Override
-	protected void onBroadcastReceived(Context context, Intent intent)
+	protected void onBroadcastReceived(final Context context, final Intent intent)
 	{
 		// We are not listening to broadcast so this is empty
 	}
