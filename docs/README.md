@@ -21,6 +21,10 @@ Please note that this library has been built and tested using Android phones, an
 
 See the library [usage](https://github.com/nlathia/SensorManager/blob/master/docs/usage.md) description, and the [ES-Library Examples](https://github.com/nlathia/ESLibrary-Examples) repository.
 
+#### Contributing to the Library
+
+See the [contributing](https://github.com/nlathia/SensorManager/blob/master/docs/contributing.md) docs.
+
 #### Questions and Contact
 
 If you have any questions, please email [this google group](https://groups.google.com/forum/#!forum/es-library-developers).
