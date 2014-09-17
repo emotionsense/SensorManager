@@ -25,10 +25,10 @@ package com.ubhave.sensormanager.data.pull;
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
-public class AccelerometerData extends AbstractMotionData
+public class MagneticFieldData extends AbstractMotionData
 {
-	public AccelerometerData(long senseStartTimestamp, SensorConfig sensorConfig)
+	public MagneticFieldData(long senseStartTimestamp, SensorConfig sensorConfig)
 	{
-		super(senseStartTimestamp, SensorUtils.SENSOR_TYPE_ACCELEROMETER, sensorConfig);
+		super(senseStartTimestamp, SensorUtils.SENSOR_TYPE_MAGNETIC_FIELD, sensorConfig);
 	}
 }

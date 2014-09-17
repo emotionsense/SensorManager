@@ -22,13 +22,46 @@ IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 package com.ubhave.sensormanager.data.pull;
 
-import com.ubhave.sensormanager.config.SensorConfig;
-import com.ubhave.sensormanager.sensors.SensorUtils;
+import java.util.ArrayList;
 
-public class AccelerometerData extends AbstractMotionData
+import com.ubhave.sensormanager.config.SensorConfig;
+import com.ubhave.sensormanager.data.SensorData;
+
+public abstract class AbstractMotionData extends SensorData
 {
-	public AccelerometerData(long senseStartTimestamp, SensorConfig sensorConfig)
+	private ArrayList<float[]> sensorReadings;
+	private ArrayList<Long> sensorReadingTimestamps;
+	private final int sensorType;
+
+	public AbstractMotionData(long senseStartTimestamp, int sensorType, SensorConfig sensorConfig)
 	{
-		super(senseStartTimestamp, SensorUtils.SENSOR_TYPE_ACCELEROMETER, sensorConfig);
+		super(senseStartTimestamp, sensorConfig);
+		this.sensorType = sensorType;
 	}
+	
+	public void setSensorReadings(ArrayList<float[]> sensorReadings)
+	{
+		this.sensorReadings = sensorReadings;
+	}
+
+	public ArrayList<float[]> getSensorReadings()
+	{
+		return sensorReadings;
+	}
+	
+	public void setSensorReadingTimestamps(ArrayList<Long> sensorReadingTimestamps)
+	{
+		this.sensorReadingTimestamps = sensorReadingTimestamps;
+	}
+	
+	public ArrayList<Long> getSensorReadingTimestamps()
+	{
+		return sensorReadingTimestamps;
+	}
+
+	public int getSensorType()
+	{
+		return sensorType;
+	}
+
 }
