@@ -46,6 +46,7 @@ import com.ubhave.sensormanager.sensors.pull.CallContentReaderSensor;
 import com.ubhave.sensormanager.sensors.pull.CameraSensor;
 import com.ubhave.sensormanager.sensors.pull.GyroscopeSensor;
 import com.ubhave.sensormanager.sensors.pull.LocationSensor;
+import com.ubhave.sensormanager.sensors.pull.MagneticFieldSensor;
 import com.ubhave.sensormanager.sensors.pull.MicrophoneSensor;
 import com.ubhave.sensormanager.sensors.pull.PhoneRadioSensor;
 import com.ubhave.sensormanager.sensors.pull.SMSContentReaderSensor;
@@ -88,6 +89,7 @@ public class SensorUtils
 	public final static int SENSOR_TYPE_AMBIENT_TEMPERATURE = 5021;
 	public final static int SENSOR_TYPE_PRESSURE = 5022;
 	public final static int SENSOR_TYPE_HUMIDITY = 5023;
+	public final static int SENSOR_TYPE_MAGNETIC_FIELD = 5024;
 	
 	public final static String SENSOR_NAME_ACCELEROMETER = "Accelerometer";
 	public final static String SENSOR_NAME_BATTERY = "Battery";
@@ -112,6 +114,7 @@ public class SensorUtils
 	public final static String SENSOR_NAME_AMBIENT_TEMPERATURE = "AmbientTemperature";
 	public final static String SENSOR_NAME_PRESSURE = "Pressure";
 	public final static String SENSOR_NAME_HUMIDITY = "Humidity";
+	public final static String SENSOR_NAME_MAGNETIC_FIELD = "MagneticField";
 
 	private static SensorEnum getSensor(int sensorType) throws ESException
 	{
@@ -223,6 +226,8 @@ public class SensorUtils
 			return PressureSensor.getSensor(context);
 		case SENSOR_TYPE_HUMIDITY:
 			return HumiditySensor.getSensor(context);
+		case SENSOR_TYPE_MAGNETIC_FIELD:
+			return MagneticFieldSensor.getSensor(context);
 		default:
 			throw new ESException(ESException.UNKNOWN_SENSOR_TYPE, "Unknown sensor id: " + id);
 		}

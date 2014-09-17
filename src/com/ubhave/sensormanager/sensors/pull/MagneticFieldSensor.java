@@ -26,32 +26,32 @@ import android.content.Context;
 import android.hardware.Sensor;
 
 import com.ubhave.sensormanager.ESException;
-import com.ubhave.sensormanager.process.pull.AccelerometerProcessor;
+import com.ubhave.sensormanager.process.pull.MagneticFieldProcessor;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
-public class AccelerometerSensor extends AbstractMotionSensor
+public class MagneticFieldSensor extends AbstractMotionSensor
 {
-	private static final String TAG = "AccelerometerSensor";
-	private static AccelerometerSensor accelerometerSensor;
+	private static final String TAG = "MagneticFieldSensor";
+	private static MagneticFieldSensor magneticFieldSensor;
 
-	public static AccelerometerSensor getSensor(Context context) throws ESException
+	public static MagneticFieldSensor getSensor(Context context) throws ESException
 	{
-		if (accelerometerSensor == null)
+		if (magneticFieldSensor == null)
 		{
 			synchronized (lock)
 			{
-				if (accelerometerSensor == null)
+				if (magneticFieldSensor == null)
 				{
-					accelerometerSensor = new AccelerometerSensor(context);
+					magneticFieldSensor = new MagneticFieldSensor(context);
 				}
 			}
 		}
-		return accelerometerSensor;
+		return magneticFieldSensor;
 	}
 
-	private AccelerometerSensor(final Context context) throws ESException
+	private MagneticFieldSensor(final Context context) throws ESException
 	{
-		super(context, Sensor.TYPE_ACCELEROMETER);
+		super(context, Sensor.TYPE_MAGNETIC_FIELD);
 	}
 
 	protected String getLogTag()
@@ -61,14 +61,14 @@ public class AccelerometerSensor extends AbstractMotionSensor
 
 	public int getSensorType()
 	{
-		return SensorUtils.SENSOR_TYPE_ACCELEROMETER;
+		return SensorUtils.SENSOR_TYPE_MAGNETIC_FIELD;
 	}
-
+	
 	protected void processSensorData()
 	{
 		synchronized (sensorReadings)
 		{
-			AccelerometerProcessor processor = (AccelerometerProcessor) getProcessor();
+			MagneticFieldProcessor processor = (MagneticFieldProcessor) getProcessor();
 			data = processor.process(pullSenseStartTimestamp, sensorReadings, sensorReadingTimestamps, sensorConfig.clone());
 		}
 	}

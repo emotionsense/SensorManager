@@ -23,7 +23,7 @@ package com.ubhave.sensormanager.sensors.pull;
 import android.content.Context;
 import android.hardware.Sensor;
 
-import com.ubhave.sensormanager.data.pull.GyroscopeData;
+import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.process.pull.GyroscopeProcessor;
 import com.ubhave.sensormanager.sensors.SensorUtils;
 
@@ -31,11 +31,8 @@ public class GyroscopeSensor extends AbstractMotionSensor
 {
 	private static final String TAG = "GyroscopeSensor";
 	private static GyroscopeSensor gyroscopeSensor;
-	private static Object lock = new Object();
 
-	private GyroscopeData gyroscopeData;
-
-	public static GyroscopeSensor getSensor(final Context context)
+	public static GyroscopeSensor getSensor(final Context context) throws ESException
 	{
 		if (gyroscopeSensor == null)
 		{
@@ -50,7 +47,7 @@ public class GyroscopeSensor extends AbstractMotionSensor
 		return gyroscopeSensor;
 	}
 
-	private GyroscopeSensor(final Context context)
+	private GyroscopeSensor(final Context context) throws ESException
 	{
 		super(context, Sensor.TYPE_GYROSCOPE);
 	}
@@ -65,17 +62,12 @@ public class GyroscopeSensor extends AbstractMotionSensor
 		return SensorUtils.SENSOR_TYPE_GYROSCOPE;
 	}
 
-	protected GyroscopeData getMostRecentRawData()
-	{
-		return gyroscopeData;
-	}
-
 	protected void processSensorData()
 	{
 		synchronized (sensorReadings)
 		{
 			GyroscopeProcessor processor = (GyroscopeProcessor) getProcessor();
-			gyroscopeData = processor.process(pullSenseStartTimestamp, sensorReadings, sensorReadingTimestamps, sensorConfig.clone());
+			data = processor.process(pullSenseStartTimestamp, sensorReadings, sensorReadingTimestamps, sensorConfig.clone());
 		}
 	}
 }
