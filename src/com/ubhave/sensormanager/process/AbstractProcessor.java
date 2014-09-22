@@ -14,6 +14,7 @@ import com.ubhave.sensormanager.process.pull.CallContentReaderProcessor;
 import com.ubhave.sensormanager.process.pull.CameraProcessor;
 import com.ubhave.sensormanager.process.pull.GyroscopeProcessor;
 import com.ubhave.sensormanager.process.pull.LocationProcessor;
+import com.ubhave.sensormanager.process.pull.MagneticFieldProcessor;
 import com.ubhave.sensormanager.process.pull.MicrophoneProcessor;
 import com.ubhave.sensormanager.process.pull.PhoneRadioProcessor;
 import com.ubhave.sensormanager.process.pull.SMSContentReaderProcessor;
@@ -85,8 +86,10 @@ public abstract class AbstractProcessor
 			return new PressureProcessor(c, setRawData, setProcessedData);
 		case SensorUtils.SENSOR_TYPE_PASSIVE_LOCATION:
 			return new PassiveLocationProcessor(c, setRawData, setProcessedData);
+		case SensorUtils.SENSOR_TYPE_MAGNETIC_FIELD:
+			return new MagneticFieldProcessor(c, setRawData, setProcessedData);
 		default:
-			throw new ESException(ESException.UNKNOWN_SENSOR_TYPE, "No processor defined for this sensor.");
+			throw new ESException(ESException.UNKNOWN_SENSOR_TYPE, "No processor defined for this sensor id ("+sensorType+").");
 		}
 	}
 
