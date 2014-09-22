@@ -3,6 +3,7 @@ package com.ubhave.sensormanager.process.pull;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.pull.AbstractMotionData;
@@ -21,6 +22,7 @@ public abstract class AbstractMotionProcessor extends AbstractProcessor
 		AbstractMotionData data = getInstance(pullSenseStartTimestamp, sensorConfig);
 		if (setRawData)
 		{
+			Log.d("Processor", "Setting raw data: "+sensorReadings.size());
 			data.setSensorReadings(sensorReadings);
 			data.setSensorReadingTimestamps(sensorReadingTimestamps);
 		}

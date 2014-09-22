@@ -39,7 +39,7 @@ public abstract class AbstractMotionData extends SensorData
 		this.sensorType = sensorType;
 	}
 	
-	public void setSensorReadings(ArrayList<float[]> sensorReadings)
+	public void setSensorReadings(final ArrayList<float[]> sensorReadings)
 	{
 		this.sensorReadings = sensorReadings;
 	}
@@ -49,7 +49,7 @@ public abstract class AbstractMotionData extends SensorData
 		return sensorReadings;
 	}
 	
-	public void setSensorReadingTimestamps(ArrayList<Long> sensorReadingTimestamps)
+	public void setSensorReadingTimestamps(final ArrayList<Long> sensorReadingTimestamps)
 	{
 		this.sensorReadingTimestamps = sensorReadingTimestamps;
 	}
@@ -63,5 +63,4 @@ public abstract class AbstractMotionData extends SensorData
 	{
 		return sensorType;
 	}
-
 }
