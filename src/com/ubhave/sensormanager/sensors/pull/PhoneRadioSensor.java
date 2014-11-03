@@ -109,6 +109,7 @@ public class PhoneRadioSensor extends AbstractPullSensor
 				{
 					visibleCells = new ArrayList<PhoneRadioData>();
 					TelephonyManager telephonyManager = (TelephonyManager) applicationContext.getSystemService(Context.TELEPHONY_SERVICE);
+					// TODO handle old API
 					List<CellInfo> cellInfos = telephonyManager.getAllCellInfo();
 					if (cellInfos == null)
 					{

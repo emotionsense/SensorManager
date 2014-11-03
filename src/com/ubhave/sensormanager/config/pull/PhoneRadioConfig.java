@@ -23,13 +23,10 @@ public class PhoneRadioConfig
 {
 	/*
 	 * Default values
+	 * Note: Phone radio sensor sensing cycles should always be one
 	 */
 	public static final long DEFAULT_SLEEP_INTERVAL = 1 * 60 * 1000;
-	public static final int PHONE_RADIO_SAMPLING_CYCLES = 1; // phone radio
-																// sensor
-																// sensing
-																// cycles should
-																// always be 1
+	public static final int PHONE_RADIO_SAMPLING_CYCLES = 1;
 
 	public static SensorConfig getDefault()
 	{

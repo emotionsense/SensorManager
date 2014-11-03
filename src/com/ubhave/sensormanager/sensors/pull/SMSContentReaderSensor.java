@@ -87,4 +87,10 @@ public class SMSContentReaderSensor extends AbstractContentReaderSensor
 	{
 		return LOG_TAG;
 	}
+
+	@Override
+	protected String getDateKey()
+	{
+		return ContentReaderConfig.SMS_CONTENT_DATE_KEY;
+	}
 }

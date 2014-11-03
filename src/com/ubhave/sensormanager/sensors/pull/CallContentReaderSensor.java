@@ -73,6 +73,12 @@ public class CallContentReaderSensor extends AbstractContentReaderSensor
 	{
 		return "content://call_log/calls";
 	}
+	
+	@Override
+	protected String getDateKey()
+	{
+		return CallLog.Calls.DATE;
+	}
 
 	@Override
 	protected String[] getContentKeysArray()

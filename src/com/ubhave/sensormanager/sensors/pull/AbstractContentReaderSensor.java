@@ -32,19 +32,21 @@ import android.net.Uri;
 import android.util.Log;
 
 import com.ubhave.sensormanager.config.GlobalConfig;
+import com.ubhave.sensormanager.config.pull.ContentReaderConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.process.pull.ContentReaderProcessor;
 
 public abstract class AbstractContentReaderSensor extends AbstractPullSensor
 {
+	private final static String TAG = "ContentReaderSensor";
 	protected ArrayList<HashMap<String, String>> contentList;
 	protected static Object lock = new Object();
 
 	protected abstract String getContentURL();
-
+	
 	protected abstract String[] getContentKeysArray();
 
-	protected AbstractContentReaderSensor(Context context)
+	protected AbstractContentReaderSensor(final Context context)
 	{
 		super(context);
 	}
@@ -55,19 +57,27 @@ public abstract class AbstractContentReaderSensor extends AbstractPullSensor
 		{
 			public void run()
 			{
-				// Some parameters that could be exposed through the config,
-				// which are currently set as constants in the code:
-				// 1) limit on number of rows - 1000
-				// 2) columns to query
-
 				contentList = new ArrayList<HashMap<String, String>>();
-				String url = getContentURL();
-				Uri uri = Uri.parse(url);
-				String[] contentKeys = getContentKeysArray();
 				try
 				{
-					ContentResolver contentResolver = applicationContext.getContentResolver();
-					Cursor cursor = contentResolver.query(uri, contentKeys, null, null, "date LIMIT 1000");
+					final String url = getContentURL();
+					final String[] contentKeys = getContentKeysArray();
+					final ContentResolver contentResolver = applicationContext.getContentResolver();
+					
+					final long timeLimit = getTimeLimit();
+					String selection = null;
+					String[] selectionArgs = null;
+					if (timeLimit != ContentReaderConfig.NO_TIME_LIMIT)
+					{
+						selection = getDateKey() + ">=?";
+						selectionArgs = new String[]{Long.toString(timeLimit)};
+						if (GlobalConfig.shouldLog())
+						{
+							Log.d(TAG, "Query range: "+selection+" :: "+timeLimit);
+						}
+					}
+					
+					Cursor cursor = contentResolver.query(Uri.parse(url), contentKeys, selection, selectionArgs, getSortBy());
 					if (cursor != null)
 					{
 						cursor.moveToFirst();
@@ -75,13 +85,19 @@ public abstract class AbstractContentReaderSensor extends AbstractPullSensor
 						{
 							Log.d(getLogTag(), "Total entries in the cursor: " + cursor.getCount());
 						}
+						
+						HashMap<String, Integer> columnIndex = new HashMap<String, Integer>();
+						for (String key : contentKeys)
+						{
+							columnIndex.put(key, cursor.getColumnIndex(key));
+						}
 
 						while (!cursor.isAfterLast())
 						{
 							HashMap<String, String> contentMap = new HashMap<String, String>();
 							for (String key : contentKeys)
 							{
-								String value = cursor.getString(cursor.getColumnIndex(key));
+								String value = cursor.getString(columnIndex.get(key));
 								contentMap.put(key, value);
 							}
 							contentList.add(contentMap);
@@ -104,6 +120,43 @@ public abstract class AbstractContentReaderSensor extends AbstractPullSensor
 
 		return true;
 	}
+	
+	private String getSortBy()
+	{
+		String sortBy = getDateKey();
+		int maxRows;
+		try
+		{
+			maxRows = (Integer) sensorConfig.getParameter(ContentReaderConfig.ROW_LIMIT);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			maxRows = ContentReaderConfig.DEFAULT_ROW_LIMIT;
+		}
+		
+		if (maxRows != ContentReaderConfig.NO_ROW_LIMIT)
+		{
+			sortBy += " LIMIT "+maxRows;
+		}
+		
+		return sortBy;
+	}
+	
+	private long getTimeLimit()
+	{
+		try
+		{
+			return (Long) sensorConfig.getParameter(ContentReaderConfig.TIME_LIMIT_MILLIS);
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+			return ContentReaderConfig.NO_TIME_LIMIT;
+		}
+	}
+	
+	protected abstract String getDateKey();
 
 	// Called when a scan is finished
 	protected void stopSensing()
