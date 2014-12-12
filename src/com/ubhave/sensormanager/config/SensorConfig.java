@@ -55,7 +55,6 @@ public class SensorConfig extends AbstractConfig implements Cloneable
 			Object obj = configParams.get(key);
 			clonedSensorConfig.setParameter(key, obj);
 		}
-
 		return clonedSensorConfig;
 	}
 	
@@ -65,6 +64,8 @@ public class SensorConfig extends AbstractConfig implements Cloneable
 		switch (sensorType)
 		{
 		case SensorUtils.SENSOR_TYPE_ACCELEROMETER:
+		case SensorUtils.SENSOR_TYPE_GYROSCOPE:
+		case SensorUtils.SENSOR_TYPE_MAGNETIC_FIELD:
 			sensorConfig = MotionSensorConfig.getDefault();
 			break;
 		case SensorUtils.SENSOR_TYPE_BLUETOOTH:
@@ -88,9 +89,6 @@ public class SensorConfig extends AbstractConfig implements Cloneable
 			break;
 		case SensorUtils.SENSOR_TYPE_CAMERA:
 			sensorConfig = CameraConfig.getDefault();
-			break;
-		case SensorUtils.SENSOR_TYPE_GYROSCOPE:
-			sensorConfig = MotionSensorConfig.getDefault();
 			break;
 		case SensorUtils.SENSOR_TYPE_PHONE_RADIO:
 			sensorConfig = PhoneRadioConfig.getDefault();

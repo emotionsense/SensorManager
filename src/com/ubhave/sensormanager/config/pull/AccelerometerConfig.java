@@ -26,6 +26,8 @@ public class AccelerometerConfig
 	/*
 	 * Classifier thresholds
 	 */
+	
+	// TODO: fix static access
 	public final static int ACCELEROMETER_MOVEMENT_THRESHOLD = 25;
 	
 }

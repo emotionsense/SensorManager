@@ -30,21 +30,23 @@ public class MotionSensorConfig
 	 * Config keys
 	 */
 	public final static String SAMPLING_DELAY = "MOTION_SAMPLING_DELAY";
+	public final static String LOW_PASS_ALPHA = "LOW_PASS_ALPHA";
 	
 	/*
 	 * Default values
 	 */
-	public static final long DEFAULT_SAMPLING_WINDOW_SIZE_MILLIS = 8000L;
-	public static final long DEFAULT_SLEEP_INTERVAL = 2 * 60 * 1000L;
-	public static final int DEFAULT_SAMPLING_DELAY = SensorManager.SENSOR_DELAY_GAME;
-	
+	private static final long DEFAULT_SAMPLING_WINDOW_SIZE_MILLIS = 8000L;
+	private static final long DEFAULT_SLEEP_INTERVAL = 2 * 60 * 1000L;
+	private static final int DEFAULT_SAMPLING_DELAY = SensorManager.SENSOR_DELAY_GAME;
+	private static final float DEFAULT_LOW_PASS_ALPHA = 0.25f;
 	
 	public static SensorConfig getDefault()
 	{
 		SensorConfig sensorConfig = new SensorConfig();
 		sensorConfig.setParameter(PullSensorConfig.POST_SENSE_SLEEP_LENGTH_MILLIS, DEFAULT_SLEEP_INTERVAL);
-		sensorConfig.setParameter(MotionSensorConfig.SAMPLING_DELAY, DEFAULT_SAMPLING_DELAY);
 		sensorConfig.setParameter(PullSensorConfig.SENSE_WINDOW_LENGTH_MILLIS, DEFAULT_SAMPLING_WINDOW_SIZE_MILLIS);
+		sensorConfig.setParameter(SAMPLING_DELAY, DEFAULT_SAMPLING_DELAY);
+		sensorConfig.setParameter(LOW_PASS_ALPHA, DEFAULT_LOW_PASS_ALPHA);
 		return sensorConfig;
 	}
 }

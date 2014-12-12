@@ -26,18 +26,13 @@ import com.ubhave.sensormanager.config.SensorConfig;
 
 public abstract class SensorData
 {
-	// for pull sensor: this is the time at which sensing
-	// cycle is started
-	// for push sensor: this is the time at which data is
-	// received by the sensor
+	// for pull sensor: this is the time at which sensing cycle is started
+	// for push sensor: this is the time at which data is received by the sensor
 	private final long sensorDataTimestamp;
-
 	private SensorData prevSensorData;
-	protected boolean isDataProcessed;
-
 	private SensorConfig sensorConfig;
-
-	public abstract int getSensorType();
+	
+	protected boolean isDataProcessed;
 
 	public SensorData(long sensorTimestamp, SensorConfig config)
 	{
@@ -70,6 +65,8 @@ public abstract class SensorData
 	{
 		return prevSensorData;
 	}
+	
+	public abstract int getSensorType();
 
 	public void setPrevSensorData(SensorData prevSensorData)
 	{
