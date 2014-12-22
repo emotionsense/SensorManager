@@ -24,14 +24,15 @@ package com.ubhave.sensormanager.classifier;
 
 import java.util.ArrayList;
 
-import com.ubhave.sensormanager.config.pull.AccelerometerConfig;
+import com.ubhave.sensormanager.config.SensorConfig;
+import com.ubhave.sensormanager.config.pull.MotionSensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.data.pull.AccelerometerData;
 
 public class AccelerometerDataClassifier implements SensorDataClassifier
 {
-
-	public boolean isInteresting(SensorData sensorData)
+	@Override
+	public boolean isInteresting(final SensorData sensorData, final SensorConfig sensorConfig)
 	{
 
 		AccelerometerData data = (AccelerometerData) sensorData;
@@ -113,6 +114,7 @@ public class AccelerometerDataClassifier implements SensorDataClassifier
 
 		// And the standard deviation of each set
 		double[] stddevs = new double[scalars.size()];
+		int motionThreshold = (Integer) sensorConfig.getParameter(MotionSensorConfig.MOTION_THRESHOLD);
 		for (int i = 0; i < stddevs.length; i++)
 		{
 			double stddev = 0.0;
@@ -125,7 +127,7 @@ public class AccelerometerDataClassifier implements SensorDataClassifier
 			stddev = Math.sqrt(stddev);
 			stddevs[i] = stddev;
 
-			if (stddev < AccelerometerConfig.ACCELEROMETER_MOVEMENT_THRESHOLD)
+			if (stddev < motionThreshold)
 			{
 				// We don't seem to be moving
 				status -= 1;

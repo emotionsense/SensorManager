@@ -22,12 +22,14 @@ IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 package com.ubhave.sensormanager.classifier;
 
+import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.data.push.ScreenData;
 
 public class ScreenDataClassifier implements SensorDataClassifier
 {
-	public boolean isInteresting(SensorData sensorData)
+	@Override
+	public boolean isInteresting(final SensorData sensorData, final SensorConfig sensorConfig)
 	{
 		ScreenData screen = (ScreenData) sensorData;
 		return screen.isOn();

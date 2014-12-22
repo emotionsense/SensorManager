@@ -24,14 +24,15 @@ package com.ubhave.sensormanager.classifier;
 
 import android.location.Location;
 
+import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.config.pull.LocationConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.data.pull.LocationData;
 
 public class LocationDataClassifier implements SensorDataClassifier
 {
-
-	public boolean isInteresting(SensorData sensorData)
+	@Override
+	public boolean isInteresting(final SensorData sensorData, final SensorConfig sensorConfig)
 	{
 		LocationData data = (LocationData) sensorData;
 		LocationData prevData = (LocationData) sensorData.getPrevSensorData();

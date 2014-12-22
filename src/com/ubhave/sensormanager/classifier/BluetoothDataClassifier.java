@@ -24,14 +24,15 @@ package com.ubhave.sensormanager.classifier;
 
 import java.util.ArrayList;
 
+import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.data.pull.BluetoothData;
 import com.ubhave.sensormanager.data.pull.ESBluetoothDevice;
 
 public class BluetoothDataClassifier extends SocialClassifier implements SensorDataClassifier
 {
-
-	public boolean isInteresting(SensorData sensorData)
+	@Override
+	public boolean isInteresting(final SensorData sensorData, final SensorConfig sensorConfig)
 	{
 		BluetoothData data = (BluetoothData) sensorData;
 		BluetoothData prevData = (BluetoothData) sensorData.getPrevSensorData();

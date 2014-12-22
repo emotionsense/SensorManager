@@ -24,14 +24,15 @@ package com.ubhave.sensormanager.classifier;
 
 import java.util.ArrayList;
 
+import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.data.pull.WifiData;
 import com.ubhave.sensormanager.data.pull.WifiScanResult;
 
 public class WifiDataClassifier extends SocialClassifier implements SensorDataClassifier
 {
-
-	public boolean isInteresting(SensorData sensorData)
+	@Override
+	public boolean isInteresting(final SensorData sensorData, final SensorConfig sensorConfig)
 	{
 		WifiData data = (WifiData) sensorData;
 		WifiData prevData = (WifiData) sensorData.getPrevSensorData();

@@ -31,6 +31,7 @@ public class MotionSensorConfig
 	 */
 	public final static String SAMPLING_DELAY = "MOTION_SAMPLING_DELAY";
 	public final static String LOW_PASS_ALPHA = "LOW_PASS_ALPHA";
+	public final static String MOTION_THRESHOLD = "MOTION_THRESHOLD";
 	
 	/*
 	 * Default values
@@ -39,6 +40,7 @@ public class MotionSensorConfig
 	private static final long DEFAULT_SLEEP_INTERVAL = 2 * 60 * 1000L;
 	private static final int DEFAULT_SAMPLING_DELAY = SensorManager.SENSOR_DELAY_GAME;
 	private static final float DEFAULT_LOW_PASS_ALPHA = 0.25f;
+	private static final int DEFAULT_MOVEMENT_THRESHOLD = 25;
 	
 	public static SensorConfig getDefault()
 	{
@@ -47,6 +49,7 @@ public class MotionSensorConfig
 		sensorConfig.setParameter(PullSensorConfig.SENSE_WINDOW_LENGTH_MILLIS, DEFAULT_SAMPLING_WINDOW_SIZE_MILLIS);
 		sensorConfig.setParameter(SAMPLING_DELAY, DEFAULT_SAMPLING_DELAY);
 		sensorConfig.setParameter(LOW_PASS_ALPHA, DEFAULT_LOW_PASS_ALPHA);
+		sensorConfig.setParameter(MOTION_THRESHOLD, DEFAULT_MOVEMENT_THRESHOLD);
 		return sensorConfig;
 	}
 }

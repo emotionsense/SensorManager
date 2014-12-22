@@ -22,13 +22,14 @@ IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 package com.ubhave.sensormanager.classifier;
 
+import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.data.push.SmsData;
 
 public class SMSDataClassifier implements SensorDataClassifier
 {
-
-	public boolean isInteresting(SensorData sensorData)
+	@Override
+	public boolean isInteresting(final SensorData sensorData, final SensorConfig sensorConfig)
 	{
 		SmsData sms = (SmsData) sensorData;
 		if (sms.wasReceived())

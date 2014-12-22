@@ -22,6 +22,7 @@ IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 package com.ubhave.sensormanager.classifier;
 
+import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 import com.ubhave.sensormanager.data.push.PhoneStateData;
 
@@ -38,7 +39,8 @@ public class PhoneStateDataClassifier implements SensorDataClassifier
 		isInCall = false;
 	}
 
-	public boolean isInteresting(SensorData sensorData)
+	@Override
+	public boolean isInteresting(final SensorData sensorData, final SensorConfig sensorConfig)
 	{
 		PhoneStateData phone = (PhoneStateData) sensorData;
 		if (phone.isOffHook())

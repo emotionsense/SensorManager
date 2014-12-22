@@ -22,9 +22,10 @@ IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 package com.ubhave.sensormanager.classifier;
 
+import com.ubhave.sensormanager.config.SensorConfig;
 import com.ubhave.sensormanager.data.SensorData;
 
 public interface SensorDataClassifier
 {
-	public boolean isInteresting(SensorData sensorData);
+	public boolean isInteresting(final SensorData sensorData, final SensorConfig sensorConfig);
 }

@@ -125,7 +125,7 @@ public class AdaptiveSensing implements SensorDataListener
 		}
 	}
 
-	private void updateSamplingInterval(SensorData data) throws ESException
+	private void updateSamplingInterval(final SensorData data) throws ESException
 	{
 		int sensorType = data.getSensorType();
 		PullSensorDetails sensorDetails = sensorMap.get(sensorType);
@@ -133,7 +133,7 @@ public class AdaptiveSensing implements SensorDataListener
 		SensorDataClassifier classifier = sensorDetails.classifier;
 
 		// classify as interesting or not
-		if (classifier.isInteresting(data))
+		if (classifier.isInteresting(data, data.getSensorConfig()))
 		{
 			probability = probability + (PullSensorConfig.ALPHA_VALUE * (1 - probability));
 		}
