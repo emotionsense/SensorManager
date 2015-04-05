@@ -1,10 +1,17 @@
 .DS_Store
+
 gen/
+
 assets/*
+
 .idea/*
+
 .settings/
+
 libs/
+
 bin/classes
+
 SensorManager.iml
 
 *.class
