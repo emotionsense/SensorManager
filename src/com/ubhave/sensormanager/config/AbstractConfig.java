@@ -33,12 +33,12 @@ public class AbstractConfig
 		configParams = new HashMap<String, Object>();
 	}
 
-	public void setParameter(String parameterName, Object parameterValue)
+	public void setParameter(final String parameterName, final Object parameterValue)
 	{
 		configParams.put(parameterName, parameterValue);
 	}
 
-	public Object getParameter(String parameterName)
+	public Object getParameter(final String parameterName)
 	{
 		Object parameterValue = null;
 		if (configParams.containsKey(parameterName))
@@ -48,7 +48,7 @@ public class AbstractConfig
 		return parameterValue;
 	}
 
-	public boolean containsParameter(String parameterName)
+	public boolean containsParameter(final String parameterName)
 	{
 		if (configParams.containsKey(parameterName))
 		{
@@ -57,12 +57,11 @@ public class AbstractConfig
 		return false;
 	}
 
-	public void removeParameter(String parameterName)
+	public void removeParameter(final String parameterName)
 	{
 		if (configParams.containsKey(parameterName))
 		{
 			configParams.remove(parameterName);
 		}
 	}
-
 }
