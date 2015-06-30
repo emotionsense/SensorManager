@@ -43,6 +43,10 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class ApplicationSensor extends AbstractPullSensor
 {
+	/*
+	 * Warning: as of Lollipop, the getRunningTasks() method that this sensor uses is no longer
+	 * available to third party applications.
+	 */
 	private static final String TAG = "ApplicationSensor";
 	private static ApplicationSensor applicationSensor;
 	private static Object lock = new Object();

@@ -39,7 +39,11 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 public class PhoneStateSensor extends AbstractPushSensor
 {
 	private static final String TAG = "PhoneStateSensor";
-	private static final String[] REQUIRED_PERMISSIONS = new String[]{Manifest.permission.PROCESS_OUTGOING_CALLS, Manifest.permission.READ_PHONE_STATE};
+	private static final String[] REQUIRED_PERMISSIONS = new String[]{
+		Manifest.permission.PROCESS_OUTGOING_CALLS,
+		Manifest.permission.ACCESS_COARSE_LOCATION,
+		Manifest.permission.READ_PHONE_STATE
+	};
 
 	private TelephonyManager telephonyManager;
 	private PhoneStateListener phoneStateListener;

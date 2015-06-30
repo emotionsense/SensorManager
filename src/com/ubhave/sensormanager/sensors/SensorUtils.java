@@ -101,7 +101,8 @@ public class SensorUtils
 	public final static String SENSOR_NAME_SCREEN = "Screen";
 	public final static String SENSOR_NAME_SMS = "SMS";
 	public final static String SENSOR_NAME_WIFI = "WiFi";
-	public final static String SENSOR_NAME_CONNECTION_STATE = "Connection";
+	public final static String SENSOR_NAME_CONNECTION_STATE = "ConnectionState";
+	public final static String SENSOR_NAME_CONNECTION_STRENGTH = "ConnectionStrength";
 	public final static String SENSOR_NAME_APPLICATION = "Application";
 	public final static String SENSOR_NAME_SMS_CONTENT_READER = "SMSContentReader";
 	public final static String SENSOR_NAME_CALL_CONTENT_READER = "CallContentReader";
@@ -109,7 +110,6 @@ public class SensorUtils
 	public final static String SENSOR_NAME_GYROSCOPE = "Gyroscope";
 	public final static String SENSOR_NAME_LIGHT = "Light";
 	public final static String SENSOR_NAME_PHONE_RADIO = "PhoneRadio";
-	public final static String SENSOR_NAME_CONNECTION_STRENGTH = "ConnectionStrength";
 	public final static String SENSOR_NAME_PASSIVE_LOCATION = "PassiveLocation";
 	public final static String SENSOR_NAME_AMBIENT_TEMPERATURE = "AmbientTemperature";
 	public final static String SENSOR_NAME_PRESSURE = "Pressure";

@@ -32,6 +32,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Telephony;
 import android.telephony.SmsMessage;
 
 import com.ubhave.sensormanager.ESException;
@@ -44,7 +45,6 @@ public class SmsSensor extends AbstractPushSensor
 {
 	private static final String TAG = "SmsSensor";
 	private static final String[] REQUIRED_PERMISSIONS = new String[]{Manifest.permission.RECEIVE_SMS, Manifest.permission.READ_SMS};
-	private static final String SMS_RECEIVED = "android.provider.Telephony.SMS_RECEIVED";
 
 	private static SmsSensor smsSensor;
 	private static Object lock = new Object();
@@ -150,7 +150,7 @@ public class SmsSensor extends AbstractPushSensor
 
 	protected void onBroadcastReceived(Context context, Intent intent)
 	{
-		if (intent.getAction().equals(SMS_RECEIVED))
+		if (intent.getAction().equals(Telephony.Sms.Intents.SMS_RECEIVED_ACTION))
 		{
 			Bundle bundle = intent.getExtras();
 			SmsMessage[] smsMessagesArray = null;
@@ -183,7 +183,7 @@ public class SmsSensor extends AbstractPushSensor
 	protected IntentFilter[] getIntentFilters()
 	{
 		IntentFilter[] filters = new IntentFilter[1];
-		filters[0] = new IntentFilter(SMS_RECEIVED);
+		filters[0] = new IntentFilter(Telephony.Sms.Intents.SMS_RECEIVED_ACTION);
 		return filters;
 	}
 

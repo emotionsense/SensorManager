@@ -86,8 +86,7 @@ public class ConnectionStateSensor extends AbstractPushSensor
 				WifiInfo wifiInfo = wifiMgr.getConnectionInfo();
 
 				ConnectionStateProcessor processor = (ConnectionStateProcessor) getProcessor();
-				ConnectionStateData data = processor.process(System.currentTimeMillis(), sensorConfig.clone(),
-						activeNetwork, wifiInfo);
+				ConnectionStateData data = processor.process(System.currentTimeMillis(), sensorConfig.clone(), activeNetwork, wifiInfo);
 				onDataSensed(data);
 			}
 			catch (Exception e)

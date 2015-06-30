@@ -35,7 +35,7 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class ConnectionStrengthSensor extends AbstractPushSensor
 {
-	private static final String TAG = "ConnectionSrengthSensor";
+	private static final String TAG = "ConnectionStrengthSensor";
 	private static final String[] REQUIRED_PERMISSIONS = new String[] { Manifest.permission.READ_PHONE_STATE };
 
 	private volatile static ConnectionStrengthSensor connectionSensor;

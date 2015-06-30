@@ -27,6 +27,7 @@ package com.ubhave.sensormanager.sensors.pull;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.telephony.CellInfo;
@@ -42,7 +43,6 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 public class PhoneRadioSensor extends AbstractPullSensor
 {
 	private static final String TAG = "PhoneRadioSensor";
-	private static final String PERMISSION_ACCESS_CELL_INFO = "android.permission.ACCESS_COARSE_LOCATION";
 
 	private static PhoneRadioSensor phoneRadioSensor;
 	private static Object lock = new Object();
@@ -58,7 +58,7 @@ public class PhoneRadioSensor extends AbstractPullSensor
 			{
 				if (phoneRadioSensor == null)
 				{
-					if (permissionGranted(context, PERMISSION_ACCESS_CELL_INFO))
+					if (permissionGranted(context, Manifest.permission.ACCESS_COARSE_LOCATION))
 					{
 						phoneRadioSensor = new PhoneRadioSensor(context);
 					}
