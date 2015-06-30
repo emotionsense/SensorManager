@@ -23,7 +23,6 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 
 public class ConnectionStrengthData extends SensorData
 {
-
 	private int strength;
 
 	public ConnectionStrengthData(long recvTimestamp, SensorConfig sensorConfig)
@@ -36,7 +35,7 @@ public class ConnectionStrengthData extends SensorData
 		strength = i;
 	}
 
-	public float getStrength()
+	public int getStrength()
 	{
 		return strength;
 	}
