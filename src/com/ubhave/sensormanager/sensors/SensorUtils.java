@@ -43,7 +43,6 @@ import com.ubhave.sensormanager.sensors.pull.AccelerometerSensor;
 import com.ubhave.sensormanager.sensors.pull.ApplicationSensor;
 import com.ubhave.sensormanager.sensors.pull.BluetoothSensor;
 import com.ubhave.sensormanager.sensors.pull.CallContentReaderSensor;
-import com.ubhave.sensormanager.sensors.pull.CameraSensor;
 import com.ubhave.sensormanager.sensors.pull.GyroscopeSensor;
 import com.ubhave.sensormanager.sensors.pull.LocationSensor;
 import com.ubhave.sensormanager.sensors.pull.MagneticFieldSensor;
@@ -80,7 +79,6 @@ public class SensorUtils
 	public final static int SENSOR_TYPE_APPLICATION = 5012;
 	public final static int SENSOR_TYPE_SMS_CONTENT_READER = 5013;
 	public final static int SENSOR_TYPE_CALL_CONTENT_READER = 5014;
-	public final static int SENSOR_TYPE_CAMERA = 5015;
 	public final static int SENSOR_TYPE_GYROSCOPE = 5016;
 	public final static int SENSOR_TYPE_LIGHT = 5017;
 	public final static int SENSOR_TYPE_PHONE_RADIO = 5018;
@@ -208,8 +206,6 @@ public class SensorUtils
 			return SMSContentReaderSensor.getSensor(context);
 		case SENSOR_TYPE_CALL_CONTENT_READER:
 			return CallContentReaderSensor.getSensor(context);
-		case SENSOR_TYPE_CAMERA:
-			return CameraSensor.getSensor(context);
 		case SENSOR_TYPE_GYROSCOPE:
 			return GyroscopeSensor.getSensor(context);
 		case SENSOR_TYPE_LIGHT:

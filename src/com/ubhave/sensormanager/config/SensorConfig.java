@@ -24,7 +24,6 @@ package com.ubhave.sensormanager.config;
 
 import com.ubhave.sensormanager.config.pull.ApplicationConfig;
 import com.ubhave.sensormanager.config.pull.BluetoothConfig;
-import com.ubhave.sensormanager.config.pull.CameraConfig;
 import com.ubhave.sensormanager.config.pull.ContentReaderConfig;
 import com.ubhave.sensormanager.config.pull.LocationConfig;
 import com.ubhave.sensormanager.config.pull.MicrophoneConfig;
@@ -86,9 +85,6 @@ public class SensorConfig extends AbstractConfig implements Cloneable
 		case SensorUtils.SENSOR_TYPE_SMS_CONTENT_READER:
 		case SensorUtils.SENSOR_TYPE_CALL_CONTENT_READER:
 			sensorConfig = ContentReaderConfig.getDefault();
-			break;
-		case SensorUtils.SENSOR_TYPE_CAMERA:
-			sensorConfig = CameraConfig.getDefault();
 			break;
 		case SensorUtils.SENSOR_TYPE_PHONE_RADIO:
 			sensorConfig = PhoneRadioConfig.getDefault();

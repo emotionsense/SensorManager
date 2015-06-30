@@ -11,7 +11,6 @@ import com.ubhave.sensormanager.process.pull.AccelerometerProcessor;
 import com.ubhave.sensormanager.process.pull.ApplicationProcessor;
 import com.ubhave.sensormanager.process.pull.BluetoothProcessor;
 import com.ubhave.sensormanager.process.pull.CallContentReaderProcessor;
-import com.ubhave.sensormanager.process.pull.CameraProcessor;
 import com.ubhave.sensormanager.process.pull.GyroscopeProcessor;
 import com.ubhave.sensormanager.process.pull.LocationProcessor;
 import com.ubhave.sensormanager.process.pull.MagneticFieldProcessor;
@@ -68,8 +67,6 @@ public abstract class AbstractProcessor
 			return new CallContentReaderProcessor(c, setRawData, setProcessedData);
 		case SensorUtils.SENSOR_TYPE_SMS_CONTENT_READER:
 			return new SMSContentReaderProcessor(c, setRawData, setProcessedData);
-		case SensorUtils.SENSOR_TYPE_CAMERA:
-			return new CameraProcessor(c, setRawData, setProcessedData);
 		case SensorUtils.SENSOR_TYPE_PHONE_RADIO:
 			return new PhoneRadioProcessor(c, setRawData, setProcessedData);
 		case SensorUtils.SENSOR_TYPE_CONNECTION_STRENGTH:
