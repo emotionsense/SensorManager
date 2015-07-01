@@ -30,6 +30,7 @@ import com.ubhave.sensormanager.config.pull.MicrophoneConfig;
 import com.ubhave.sensormanager.config.pull.MotionSensorConfig;
 import com.ubhave.sensormanager.config.pull.PhoneRadioConfig;
 import com.ubhave.sensormanager.config.pull.PullSensorConfig;
+import com.ubhave.sensormanager.config.pull.StepCounterConfig;
 import com.ubhave.sensormanager.config.pull.WifiConfig;
 import com.ubhave.sensormanager.config.push.PassiveLocationConfig;
 import com.ubhave.sensormanager.sensors.SensorUtils;
@@ -91,6 +92,9 @@ public class SensorConfig extends AbstractConfig implements Cloneable
 			break;
 		case SensorUtils.SENSOR_TYPE_PASSIVE_LOCATION:
 			sensorConfig = PassiveLocationConfig.getDefault();
+			break;
+		case SensorUtils.SENSOR_TYPE_STEP_COUNTER:
+			sensorConfig = StepCounterConfig.getDefault();
 			break;
 		}
 		sensorConfig.setParameter(PullSensorConfig.ADAPTIVE_SENSING_ENABLED, false);
