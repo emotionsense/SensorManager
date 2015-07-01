@@ -44,7 +44,7 @@ public abstract class AbstractPushSensor extends AbstractSensor implements PushS
 		super(context);
 		broadcastReceiver = new BroadcastReceiver()
 		{
-			public void onReceive(Context context, Intent intent)
+			public void onReceive(final Context context, final Intent intent)
 			{
 				if (isSensing)
 				{
@@ -125,7 +125,7 @@ public abstract class AbstractPushSensor extends AbstractSensor implements PushS
 		}
 	}
 
-	protected void onDataSensed(SensorData sensorData)
+	protected void onDataSensed(final SensorData sensorData)
 	{
 		if (sensorDataListener != null)
 		{

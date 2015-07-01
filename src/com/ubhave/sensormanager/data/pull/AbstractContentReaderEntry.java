@@ -22,12 +22,15 @@ IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 package com.ubhave.sensormanager.data.pull;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Set;
 
 public abstract class AbstractContentReaderEntry
 {
+	private final static SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss:SSS dd MM yyyy Z z", Locale.US);
 	private final static String LOCAL_TIME = "local_time_when_sensed";
 	protected HashMap<String, String> contentMap;
 	
@@ -45,7 +48,7 @@ public abstract class AbstractContentReaderEntry
 			{
 				Calendar calendar = Calendar.getInstance();
 				calendar.setTimeInMillis(getTimestamp());
-				contentMap.put(LOCAL_TIME, calendar.getTime().toString());
+				contentMap.put(LOCAL_TIME, formatter.format(calendar.getTime()));
 			}
 			catch (Exception e)
 			{

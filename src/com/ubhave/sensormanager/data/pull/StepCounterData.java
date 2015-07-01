@@ -28,6 +28,7 @@ import com.ubhave.sensormanager.sensors.SensorUtils;
 public class StepCounterData extends SensorData
 {
 	private float numSteps;
+	private long lastBoot;
 
 	public StepCounterData(final long senseStartTimestamp, final SensorConfig sensorConfig)
 	{
@@ -42,6 +43,16 @@ public class StepCounterData extends SensorData
 	public float getNumSteps()
 	{
 		return this.numSteps;
+	}
+	
+	public void setLastBoot(long lastBoot)
+	{
+		this.lastBoot = lastBoot;
+	}
+	
+	public long getLastBoot()
+	{
+		return this.lastBoot;
 	}
 
 	public int getSensorType()

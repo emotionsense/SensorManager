@@ -22,11 +22,15 @@ IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 package com.ubhave.sensormanager.sensors.pull;
 
+import java.util.Calendar;
+
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.SystemClock;
+import android.util.Log;
 
 import com.ubhave.sensormanager.ESException;
 import com.ubhave.sensormanager.config.pull.MotionSensorConfig;
@@ -45,6 +49,7 @@ public class StepCounterSensor extends AbstractPullSensor
 
 	private StepCounterData data;
 	private float numSteps;
+	private long lastBoot;
 
 	public static StepCounterSensor getSensor(final Context context) throws ESException
 	{
@@ -109,6 +114,13 @@ public class StepCounterSensor extends AbstractPullSensor
 							if (isSensing)
 							{
 								numSteps = event.values[0];
+								long millisSinceSystemBoot = SystemClock.elapsedRealtime();
+								lastBoot = System.currentTimeMillis() - millisSinceSystemBoot;
+								
+								Calendar calendar = Calendar.getInstance();
+								calendar.setTimeInMillis(lastBoot);
+								Log.d(TAG, "Num steps: "+numSteps);
+								Log.d(TAG, "Last boot: "+calendar.getTime().toString());
 							}
 						}
 					}
@@ -144,8 +156,13 @@ public class StepCounterSensor extends AbstractPullSensor
 	@Override
 	protected void processSensorData()
 	{
+		Log.d(TAG, "processSensorData()");
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTimeInMillis(lastBoot);
+		Log.d(TAG, "Num steps: "+numSteps);
+		Log.d(TAG, "Last boot: "+calendar.getTime().toString());
 		StepCounterProcessor processor = (StepCounterProcessor) getProcessor();
-		data = processor.process(pullSenseStartTimestamp, numSteps, sensorConfig.clone());
+		data = processor.process(pullSenseStartTimestamp, numSteps, lastBoot, sensorConfig.clone());
 	}
 
 	@Override
@@ -157,6 +174,7 @@ public class StepCounterSensor extends AbstractPullSensor
 	@Override
 	protected SensorData getMostRecentRawData()
 	{
+		Log.d(TAG, "getMostRecentRawData()");
 		return data;
 	}
 }

@@ -99,5 +99,4 @@ public class BatterySensor extends AbstractPushSensor
 	{
 		// nothing to do
 	}
-
 }

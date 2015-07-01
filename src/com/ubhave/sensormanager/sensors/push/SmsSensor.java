@@ -187,6 +187,7 @@ public class SmsSensor extends AbstractPushSensor
 		return filters;
 	}
 
+	@Override
 	protected boolean startSensing()
 	{
 		prevMessageId = "";
@@ -197,9 +198,9 @@ public class SmsSensor extends AbstractPushSensor
 		return true;
 	}
 
+	@Override
 	protected void stopSensing()
 	{
 		applicationContext.getContentResolver().unregisterContentObserver(observer);
 	}
-
 }

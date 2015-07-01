@@ -13,10 +13,11 @@ public class StepCounterProcessor extends AbstractProcessor
 		super(c, rw, sp);
 	}
 	
-	public StepCounterData process(final long senseStartTime, final float numSteps, final SensorConfig config)
+	public StepCounterData process(final long senseStartTime, final float numSteps, final long lastBoot, final SensorConfig config)
 	{
 		StepCounterData data = new StepCounterData(senseStartTime, config);
 		data.setNumSteps(numSteps);
+		data.setLastBoot(lastBoot);
 		return data;
 	}
 }
