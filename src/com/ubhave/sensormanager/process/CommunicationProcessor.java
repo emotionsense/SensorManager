@@ -13,7 +13,7 @@ public abstract class CommunicationProcessor extends AbstractProcessor
 		super(c, rw, sp);
 	}
 	
-	protected String hashPhoneNumber(String phoneNumber)
+	public static String hashPhoneNumber(String phoneNumber)
 	{
 		if ((phoneNumber == null) || (phoneNumber.length() == 0))
 		{
