@@ -8,7 +8,6 @@ import com.ubhave.sensormanager.process.env.HumidityProcessor;
 import com.ubhave.sensormanager.process.env.LightProcessor;
 import com.ubhave.sensormanager.process.env.PressureProcessor;
 import com.ubhave.sensormanager.process.pull.AccelerometerProcessor;
-import com.ubhave.sensormanager.process.pull.ApplicationProcessor;
 import com.ubhave.sensormanager.process.pull.BluetoothProcessor;
 import com.ubhave.sensormanager.process.pull.CallContentReaderProcessor;
 import com.ubhave.sensormanager.process.pull.GyroscopeProcessor;
@@ -42,8 +41,6 @@ public abstract class AbstractProcessor
 		{
 		case SensorUtils.SENSOR_TYPE_ACCELEROMETER:
 			return new AccelerometerProcessor(c, setRawData, setProcessedData);
-		case SensorUtils.SENSOR_TYPE_APPLICATION:
-			return new ApplicationProcessor(c, setRawData, setProcessedData);
 		case SensorUtils.SENSOR_TYPE_BLUETOOTH:
 			return new BluetoothProcessor(c, setRawData, setProcessedData);
 		case SensorUtils.SENSOR_TYPE_LOCATION:

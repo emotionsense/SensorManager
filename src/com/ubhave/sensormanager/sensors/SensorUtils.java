@@ -40,7 +40,6 @@ import com.ubhave.sensormanager.sensors.env.HumiditySensor;
 import com.ubhave.sensormanager.sensors.env.LightSensor;
 import com.ubhave.sensormanager.sensors.env.PressureSensor;
 import com.ubhave.sensormanager.sensors.pull.AccelerometerSensor;
-import com.ubhave.sensormanager.sensors.pull.ApplicationSensor;
 import com.ubhave.sensormanager.sensors.pull.BluetoothSensor;
 import com.ubhave.sensormanager.sensors.pull.CallContentReaderSensor;
 import com.ubhave.sensormanager.sensors.pull.GyroscopeSensor;
@@ -65,6 +64,7 @@ public class SensorUtils
 	public final static int SENSOR_GROUP_PULL = 0;
 	public final static int SENSOR_GROUP_PUSH = 1;
 	public final static int SENSOR_GROUP_ENVIRONMENT = 2;
+	public final static int SENSOR_GROUP_USER = 3;
 	
 	public final static int SENSOR_TYPE_ACCELEROMETER = 5001;
 	public final static int SENSOR_TYPE_BATTERY = 5002;
@@ -77,7 +77,7 @@ public class SensorUtils
 	public final static int SENSOR_TYPE_SMS = 5009;
 	public final static int SENSOR_TYPE_WIFI = 5010;
 	public final static int SENSOR_TYPE_CONNECTION_STATE = 5011;
-	public final static int SENSOR_TYPE_APPLICATION = 5012;
+//	public final static int SENSOR_TYPE_APPLICATION = 5012; // API deprecated: sensor removed
 	public final static int SENSOR_TYPE_SMS_CONTENT_READER = 5013;
 	public final static int SENSOR_TYPE_CALL_CONTENT_READER = 5014;
 	public final static int SENSOR_TYPE_GYROSCOPE = 5016;
@@ -90,6 +90,7 @@ public class SensorUtils
 	public final static int SENSOR_TYPE_HUMIDITY = 5023;
 	public final static int SENSOR_TYPE_MAGNETIC_FIELD = 5024;
 	public final static int SENSOR_TYPE_STEP_COUNTER = 5025;
+	public final static int SENSOR_TYPE_INTERACTION = 5026;
 	
 	public final static String SENSOR_NAME_ACCELEROMETER = "Accelerometer";
 	public final static String SENSOR_NAME_BATTERY = "Battery";
@@ -116,6 +117,7 @@ public class SensorUtils
 	public final static String SENSOR_NAME_HUMIDITY = "Humidity";
 	public final static String SENSOR_NAME_MAGNETIC_FIELD = "MagneticField";
 	public final static String SENSOR_NAME_STEP_COUNTER = "StepCounter";
+	public final static String SENSOR_NAME_INTERACTION = "Interaction";
 
 	private static SensorEnum getSensor(int sensorType) throws ESException
 	{
@@ -203,8 +205,6 @@ public class SensorUtils
 			return WifiSensor.getSensor(context);
 		case SENSOR_TYPE_CONNECTION_STATE:
 			return ConnectionStateSensor.getSensor(context);
-		case SENSOR_TYPE_APPLICATION:
-			return ApplicationSensor.getSensor(context);
 		case SENSOR_TYPE_SMS_CONTENT_READER:
 			return SMSContentReaderSensor.getSensor(context);
 		case SENSOR_TYPE_CALL_CONTENT_READER:

@@ -22,7 +22,6 @@ IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 package com.ubhave.sensormanager.config;
 
-import com.ubhave.sensormanager.config.pull.ApplicationConfig;
 import com.ubhave.sensormanager.config.pull.BluetoothConfig;
 import com.ubhave.sensormanager.config.pull.ContentReaderConfig;
 import com.ubhave.sensormanager.config.pull.LocationConfig;
@@ -79,9 +78,6 @@ public class SensorConfig extends AbstractConfig implements Cloneable
 			break;
 		case SensorUtils.SENSOR_TYPE_WIFI:
 			sensorConfig = WifiConfig.getDefault();
-			break;
-		case SensorUtils.SENSOR_TYPE_APPLICATION:
-			sensorConfig = ApplicationConfig.getDefault();
 			break;
 		case SensorUtils.SENSOR_TYPE_SMS_CONTENT_READER:
 		case SensorUtils.SENSOR_TYPE_CALL_CONTENT_READER:
