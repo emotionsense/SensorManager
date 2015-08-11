@@ -1,6 +1,6 @@
 # ES Sensor Manager
 
-The ES Sensor Manager Library is a library project for Android application developers. The main goal of the project is to make accessing and polling for Android smartphone sensor data easy, highly configurable, and battery-friendly.
+The ES Sensor Manager Library is a library project for Android application developers. The main goal of the project is to make accessing and polling for Android smartphone sensor data easy, highly configurable, and battery-friendly. Check the [online documentation](http://emotionsense.github.io/) for more details.
 
 ## Authors & Contributors
 * Neal Lathia ([nlathia](https://github.com/nlathia)), University of Cambridge, UK
@@ -9,9 +9,6 @@ The ES Sensor Manager Library is a library project for Android application devel
 * Sibelius Seraphini ([sibeliusseraphini](https://github.com/sibeliusseraphini)), University of São Paulo
 * Hugues Salamin, ([hsalamin](http://github.com/hsalamin)) Idiap Research Institute, Switzerland
 * Olivier Bornet ([puckch](http://github.com/puckch)), Idiap Research Institute, Switzerland
-
-## Docs, Apps, Research
-Check the [docs/](https://github.com/nlathia/SensorManager/tree/master/docs) directory of this project.
 
 ## License
 Copyright (c), University of Cambridge 
