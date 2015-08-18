@@ -22,8 +22,6 @@ IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 package com.ubhave.sensormanager.sensors;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.util.Log;
 
@@ -58,6 +56,8 @@ import com.ubhave.sensormanager.sensors.push.PhoneStateSensor;
 import com.ubhave.sensormanager.sensors.push.ProximitySensor;
 import com.ubhave.sensormanager.sensors.push.ScreenSensor;
 import com.ubhave.sensormanager.sensors.push.SmsSensor;
+
+import java.util.ArrayList;
 
 public class SensorUtils
 {
