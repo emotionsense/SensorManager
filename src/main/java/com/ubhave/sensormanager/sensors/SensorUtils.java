@@ -77,7 +77,6 @@ public class SensorUtils
 	public final static int SENSOR_TYPE_SMS = 5009;
 	public final static int SENSOR_TYPE_WIFI = 5010;
 	public final static int SENSOR_TYPE_CONNECTION_STATE = 5011;
-//	public final static int SENSOR_TYPE_APPLICATION = 5012; // API deprecated: sensor removed
 	public final static int SENSOR_TYPE_SMS_CONTENT_READER = 5013;
 	public final static int SENSOR_TYPE_CALL_CONTENT_READER = 5014;
 	public final static int SENSOR_TYPE_GYROSCOPE = 5016;
@@ -104,10 +103,8 @@ public class SensorUtils
 	public final static String SENSOR_NAME_WIFI = "WiFi";
 	public final static String SENSOR_NAME_CONNECTION_STATE = "ConnectionState";
 	public final static String SENSOR_NAME_CONNECTION_STRENGTH = "ConnectionStrength";
-	public final static String SENSOR_NAME_APPLICATION = "Application";
 	public final static String SENSOR_NAME_SMS_CONTENT_READER = "SMSContentReader";
 	public final static String SENSOR_NAME_CALL_CONTENT_READER = "CallContentReader";
-	public final static String SENSOR_NAME_CAMERA = "Camera";
 	public final static String SENSOR_NAME_GYROSCOPE = "Gyroscope";
 	public final static String SENSOR_NAME_LIGHT = "Light";
 	public final static String SENSOR_NAME_PHONE_RADIO = "PhoneRadio";
@@ -141,11 +138,6 @@ public class SensorUtils
 		return getSensor(sensorType).isPull();
 	}
 
-	public static boolean isPushSensor(final int sensorType) throws ESException
-	{
-		return !getSensor(sensorType).isPull();
-	}
-
 	public static int getSensorType(final String sensorName) throws ESException
 	{
 		for (SensorEnum s : SensorEnum.values())
@@ -160,7 +152,7 @@ public class SensorUtils
 
 	public static ArrayList<SensorInterface> getAllSensors(final Context applicationContext)
 	{
-		ArrayList<SensorInterface> sensors = new ArrayList<SensorInterface>();
+		ArrayList<SensorInterface> sensors = new ArrayList<>();
 		for (SensorEnum s : SensorEnum.values())
 		{
 			try
